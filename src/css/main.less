@@ -77,7 +77,7 @@ content {
 		height: 35px;
 		opacity: 0.5;
 		margin-right: 3px;
-		transition: opacity 100ms ease-in-out;
+		transition: opacity 80ms ease-in-out;
 
 		&:after {
 			content: "";
@@ -89,18 +89,18 @@ content {
 			background-size: cover;
 			background-repeat: no-repeat;
 			background-position: 50% 50%;
-			filter: invert() drop-shadow(0 1px 0 #00000050);
+			filter: invert() drop-shadow(0 1px 0 #00000030);
 			width: 17px;
 			height: 17px;
 		}
 
 		&.active {
 			background-color: #596466;
-			opacity: 1;
+			opacity: 0.85;
 		}
 
 		&:hover:not(.active) {
-			opacity: 0.85;
+			opacity: 0.65;
 		}
 	}
 
@@ -232,7 +232,7 @@ content {
 			color: #dee;
 			white-space: nowrap;
 			text-transform: uppercase;
-			text-shadow: 0 1px 0 #00000050;
+			text-shadow: 0 1px 0 #00000030;
 
 			> div {
 				display: inline-block;
@@ -295,7 +295,7 @@ content {
 					font-size: 11px;
 					padding: 9px;
 					border-right: 1px solid #2f3437;
-					text-shadow: 0 1px 0 #00000050;
+					text-shadow: 0 1px 0 #00000030;
 
 					&.active {
 						background: #596466;
@@ -327,6 +327,76 @@ content {
 						width: 140px;
 						height: 88px;
 						border: 2px solid #e22;
+					}
+				}
+
+				.group {
+					.row:not(:first-child) {
+						padding-left: 17px;
+					}
+				}
+
+				.row {
+					border-bottom: 1px solid rgba(0,0,0,.35);
+					display: flex;
+					padding: 9px 3px 7px;
+
+					&:hover {
+						.name {
+							color: #dee;
+						}
+
+						.icon:after {
+							opacity: 0.75;
+						}
+					}
+
+					> div {
+						display: inline-block;
+						vertical-align: middle;
+						color: #abb;
+						font-size: 12px;
+						text-shadow: 0 1px 0 #00000030;
+						transition: color 80ms ease-in-out;
+					}
+
+					.name {
+						flex: 1;
+						padding: 3px 5px;
+					}
+
+					.thumbnail {
+						//background-color: #ffffff20;
+						background-size: contain;
+						background-position: 50% 50%;
+						background-repeat: no-repeat;
+						width: 23px;
+						height: 23px;
+						margin: -2px 2px 0;
+					}
+
+					.icon {
+						position: relative;
+						background-size: 0px;
+						width: 21px;
+						height: 17px;
+						margin: 0 2px;
+
+						&:after {
+							content: "";
+							position: absolute;
+							top: 1px;
+							left: 3px;
+							opacity: 0.5;
+							background-image: inherit;
+							background-size: cover;
+							background-repeat: no-repeat;
+							background-position: 50% 50%;
+							filter: invert() drop-shadow(0 1px 0 #00000030);
+							width: 15px;
+							height: 15px;
+							transition: opacity 80ms ease-in-out;
+						}
 					}
 				}
 			}
@@ -381,6 +451,14 @@ content {
 						width: 17px;
 						height: 17px;
 						margin: 0;
+					}
+
+					&.disabled {
+						opacity: 0.45;
+					}
+
+					&:hover:not(.disabled):after {
+						opacity: 0.75;
 					}
 
 					&:after {
