@@ -53,7 +53,9 @@
 				<span class="value">100%</span>
 			</div>
 		</div>
+
 		<div class="canvas"></div>
+		
 		<div class="sidebar-wrapper">
 			<div class="sidebar-box">
 				<div class="box-head">
@@ -61,16 +63,44 @@
 					<div>Swatches</div>
 					<div>History</div>
 				</div>
-				<div class="box-body"></div>
-				<div class="box-foot"></div>
+				<div class="box-body">
+					<div class="thumb-wrapper">
+						<div class="view-rect"></div>
+					</div>
+				</div>
+				<div class="box-foot">
+					<div class="value">100%</div>
+					<div class="zoom-slider">
+						<div class="icon mini" style="background-image: url(~/icons/icon-mountain.png);"></div>
+						<input class="mini-nob" type="range" value="50" min="0" max="100">
+						<div class="icon maxi" style="background-image: url(~/icons/icon-mountain.png);"></div>
+					</div>
+				</div>
 			</div>
 
-			<div class="sidebar-box">
+			<!--<div class="sidebar-box">
 				<div class="box-head">
-					<div>Layers</div>
+					<div class="active">Character</div>
+					<div>Paragraph</div>
 				</div>
 				<div class="box-body"></div>
 				<div class="box-foot"></div>
+			</div>-->
+
+			<div class="sidebar-box">
+				<div class="box-head">
+					<div class="active">Layers</div>
+					<div>Channels</div>
+					<div>Paths</div>
+				</div>
+				<div class="box-body"></div>
+				<div class="box-foot right">
+					<div class="icon" style="background-image: url(~/icons/icon-layer-mask.png);"></div>
+					<div class="icon" style="background-image: url(~/icons/icon-layer-adjustment.png);"></div>
+					<div class="icon" style="background-image: url(~/icons/icon-folder.png);"></div>
+					<div class="icon" style="background-image: url(~/icons/icon-new.png);"></div>
+					<div class="icon" style="background-image: url(~/icons/icon-trashcan.png);"></div>
+				</div>
 			</div>
 		</div>
 	</div>
