@@ -1,5 +1,9 @@
 
+@import (css) url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+
 background: transparent;
+font-family: "Lato", sans-serif;
+line-height: 1.25;
 
 content {
 	background: #2f3437;
@@ -89,7 +93,7 @@ content {
 			background-size: cover;
 			background-repeat: no-repeat;
 			background-position: 50% 50%;
-			filter: invert() drop-shadow(0 1px 0 #00000030);
+			filter: invert() drop-shadow(0 1px 0 #00000040);
 			width: 17px;
 			height: 17px;
 		}
@@ -105,9 +109,14 @@ content {
 	}
 
 	.option {
-		color: #cdd;
+		color: #bcc;
+		margin-top: 1px;
 		margin-right: 13px;
 		padding-left: 9px;
+
+		&:last-child {
+			margin-right: 7px;
+		}
 
 		.label {
 			font-size: 11px;
@@ -120,8 +129,9 @@ content {
 			position: relative;
 			font-size: 11px;
 			background: #353d3f;
+			color: #cdd;
 			text-shadow: 0 1px 0 #122;
-			padding: 3px 31px 4px 9px;
+			padding: 4px 31px 4px 9px;
 			border-radius: 21px;
 
 			&:before {
@@ -154,6 +164,7 @@ content {
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
+		z-index: 1;
 
 		.ruler-top {
 			background: #24292c;
@@ -197,7 +208,7 @@ content {
 
 			> span {
 				position: absolute;
-				top: 150px;
+				top: 250px;
 				left: -1px;
 				transform: rotate(-90deg);
 			}
@@ -207,17 +218,16 @@ content {
 			position: absolute;
 			top: 50%;
 			left: 50%;
-			// width: 1000px;
-			// height: 610px;
-				width: 600px;
-				height: 366px;
+			width: 1000px;
+			height: 610px;
+			//	width: 600px;
+			//	height: 366px;
 			transform: translateX(-50%) translateY(-50%);
 			background: url(~/dev/sample-1.jpg) 50% 50% no-repeat;
 			border: 1px solid rgba(0,0,0,.3);
-			box-shadow: 0 3px 29px rgba(0,0,0,.3);
+			box-shadow: 0 0 29px rgba(0,0,0,.25);
 			background-size: cover;
 			margin-left: -120px;
-			z-index: 1;
 			//filter: blur(8px);
 		}
 
@@ -232,12 +242,12 @@ content {
 			color: #dee;
 			white-space: nowrap;
 			text-transform: uppercase;
-			text-shadow: 0 1px 0 #00000030;
+			text-shadow: 0 1px 0 #00000040;
 
 			> div {
 				display: inline-block;
 				font-size: 11px;
-				padding: 6px 7px;
+				padding: 6px 7px 3px;
 				height: 100%;
 			}
 
@@ -252,6 +262,7 @@ content {
 				padding-left: 7px;
 				padding-right: 2px;
 				border-radius: 0 11px 11px 0;
+				backdrop-filter: blur(13px);
 			}
 		}
 
@@ -261,12 +272,13 @@ content {
 			bottom: 0;
 			right: 0;
 			width: 260px;
-			background-color: #3e494b;
-			//background-color: rgba(55,65,67,.25);
-			//backdrop-filter: blur(20px);
+			//background-color: #3e494b;
+			background-color: rgba(55,65,67,.55);
+			backdrop-filter: blur(13px);
 			z-index: 2;
 			display: flex;
 			flex-direction: column;
+			border-left: 1px solid #24292c;
 		}
 
 		.sidebar-box {
@@ -295,7 +307,7 @@ content {
 					font-size: 11px;
 					padding: 9px;
 					border-right: 1px solid #2f3437;
-					text-shadow: 0 1px 0 #00000030;
+					text-shadow: 0 1px 0 #00000040;
 
 					&.active {
 						background: #596466;
@@ -303,11 +315,31 @@ content {
 					}
 				}
 			}
+			.box-tools {
+				background: #596466;
+				padding: 5px 0 6px;
+				display: flex;
+
+				.option:first-child {
+					flex: 1;
+				}
+			}
 			.box-body {
 				min-height: 140px;
 				//background: #596466;
 				position: relative;
 				flex: 1;
+				box-shadow: inset 0 7px 7px -7px rgba(0,0,0,.25),
+							inset 0 -7px 7px -7px rgba(0,0,0,.25);
+
+				.body-wrapper {
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					overflow-y: auto;
+				}
 
 				.thumb-wrapper {
 					background: url(~/dev/sample-1.jpg) 50% 50% no-repeat;
@@ -331,17 +363,41 @@ content {
 				}
 
 				.group {
-					.row:not(:first-child) {
-						padding-left: 17px;
+					position: relative;
+
+					&.expanded {
+						> .row:nth-child(1) .icon.leaf { transform: rotate(0deg); }
+
+						> .group {
+							> .row:first-child:before { margin: 0 7px; }
+							> .row:not(:first-child):before { margin: 0 18px; }
+
+							&.expanded {
+								> .group {
+									> .row:first-child:before { margin: 0 17px; }
+									> .row:not(:first-child):before { margin: 0 28px; }
+
+									&.expanded {
+										> .group {
+											> .row:first-child:before { margin: 0 27px; }
+											> .row:not(:first-child):before { margin: 0 38px; }
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 
 				.row {
-					border-bottom: 1px solid rgba(0,0,0,.35);
+					position: relative;
 					display: flex;
-					padding: 9px 3px 7px;
+					padding: 9px 3px 7px 5px;
+					border-bottom: 1px solid #233;
 
-					&:hover {
+					&:before { content: ""; }
+
+					&:hover:not(.active) {
 						.name {
 							color: #dee;
 						}
@@ -351,12 +407,25 @@ content {
 						}
 					}
 
+					&.active {
+						background: #20b4d0;
+
+						.icon:after {
+							opacity: .85;
+						}
+
+						> div {
+							color: #eff;
+							text-shadow: 0 1px 0 #00000070;
+						}
+					}
+
 					> div {
 						display: inline-block;
 						vertical-align: middle;
 						color: #abb;
 						font-size: 12px;
-						text-shadow: 0 1px 0 #00000030;
+						text-shadow: 0 1px 0 #00000040;
 						transition: color 80ms ease-in-out;
 					}
 
@@ -370,32 +439,63 @@ content {
 						background-size: contain;
 						background-position: 50% 50%;
 						background-repeat: no-repeat;
-						width: 23px;
-						height: 23px;
-						margin: -2px 2px 0;
+						width: 21px;
+						height: 21px;
+						margin: -2px 2px 0 -1px;
+						filter: drop-shadow(0 0 1px #000);
 					}
 
 					.icon {
 						position: relative;
+						position: relative;
 						background-size: 0px;
-						width: 21px;
+						width: 23px;
 						height: 17px;
 						margin: 0 2px;
+						z-index: 2;
 
 						&:after {
 							content: "";
 							position: absolute;
-							top: 1px;
+							top: 0;
 							left: 3px;
 							opacity: 0.5;
 							background-image: inherit;
 							background-size: cover;
 							background-repeat: no-repeat;
 							background-position: 50% 50%;
-							filter: invert() drop-shadow(0 1px 0 #00000030);
-							width: 15px;
-							height: 15px;
+							filter: invert() drop-shadow(0 1px 0 #00000040);
+							width: 17px;
+							height: 17px;
 							transition: opacity 80ms ease-in-out;
+						}
+
+						&.eye {
+							width: 17px;
+
+							&:after {
+								top: 1px;
+								width: 15px;
+								height: 15px;
+							}
+						}
+
+						&.leaf {
+							top: 2px;
+							width: 13px;
+							height: 13px;
+							border-radius: 50%;
+							background-color: #677;
+							transform: rotate(-90deg);
+
+							&:after {
+								background: url(~/icons/icon-arrow.png) 50% 50% no-repeat;
+								top: 4px;
+								left: 3px;
+								width: 7px;
+								height: 7px;
+								filter: invert() brightness(4) drop-shadow(0 1px 0 #000000dd);
+							}
 						}
 					}
 				}
