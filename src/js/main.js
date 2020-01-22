@@ -9,6 +9,8 @@ const photoshop = {
 
 		// bind event handlers
 		this.zoomSlider.on("input", this.dispatch);
+
+		this.zoomSlider.val(300).trigger("input");
 	},
 	dispatch(event) {
 		let self = photoshop,

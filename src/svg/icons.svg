@@ -77,7 +77,7 @@
 	</svg>
 
 	<svg id="icon-quick-mask" viewBox="0 0 500 500">
-		<path fill="#ffffff20" stroke="#000000" stroke-width="15" d="M19.5,84.905v330.19h461V84.905H19.5z"/>
+		<path fill="#00000020" stroke="#000000" stroke-width="15" d="M19.5,84.905v330.19h461V84.905H19.5z"/>
 		<circle fill="none" stroke="#000000" stroke-width="25" stroke-linecap="round" stroke-dasharray="30,30" cx="250" cy="250" r="100"/>
 	</svg>
 
