@@ -4,8 +4,8 @@
 		<meta name="title" value="Photoshop" version="1.0"/>
 		<meta name="author" value="Hakan Bilgin" namespace="ant"/>
 		<meta name="license" value="AGPL-3.0"/>
-		<meta name="width" value="940"/>
-		<meta name="height" value="680"/>
+		<meta name="width" value="1040"/>
+		<meta name="height" value="800"/>
 		<meta name="top" value="120"/>
 		<meta name="left" value="120"/>
 		<meta name="minimize"/>
