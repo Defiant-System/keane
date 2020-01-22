@@ -2,7 +2,7 @@
 @import (css) url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
 @backgrop-blur: 17px;
-@ws-image: url(/cdn/img/bg/nature/grass.jpg) 50% 50% no-repeat;
+@ws-image: url(/cdn/img/bg/nature/drop-of-water.jpg) 50% 50% no-repeat;
 
 
 .win-caption-buttons_ {
@@ -18,13 +18,6 @@
 	background: transparent;
 	font-family: "Lato", sans-serif;
 	line-height: 1.25;
-}
-
-.canvas {
-	background: @ws-image;
-	width: 600px; height: 366px;
-	// width: 1000px; height: 610px;
-	// width: 1730px; height: 1153px;
 }
 
 content {
@@ -62,15 +55,19 @@ content {
 			vertical-align: middle;
 		}
 
-		.tool.active:before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: -1px;
-			border-top: 1px solid lighten(#596466, 3%);
-			border-bottom: 1px solid #596466;
+		.tool.active {
+			background-color: rgba(95,105,107,.75);
+
+			&:before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: -1px;
+				border-top: 1px solid lighten(#596466, 3%);
+				border-bottom: 1px solid #596466;
+			}
 		}
 	}
 
@@ -96,6 +93,10 @@ content {
 		> div {
 			display: inline-block;
 			vertical-align: middle;
+		}
+
+		.tool.active {
+			background-color: transparent;
 		}
 	}
 	
@@ -124,7 +125,6 @@ content {
 		}
 
 		&.active {
-			background-color: rgba(#9aa,.5);
 			opacity: 0.85;
 		}
 
@@ -246,9 +246,11 @@ content {
 			transform: translateX(-50%) translateY(-50%);
 			border: 1px solid rgba(0,0,0,.3);
 			box-shadow: 0 0 29px rgba(0,0,0,.25);
-			background-size: cover;
 			margin-left: -120px;
-			//filter: blur(8px);
+			background: @ws-image;
+			width: 600px;
+			height: 366px;
+			background-size: cover;
 		}
 
 		.status-bar {
@@ -326,7 +328,7 @@ content {
 				> div {
 					display: inline-block;
 					text-transform: uppercase;
-					color: #abb;
+					color: #788;
 					font-size: 11px;
 					padding: 8px 11px 7px;
 					border-right: 1px solid #272c2f;
@@ -335,6 +337,10 @@ content {
 					&.active {
 						background: rgba(255,255,255,0.15);
 						color: #dee;
+					}
+
+					&:hover {
+						color: #9aa;
 					}
 				}
 			}
@@ -379,10 +385,10 @@ content {
 
 					.view-rect {
 						position: absolute;
-						top: 7px;
-						left: 13px;
-						width: 140px;
-						height: 88px;
+						top: 0;
+						left: 0;
+						width: inherit;
+						height: inherit;
 						border: 2px solid #e22;
 					}
 				}
