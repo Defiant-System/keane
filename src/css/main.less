@@ -1,9 +1,20 @@
 
 @import (css) url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
-@backgrop-blur: 17px;
-@ws-image: url(/cdn/img/bg/nature/drop-of-water.jpg) 50% 50% no-repeat;
+@backgrop-blur: 21px;
+@ws-image: url(/cdn/img/bg/nature/barley-field.jpg) 50% 50% no-repeat;
 
+.win-caption-bar_ {
+	height: unset;
+}
+
+.win-caption-title_ {
+	position: absolute;
+	left: 660px;
+	right: 0;
+	width: auto;
+	height: 29px;
+}
 
 .win-caption-buttons_ {
 	top: 10px;
@@ -18,10 +29,10 @@
 	background: transparent;
 	font-family: "Lato", sans-serif;
 	line-height: 1.25;
+	//z-index: initial;
 }
 
 content {
-	background: #2f3437;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -31,13 +42,14 @@ content {
 	flex-direction: column;
 
 	.tools-bar {
-		background-color: rgba(65,75,77,.75);
+		background-color: rgba(#233,.75);
 		backdrop-filter: blur(@backgrop-blur);
 		position: relative;
-		z-index: 2;
+		z-index: 3;
 		font-size: 0;
 		padding: 0 7px 0 67px;
 		white-space: nowrap;
+		user-select: none;
 	//	box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),
 	//				inset 0 -1px 0 rgba(0,0,0,0.05);
 
@@ -56,7 +68,7 @@ content {
 		}
 
 		.tool.active {
-			background-color: rgba(95,105,107,.75);
+			background-color: rgba(#cdd,.35);
 
 			&:before {
 				content: "";
@@ -65,17 +77,17 @@ content {
 				left: 0;
 				right: 0;
 				bottom: -1px;
-				border-top: 1px solid lighten(#596466, 3%);
-				border-bottom: 1px solid #596466;
+				// border-top: 1px solid lighten(#596466, 3%);
+				// border-bottom: 1px solid #596466;
 			}
 		}
 	}
 
 	.tools-options-bar {
-		background-color: rgba(95,105,107,.75);
+		background-color: rgba(#566,.75);
 		backdrop-filter: blur(@backgrop-blur);
 		position: relative;
-		z-index: 2;
+		z-index: 4;
 		font-size: 0;
 		padding: 0 7px 1px;
 		white-space: nowrap;
@@ -83,10 +95,10 @@ content {
 	//				inset 0 -1px 0 rgba(0,0,0,0.05);
 
 		.divider {
-			background: rgba(0,0,0,0.2);
+			background: rgba(#000, .2);
 			position: relative;
 			width: 1px;
-			height: 23px;
+			height: 24px;
 			margin: 6px 5px;
 		}
 
@@ -94,9 +106,51 @@ content {
 			display: inline-block;
 			vertical-align: middle;
 		}
+	}
 
-		.tool.active {
-			background-color: transparent;
+	.color-sample {
+		//background: rgba(0,0,0,.1);
+		position: relative;
+		width: 54px;
+		height: 21px;
+		margin: 0 3px;
+
+		.bg-color,
+		.fg-color {
+			position: absolute;
+			top: 0;
+			left: 18px;
+			width: 13px;
+			height: 13px;
+			background: #000;
+			border: 1px solid rgba(#000, .7);
+		}
+		.bg-color {
+			top: 8px;
+			left: 26px;
+			background: #fff;
+		}
+		.color-reset {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 12px;
+			height: 13px;
+			background: url(~/icons/icon-black-white.png) 50% 50% no-repeat;
+			background-size: cover;
+			filter: invert() drop-shadow(0 1px 0 #00000070);
+			opacity: 0.35;
+		}
+		.icon {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 12px;
+			height: 13px;
+			background: url(~/icons/icon-switch.png) 50% 50% no-repeat;
+			background-size: cover;
+			filter: invert() drop-shadow(0 1px 0 #00000070);
+			opacity: 0.45;
 		}
 	}
 	
@@ -125,16 +179,15 @@ content {
 		}
 
 		&.active {
-			opacity: 0.85;
+			opacity: 0.95;
 		}
 
 		&:hover:not(.active) {
-			opacity: 0.65;
+			opacity: 0.85;
 		}
 	}
 
 	.option {
-		color: #bcc;
 		margin-top: 1px;
 		margin-right: 13px;
 		padding-left: 9px;
@@ -144,24 +197,25 @@ content {
 		}
 
 		.label {
+			color: rgba(#fff, .75);
 			font-size: 10px;
 			margin-right: 7px;
 			text-transform: uppercase;
-			text-shadow: 0 1px 0 #353d3f;
+			text-shadow: 0 1px 0 rgba(#000, .25);
 		}
 
 		.value {
 			position: relative;
 			font-size: 11px;
-			background: rgba(#122, .35);
-			color: #cdd;
+			background: rgba(#000, .25);
+			color: rgba(#fff, .85);
 			text-shadow: 0 1px 0 #122;
 			padding: 4px 31px 3px 9px;
 			border-radius: 21px;
 
 			&:before {
 				content: "";
-				background: rgba(#9aa, .35);
+				background: rgba(#fff, .25);
 				position: absolute;
 				top: 1px;
 				bottom: 1px;
@@ -223,7 +277,7 @@ content {
 			background: rgba(#24292c, 0.85);
 			position: absolute;
 			top: 15px;
-			bottom: 19px;
+			bottom: 0;
 			left: 0;
 			width: 15px;
 			z-index: 2;
@@ -255,13 +309,13 @@ content {
 
 		.status-bar {
 			position: absolute;
-			left: 0;
+			left: 15px;
 			right: 0;
 			bottom: 0;
 			height: 25px;
 			z-index: 2;
 			font-size: 0;
-			color: #dee;
+			color: rgba(#fff,.85);
 			white-space: nowrap;
 			text-transform: uppercase;
 			text-shadow: 0 1px 0 #00000040;
@@ -274,14 +328,15 @@ content {
 			}
 
 			.file {
-				background: #596466;
+				background: rgba(#455,.85);
+				backdrop-filter: blur(@backgrop-blur);
 				min-width: 150px;
 				text-align: center;
 			}
 
 			.option {
-				background: #3e494bd0;
-				padding-left: 7px;
+				background: rgba(#344,.75);
+				padding-left: 11px;
 				padding-right: 2px;
 				border-radius: 0 11px 11px 0;
 				backdrop-filter: blur(@backgrop-blur);
@@ -295,19 +350,19 @@ content {
 			right: 0;
 			width: 271px;
 			//background-color: #3e494b;
-			background-color: rgba(65,75,77,.55);
+			background-color: rgba(#344,.75);
 			backdrop-filter: blur(@backgrop-blur);
 			z-index: 2;
 			display: flex;
 			flex-direction: column;
-			border-left: 1px solid #24292c;
+			border-left: 1px solid rgba(#011, .65);
 		}
 
 		.sidebar-box {
 			position: relative;
 			display: flex;
 			flex-direction: column;
-			border-top: 2px solid #24292c;
+			border-top: 2px solid rgba(#011, .65);
 
 			&:nth-child(2) .box-body {
 				//min-height: 120px;
@@ -328,19 +383,20 @@ content {
 				> div {
 					display: inline-block;
 					text-transform: uppercase;
-					color: #788;
+					color: rgba(#bcc, .5);
 					font-size: 10px;
 					padding: 8px 11px 7px;
-					border-right: 1px solid #272c2f;
-					text-shadow: 0 1px 0 #00000040;
+					border-right: 1px solid rgba(#011, .55);
+					text-shadow: 0 1px 0 rgba(#000, .5);
 
 					&.active {
 						background: rgba(255,255,255,0.15);
-						color: #dee;
+						color: rgba(#eff, .85);
+						text-shadow: 0 1px 0 rgba(#000, .35);
 					}
 
-					&:hover {
-						color: #9aa;
+					&:hover:not(.active) {
+						color: rgba(#bcc, .75);
 					}
 				}
 			}
@@ -357,8 +413,8 @@ content {
 				min-height: 137px;
 				//background: #596466;
 				position: relative;
-				border-top: 1px solid #272c2f;
-				border-bottom: 1px solid #272c2f;
+				border-top: 1px solid rgba(#011, .55);
+				border-bottom: 1px solid rgba(#011, .55);
 				flex: 1;
 			//	box-shadow: inset 0 7px 7px -7px rgba(0,0,0,.25),
 			//				inset 0 -7px 7px -7px rgba(0,0,0,.25);
@@ -400,8 +456,8 @@ content {
 						display: inline-block;
 						width: 15px;
 						height: 15px;
-						border-right: 1px solid #24292c;
-						border-bottom: 1px solid #24292c;
+						border-right: 1px solid rgba(#011, .85);
+						border-bottom: 1px solid rgba(#011, .85);
 					}
 				}
 
@@ -451,24 +507,24 @@ content {
 					}
 
 					&.active {
-						background: #20b4d0;
+						background: rgba(#20b4d0, .65);
 
 						.icon:after {
 							opacity: .85;
 						}
 
 						> div {
-							color: #eff;
-							text-shadow: 0 1px 0 #00000070;
+							color: rgba(#dee, .75);
+							text-shadow: 0 1px 0 rgba(#000, .25);
 						}
 					}
 
 					> div {
 						display: inline-block;
 						vertical-align: middle;
-						color: #abb;
 						font-size: 12px;
-						text-shadow: 0 1px 0 #00000040;
+						color: rgba(#dee, .65);
+						text-shadow: 0 1px 0 rgba(#000, .25);
 						transition: color 80ms ease-in-out;
 					}
 
@@ -489,7 +545,6 @@ content {
 					}
 
 					.icon {
-						position: relative;
 						position: relative;
 						background-size: 0px;
 						width: 23px;
@@ -528,7 +583,7 @@ content {
 							width: 13px;
 							height: 13px;
 							border-radius: 50%;
-							background-color: #677;
+							background-color: rgba(#9aa, .45);
 							transform: rotate(-90deg);
 
 							&:after {
@@ -646,8 +701,9 @@ content {
 							margin-top: -5px;
 						}
 						&::-webkit-slider-runnable-track {
-							background: #596466;
+							background: rgba(#455, .5);
 							height: 2px;
+							box-shadow: 0 1px 0 rgba(#000, 0.2)
 						}
 					}
 				}

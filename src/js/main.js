@@ -6,6 +6,7 @@ const photoshop = {
 		this.canvas = window.find(".canvas");
 		this.thumbRect = window.find(".thumb-wrapper .view-rect");
 		this.zoomSlider = window.find(".zoom-slider input");
+		this.zoomValue = window.find(".box-foot .value");
 
 		// bind event handlers
 		this.zoomSlider.on("input", this.dispatch);
@@ -19,6 +20,8 @@ const photoshop = {
 		switch (event.type) {
 			case "input":
 				percent = this.value / 100;
+
+				self.zoomValue.html(this.value + "%");
 
 				self.canvas.css({
 					width: (600 * percent) +"px",
