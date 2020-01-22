@@ -1,9 +1,31 @@
 
 @import (css) url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
-background: transparent;
-font-family: "Lato", sans-serif;
-line-height: 1.25;
+@backgrop-blur: 17px;
+@ws-image: url(/cdn/img/bg/nature/grass.jpg) 50% 50% no-repeat;
+
+
+.win-caption-buttons_ {
+	top: 10px;
+	left: 10px;
+
+	btn:nth-child(1) { left: 0; }
+	btn:nth-child(2) { left: 20px; }
+	btn:nth-child(3) { left: 40px; }
+}
+
+.win-body_ {
+	background: transparent;
+	font-family: "Lato", sans-serif;
+	line-height: 1.25;
+}
+
+.canvas {
+	background: @ws-image;
+	width: 600px; height: 366px;
+	// width: 1000px; height: 610px;
+	// width: 1730px; height: 1153px;
+}
 
 content {
 	background: #2f3437;
@@ -16,14 +38,15 @@ content {
 	flex-direction: column;
 
 	.tools-bar {
-		background: #3e494b;
+		background-color: rgba(65,75,77,.75);
+		backdrop-filter: blur(@backgrop-blur);
 		position: relative;
 		z-index: 2;
 		font-size: 0;
-		padding: 0 7px 0 44px;
+		padding: 0 7px 0 67px;
 		white-space: nowrap;
-		box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),
-					inset 0 -1px 0 rgba(0,0,0,0.05);
+	//	box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),
+	//				inset 0 -1px 0 rgba(0,0,0,0.05);
 
 		.divider {
 			background: rgba(0,0,0,0.2);
@@ -52,13 +75,15 @@ content {
 	}
 
 	.tools-options-bar {
-		background: #596466;
+		background-color: rgba(95,105,107,.75);
+		backdrop-filter: blur(@backgrop-blur);
 		position: relative;
+		z-index: 2;
 		font-size: 0;
 		padding: 0 7px 1px;
 		white-space: nowrap;
-		box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),
-					inset 0 -1px 0 rgba(0,0,0,0.05);
+	//	box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),
+	//				inset 0 -1px 0 rgba(0,0,0,0.05);
 
 		.divider {
 			background: rgba(0,0,0,0.2);
@@ -99,7 +124,7 @@ content {
 		}
 
 		&.active {
-			background-color: #596466;
+			background-color: rgba(#9aa,.5);
 			opacity: 0.85;
 		}
 
@@ -128,7 +153,7 @@ content {
 		.value {
 			position: relative;
 			font-size: 11px;
-			background: #353d3f;
+			background: rgba(#122, .35);
 			color: #cdd;
 			text-shadow: 0 1px 0 #122;
 			padding: 4px 31px 3px 9px;
@@ -136,7 +161,7 @@ content {
 
 			&:before {
 				content: "";
-				background: #596466;
+				background: rgba(#9aa, .35);
 				position: absolute;
 				top: 1px;
 				bottom: 1px;
@@ -163,14 +188,14 @@ content {
 		position: relative;
 		width: 100%;
 		height: 100%;
-		overflow: hidden;
+	//	overflow: hidden;
 		z-index: 1;
 
 		.ruler-top {
-			background: #24292c;
+			background: rgba(#24292c, 0.85);
 			position: absolute;
 			left: 15px;
-			right: 273px;
+			right: 271px;
 			top: 0;
 			height: 15px;
 			z-index: 2;
@@ -185,7 +210,7 @@ content {
 			}
 			&:before {
 				content: "";
-				background: #24292c;
+				background: rgba(#24292c, 0.85);
 				position: absolute;
 				top: 0;
 				left: -16px;
@@ -195,7 +220,7 @@ content {
 		}
 
 		.ruler-left {
-			background: #24292c;
+			background: rgba(#24292c, 0.85);
 			position: absolute;
 			top: 15px;
 			bottom: 19px;
@@ -218,12 +243,7 @@ content {
 			position: absolute;
 			top: 50%;
 			left: 50%;
-			width: 1000px;
-			height: 610px;
-				// width: 600px;
-				// height: 366px;
 			transform: translateX(-50%) translateY(-50%);
-			background: url(~/dev/sample-1.jpg) 50% 50% no-repeat;
 			border: 1px solid rgba(0,0,0,.3);
 			box-shadow: 0 0 29px rgba(0,0,0,.25);
 			background-size: cover;
@@ -262,7 +282,7 @@ content {
 				padding-left: 7px;
 				padding-right: 2px;
 				border-radius: 0 11px 11px 0;
-				backdrop-filter: blur(13px);
+				backdrop-filter: blur(@backgrop-blur);
 			}
 		}
 
@@ -271,10 +291,10 @@ content {
 			top: 0;
 			bottom: 0;
 			right: 0;
-			width: 273px;
+			width: 271px;
 			//background-color: #3e494b;
 			background-color: rgba(65,75,77,.55);
-			backdrop-filter: blur(13px);
+			backdrop-filter: blur(@backgrop-blur);
 			z-index: 2;
 			display: flex;
 			flex-direction: column;
@@ -328,7 +348,7 @@ content {
 				}
 			}
 			.box-body {
-				min-height: 157px;
+				min-height: 137px;
 				//background: #596466;
 				position: relative;
 				border-top: 1px solid #272c2f;
@@ -347,7 +367,7 @@ content {
 				}
 
 				.thumb-wrapper {
-					background: url(~/dev/sample-1.jpg) 50% 50% no-repeat;
+					background: @ws-image;
 					background-size: cover;
 					position: absolute;
 					top: 50%;
@@ -372,8 +392,8 @@ content {
 
 					> div {
 						display: inline-block;
-						width: 17px;
-						height: 17px;
+						width: 15px;
+						height: 15px;
 						border-right: 1px solid #24292c;
 						border-bottom: 1px solid #24292c;
 					}
@@ -541,7 +561,7 @@ content {
 				}
 
 				.value {
-					background: #24292c;
+					background: rgba(#122, .35);
 					padding: 2px 1px 2px 0;
 					border-radius: 13px;
 					margin-right: 5px;

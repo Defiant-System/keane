@@ -8,6 +8,7 @@
 		<meta name="height" value="800"/>
 		<meta name="top" value="120"/>
 		<meta name="left" value="120"/>
+		<meta name="headless" value="true" theme="dark"/>
 		<meta name="minimize"/>
 		<meta name="maximize"/>
 		<meta name="resize"/>
