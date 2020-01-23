@@ -10,6 +10,22 @@
 		<Menu type="divider"/>
 		<Menu name="Quit Photoshop" shell="win -c"/>
 	</Menu>
+	<Menu name="Background" for="workspace">
+		<Menu name="Drop of Water" arg="nature/drop-of-water" click="change-bg"/>
+		<Menu name="Barley Field" arg="nature/barley-field" click="change-bg"/>
+		<Menu name="Flower 1" arg="nature/flower" click="change-bg"/>
+		<Menu name="Flower 2" arg="nature/flower-2" click="change-bg"/>
+		<Menu name="Flower 3" arg="nature/flower-3" click="change-bg"/>
+		<Menu name="Grass" arg="nature/grass" click="change-bg"/>
+		<Menu name="Lotus" arg="nature/lotus" click="change-bg"/>
+		<Menu name="Meadow" arg="nature/meadow" click="change-bg"/>
+		<Menu name="Pink" arg="nature/pink" click="change-bg"/>
+		<Menu name="Rose" arg="nature/rose" click="change-bg"/>
+		<Menu name="Bloom" arg="nature/bloom" click="change-bg"/>
+		<Menu type="divider"/>
+		<Menu name="Bled" arg="wallpapers/bled" click="change-bg"/>
+		<Menu name="Golden Gate Bridge" arg="wallpapers/golden-gate-bridge" click="change-bg"/>
+	</Menu>
 	<Menu name="Help">
 		<Menu name="Help" click="open-help"/>
 		<Menu type="divider"/>

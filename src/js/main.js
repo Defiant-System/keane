@@ -39,7 +39,9 @@ const photoshop = {
 					height: height +"px",
 				});
 				break;
-			case "window.open":
+			case "change-bg":
+				self.canvas.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
+				self.thumbRect.parent().css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
 				break;
 		}
 	}

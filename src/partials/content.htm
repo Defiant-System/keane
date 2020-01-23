@@ -22,8 +22,8 @@
 	</div>
 	<div class="tools-options-bar">
 		<div class="color-sample">
-			<div class="fg-color" style="background: #f00;"></div>
-			<div class="bg-color" style="background: #00f;"></div>
+			<div class="fg-color" style="background: #000;"></div>
+			<div class="bg-color" style="background: #fff;"></div>
 			<div class="color-switch"></div>
 			<div class="color-reset"></div>
 		</div>
@@ -50,7 +50,7 @@
 		<div class="tool" style="background-image: url(~/icons/tool-pressure.png);"></div>
 
 	</div>
-	<div class="workspace">
+	<div class="workspace" data-context="workspace">
 		<div class="ruler-top"><span>351</span></div>
 		<div class="ruler-left"><span>285</span></div>
 		<div class="status-bar">
@@ -67,7 +67,7 @@
 			<div class="sidebar-box">
 				<div class="box-head">
 					<div class="active">Navigator</div>
-					<div>Swatches</div>
+					<div>Character</div>
 					<div>History</div>
 				</div>
 				<div class="box-body">
@@ -85,9 +85,9 @@
 				</div>
 			</div>
 
-			<div class="sidebar-box">
+			<!----><div class="sidebar-box">
 				<div class="box-head">
-					<div class="active">Character</div>
+					<div class="active">Swatches</div>
 					<div>Paragraph</div>
 				</div>
 				<div class="box-body">
@@ -244,7 +244,6 @@
 						
 						<div class="group">
 							<div class="row">
-								<div class="icon leaf"></div>
 								<div class="icon" style="background-image: url(~/icons/icon-folder.png);"></div>
 								<div class="name">Field</div>
 								<div class="icon eye" style="background-image: url(~/icons/icon-eye-off.png);"></div>
@@ -253,7 +252,6 @@
 
 						<div class="group expanded">
 							<div class="row">
-								<div class="icon leaf"></div>
 								<div class="icon" style="background-image: url(~/icons/icon-folder-open.png);"></div>
 								<div class="name">Landscape</div>
 								<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
@@ -261,28 +259,27 @@
 							
 							<div class="group expanded">
 								<div class="row">
-									<div class="icon leaf"></div>
 									<div class="icon" style="background-image: url(~/icons/icon-folder-open.png);"></div>
 									<div class="name">Sky</div>
 									<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
 								</div>
 								
-								<div class="row active">
+								<div class="row active1">
 									<div class="thumbnail" style="background-image: url(~/dev/sample-1.jpg);"></div>
 									<div class="name">Flower</div>
 									<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
+									<div class="fx-applied"></div>
 								</div>
 								
 								<!--
 								<div class="row">
 									<div class="thumbnail" style="background-image: url(~/dev/sample-1.jpg);"></div>
 									<div class="name">Flower</div>
-									<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
+									<div class="icon eye" style="background-image: url(~/icons/icon-eye-off.png);"></div>
 								</div>
 							
 								<div class="group expanded">
 									<div class="row">
-										<div class="icon leaf"></div>
 										<div class="icon" style="background-image: url(~/icons/icon-folder-open.png);"></div>
 										<div class="name">Sky</div>
 										<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
@@ -292,15 +289,15 @@
 										<div class="thumbnail" style="background-image: url(~/dev/sample-1.jpg);"></div>
 										<div class="name">Flower</div>
 										<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
+										<div class="fx-applied"></div>
 									</div>
-								</div>
-								-->
+								</div>-->
+								
 							</div>
 						</div>
 						
 						<div class="group">
 							<div class="row">
-								<div class="icon leaf"></div>
 								<div class="icon" style="background-image: url(~/icons/icon-folder.png);"></div>
 								<div class="name">Lightning</div>
 								<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
