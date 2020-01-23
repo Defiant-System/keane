@@ -89,7 +89,7 @@ content {
 		position: relative;
 		z-index: 4;
 		font-size: 0;
-		padding: 0 7px 1px;
+		padding: 1px 7px;
 		white-space: nowrap;
 	//	box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),
 	//				inset 0 -1px 0 rgba(0,0,0,0.05);
@@ -106,6 +106,16 @@ content {
 			display: inline-block;
 			vertical-align: middle;
 		}
+
+		&:hover {
+			.option,
+			.color-sample {
+				opacity: 1;
+			}
+			.tool {
+				opacity: 0.85;
+			}
+		}
 	}
 
 	.color-sample {
@@ -114,6 +124,8 @@ content {
 		width: 54px;
 		height: 21px;
 		margin: 0 3px;
+		opacity: 0.75;
+		transition: opacity 80ms;
 
 		.bg-color,
 		.fg-color {
@@ -122,13 +134,13 @@ content {
 			left: 18px;
 			width: 13px;
 			height: 13px;
-			background: #000;
-			border: 1px solid rgba(#000, .7);
+			border: 1px solid rgba(#000, .5);
+			z-index: 2;
 		}
 		.bg-color {
 			top: 8px;
 			left: 26px;
-			background: #fff;
+			z-index: 1;
 		}
 		.color-reset {
 			position: absolute;
@@ -139,9 +151,9 @@ content {
 			background: url(~/icons/icon-black-white.png) 50% 50% no-repeat;
 			background-size: cover;
 			filter: invert() drop-shadow(0 1px 0 #00000070);
-			opacity: 0.35;
+			opacity: 0.4;
 		}
-		.icon {
+		.color-switch {
 			position: absolute;
 			top: 0;
 			right: 0;
@@ -150,7 +162,7 @@ content {
 			background: url(~/icons/icon-switch.png) 50% 50% no-repeat;
 			background-size: cover;
 			filter: invert() drop-shadow(0 1px 0 #00000070);
-			opacity: 0.45;
+			opacity: 0.5;
 		}
 	}
 	
@@ -191,6 +203,8 @@ content {
 		margin-top: 1px;
 		margin-right: 13px;
 		padding-left: 9px;
+		opacity: 0.75;
+		transition: opacity 80ms;
 
 		&:last-child {
 			margin-right: 7px;
@@ -207,7 +221,7 @@ content {
 		.value {
 			position: relative;
 			font-size: 11px;
-			background: rgba(#000, .25);
+			background: rgba(#000, .35);
 			color: rgba(#fff, .85);
 			text-shadow: 0 1px 0 #122;
 			padding: 4px 31px 3px 9px;
@@ -215,7 +229,7 @@ content {
 
 			&:before {
 				content: "";
-				background: rgba(#fff, .25);
+				background: rgba(#fff, .35);
 				position: absolute;
 				top: 1px;
 				bottom: 1px;
