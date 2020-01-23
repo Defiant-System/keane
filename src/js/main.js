@@ -11,7 +11,7 @@ const photoshop = {
 		// bind event handlers
 		this.zoomSlider.on("input", this.dispatch);
 
-		this.zoomSlider.val(300).trigger("input");
+		this.zoomSlider.val(235).trigger("input");
 	},
 	dispatch(event) {
 		let self = photoshop,
@@ -30,8 +30,8 @@ const photoshop = {
 
 				let width = Math.min((190 * 1.25) / percent, 190);
 				let height = Math.min((120 * 1.25) / percent, 120);
-				let top = (120 - height) / 2;
-				let left = (190 - width) / 2;
+				let top = ((120 - height) / 2) - 1;
+				let left = ((190 - width) / 2) - 1;
 				self.thumbRect.css({
 					top: top +"px",
 					left: left +"px",

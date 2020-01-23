@@ -59,7 +59,7 @@ content {
 	//				inset 0 -1px 0 rgba(0,0,0,0.05);
 
 		.divider {
-			background: rgba(0,0,0,0.2);
+			background: rgba(#011, .3);
 			position: relative;
 			display: inline-block;
 			width: 1px;
@@ -100,7 +100,7 @@ content {
 	//				inset 0 -1px 0 rgba(0,0,0,0.05);
 
 		.divider {
-			background: rgba(#000, .2);
+			background: rgba(#011, .3);
 			position: relative;
 			width: 1px;
 			height: 24px;
@@ -212,6 +212,13 @@ content {
 		margin: 0 2px;
 		z-index: 2;
 
+		&[style*="icon-color-preset"] {
+			&:after {
+				opacity: .9;
+				filter: none;
+			}
+		}
+
 		&:after {
 			content: "";
 			position: absolute;
@@ -239,6 +246,39 @@ content {
 
 		&:last-child {
 			margin-right: 7px;
+		}
+
+		&.input {
+			.value {
+				margin-right: 21px;
+				padding: 0 9px 1px;
+
+				&:before,
+				&:after {
+					display: none;
+				}
+
+				input {
+					background: transparent;
+					border: 0;
+					padding: 2px 1px;
+					height: 19px;
+					color: inherit;
+				}
+			}
+		}
+
+		&.preset {
+			.value {
+				margin-right: 21px;
+				padding: 0 9px 1px;
+				border: 1px solid rgba(#011, .85);
+
+				&:before,
+				&:after {
+					display: none;
+				}
+			}
 		}
 
 		.label {
@@ -492,7 +532,7 @@ content {
 				}
 			}
 			.box-body {
-				min-height: 137px;
+				//min-height: 137px;
 				//background: #596466;
 				position: relative;
 				border-top: 1px solid rgba(#011, .55);
@@ -502,7 +542,7 @@ content {
 			//				inset 0 -7px 7px -7px rgba(0,0,0,.25);
 
 				.divider {
-					background: rgba(#011, .25);
+					background: rgba(#011, .35);
 					height: 1px;
 					margin: 3px 0;
 				}
@@ -519,13 +559,11 @@ content {
 				.thumb-wrapper {
 					background: @ws-image;
 					background-size: cover;
-					position: absolute;
-					top: 50%;
-					left: 50%;
+					position: relative;
+					margin: 11px auto;
 					width: 190px;
 					height: 120px;
-					transform: translateX(-50%) translateY(-50%);
-					border: 1px solid #222;
+					border: 1px solid rgba(#011, .65);
 
 					.view-rect {
 						position: absolute;
@@ -533,7 +571,7 @@ content {
 						left: 0;
 						width: inherit;
 						height: inherit;
-						border: 2px solid #e22;
+						border: 2px solid rgba(#e11, .85);
 					}
 				}
 
@@ -550,7 +588,7 @@ content {
 				}
 
 				.character-wrapper {
-					padding: 3px 0;
+					padding: 2px 0 5px;
 
 					.field:first-child {
 						.option:nth-child(2) {
@@ -594,6 +632,18 @@ content {
 
 					.option {
 						flex: 1;
+
+						&.input:last-child,
+						&.preset:last-child {
+							justify-content: flex-end;
+
+							.label {
+								margin-left: 21px;
+							}
+							.value {
+								margin-right: 0;
+							}
+						}
 					}
 				}
 
@@ -625,8 +675,8 @@ content {
 				.row {
 					position: relative;
 					display: flex;
-					padding: 9px 29px 7px 5px;
-					border-bottom: 1px solid #233;
+					padding: 8px 29px 6px 5px;
+					border-bottom: 1px solid rgba(#011, .35);
 
 					&:before { content: ""; }
 
@@ -765,7 +815,7 @@ content {
 
 				.value {
 					background: rgba(#011, .35);
-					padding: 2px 1px 2px 0;
+					padding: 3px 1px 2px 0;
 					border-radius: 13px;
 					margin-right: 5px;
 					width: 53px;
