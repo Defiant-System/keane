@@ -577,6 +577,7 @@ content {
 
 				.swatches-wrapper {
 					font-size: 0;
+					padding: 0 0 13px;
 
 					> div {
 						display: inline-block;
@@ -588,7 +589,7 @@ content {
 				}
 
 				.character-wrapper {
-					padding: 2px 0 5px;
+					padding: 3px 0 5px;
 
 					.field:first-child {
 						.option:nth-child(2) {
@@ -596,6 +597,10 @@ content {
 							flex: none;
 						}
 					}
+				}
+
+				.paragraph-wrapper {
+					padding: 3px 0 5px;
 				}
 
 				.field {
@@ -608,9 +613,14 @@ content {
 						> .icon {
 							margin: 0 5px;
 							opacity: .75;
+							width: 19px;
 
 							&:hover {
 								opacity: .9;
+							}
+
+							&:after {
+								background-size: 90%;
 							}
 
 							&.active {
@@ -644,6 +654,11 @@ content {
 								margin-right: 0;
 							}
 						}
+					}
+
+					.empty {
+						flex: 1;
+						padding-left: 15px;
 					}
 				}
 
