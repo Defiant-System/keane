@@ -15,11 +15,11 @@ const photoshop = {
 	},
 	dispatch(event) {
 		let self = photoshop,
-			percent;
+			el;
 
 		switch (event.type) {
 			case "input":
-				percent = this.value / 100;
+				let percent = this.value / 100;
 
 				self.zoomValue.html(this.value + "%");
 
@@ -28,10 +28,11 @@ const photoshop = {
 					height: (366 * percent) +"px",
 				});
 
-				let width = Math.min((190 * 1.25) / percent, 190);
-				let height = Math.min((120 * 1.25) / percent, 120);
-				let top = ((120 - height) / 2) - 1;
-				let left = ((190 - width) / 2) - 1;
+				let width = Math.min((190 * 1.25) / percent, 190),
+					height = Math.min((120 * 1.25) / percent, 120),
+					top = ((120 - height) / 2) - 1,
+					left = ((190 - width) / 2) - 1;
+
 				self.thumbRect.css({
 					top: top +"px",
 					left: left +"px",
@@ -42,6 +43,13 @@ const photoshop = {
 			case "change-bg":
 				self.canvas.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
 				self.thumbRect.parent().css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
+				break;
+			case "box-head-tab":
+				el = $(event.target);
+				if (el.hasClass("active")) return;
+				//console.log(event);
+				el.parent().find(".active").removeClass("active");
+				el.addClass("active");
 				break;
 		}
 	}
