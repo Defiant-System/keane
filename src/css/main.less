@@ -204,12 +204,37 @@ content {
 		}
 	}
 
+	.icon {
+		position: relative;
+		background-size: 0px;
+		width: 17px;
+		height: 17px;
+		margin: 0 2px;
+		z-index: 2;
+
+		&:after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0.5;
+			background-image: inherit;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: 50% 50%;
+			filter: invert() drop-shadow(0 1px 0 rgba(#000, .4));
+			width: inherit;
+			height: inherit;
+			transition: opacity 80ms ease-in-out;
+		}
+	}
+
 	.option {
 		display: flex;
 		margin-top: 1px;
 		margin-right: 9px;
 		padding-left: 7px;
-		opacity: 0.75;
+		opacity: 0.85;
 		transition: opacity 80ms ease-in-out;
 
 		&:last-child {
@@ -223,6 +248,11 @@ content {
 			padding-top: 4px;
 			text-transform: uppercase;
 			text-shadow: 0 1px 0 rgba(#000, .25);
+
+			.icon {
+				margin-top: -2px;
+				margin-right: 0;
+			}
 		}
 
 		.value {
@@ -268,16 +298,16 @@ content {
 		z-index: 1;
 
 		.ruler-top {
-			background: rgba(#24292c, 0.85);
+			background: rgba(#122, 0.85);
 			position: absolute;
 			left: 15px;
 			right: 271px;
 			top: 0;
 			height: 15px;
 			z-index: 2;
-			color: #677;
+			color: rgba(#9aa, .65);
 			font-size: 9px;
-			border-left: 1px dotted #3e494bd0;
+			border-left: 1px dotted rgba(#677, .35);
 
 			> span {
 				position: absolute;
@@ -286,7 +316,7 @@ content {
 			}
 			&:before {
 				content: "";
-				background: rgba(#24292c, 0.85);
+				background: rgba(#122, 0.85);
 				position: absolute;
 				top: 0;
 				left: -16px;
@@ -296,21 +326,21 @@ content {
 		}
 
 		.ruler-left {
-			background: rgba(#24292c, 0.85);
+			background: rgba(#122, 0.85);
 			position: absolute;
 			top: 15px;
 			bottom: 0;
 			left: 0;
 			width: 15px;
 			z-index: 2;
-			color: #677;
+			color: rgba(#9aa, .65);
 			font-size: 9px;
-			border-top: 1px dotted #3e494bd0;
+			border-top: 1px dotted rgba(#677, .35);
 
 			> span {
 				position: absolute;
 				top: 250px;
-				left: -1px;
+				left: 0;
 				transform: rotate(-90deg);
 			}
 		}
@@ -471,6 +501,12 @@ content {
 			//	box-shadow: inset 0 7px 7px -7px rgba(0,0,0,.25),
 			//				inset 0 -7px 7px -7px rgba(0,0,0,.25);
 
+				.divider {
+					background: rgba(#011, .25);
+					height: 1px;
+					margin: 3px 0;
+				}
+
 				.body-wrapper {
 					position: absolute;
 					top: 0;
@@ -510,6 +546,54 @@ content {
 						height: 15px;
 						border-right: 1px solid rgba(#011, .85);
 						border-bottom: 1px solid rgba(#011, .85);
+					}
+				}
+
+				.character-wrapper {
+					padding: 3px 0;
+
+					.field:first-child {
+						.option:nth-child(2) {
+							width: 35%;
+							flex: none;
+						}
+					}
+				}
+
+				.field {
+					display: flex;
+					padding: 3px 1px;
+
+					&.centered {
+						justify-content: center;
+
+						> .icon {
+							margin: 0 5px;
+							opacity: .75;
+
+							&:hover {
+								opacity: .9;
+							}
+
+							&.active {
+								opacity: 1;
+
+								&:before {
+									content: "";
+									background: rgba(#011, .35);
+									position: absolute;
+									top: -2px;
+									left: -2px;
+									right: -2px;
+									bottom: -2px;
+									border-radius: 2px;
+								}
+							}
+						}
+					}
+
+					.option {
+						flex: 1;
 					}
 				}
 
@@ -601,27 +685,13 @@ content {
 					}
 
 					.icon {
-						position: relative;
-						background-size: 0px;
 						width: 23px;
 						height: 17px;
-						margin: 0 2px;
-						z-index: 2;
 
 						&:after {
-							content: "";
-							position: absolute;
-							top: 0;
 							left: 3px;
-							opacity: 0.5;
-							background-image: inherit;
-							background-size: cover;
-							background-repeat: no-repeat;
-							background-position: 50% 50%;
-							filter: invert() drop-shadow(0 1px 0 rgba(#000, .4));
 							width: 17px;
 							height: 17px;
-							transition: opacity 80ms ease-in-out;
 						}
 
 						&.eye {
@@ -694,7 +764,7 @@ content {
 				}
 
 				.value {
-					background: rgba(#122, .35);
+					background: rgba(#011, .35);
 					padding: 2px 1px 2px 0;
 					border-radius: 13px;
 					margin-right: 5px;
