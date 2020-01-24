@@ -72,18 +72,22 @@ content {
 			vertical-align: middle;
 		}
 
-		.tool.active {
-			background-color: rgba(#cdd,.35);
+		.tool {
+			height: 36px;
 
-			&:before {
-				content: "";
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: -1px;
-				// border-top: 1px solid lighten(#596466, 3%);
-				// border-bottom: 1px solid #596466;
+			&.active {
+				background-color: rgba(#cdd,.35);
+
+				&:before {
+					content: "";
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: -1px;
+					// border-top: 1px solid lighten(#596466, 3%);
+					// border-bottom: 1px solid #596466;
+				}
 			}
 		}
 	}

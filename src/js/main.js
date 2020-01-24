@@ -11,10 +11,14 @@ const photoshop = {
 		// bind event handlers
 		this.zoomSlider.on("input", this.dispatch);
 
+		// auto store 'box-characters.htm'
+		window.store("box-characters.htm", ".character-wrapper");
+
 		this.zoomSlider.val(235).trigger("input");
 	},
 	dispatch(event) {
 		let self = photoshop,
+			storeNode,
 			el;
 
 		switch (event.type) {
@@ -50,6 +54,9 @@ const photoshop = {
 				//console.log(event);
 				el.parent().find(".active").removeClass("active");
 				el.addClass("active");
+
+				storeNode = window.store(el.data("content"));
+				el.parent().nextAll(".box-body").html(storeNode);
 				break;
 		}
 	}

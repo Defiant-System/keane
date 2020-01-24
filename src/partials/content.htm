@@ -90,13 +90,15 @@
 
 			<div class="sidebar-box">
 				<div class="box-head" data-click="box-head-tab">
-					<div data-content="box-characters" class="active">Character</div>
-					<div data-content="box-swatches">Swatches</div>
-					<div data-content="box-paragraph">Paragraph</div>
+					<div data-content="box-characters.htm" class="active">Character</div>
+					<div data-content="box-swatches.htm">Swatches</div>
+					<div data-content="box-paragraph.htm">Paragraph</div>
 				</div>
 				<div class="box-body">
 					<!-- content goes here -->
 					@import "box-characters.htm"
+					@store "box-swatches.htm"
+					@store "box-paragraph.htm"
 				</div>
 			</div>
 
