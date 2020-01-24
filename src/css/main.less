@@ -630,8 +630,61 @@ content {
 				}
 
 				.color-wrapper {
-					height: 100px;
-					padding: 3px 0 13px;
+					padding: 11px 0;
+
+					.wheel-object {
+						height: 187px;
+						overflow: hidden;
+					}
+
+					.color-wheel {
+						position: relative;
+						display: block;
+						margin: -35px auto 0;
+						width: 256px;
+						height: 256px;
+						background: url(~/img/sprite.png) 0px 0px no-repeat;
+						border-radius: 50%;
+						transform: scale(.7);
+						filter: drop-shadow(0 1px 2px rgba(#000, .25));
+
+						.color-triangle {
+							position: absolute;
+							top: 31px;
+							left: 31px;
+							width: 194px;
+							height: 194px;
+							border-radius: 50%;
+							transform-origin: 50% 50%;
+							//background-color: rgba(#fff, .5);
+							overflow: hidden;
+							transform: var(--rotation);
+
+							&:before {
+								content: "";
+								position: absolute;
+								top: 15px;
+								left: 46px;
+								width: 0;
+								height: 0;
+								border-left: 148px solid var(--color);
+								border-top: 82px solid transparent;
+								border-bottom: 82px solid transparent;
+							}
+
+							&:after {
+								content: "";
+								position: absolute;
+								top: 0;
+								left: 0;
+								width: 194px;
+								height: 194px;
+								background: url(~/img/sprite.png) -287px -31px no-repeat;
+								border-radius: inherit;
+								transform: scale(1.01);
+							}
+						}
+					}
 				}
 
 				.info-wrapper {
