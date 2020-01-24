@@ -111,7 +111,7 @@ content {
 			margin: 6px 7px;
 		}
 
-		> div {
+		> div > div {
 			display: inline-block;
 			vertical-align: middle;
 		}
@@ -586,14 +586,12 @@ content {
 				}
 			}
 			.box-body {
-				//min-height: 137px;
-				//background: #596466;
 				position: relative;
-				border-top: 1px solid rgba(#011, .55);
-				border-bottom: 1px solid rgba(#011, .55);
 				flex: 1;
-			//	box-shadow: inset 0 7px 7px -7px rgba(0,0,0,.25),
-			//				inset 0 -7px 7px -7px rgba(0,0,0,.25);
+
+				> [class*="-body-wrapper"] {
+					border-top: 1px solid rgba(#011, .55);
+				}
 
 				.divider {
 					background: rgba(#011, .35);
@@ -601,13 +599,30 @@ content {
 					margin: 3px 0;
 				}
 
-				.body-wrapper {
-					position: absolute;
-					top: 0;
-					left: 0;
-					right: 0;
-					bottom: 0;
-					overflow-y: auto;
+				.layers-body-wrapper {
+					display: flex;
+					flex-direction: column;
+					height: 100%;
+					border-top: 0;
+
+					.box-tools {
+						border-bottom: 1px solid rgba(#011, .55);
+						height: 37px;
+					}
+
+					.layers-wrapper {
+						flex: 1;
+						position: relative;
+
+						.layers-list {
+							position: absolute;
+							top: 0;
+							left: 0;
+							right: 0;
+							bottom: 0;
+							overflow-y: auto;
+						}
+					}
 				}
 
 				.navigator-wrapper {
@@ -630,23 +645,33 @@ content {
 				}
 
 				.color-wrapper {
-					padding: 11px 0;
+					padding: 7px 0;
 
 					.wheel-object {
-						height: 187px;
+						height: 170px;
 						overflow: hidden;
 					}
 
 					.color-wheel {
 						position: relative;
 						display: block;
-						margin: -35px auto 0;
+						margin: -43px auto 0;
 						width: 256px;
 						height: 256px;
-						background: url(~/img/sprite.png) 0px 0px no-repeat;
 						border-radius: 50%;
-						transform: scale(.7);
-						filter: drop-shadow(0 1px 2px rgba(#000, .25));
+						transform: scale(.65);
+
+						&:after {
+							content: "";
+							position: absolute;
+							top: 0;
+							left: 0;
+							width: inherit;
+							height: inherit;
+							background: url(~/img/sprite.png) 0px 0px no-repeat;
+							filter: drop-shadow(0 1px 1px rgba(#000, .3));
+							z-index: 2;
+						}
 
 						.color-triangle {
 							position: absolute;
@@ -658,6 +683,7 @@ content {
 							transform-origin: 50% 50%;
 							//background-color: rgba(#fff, .5);
 							overflow: hidden;
+							z-index: 1;
 							transform: var(--rotation);
 
 							&:before {
@@ -924,6 +950,7 @@ content {
 			}
 			.box-foot {
 				background: rgba(#000, .15);
+				border-top: 1px solid rgba(#011, .45);
 				height: 23px;
 				padding: 3px 3px;
 				font-size: 0;
@@ -947,7 +974,7 @@ content {
 
 				.value {
 					background: rgba(#011, .35);
-					padding: 3px 1px 2px 0;
+					padding: 2px 1px 2px 0;
 					border-radius: 13px;
 					margin-right: 5px;
 					width: 53px;

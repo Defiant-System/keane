@@ -21,47 +21,7 @@
 		<div class="divider"></div>
 	</div>
 	<div class="tools-options-bar">
-		<div class="color-sample">
-			<div class="fg-color" style="background: #000;"></div>
-			<div class="bg-color" style="background: #fff;"></div>
-			<div class="color-switch"></div>
-			<div class="color-reset"></div>
-		</div>
-		<div class="divider"></div>
-		<div class="tool active" style="background-image: url(~/icons/tool-brush.png);"></div>
-		<div class="divider"></div>
-		<div class="option">
-			<span class="value">465</span>
-		</div>
-
-		<!--
-		<div class="divider"></div>
-		<div class="option check">
-			<span class="value">
-				<input type="checkbox" id="hyphenate1" checked>
-				<i></i>
-			</span>
-			<label class="label" for="hyphenate1">Hyphenate</label>
-		</div>
-		<div class="divider"></div>
-		-->
-
-		<div class="option">
-			<span class="label">Mode</span>
-			<span class="value">Normal</span>
-		</div>
-		<div class="divider"></div>
-		<div class="option">
-			<span class="label">Opacity</span>
-			<span class="value">100%</span>
-		</div>
-		<div class="option">
-			<span class="label">Flow</span>
-			<span class="value">100%</span>
-		</div>
-		<div class="divider"></div>
-		<div class="tool" style="background-image: url(~/icons/tool-pressure.png);"></div>
-
+		@import "tool-options-brush.htm"
 	</div>
 	<div class="workspace" data-context="workspace">
 		<div class="ruler-top"><span>351</span></div>
@@ -91,15 +51,6 @@
 					@import "box-navigator.htm"
 					@store "box-colors.htm"
 					@store "box-info.htm"
-
-				</div>
-				<div class="box-foot">
-					<div class="value">100%</div>
-					<div class="zoom-slider">
-						<div class="icon mini" style="background-image: url(~/icons/icon-mountain.png);"></div>
-						<input class="mini-nob" type="range" value="100" min="25" max="400">
-						<div class="icon maxi" style="background-image: url(~/icons/icon-mountain.png);"></div>
-					</div>
 				</div>
 			</div>
 
@@ -123,90 +74,9 @@
 					<div>Channels</div>
 					<div>Paths</div>
 				</div>
-				<div class="box-tools">
-					<div class="option">
-						<span class="value">Normal</span>
-					</div>
-					<div class="option">
-						<span class="label">Opacity</span>
-						<span class="value">100%</span>
-					</div>
-				</div>
 				<div class="box-body">
-					<div class="body-wrapper">
-						
-						<div class="group">
-							<div class="row">
-								<div class="icon" style="background-image: url(~/icons/icon-folder.png);"></div>
-								<div class="name">Field</div>
-								<div class="icon eye" style="background-image: url(~/icons/icon-eye-off.png);"></div>
-							</div>
-						</div>
-
-						<div class="group expanded">
-							<div class="row">
-								<div class="icon" style="background-image: url(~/icons/icon-folder-open.png);"></div>
-								<div class="name">Landscape</div>
-								<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
-							</div>
-							
-							<div class="group expanded">
-								<div class="row">
-									<div class="icon" style="background-image: url(~/icons/icon-folder-open.png);"></div>
-									<div class="name">Sky</div>
-									<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
-								</div>
-								
-								<div class="row active1">
-									<div class="thumbnail" style="background-image: url(~/dev/sample-1.jpg);"></div>
-									<div class="name">Flower</div>
-									<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
-									<div class="fx-applied"></div>
-								</div>
-								
-								<!--
-								<div class="row">
-									<div class="thumbnail" style="background-image: url(~/dev/sample-1.jpg);"></div>
-									<div class="name">Flower</div>
-									<div class="icon eye" style="background-image: url(~/icons/icon-eye-off.png);"></div>
-								</div>
-							
-								<div class="group expanded">
-									<div class="row">
-										<div class="icon" style="background-image: url(~/icons/icon-folder-open.png);"></div>
-										<div class="name">Sky</div>
-										<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
-									</div>
-									
-									<div class="row">
-										<div class="thumbnail" style="background-image: url(~/dev/sample-1.jpg);"></div>
-										<div class="name">Flower</div>
-										<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
-										<div class="fx-applied"></div>
-									</div>
-								</div>-->
-								
-							</div>
-						</div>
-						
-						<div class="group">
-							<div class="row">
-								<div class="icon" style="background-image: url(~/icons/icon-folder.png);"></div>
-								<div class="name">Lightning</div>
-								<div class="icon eye" style="background-image: url(~/icons/icon-eye-on.png);"></div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-				<div class="box-foot right">
-					<div class="icon disabled" style="background-image: url(~/icons/icon-layer-link.png);"></div>
-					<div class="icon" style="background-image: url(~/icons/icon-layer-fx.png);"></div>
-					<div class="icon" style="background-image: url(~/icons/icon-layer-mask.png);"></div>
-					<div class="icon" style="background-image: url(~/icons/icon-layer-adjustment.png);"></div>
-					<div class="icon" style="background-image: url(~/icons/icon-folder.png);"></div>
-					<div class="icon" style="background-image: url(~/icons/icon-new.png);"></div>
-					<div class="icon" style="background-image: url(~/icons/icon-trashcan.png);"></div>
+					<!-- content goes here -->
+					@import "box-layers.htm"
 				</div>
 			</div>
 		</div>

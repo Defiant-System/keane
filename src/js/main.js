@@ -8,15 +8,15 @@ const photoshop = {
 		this.zoomSlider = window.find(".zoom-slider input");
 
 		// auto store 'box-characters.htm'
-		window.store("box-navigator.htm", ".navigator-wrapper");
+		window.store("box-navigator.htm", ".navigator-body-wrapper");
 		window.store("box-characters.htm", ".character-wrapper");
 
 		// bind event handlers
 		this.zoomSlider.on("input", this.dispatch);
 
 		// temp
-		//this.zoomSlider.val(235).trigger("input");
-		window.find('[data-content="box-colors.htm"]').trigger("click");
+		this.zoomSlider.val(235).trigger("input");
+		//window.find('[data-content="box-colors.htm"]').trigger("click");
 	},
 	dispatch(event) {
 		let self = photoshop,
