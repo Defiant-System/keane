@@ -33,6 +33,19 @@
 		<div class="option">
 			<span class="value">465</span>
 		</div>
+
+		<!--
+		<div class="divider"></div>
+		<div class="option check">
+			<span class="value">
+				<input type="checkbox" id="hyphenate1" checked>
+				<i></i>
+			</span>
+			<label class="label" for="hyphenate1">Hyphenate</label>
+		</div>
+		<div class="divider"></div>
+		-->
+
 		<div class="option">
 			<span class="label">Mode</span>
 			<span class="value">Normal</span>
@@ -68,15 +81,17 @@
 		
 		<div class="sidebar-wrapper">
 			<div class="sidebar-box">
-				<div class="box-head">
-					<div class="active">Navigator</div>
-					<div>History</div>
-					<div>Info</div>
+				<div class="box-head" data-click="box-head-tab">
+					<div data-content="box-navigator.htm" class="active">Navigator</div>
+					<div data-content="box-colors.htm">Color</div>
+					<div data-content="box-info.htm">Info</div>
 				</div>
 				<div class="box-body">
-					<div class="thumb-wrapper">
-						<div class="view-rect"></div>
-					</div>
+					<!-- content goes here -->
+					@import "box-navigator.htm"
+					@store "box-colors.htm"
+					@store "box-info.htm"
+
 				</div>
 				<div class="box-foot">
 					<div class="value">100%</div>
