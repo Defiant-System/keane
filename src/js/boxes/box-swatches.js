@@ -2,7 +2,11 @@
 // photoshop.box.swatches
 
 {
-	toggle(state) {
-		console.log("swatches", state);
+	toggle(el, state) {
+		if (state === "on") {
+			
+		} else {
+
+		}
 	}
 }

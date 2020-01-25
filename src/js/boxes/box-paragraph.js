@@ -2,7 +2,11 @@
 // photoshop.box.paragraph
 
 {
-	toggle(state) {
-		console.log("paragraph", state);
+	toggle(el, state) {
+		if (state === "on") {
+			
+		} else {
+
+		}
 	}
 }

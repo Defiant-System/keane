@@ -2,7 +2,11 @@
 // photoshop.box.layers
 
 {
-	toggle(state) {
-		console.log("layers", state);
+	toggle(el, state) {
+		if (state === "on") {
+			
+		} else {
+
+		}
 	}
 }

@@ -2,7 +2,11 @@
 // photoshop.box.info
 
 {
-	toggle(state) {
-		console.log("info", state);
+	toggle(el, state) {
+		if (state === "on") {
+			
+		} else {
+
+		}
 	}
 }

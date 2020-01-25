@@ -7,7 +7,7 @@ const photoshop = {
 		this.boxNavigator = window.find(".navigator-wrapper");
 		this.zoomSlider = window.find(".zoom-slider input");
 
-		// auto store 'box-characters.htm'
+		// auto store box HTML
 		window.store("boxes/box-navigator.htm", 'div[data-box="navigator"]');
 		window.store("boxes/box-character.htm", 'div[data-box="character"]');
 		window.store("boxes/box-layers.htm", 'div[data-box="layers"]');
@@ -18,8 +18,6 @@ const photoshop = {
 		// temp
 		this.zoomSlider.val(235).trigger("input");
 		window.find('[data-content="boxes/box-color.htm"]').trigger("click");
-
-		//this.box.color.init();
 	},
 	dispatch(event) {
 		let self = photoshop,
@@ -62,14 +60,15 @@ const photoshop = {
 
 				let newBox = window.store(el.data("content")),
 					oldBox = el.parent().nextAll(".box-body").find("> div[data-box]");
+				
 				// notify box state = off
-				this.box[oldBox.data("box")].toggle("off");
+				this.box[oldBox.data("box")].toggle(oldBox, "off");
 
 				// replace box body
-				oldBox.replace(newBox);
+				newBox = oldBox.replace(newBox);
 
 				// notify box state = on
-				this.box[newBox.data("box")].toggle("on");
+				this.box[newBox.data("box")].toggle(newBox, "on");
 				break;
 		}
 	},

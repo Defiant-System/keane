@@ -2,7 +2,11 @@
 // photoshop.box.character
 
 {
-	toggle(state) {
-		console.log("character", state);
+	toggle(el, state) {
+		if (state === "on") {
+			
+		} else {
+
+		}
 	}
 }

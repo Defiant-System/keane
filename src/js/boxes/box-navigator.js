@@ -2,7 +2,11 @@
 // photoshop.box.navigator
 
 {
-	toggle(state) {
-		console.log("navigator", state);
+	toggle(el, state) {
+		if (state === "on") {
+			
+		} else {
+
+		}
 	}
 }
