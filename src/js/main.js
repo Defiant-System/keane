@@ -8,19 +8,22 @@ const photoshop = {
 		this.zoomSlider = window.find(".zoom-slider input");
 
 		// auto store 'box-characters.htm'
-		window.store("box-navigator.htm", ".navigator-body-wrapper");
-		window.store("box-characters.htm", ".character-wrapper");
+		window.store("box-navigator.htm", 'div[data-box="navigator"]');
+		window.store("box-characters.htm", 'div[data-box="characters"]');
+		window.store("box-layers.htm", 'div[data-box="layers"]');
 
 		// bind event handlers
 		this.zoomSlider.on("input", this.dispatch);
 
 		// temp
 		this.zoomSlider.val(235).trigger("input");
-		//window.find('[data-content="box-colors.htm"]').trigger("click");
+		window.find('[data-content="box-colors.htm"]').trigger("click");
+
+		//this.box.color.init();
 	},
 	dispatch(event) {
 		let self = photoshop,
-			storeNode,
+			name,
 			el;
 
 		switch (event.type) {
@@ -57,10 +60,23 @@ const photoshop = {
 				el.parent().find(".active").removeClass("active");
 				el.addClass("active");
 
-				storeNode = window.store(el.data("content"));
-				el.parent().nextAll(".box-body").html(storeNode);
+				let newBox = window.store(el.data("content")),
+					oldBox = el.parent().nextAll(".box-body").find("> div[data-box]");
+				
+				name = oldBox.data("box");
+				if (this.box[name]) this.box[name].toggle("off");
+
+
+				oldBox.replace(newBox);
+
+				name = newBox.data("box");
+				if (this.box[name]) this.box[name].toggle("on");
 				break;
 		}
+	},
+	box: {
+		navigator: require("modules/box-navigator.js"),
+		colors: require("modules/box-colors.js")
 	}
 };
 

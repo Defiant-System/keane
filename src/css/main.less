@@ -589,7 +589,7 @@ content {
 				position: relative;
 				flex: 1;
 
-				> [class*="-body-wrapper"] {
+				> [data-box] {
 					border-top: 1px solid rgba(#011, .55);
 				}
 
@@ -599,7 +599,7 @@ content {
 					margin: 3px 0;
 				}
 
-				.layers-body-wrapper {
+				div[data-box="layers"] {
 					display: flex;
 					flex-direction: column;
 					height: 100%;
