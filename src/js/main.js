@@ -9,7 +9,7 @@ const photoshop = {
 
 		// auto store 'box-characters.htm'
 		window.store("boxes/box-navigator.htm", 'div[data-box="navigator"]');
-		window.store("boxes/box-characters.htm", 'div[data-box="characters"]');
+		window.store("boxes/box-character.htm", 'div[data-box="character"]');
 		window.store("boxes/box-layers.htm", 'div[data-box="layers"]');
 
 		// bind event handlers
@@ -17,7 +17,7 @@ const photoshop = {
 
 		// temp
 		this.zoomSlider.val(235).trigger("input");
-		window.find('[data-content="box-colors.htm"]').trigger("click");
+		window.find('[data-content="boxes/box-color.htm"]').trigger("click");
 
 		//this.box.color.init();
 	},
@@ -75,7 +75,12 @@ const photoshop = {
 	},
 	box: {
 		navigator: require("boxes/box-navigator.js"),
-		colors: require("boxes/box-colors.js")
+		color: require("boxes/box-color.js"),
+		info: require("boxes/box-info.js"),
+		character: require("boxes/box-character.js"),
+		swatches: require("boxes/box-swatches.js"),
+		paragraph: require("boxes/box-paragraph.js"),
+		layers: require("boxes/box-layers.js")
 	}
 };
 
