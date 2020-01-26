@@ -4,12 +4,26 @@
 {
 	toggle(el, state) {
 		if (state === "on") {
-			el.on("mousedown", ".color-wheel", this.dispatch)
+			// fast references
+			this.wrapper = el.find(".wheel-object");
+			this.wheel = el.find(".color-wheel");
+			this.triangle = el.find(".color-triangle");
+
+			// bind event handlers
+			this.triangle.on("mousedown", this.dispatch)
 		} else {
-			el.off("mousedown", ".color-wheel", this.dispatch)
+
+			// unbind event handlers
+			this.triangle.off("mousedown", this.dispatch)
 		}
 	},
 	dispatch(event) {
-		console.log(event);
+		let root = photoshop,
+			self = root.box.color;
+		switch (event.type) {
+			case "mousedown":
+				console.log(event);
+				break;
+		}
 	}
 }

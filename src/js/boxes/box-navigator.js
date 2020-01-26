@@ -23,10 +23,7 @@
 	},
 	dispatch(event) {
 		let root = photoshop,
-			self = root.box.navigator,
-			name,
-			el;
-
+			self = root.box.navigator;
 		switch (event.type) {
 			case "input":
 				let percent = this.value / 100;

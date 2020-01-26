@@ -659,19 +659,9 @@ content {
 						width: 256px;
 						height: 256px;
 						border-radius: 50%;
+						background: url(~/img/sprite.png) 0px 0px no-repeat;
+						filter: drop-shadow(0 1px 1px rgba(#000, .3));
 						transform: scale(.65);
-
-						&:after {
-							content: "";
-							position: absolute;
-							top: 0;
-							left: 0;
-							width: inherit;
-							height: inherit;
-							background: url(~/img/sprite.png) 0px 0px no-repeat;
-							filter: drop-shadow(0 1px 1px rgba(#000, .3));
-							z-index: 2;
-						}
 
 						.color-triangle {
 							position: absolute;
@@ -683,7 +673,6 @@ content {
 							transform-origin: 50% 50%;
 							//background-color: rgba(#fff, .5);
 							overflow: hidden;
-							z-index: 1;
 							transform: var(--rotation);
 
 							&:before {
@@ -696,6 +685,7 @@ content {
 								border-left: 148px solid var(--color);
 								border-top: 82px solid transparent;
 								border-bottom: 82px solid transparent;
+								pointer-events: none;
 							}
 
 							&:after {
