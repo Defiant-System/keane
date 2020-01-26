@@ -35,7 +35,8 @@
 				dy = event.offsetY - 128;
 				dx = event.offsetX - 128;
 				angle = parseInt(Math.atan2(dy, dx) * (180 / Math.PI), 10);
-				hue = (-angle - 39);
+				hue = (360 - angle) % 360;
+				//console.log(hue);
 
 				self.wrapper.attr({
 					style: `--color: hsl(${hue}, 100%, 50%); --rotation: rotate(${angle}deg);`
