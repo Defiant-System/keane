@@ -181,6 +181,8 @@ class Polygon {
 		center = center || this.getCentroid();
 
 		this.vertices.map((point, i) => {
+			let pointX = this.vertices[i].x - center.x,
+				pointY = this.vertices[i].y - center.y;
 			this.vertices[i] = new Point(pointX = scaleX * (this.vertices[i].x - center.x) + center.x,
 						scaleY * (this.vertices[i].y - center.y) + center.y);
 		});

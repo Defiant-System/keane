@@ -33,9 +33,10 @@
 				event.preventDefault();
 
 				//console.log( event.offsetX, event.offsetY );
+				shape = new Polygon([[38,7], [185,90], [38,171]]);
 
 				self.triangleDown = {
-					shape: new Polygon([[38,7], [187,89], [38,171]]),
+					shape,
 					offsetY: event.offsetY,
 					offsetX: event.offsetX,
 					clickY: event.clientY,
@@ -44,16 +45,16 @@
 
 				//console.log(self.triangleDown.shape.getCentroid());
 
-				// bind event handlers
-				self.wheelObject
-					.on("mousemove mouseup mouseout", self.triangleEvents);
-
 				//fake trigger event
 				self.triangleEvents({
 					type: "mousemove",
 					clientY: event.clientY,
 					clientX: event.clientX,
 				});
+
+				// bind event handlers
+				self.wheelObject
+					.on("mousemove mouseup mouseout", self.triangleEvents);
 				break;
 			case "mousemove":
 				point = down.shape.constrain([
