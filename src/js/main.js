@@ -2,22 +2,22 @@
 const photoshop = {
 	init() {
 		// fast references
-		this.content = window.find("content");
 		this.canvas = window.find(".canvas");
 		this.boxNavigator = window.find(".navigator-wrapper");
-		this.zoomSlider = window.find(".zoom-slider input");
 
 		// auto store box HTML
-		window.store("boxes/box-navigator.htm", 'div[data-box="navigator"]');
-		window.store("boxes/box-character.htm", 'div[data-box="character"]');
-		window.store("boxes/box-layers.htm", 'div[data-box="layers"]');
+		let box = window.store("boxes/box-navigator.htm", 'div[data-box="navigator"]');
+		this.box.navigator.toggle(box, "on");
 
-		// bind event handlers
-		this.zoomSlider.on("input", this.dispatch);
+		box = window.store("boxes/box-character.htm", 'div[data-box="character"]');
+		this.box.character.toggle(box, "on");
+		
+		box = window.store("boxes/box-layers.htm", 'div[data-box="layers"]');
+		this.box.layers.toggle(box, "on");
 
 		// temp
-		this.zoomSlider.val(235).trigger("input");
-		window.find('[data-content="boxes/box-color.htm"]').trigger("click");
+		//this.zoomSlider.val(235).trigger("input");
+		//window.find('[data-content="boxes/box-color.htm"]').trigger("click");
 	},
 	dispatch(event) {
 		let self = photoshop,
@@ -25,28 +25,6 @@ const photoshop = {
 			el;
 
 		switch (event.type) {
-			case "input":
-				let percent = this.value / 100;
-
-				window.find(".box-foot .value").html(this.value + "%");
-
-				self.canvas.css({
-					width: (600 * percent) +"px",
-					height: (366 * percent) +"px",
-				});
-
-				let width = Math.min((190 * 1.25) / percent, 190),
-					height = Math.min((120 * 1.25) / percent, 120),
-					top = ((120 - height) / 2),
-					left = ((190 - width) / 2);
-
-				self.boxNavigator.find(".view-rect").css({
-					top: top +"px",
-					left: left +"px",
-					width: width +"px",
-					height: height +"px",
-				});
-				break;
 			case "change-bg":
 				self.canvas.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
 				self.boxNavigator.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
