@@ -26,6 +26,17 @@
 			hue;
 		switch (event.type) {
 			case "mousedown":
+				dy = event.offsetY - 128;
+				dx = event.offsetX - 128;
+				angle = parseInt(Math.atan2(dy, dx) * (180 / Math.PI), 10);
+				hue = (360 - angle) % 360;
+
+				self.wrapper
+					.cssSequence("fade", "transitionend", i => self.wrapper.removeClass("fade"))
+					.attr({
+						style: `--color: hsl(${hue}, 100%, 50%); --rotation: rotate(${angle}deg);`
+					});
+
 				self.down = true;
 				self.wheel.on("mousemove mouseup", self.dispatch)
 				break;
