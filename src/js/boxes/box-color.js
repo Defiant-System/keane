@@ -23,42 +23,51 @@
 		let root = photoshop,
 			self = root.box.color,
 			down = self.triangleDown,
-			top,
-			left;
+			shape,
+			point;
 
 		switch (event.type) {
 			case "mousedown":
 				// stop event from bubbling up
 				event.stopPropagation();
 
+				//console.log( event.offsetX, event.offsetY );
+
 				self.triangleDown = {
-					offsetY: self.wrapper[0].offsetTop + 20,
-					offsetX: self.wrapper[0].offsetLeft + 22,
+					shape: new Polygon([[46,17], [193,99], [46,181]]),
+					offsetY: event.offsetY,
+					offsetX: event.offsetX,
 					clickY: event.clientY,
 					clickX: event.clientX,
 				};
 
-				self.dot.css({
-					top: (event.offsetY + 20) +"px",
-					left: (event.offsetX + 22) +"px",
-				});
+				//console.log(self.triangleDown.shape.getCentroid());
 
 				// bind event handlers
-				self.triangle.on("mousemove mouseup mouseout", self.triangleEvents)
+				self.triangle.on("mousemove mouseup mouseout", self.triangleEvents);
+
+				//fake trigger event
+				self.triangleEvents({
+					type: "mousemove",
+					clientY: event.clientY,
+					clientX: event.clientX,
+				});
 				break;
 			case "mousemove":
-				top = event.clientY - down.clickY + event.offsetY;
-				left = event.clientX - down.clickX + event.offsetX;
+				point = down.shape.constrain([
+					event.clientX - down.clickX + down.offsetX - 9, // left
+					event.clientY - down.clickY + down.offsetY - 10, // top
+				]);
 
 				self.dot.css({
-					top: top +"px",
-					left: left +"px",
+					top: point.y +"px",
+					left: point.x +"px",
 				});
 				break;
 			case "mouseout":
 			case "mouseup":
 				// unbind event handlers
-				self.triangle.off("mousemove mouseup mouseout", self.triangleEvents)
+				self.triangle.off("mousemove mouseup mouseout", self.triangleEvents);
 				break;
 		}
 	},
@@ -79,7 +88,7 @@
 				hue = (360 - angle) % 360;
 				// calculate angle diff
 				diff = ((this.cAngle || 0) - angle + 180) % 360 - 180;
-				diff = diff < -180 ? diff - 180 : diff;
+				diff = diff < -180 ? diff - 360 : diff;
 
 				speed = Math.abs(diff) * 2.5;
 				angle = (this.cAngle || 0) - diff;
@@ -91,7 +100,7 @@
 					.attr({ style });
 
 				// bind event handlers
-				self.wheel.on("mousemove mouseup mouseout", self.wheelEvents)
+				self.wheel.on("mousemove mouseup mouseout", self.wheelEvents);
 				self.wheelDown = true;
 				break;
 			case "mousemove":
@@ -110,7 +119,7 @@
 			case "mouseout":
 			case "mouseup":
 				// unbind event handlers
-				self.wheel.off("mousemove mouseup mouseout", self.wheelEvents)
+				self.wheel.off("mousemove mouseup mouseout", self.wheelEvents);
 				//delete self.wheelDown;
 				break;
 		}

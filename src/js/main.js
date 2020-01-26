@@ -59,4 +59,6 @@ const photoshop = {
 	}
 };
 
+require("polygon.js")
+
 window.exports = photoshop;
