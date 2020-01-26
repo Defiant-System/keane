@@ -647,10 +647,20 @@ content {
 
 				.color-wrapper {
 					padding: 7px 0;
+					display: flex;
+
+					.values {
+						flex: 1;
+
+						.field .option.input .label {
+							margin-left: 0;
+							width: 11px;
+						}
+					}
 
 					.wheel-object {
-
 						&.scale {
+							width: 178px;
 							height: 170px;
 							overflow: hidden;
 
@@ -703,6 +713,7 @@ content {
 						border-radius: 50%;
 						background: url(~/img/sprite.png) 0px 0px no-repeat;
 						filter: drop-shadow(0 1px 1px rgba(#000, .3));
+						transform-origin: 0% 50%;
 
 						.color-triangle {
 							//background-color: rgba(#fff, .5);
