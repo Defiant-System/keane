@@ -56,28 +56,21 @@ class LineSegment {
 			numerator = Vector.crossProduct(u, w);
 
 		if (denominator == 0) {
-			if (numerator != 0) // might need to do v, w as well check this || Vector.crossProduct(v, w) != 0
-				return null; // parallel
+			if (numerator != 0) return null; // parallel
 
 			let d0 = this.p0.equals(this.p1),
 			d1 = lineSegment.p0.equals(lineSegment.p1);
 			if (d0 && d1) {
-					if (this.p0.equals(lineSegment.p0))
-						return lineSegment.p0; // same points
-					else
-						return null; // different points
+				if (this.p0.equals(lineSegment.p0)) return lineSegment.p0; // same points
+				else return null; // different points
 			}
 			if (d0) {
-				if (lineSegment.containsPoint(this.p0)) {
-					return this.p0;
-				} else
-					return null;
+				if (lineSegment.containsPoint(this.p0)) return this.p0;
+				else return null;
 			}
 			if (d1) {
-				if (this.containsPoint(lineSegment.p0)) {
-					return lineSegment.p0;
-				} else
-					return null;
+				if (this.containsPoint(lineSegment.p0)) return lineSegment.p0;
+				else return null;
 			}
 
 			// they are colinear
@@ -90,10 +83,10 @@ class LineSegment {
 				t1 = w2.j / v.j;
 			}
 			if (t0 > t1) t1 = [t0, t0 = t1][0];
-			// TODO: is clipping necessary? Can we normalize the vectors to prevent this?
+			
 			t0 = t0<0? 0 : t0;
 			t1 = t1>1? 1 : t1;
-				if (t0 > 1 || t1 < 0) return null;
+			if (t0 > 1 || t1 < 0) return null;
 			if (t0 == t1) { // intersect is a point
 				return new Point(lineSegment.p0.x + t0 * v.i, lineSegment.p0.y + t0 * v.j);
 			}
@@ -101,14 +94,11 @@ class LineSegment {
 		}
 
 		let i = Vector.crossProduct(v, w) / denominator; //Vector.crossProduct(v, w) / denominator;
-		//if (!Number.[in]range(i, 0, 1)) return null;
 		
 		if (!((i >= 0) && (i <= 1))) return null;
 		let i2 = Vector.crossProduct(u, w) / denominator;
-		if (!((i2 >= 0) && (i2 <= 1))) return null;//Number.range(i2, 0, 1)) return null;
+		if (!((i2 >= 0) && (i2 <= 1))) return null; //Number.range(i2, 0, 1)) return null;
 		
-		//this.p0 + i * u <= can we do some Vector.add, scale functions?
-		// (new Vector(this.po).add(u.scale(i)).toPoint();X
 		return new Point(this.p0.x + i * u.i, this.p0.y + i * u.j);
 	}
 }
@@ -121,42 +111,22 @@ class Polygon {
 		let point = new Point(p[0], p[1]);
 		if (this.containsPoint(point)) return point;
 
-		var center = typeof center === 'undefined' ? this.getCentroid() : center,
-			lineSegment = new LineSegment(center, point);
+		center = center || this.getCentroid();
 
-		var intersection = this.intersects(lineSegment)[0];
-		//if (Point.isInstance(intersection)) return intersection;
+		let lineSegment = new LineSegment(center, point);
+		let intersection = this.intersects(lineSegment)[0];
+		
 		return intersection && intersection.constructor === Point
 			? intersection
 			: (Point.distance(center, intersection.p0) > Point.distance(center, intersection.p1) ? intersection.p0 : intersection.p1);
 	}
-	constrain2(point) {
-		let poly = this.vertices,
-			x = point[0],
-			y = point[1],
-			i, il, j,
-			xi, yi,
-			xj, yj,
-			inside = false,
-			intersect;
-		for (i=0, il=poly.length, j=poly.length-1; i<il; j=i++) {
-			xi = poly[i].x;
-			yi = poly[i].y;
-			xj = poly[j].x;
-			yj = poly[j].y;
-			intersect = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-			if (intersect) inside = !inside;
-		}
-		//return inside;
-		return point;
-	}
 	containsPoint(point) {
-		var contains = false;
+		let contains = false;
 		//	rectangle = this.getBoundingRectangle();
 
 		//if (!rectangle.containsPoint(point)) return false;
 
-		for (var i = 0, j = this.vertices.length - 1; i < this.vertices.length; j = i++) {
+		for (let i = 0, j = this.vertices.length - 1; i < this.vertices.length; j = i++) {
 			if ((new LineSegment(this.vertices[i], this.vertices[j])).containsPoint(point)) return true;
 			if (((this.vertices[i].y > point.y) !== (this.vertices[j].y > point.y)) &&
 				(point.x < (this.vertices[j].x - this.vertices[i].x) * (point.y - this.vertices[i].y) / (this.vertices[j].y - this.vertices[i].y) + this.vertices[i].x) ) {
@@ -194,5 +164,25 @@ class Polygon {
 			}
 		}
 		return intersections;
+	}
+	rotate(angle, center) {
+		center = center || this.getCentroid();
+
+		this.vertices.map((point, i) => {
+			let pointX = this.vertices[i].x - center.x,
+				pointY = this.vertices[i].y - center.y,
+				pointXr = pointX * Math.cos(angle) - pointY * Math.sin(angle),
+				pointYr = pointY * Math.cos(angle) + pointX * Math.sin(angle);
+
+			this.vertices[i] = new Point(pointXr + center.x, pointYr + center.y);
+		});
+	}
+	scale(scaleX, scaleY, center) {
+		center = center || this.getCentroid();
+
+		this.vertices.map((point, i) => {
+			this.vertices[i] = new Point(pointX = scaleX * (this.vertices[i].x - center.x) + center.x,
+						scaleY * (this.vertices[i].y - center.y) + center.y);
+		});
 	}
 }

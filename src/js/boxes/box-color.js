@@ -5,7 +5,7 @@
 	toggle(el, state) {
 		if (state === "on") {
 			// fast references
-			this.wrapper = el.find(".wheel-object");
+			this.wheelObject = el.find(".wheel-object");
 			this.wheel = el.find(".color-wheel");
 			this.triangle = el.find(".color-triangle");
 			this.dot = el.find(".color-dot");
@@ -30,11 +30,12 @@
 			case "mousedown":
 				// stop event from bubbling up
 				event.stopPropagation();
+				event.preventDefault();
 
 				//console.log( event.offsetX, event.offsetY );
 
 				self.triangleDown = {
-					shape: new Polygon([[46,17], [193,99], [46,181]]),
+					shape: new Polygon([[38,7], [187,89], [38,171]]),
 					offsetY: event.offsetY,
 					offsetX: event.offsetX,
 					clickY: event.clientY,
@@ -44,7 +45,8 @@
 				//console.log(self.triangleDown.shape.getCentroid());
 
 				// bind event handlers
-				self.triangle.on("mousemove mouseup mouseout", self.triangleEvents);
+				self.wheelObject
+					.on("mousemove mouseup mouseout", self.triangleEvents);
 
 				//fake trigger event
 				self.triangleEvents({
@@ -65,9 +67,11 @@
 				});
 				break;
 			case "mouseout":
+				if (event.target !== self.wheelObject[0]) return;
 			case "mouseup":
 				// unbind event handlers
-				self.triangle.off("mousemove mouseup mouseout", self.triangleEvents);
+				self.wheelObject
+					.off("mousemove mouseup mouseout", self.triangleEvents);
 				break;
 		}
 	},
@@ -82,6 +86,9 @@
 			hue;
 		switch (event.type) {
 			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+
 				dy = event.offsetY - 128;
 				dx = event.offsetX - 128;
 				angle = parseInt(Math.atan2(dy, dx) * (180 / Math.PI), 10);
@@ -95,8 +102,8 @@
 				style = `--color: hsl(${hue}, 100%, 50%); --rotation: rotate(${angle}deg); --speed: ${speed}ms;`;
 				this.cAngle = angle;
 
-				self.wrapper
-					.cssSequence("fade", "transitionend", i => self.wrapper.removeClass("fade"))
+				self.wheelObject
+					.cssSequence("fade", "transitionend", i => self.wheelObject.removeClass("fade"))
 					.attr({ style });
 
 				// bind event handlers
@@ -105,7 +112,7 @@
 				break;
 			case "mousemove":
 				//if (!self.wheelDown) return;
-				self.wrapper.removeClass("fade");
+				self.wheelObject.removeClass("fade");
 
 				dy = event.offsetY - 128;
 				dx = event.offsetX - 128;
@@ -114,7 +121,7 @@
 				style =  `--color: hsl(${hue}, 100%, 50%); --rotation: rotate(${angle}deg);`;
 				this.cAngle = angle;
 
-				self.wrapper.attr({ style });
+				self.wheelObject.attr({ style });
 				break;
 			case "mouseout":
 			case "mouseup":
