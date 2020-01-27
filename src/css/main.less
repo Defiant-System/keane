@@ -134,6 +134,26 @@ content {
 
 		.tool {
 			margin-right: 0;
+
+			&.down {
+				opacity: .85;
+
+				&:before {
+					content: "";
+					margin-top: -1px;
+					background: rgba(0,17,17,0.35);
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					width: 25px;
+					height: 25px;
+					border-radius: 2px;
+					transform: translateY(-50%) translateX(-50%);
+				}
+				&:after {
+					margin-top: -1px;
+				}
+			}
 		}
 
 		.option {
