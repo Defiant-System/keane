@@ -15,7 +15,7 @@ const photoshop = {
 
 		// temp
 		window.find(".zoom-slider input").val(235).trigger("input");
-		window.find('[data-content="boxes/box-color.htm"]').trigger("click");
+		window.find('[data-content="boxes/box-info.htm"]').trigger("click");
 	},
 	dispatch(event) {
 		let self = photoshop,

@@ -84,6 +84,17 @@
 		<polygon stroke="#000000" stroke-width="30" fill="#00000050" points="58.08,418.735 202.314,81.266 441.92,383.23"/>
 	</svg>
 
+	<svg id="icon-cursor-pos" viewBox="0 0 500 500">
+		<line fill="none" stroke="#000000" stroke-width="30" x1="21.462" y1="250" x2="478.538" y2="250"/>
+		<line fill="none" stroke="#000000" stroke-width="30" x1="250.001" y1="21.461" x2="250" y2="478.539"/>
+	</svg>
+
+	<svg id="icon-selection-dim" viewBox="0 0 500 500">
+		<polygon points="478.325,90.395 359.316,21.675 359.316,75.082 105.708,75.082 75.083,75.082 75.083,105.708 75.083,359.315 21.675,359.315 90.395,478.324 159.116,359.315 105.708,359.315 105.708,105.708 359.316,105.708 359.316,159.115"/>
+		<line fill="none" stroke="#000000" stroke-width="30" stroke-dasharray="33.6886" x1="149.605" y1="429.833" x2="452.803" y2="429.833"/>
+		<line fill="none" stroke="#000000" stroke-width="30" stroke-dasharray="33.6886" x1="437.49" y1="141.948" x2="437.49" y2="445.146"/>
+	</svg>
+
 	<svg id="icon-quick-mask" viewBox="0 0 500 500">
 		<path fill="#00000020" stroke="#000000" stroke-width="15" d="M19.5,84.905v330.19h461V84.905H19.5z"/>
 		<circle fill="none" stroke="#000000" stroke-width="25" stroke-linecap="round" stroke-dasharray="30,30" cx="250" cy="250" r="100"/>
@@ -249,7 +260,7 @@
 	<svg id="icon-font-kerning" viewBox="0 0 500 500">
 		<path d="M286.475,365.001l20.7-69.001h95.15l20.7,69.001h40.839l-69.003-230.003h-80.224l-69.001,230.003H286.475z M341.675,180.999 h26.15l20.7,69h-67.551L341.675,180.999z"/>
 		<path d="M76.975,134.998H36.136l69.003,230.003h55.184l69.001-230.003h-40.839L133.284,319h-1.11L76.975,134.998z"/>
-		<line fill="none" stroke="#000000" stroke-width="27" stroke-miterlimit="10" x1="296.5" y1="63.5" x2="183.5" y2="427.5"/>
+		<line fill="none" stroke="#000000" stroke-width="27" x1="296.5" y1="63.5" x2="183.5" y2="427.5"/>
 	</svg>
 
 	<svg id="icon-font-tracking" viewBox="0 0 500 500">
