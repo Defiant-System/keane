@@ -41,8 +41,8 @@
 					left = ((190 - width) / 2);
 
 				self.zoomRect.css({
-					top: top +"px",
-					left: left +"px",
+					top: (top - 1) +"px",
+					left: (left - 1) +"px",
 					width: width +"px",
 					height: height +"px",
 				});
