@@ -356,8 +356,21 @@ content {
 			color: rgba(#fff, .85);
 			text-shadow: 0 1px 0 #122;
 			padding: 4px 31px 3px 9px;
+			white-space: nowrap;
 			border-radius: 21px;
 			flex: 1;
+
+			.prefix {
+				display: inline-block;
+				position: relative;
+				top: 2px;
+				left: -5px;
+				width: 9px;
+				height: 9px;
+				text-align: center;
+				margin-right: -7px;
+				opacity: .5;
+			}
 
 			&:before {
 				content: "";
@@ -646,32 +659,61 @@ content {
 				}
 
 				.color-wrapper {
-					padding: 7px 0;
+					padding: 7px 5px;
 					display: flex;
 
-					.values {
+					.configs {
 						flex: 1;
+						display: flex;
+						flex-direction: column;
 
-						.field .option.input .label {
-							margin-left: 0;
-							width: 11px;
+						> div {
+							//background-color: rgba(0,0,0,.15);
+							position: relative;
+							width: 123%;
+							height: 23px;
+
+							&:first-child {
+								.field .group:last-child {
+									position: absolute;
+									top: 3px;
+									left: 68px;
+								}
+							}
+
+							&:nth-child(2) {
+								flex: 1;
+								width: 100%;
+								padding: 23px 0 0;
+							}
+
+							&:last-child {
+								.field .option.input {
+									.label {
+										width: 19px;
+									}
+								}
+							}
+						}
+
+						.field .option.input {
+							padding-left: 3px;
+							padding-right: 3px;
+
+							.label {
+								margin-left: 1px;
+								width: 11px;
+							}
 						}
 					}
 
 					.wheel-object {
-						&.scale {
-							width: 178px;
-							height: 170px;
-							overflow: hidden;
-
-							.color-wheel {
-								margin-top: -43px;
-								transform: scale(.65);
-							}
-						}
+						width: 170px;
+						height: 176px;
+						overflow: hidden;
 
 						&.fade {
-							.color-triangle {
+							.color-shape {
 								transition: transform var(--speed) ease-out;
 
 								&:before {
@@ -707,50 +749,73 @@ content {
 					.color-wheel {
 						position: relative;
 						display: block;
-						margin: 0 auto;
-						width: 256px;
-						height: 257px;
+						margin: 5px;
+						width: 166px;
+						height: 166px;
 						border-radius: 50%;
 						background: url(~/img/sprite.png) 0px 0px no-repeat;
 						filter: drop-shadow(0 1px 1px rgba(#000, .3));
 						transform-origin: 0% 50%;
 
-						.color-triangle {
+						.color-shape {
 							//background-color: rgba(#fff, .5);
 							//overflow: hidden;
 							position: absolute;
-							top: 31px;
-							left: 31px;
-							width: 194px;
-							height: 194px;
-							border-radius: 50%;
-							transform-origin: 50% 50%;
-							transform: var(--rotation);
 
-							&:before {
-								content: "";
-								position: absolute;
-								top: 15px;
-								left: 46px;
-								width: 0;
-								height: 0;
-								border-left: 148px solid var(--color);
-								border-top: 82px solid transparent;
-								border-bottom: 82px solid transparent;
-								pointer-events: none;
+							&.triangle {
+								top: 19px;
+								left: 19px;
+								width: 128px;
+								height: 128px;
+								border-radius: 50%;
+								transform-origin: 50% 50%;
+								transform: var(--rotation);
+
+								&:before {
+									content: "";
+									position: absolute;
+									top: 9px;
+									left: 29px;
+									width: 0;
+									height: 0;
+									border-left: 100px solid var(--color);
+									border-top: 55px solid transparent;
+									border-bottom: 55px solid transparent;
+									pointer-events: none;
+								}
+
+								&:after {
+									content: "";
+									position: absolute;
+									top: 9px;
+									left: 29px;
+									width: 99px;
+									height: 110px;
+									background: url(~/img/sprite.png) -380px -28px no-repeat;
+								//	transform-origin: 50% 50%;
+								//	transform: scale(1.02);
+								}
 							}
 
-							&:after {
-								content: "";
+							&.rectangle {
+								background: var(--color);
 								position: absolute;
-								top: 0;
-								left: 0;
-								width: 194px;
-								height: 194px;
-								background: url(~/img/sprite.png) -287px -31px no-repeat;
-								border-radius: inherit;
-								transform-origin: 50% 50%;
-								transform: scale(1.01);
+								top: 38px;
+								left: 38px;
+								width: 90px;
+								height: 90px;
+
+								&:after {
+									content: "";
+									position: absolute;
+									top: 0;
+									left: 0;
+									width: inherit;
+									height: inherit;
+									background: url(~/img/sprite.png) -204px -38px no-repeat;
+									border-radius: inherit;
+									transform-origin: 50% 50%;
+								}
 							}
 						}
 					}
@@ -795,33 +860,72 @@ content {
 
 					&.centered {
 						justify-content: center;
+					}
 
-						> .icon {
-							margin: 0 5px;
-							opacity: .75;
-							width: 19px;
+					> .icon {
+						margin: 0 5px;
+						opacity: .75;
+						width: 19px;
 
-							&:hover {
-								opacity: .9;
+						&:hover {
+							opacity: .9;
+						}
+
+						&:after {
+							background-size: 90%;
+						}
+
+						&.active {
+							opacity: 1;
+
+							&:before {
+								content: "";
+								background: rgba(#011, .35);
+								position: absolute;
+								top: -2px;
+								left: -2px;
+								right: -2px;
+								bottom: -2px;
+								border-radius: 2px;
+							}
+						}
+					}
+
+					.group {
+						white-space: nowrap;
+						color: rgba(#bcc, .35);
+						font-size: 0;
+
+						> div {
+							display: inline-block;
+							font-size: 11px;
+							padding: 3px 3px 2px;
+							background-color: rgba(#122, .4);
+
+							&:not(:first-child) {
+								margin-left: 1px;
 							}
 
-							&:after {
-								background-size: 90%;
+							&:first-child {
+								border-radius: 13px 0 0 13px;
+								padding-left: 5px;
+							}
+
+							&:last-child {
+								border-radius: 0 13px 13px 0;
+								padding-right: 5px;
 							}
 
 							&.active {
-								opacity: 1;
+								background-color: rgba(#abb, .4);
+								color: rgba(#bcc, .75);
+								text-shadow: 0 1px 0 rgba(#122, .2);
+							}
 
-								&:before {
-									content: "";
-									background: rgba(#011, .35);
-									position: absolute;
-									top: -2px;
-									left: -2px;
-									right: -2px;
-									bottom: -2px;
-									border-radius: 2px;
-								}
+							.icon {
+								width: 14px;
+								height: 14px;
+								margin: -1px 0 0;
 							}
 						}
 					}
