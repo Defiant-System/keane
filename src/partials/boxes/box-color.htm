@@ -5,39 +5,56 @@
 			<div>
 				<div class="field">
 					<div class="group">
-						<div class="active">HSL</div>
-						<div>RGB</div>
+						<div class="active" data-click="show-hsl-values">HSL</div>
+						<div data-click="show-rgb-values">RGB</div>
 					</div>
 					<div class="group">
-						<div class="active">
+						<div class="active" data-click="color-wheel-triangle">
 							<div class="icon" style="background-image: url(~/icons/icon-triangle.png);"></div>
 						</div>
-						<div>
+						<div data-click="color-wheel-rectangle">
 							<div class="icon" style="background-image: url(~/icons/icon-rectangle.png);"></div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div>
-				<div class="field">
+			<div class="color-values show-hsl">
+				<div class="field field-hsl">
 					<div class="option input">
 						<span class="label">H</span>
 						<span class="value"><input type="text" value="135°"></span>
 					</div>
 				</div>
-
-				<div class="field">
+				<div class="field field-hsl">
 					<div class="option input">
 						<span class="label">S</span>
 						<span class="value"><input type="text" value="100%"></span>
 					</div>
 				</div>
-
-				<div class="field">
+				<div class="field field-hsl">
 					<div class="option input">
 						<span class="label">L</span>
 						<span class="value"><input type="text" value="50%"></span>
+					</div>
+				</div>
+
+				<div class="field field-rgb">
+					<div class="option input">
+						<span class="label">R</span>
+						<span class="value"><input type="text" value="127"></span>
+					</div>
+				</div>
+				<div class="field field-rgb">
+					<div class="option input">
+						<span class="label">G</span>
+						<span class="value"><input type="text" value="10"></span>
+					</div>
+				</div>
+				<div class="field field-rgb">
+					<div class="option input">
+						<span class="label">B</span>
+						<span class="value"><input type="text" value="231"></span>
 					</div>
 				</div>
 			</div>

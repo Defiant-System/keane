@@ -20,9 +20,13 @@ const photoshop = {
 	dispatch(event) {
 		let self = photoshop,
 			name,
+			boxEl,
+			boxName,
 			el;
 
 		switch (event.type) {
+			case "window.open":
+				break;
 			case "change-bg":
 				self.canvas.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
 				self.boxNavigator.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
@@ -46,6 +50,14 @@ const photoshop = {
 				// notify box state = on
 				this.box[newBox.data("box")].toggle(newBox, "on");
 				break;
+			default:
+				if (event.el) {
+					boxEl = event.el.parents("div[data-box]");
+					boxName = boxEl.attr("data-box");
+					if (boxEl.length && self.box[boxName].dispatch) {
+						self.box[boxName].dispatch(event);
+					}
+				}
 		}
 	},
 	box: {

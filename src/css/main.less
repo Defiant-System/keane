@@ -352,7 +352,7 @@ content {
 		.value {
 			position: relative;
 			font-size: 11px;
-			background: rgba(#000, .35);
+			background: rgba(#000, .3);
 			color: rgba(#fff, .85);
 			text-shadow: 0 1px 0 #122;
 			padding: 4px 31px 3px 9px;
@@ -537,7 +537,7 @@ content {
 			top: 0;
 			bottom: 0;
 			right: 0;
-			width: 271px;
+			width: 277px;
 			//background-color: #3e494b;
 			background-color: rgba(#344,.75);
 			backdrop-filter: blur(@backgrop-blur);
@@ -670,14 +670,14 @@ content {
 						> div {
 							//background-color: rgba(0,0,0,.15);
 							position: relative;
-							width: 123%;
+							width: 121%;
 							height: 23px;
 
 							&:first-child {
 								.field .group:last-child {
 									position: absolute;
 									top: 3px;
-									left: 68px;
+									left: 70px;
 								}
 							}
 
@@ -694,6 +694,11 @@ content {
 									}
 								}
 							}
+
+							&.show-hsl .field-rgb,
+							&.show-rgb .field-hsl {
+								display: none;
+							}
 						}
 
 						.field .option.input {
@@ -708,7 +713,7 @@ content {
 					}
 
 					.wheel-object {
-						width: 170px;
+						width: 173px;
 						height: 176px;
 						overflow: hidden;
 
@@ -749,7 +754,7 @@ content {
 					.color-wheel {
 						position: relative;
 						display: block;
-						margin: 5px;
+						margin: 5px 0 5px 3px;
 						width: 166px;
 						height: 166px;
 						border-radius: 50%;
@@ -895,6 +900,7 @@ content {
 						white-space: nowrap;
 						color: rgba(#bcc, .35);
 						font-size: 0;
+						height: 20px;
 
 						> div {
 							display: inline-block;
@@ -917,15 +923,20 @@ content {
 							}
 
 							&.active {
-								background-color: rgba(#abb, .4);
-								color: rgba(#bcc, .75);
+								background-color: rgba(#abb, .3);
+								color: rgba(#bcc, .85);
 								text-shadow: 0 1px 0 rgba(#122, .2);
+
+								.icon {
+									opacity: 1;
+								}
 							}
 
 							.icon {
 								width: 14px;
 								height: 14px;
 								margin: -1px 0 0;
+								opacity: 0.7;
 							}
 						}
 					}

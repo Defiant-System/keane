@@ -9,6 +9,7 @@
 			this.wheel = el.find(".color-wheel");
 			this.shape = el.find(".color-shape");
 			this.dot = el.find(".color-dot");
+			this.el = el;
 
 			// bind event handlers
 			this.wheel.on("mousedown", this.wheelEvents)
@@ -17,6 +18,31 @@
 			// unbind event handlers
 			this.wheel.off("mousedown", this.wheelEvents)
 			//this.shape.off("mousedown", this.shapeEvents)
+		}
+	},
+	dispatch(event) {
+		let root = photoshop,
+			self = root.box.color;
+
+		switch (event.type) {
+			case "show-hsl-values":
+			case "show-rgb-values":
+				event.el.parent().find(".active").removeClass("active");
+				event.el.addClass("active");
+
+				self.el.find(".color-values")
+					.removeClass("show-hsl show-rgb")
+					.addClass(event.type.slice(0, 8));
+				break;
+			case "color-wheel-triangle":
+			case "color-wheel-rectangle":
+				event.el.parent().find(".active").removeClass("active");
+				event.el.addClass("active");
+
+				self.el.find(".color-wheel .color-shape")
+					.removeClass("triangle rectangle")
+					.addClass(event.type.split("-")[2]);
+				break;
 		}
 	},
 	shapeEvents(event) {
