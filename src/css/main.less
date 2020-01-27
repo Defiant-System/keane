@@ -126,30 +126,38 @@ content {
 		> div > div {
 			display: inline-block;
 			vertical-align: middle;
+
+			&.hidden {
+				display: none;
+			}
 		}
 
 		.tool {
 			margin-right: 0;
 		}
 
-		.option.input {
-			margin-top: 0;
+		.option {
+			margin-right: 7px;
 
-			.label {
-				vertical-align: middle;
-			}
-			.value {
-				display: inline-block;
-				vertical-align: middle;
-				margin-right: 0;
-			}
-			input[type="text"] {
-				background: transparent;
-				border: 0;
-				padding: 2px 1px;
-				width: 37px;
-				height: 19px;
-				color: inherit;
+			&.input {
+				margin-top: 0;
+
+				.label {
+					vertical-align: middle;
+				}
+				.value {
+					display: inline-block;
+					vertical-align: middle;
+					margin-right: 0;
+				}
+				input[type="text"] {
+					background: transparent;
+					border: 0;
+					padding: 2px 1px;
+					width: 37px;
+					height: 19px;
+					color: inherit;
+				}
 			}
 		}
 
@@ -159,6 +167,7 @@ content {
 			vertical-align: middle;
 			padding: 3px 11px 2px;
 			margin-top: -1px;
+			margin-right: 7px;
 			font-size: 11px;
 			color: rgba(#fff, .85);
 			text-shadow: 0 1px 0 rgba(#000, .25);
@@ -311,8 +320,8 @@ content {
 
 			.value {
 				position: relative;
-				width: 19px;
-				height: 19px;
+				width: 17px;
+				height: 17px;
 				border-radius: 3px;
 				margin-right: 5px;
 				padding: 0;
@@ -330,14 +339,14 @@ content {
 
 					&:checked + i {
 						position: absolute;
-						top: 4px;
-						left: 3px;
+						top: 3px;
+						left: 2px;
 						width: 13px;
 						height: 7px;
 						transform: rotate(-45deg);
 						border-left: 3px solid rgba(#eff, .75);
 						border-bottom: 3px solid rgba(#eff, .75);
-						box-shadow: -1px 1px 0 rgba(#011, .75);
+						box-shadow: -1px 1px 0 rgba(#011, .55);
 					}
 				}
 
