@@ -80,7 +80,6 @@
 		<path d="M429.287,98.46c-12.059,14.656-45.117,55.127-71.377,87.296l-33.344-33.851c30.157-26.838,67.488-60.013,80.979-71.893 c23.999-21.152,45.045-33.735,49.619-28.591C458.029,54.27,450.421,72.743,429.287,98.46L429.287,98.46z M352.082,192.876 c-10.172,12.45-18.928,23.172-24.285,29.748l-39.476-38.468c6.398-5.696,17.05-15.172,29.401-26.153L352.082,192.876z  M321.915,229.833v-0.107c-22.914,87.919-124.742,37.375-124.742,37.375s42.723,5.384,42.723-34.465 c0-38.63,39.26-42.118,41.671-42.295l40.427,39.394C321.994,229.744,321.915,229.833,321.915,229.833L321.915,229.833z"/>
 	</svg>
 
-
 	<svg id="icon-marquee-new" viewBox="0 0 500 500">
 		<rect x="70.833" y="70.833" fill="#00000070" stroke="#000000b0" stroke-width="25" width="358.334" height="358.334"/>
 	</svg>
@@ -101,6 +100,56 @@
 		<rect x="150.333" y="179" display="inline" fill="#00000070" stroke="#000000b0" stroke-width="25" stroke-miterlimit="10" width="208.834" height="160.167"/>
 	</svg>
 
+
+	<svg id="icon-align-top" viewBox="0 0 500 500">
+		<rect x="89" y="136.75" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="280.5"/>
+		<rect x="283.5" y="136.75" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="200.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="47.5" y1="82" x2="451" y2="82"/>
+	</svg>
+
+	<svg id="icon-align-middle" viewBox="0 0 500 500">
+		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="455.999" y1="256" x2="42.499" y2="256"/>
+		<rect x="281.999" y="116.75" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="280.5"/>
+		<rect x="87.499" y="156.75" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="200.5"/>
+	</svg>
+
+	<svg id="icon-align-bottom" viewBox="0 0 500 500">
+		<rect x="89" y="86.75" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="280.5"/>
+		<rect x="283.5" y="166.75" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="200.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="47.5" y1="418" x2="451" y2="418"/>
+	</svg>
+
+	<svg id="icon-vertical-centers" viewBox="0 0 500 500">
+		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="345.25" y1="462.752" x2="345.25" y2="49.251"/>
+		<rect x="281.999" y="116.75" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="280.5"/>
+		<rect x="87.499" y="156.75" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="200.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="151.249" y1="462.752" x2="151.249" y2="49.251"/>
+	</svg>
+
+	<svg id="icon-align-left" viewBox="0 0 500 500">
+		<rect x="134.375" y="92.125" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="280.5" height="127.5"/>
+		<rect x="134.375" y="286.625" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="200.5" height="127.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="83.625" y1="50.625" x2="83.625" y2="454.125"/>
+	</svg>
+
+	<svg id="icon-align-center" viewBox="0 0 500 500">
+		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="252" y1="48.25" x2="252" y2="451.75"/>
+		<rect x="109.75" y="89.75" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="280.5" height="127.5"/>
+		<rect x="149.75" y="284.25" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="200.5" height="127.5"/>
+	</svg>
+
+	<svg id="icon-align-right" viewBox="0 0 500 500">
+		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="415.625" y1="50.625" x2="415.625" y2="454.125"/>
+		<rect x="84.375" y="92.125" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="280.5" height="127.5"/>
+		<rect x="164.375" y="286.625" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="200.5" height="127.5"/>
+	</svg>
+
+	<svg id="icon-horizontal-centers" viewBox="0 0 500 500">
+		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="455.249" y1="159.251" x2="41.749" y2="159.251"/>
+		<rect x="109.247" y="95.002" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="280.5" height="127.5"/>
+		<rect x="149.247" y="289.502" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="200.5" height="127.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="455.249" y1="353.252" x2="41.749" y2="353.252"/>
+	</svg>
 
 
 	<svg id="icon-rectangle" viewBox="0 0 500 500">
