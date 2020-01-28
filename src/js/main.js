@@ -15,7 +15,7 @@ const photoshop = {
 
 		// temp
 		window.find(".zoom-slider input").val(235).trigger("input");
-		//window.find('[data-content="boxes/box-info.htm"]').trigger("click");
+		//window.find('[data-content="boxes/box-color.htm"]').trigger("click");
 	},
 	dispatch(event) {
 		let self = photoshop,
@@ -30,6 +30,18 @@ const photoshop = {
 			case "change-bg":
 				self.canvas.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
 				self.boxNavigator.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
+				break;
+			case "select-tool":
+				el = $(event.target);
+				if (el.hasClass("active")) return;
+
+				el.parent().find(".active").removeClass("active");
+				el.addClass("active");
+
+				let newOpt = window.store(`tool-options/${el.data("options")}.htm`)
+					oldOpt = event.el.nextAll(".tools-options-bar").find("> div");
+
+				oldOpt.replace(newOpt);
 				break;
 			case "box-head-tab":
 				el = $(event.target);

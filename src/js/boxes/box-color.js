@@ -25,23 +25,21 @@
 			self = root.box.color;
 
 		switch (event.type) {
-			case "show-hsl-values":
-			case "show-rgb-values":
+			case "show-color-values":
 				event.el.parent().find(".active").removeClass("active");
 				event.el.addClass("active");
 
 				self.el.find(".color-values")
 					.removeClass("show-hsl show-rgb")
-					.addClass(event.type.slice(0, 8));
+					.addClass("show-"+ event.arg);
 				break;
-			case "color-wheel-triangle":
-			case "color-wheel-rectangle":
+			case "color-wheel-shape":
 				event.el.parent().find(".active").removeClass("active");
 				event.el.addClass("active");
 
 				self.el.find(".color-wheel .color-shape")
 					.removeClass("triangle rectangle")
-					.addClass(event.type.split("-")[2]);
+					.addClass(event.arg);
 				break;
 		}
 	},

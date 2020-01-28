@@ -15,7 +15,9 @@
 	</svg>
 
 	<svg id="tool-pencil" viewBox="0 0 500 500">
-		<path d="M137.834,428.981l25.874-25.873l-66.816-66.816l-25.873,25.874v30.422h36.394v36.394H137.834z M286.535,165.129 c0-3.695-2.559-6.254-6.255-6.254c-1.706,0-3.412,0.568-4.833,1.99L121.344,314.968c-1.422,1.422-1.99,3.128-1.99,4.834 c0,3.696,2.559,6.255,6.255,6.255c1.706,0,3.412-0.568,4.833-1.99l154.104-154.104C285.967,168.541,286.535,166.836,286.535,165.129 z M271.182,110.539l118.279,118.279L152.903,465.375H34.625V347.097L271.182,110.539z M465.375,137.834 c0,9.668-3.98,19.051-10.52,25.59l-47.198,47.197L289.379,92.343l47.197-46.913c6.54-6.824,15.923-10.805,25.59-10.805 s19.049,3.98,25.873,10.805l66.816,66.531C461.395,118.785,465.375,128.168,465.375,137.834z"/>
+		<rect x="350.313" y="71.461" transform="matrix(0.7071 0.7071 -0.7071 0.7071 187.0552 -255.5077)" width="103.285" height="53.166"/>
+		<rect x="201.978" y="83.719" transform="matrix(0.7071 0.7071 -0.7071 0.7071 252.0842 -98.5225)" fill="#474747" stroke="#000" stroke-width="18.0102" width="85.983" height="342.624"/>
+		<polygon points="70.959,356.008 143.993,429.042 42.73,457.269 "/>
 	</svg>
 
 	<svg id="tool-droplet" viewBox="0 0 500 500">
@@ -43,7 +45,16 @@
 	</svg>
 
 	<svg id="tool-pipette" viewBox="0 0 500 500">
-		<path d="M456.208,43.792c-21.724-21.723-56.942-21.723-78.666,0l-74.798,74.798L250,65.845l-58.999,58.999l46.25,46.25 L32.082,376.262c-3.497,3.497-4.983,8.238-4.477,12.801H27.5v69.531c0,7.681,6.227,13.906,13.906,13.906h69.531c0,0,1.158,0,1.738,0 c4.004,0,8.008-1.527,11.062-4.582L328.907,262.75l46.249,46.249L434.155,250l-52.744-52.744l74.797-74.798 C477.931,100.734,477.931,65.516,456.208,43.792z M102.72,444.688H55.312V397.28l204.063-204.062l47.406,47.406L102.72,444.688z"/>
+		<path d="M446.438,53.562c-19.64-19.641-51.483-19.641-71.123,0l-67.626,67.625L260,73.5l-53.342,53.343l41.815,41.815 L62.975,354.155c-3.163,3.163-4.506,7.45-4.047,11.575h-0.096l-20,82.864c0,6.944,5.629,12.573,12.573,12.573l82.865-20 c0,0,1.047,0,1.571,0c3.62,0,7.239-1.382,10.002-4.143l185.498-185.498l41.814,41.815L426.499,240l-47.688-47.688l67.626-67.626 C466.078,105.044,466.078,73.203,446.438,53.562z M146.84,396.022l-22.862-20l-20-22.861l164.499-164.499l42.862,42.862 L146.84,396.022z"/>
+	</svg>
+
+	<svg id="tool-ruler" viewBox="0 0 500 500">
+		<rect x="40.333" y="160.144" fill="none" stroke="#000" stroke-width="25.223" width="419.333" height="179.714"/>
+		<line fill="none" stroke="#000" stroke-width="25.223" x1="100.237" y1="250.001" x2="100.237" y2="339.857"/>
+		<line fill="none" stroke="#000" stroke-width="25.223" x1="172.753" y1="294.93" x2="172.753" y2="339.857"/>
+		<line fill="none" stroke="#000" stroke-width="25.223" x1="249.999" y1="250.001" x2="249.999" y2="339.857"/>
+		<line fill="none" stroke="#000" stroke-width="25.223" x1="322.516" y1="294.93" x2="322.516" y2="339.857"/>
+		<line fill="none" stroke="#000" stroke-width="25.223" x1="401.338" y1="250.001" x2="401.338" y2="339.857"/>
 	</svg>
 
 	<svg id="tool-brush" viewBox="0 0 500 500">
@@ -81,25 +92,25 @@
 	</svg>
 
 	<svg id="tool-lasso" viewBox="0 0 500 500">
-		<ellipse fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" cx="250" cy="158.732" rx="195.83" ry="120.731"/>
-		<ellipse fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" cx="148.671" cy="247.844" rx="25.872" ry="18.686"/>
-		<ellipse fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" cx="138.61" cy="299.587" rx="64.318" ry="44.556"/>
-		<path fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" d="M166.637,339.699 c47.431-2.156,95.22,43.969,36.291,122.301"/>
+		<ellipse fill="none" stroke="#000" stroke-width="30" cx="250" cy="158.732" rx="195.83" ry="120.731"/>
+		<ellipse fill="none" stroke="#000" stroke-width="30" cx="148.671" cy="247.844" rx="25.872" ry="18.686"/>
+		<ellipse fill="none" stroke="#000" stroke-width="30" cx="138.61" cy="299.587" rx="64.318" ry="44.556"/>
+		<path fill="none" stroke="#000" stroke-width="30" d="M166.637,339.699 c47.431-2.156,95.22,43.969,36.291,122.301"/>
 	</svg>
 
 	<svg id="tool-lasso-polygon" viewBox="0 0 500 500">
-		<ellipse fill="none" stroke="#000000" stroke-width="28.9506" stroke-miterlimit="10" cx="140.86" cy="307.146" rx="62.069" ry="42.997"/>
-		<path fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" d="M202.928,462 C215,392,177.367,327.559,134.5,307.146L50.1,250L107,63l103.5,75.5l156.084-85.399L444,342l-241.072-32.5"/>
+		<ellipse fill="none" stroke="#000" stroke-width="28.9506" cx="140.86" cy="307.146" rx="62.069" ry="42.997"/>
+		<path fill="none" stroke="#000" stroke-width="30" d="M202.928,462 C215,392,177.367,327.559,134.5,307.146L50.1,250L107,63l103.5,75.5l156.084-85.399L444,342l-241.072-32.5"/>
 	</svg>
 
 	<svg id="tool-lasso-magnetic" viewBox="0 0 500 500">
-		<ellipse fill="none" stroke="#000000" stroke-width="26.5216" stroke-miterlimit="10" cx="116.586" cy="292.277" rx="56.861" ry="39.389"/>
-			<path fill="none" stroke="#000000" stroke-width="27.483" stroke-miterlimit="10" d="M173.447,434.139
-				c11.059-64.127-23.417-123.162-62.687-141.861l-77.319-52.352l83.145-192.549l276.77,122L173.447,294.434"/>
-		<path fill="none" stroke="#000000" stroke-width="13.0866" stroke-miterlimit="10" d="M281.535,452.624v-49.075h127.771
+		<ellipse fill="none" stroke="#000" stroke-width="26.5216" cx="116.586" cy="299.277" rx="56.861" ry="39.389"/>
+		<path fill="none" stroke="#000" stroke-width="27.483" d="M173.447,441.139
+			c11.059-64.127-23.417-123.162-62.687-141.861l-77.319-52.352L53.5,61.5l158,90l49-109l185,108L173.447,301.434"/>
+		<path fill="none" stroke="#000" stroke-width="13.0866" d="M281.535,459.624v-49.075h127.771
 			c4.51,0,8.179-3.668,8.179-8.178v-61.344c0-4.51-3.669-8.178-8.179-8.178H281.535v-49.075h127.771
 			c31.568,0,57.253,25.684,57.253,57.253v61.344c0,31.568-25.685,57.253-57.253,57.253H281.535z"/>
-		<path d="M320.153,452.624v-49.075h89.152c4.51,0,8.179-3.668,8.179-8.178v-61.344c0-4.51-3.669-8.178-8.179-8.178h-89.152v-49.075
+		<path d="M320.153,459.624v-49.075h89.152c4.51,0,8.179-3.668,8.179-8.178v-61.344c0-4.51-3.669-8.178-8.179-8.178h-89.152v-49.075
 			h89.152c31.568,0,57.253,25.684,57.253,57.253v61.344c0,31.568-25.685,57.253-57.253,57.253H320.153z"/>
 	</svg>
 
@@ -108,69 +119,69 @@
 	</svg>
 
 	<svg id="icon-marquee-union" viewBox="0 0 500 500">
-		<polygon fill="#00000070" stroke="#000000b0" stroke-width="30" stroke-miterlimit="10" points="359.417,179.916 359.417,51.749 51.083,51.749 51.083,340.083 150.583,340.083 150.583,448.25 448.917,448.25 448.917,179.916 	"/>
+		<polygon fill="#00000070" stroke="#000000b0" stroke-width="30" points="359.417,179.916 359.417,51.749 51.083,51.749 51.083,340.083 150.583,340.083 150.583,448.25 448.917,448.25 448.917,179.916 	"/>
 	</svg>
 
 	<svg id="icon-marquee-subtract" viewBox="0 0 500 500">
-		<rect x="50.833" y="50.833" fill="none" stroke="#00000080" stroke-width="25" stroke-miterlimit="10" width="308.334" height="288.334"/>
-		<rect x="150.333" y="179" fill="none" stroke="#00000080" stroke-width="25" stroke-miterlimit="10" width="298.334" height="268.334"/>
-		<polygon display="inline" fill="#00000070" stroke="#000000b0" stroke-width="25" stroke-miterlimit="10" points="150.333,179 359.167,179 359.167,50.833 50.833,50.833 50.833,339.167 150.333,339.167 	"/>
+		<rect x="50.833" y="50.833" fill="none" stroke="#00000080" stroke-width="25" width="308.334" height="288.334"/>
+		<rect x="150.333" y="179" fill="none" stroke="#00000080" stroke-width="25" width="298.334" height="268.334"/>
+		<polygon display="inline" fill="#00000070" stroke="#000000b0" stroke-width="25" points="150.333,179 359.167,179 359.167,50.833 50.833,50.833 50.833,339.167 150.333,339.167 	"/>
 	</svg>
 
 	<svg id="icon-marquee-intersection" viewBox="0 0 500 500">
-		<rect x="50.833" y="50.833" fill="none" stroke="#00000080" stroke-width="25" stroke-miterlimit="10" width="308.334" height="288.334"/>
-		<rect x="150.333" y="179" fill="none" stroke="#00000080" stroke-width="25" stroke-miterlimit="10" width="298.334" height="268.334"/>
-		<rect x="150.333" y="179" display="inline" fill="#00000070" stroke="#000000b0" stroke-width="25" stroke-miterlimit="10" width="208.834" height="160.167"/>
+		<rect x="50.833" y="50.833" fill="none" stroke="#00000080" stroke-width="25" width="308.334" height="288.334"/>
+		<rect x="150.333" y="179" fill="none" stroke="#00000080" stroke-width="25" width="298.334" height="268.334"/>
+		<rect x="150.333" y="179" display="inline" fill="#00000070" stroke="#000000b0" stroke-width="25" width="208.834" height="160.167"/>
 	</svg>
 
 	<svg id="icon-align-top" viewBox="0 0 500 500">
-		<rect x="89" y="136.75" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="280.5"/>
-		<rect x="283.5" y="136.75" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="200.5"/>
-		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="47.5" y1="82" x2="451" y2="82"/>
+		<rect x="89" y="136.75" fill="#555" stroke="#000" stroke-width="25" width="127.5" height="280.5"/>
+		<rect x="283.5" y="136.75" stroke="#000" stroke-width="25" width="127.5" height="200.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" x1="47.5" y1="82" x2="451" y2="82"/>
 	</svg>
 
 	<svg id="icon-align-middle" viewBox="0 0 500 500">
-		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="455.999" y1="256" x2="42.499" y2="256"/>
-		<rect x="281.999" y="116.75" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="280.5"/>
-		<rect x="87.499" y="156.75" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="200.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" x1="455.999" y1="256" x2="42.499" y2="256"/>
+		<rect x="281.999" y="116.75" fill="#555" stroke="#000" stroke-width="25" width="127.5" height="280.5"/>
+		<rect x="87.499" y="156.75" stroke="#000" stroke-width="25" width="127.5" height="200.5"/>
 	</svg>
 
 	<svg id="icon-align-bottom" viewBox="0 0 500 500">
-		<rect x="89" y="86.75" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="280.5"/>
-		<rect x="283.5" y="166.75" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="200.5"/>
-		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="47.5" y1="418" x2="451" y2="418"/>
+		<rect x="89" y="86.75" fill="#555" stroke="#000" stroke-width="25" width="127.5" height="280.5"/>
+		<rect x="283.5" y="166.75" stroke="#000" stroke-width="25" width="127.5" height="200.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" x1="47.5" y1="418" x2="451" y2="418"/>
 	</svg>
 
 	<svg id="icon-vertical-centers" viewBox="0 0 500 500">
-		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="345.25" y1="462.752" x2="345.25" y2="49.251"/>
-		<rect x="281.999" y="116.75" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="280.5"/>
-		<rect x="87.499" y="156.75" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="127.5" height="200.5"/>
-		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="151.249" y1="462.752" x2="151.249" y2="49.251"/>
+		<line fill="none" stroke="#000" stroke-width="25" x1="345.25" y1="462.752" x2="345.25" y2="49.251"/>
+		<rect x="281.999" y="116.75" fill="#555" stroke="#000" stroke-width="25" width="127.5" height="280.5"/>
+		<rect x="87.499" y="156.75" stroke="#000" stroke-width="25" width="127.5" height="200.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" x1="151.249" y1="462.752" x2="151.249" y2="49.251"/>
 	</svg>
 
 	<svg id="icon-align-left" viewBox="0 0 500 500">
-		<rect x="134.375" y="92.125" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="280.5" height="127.5"/>
-		<rect x="134.375" y="286.625" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="200.5" height="127.5"/>
-		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="83.625" y1="50.625" x2="83.625" y2="454.125"/>
+		<rect x="134.375" y="92.125" fill="#555" stroke="#000" stroke-width="25" width="280.5" height="127.5"/>
+		<rect x="134.375" y="286.625" stroke="#000" stroke-width="25" width="200.5" height="127.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" x1="83.625" y1="50.625" x2="83.625" y2="454.125"/>
 	</svg>
 
 	<svg id="icon-align-center" viewBox="0 0 500 500">
-		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="252" y1="48.25" x2="252" y2="451.75"/>
-		<rect x="109.75" y="89.75" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="280.5" height="127.5"/>
-		<rect x="149.75" y="284.25" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="200.5" height="127.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" x1="252" y1="48.25" x2="252" y2="451.75"/>
+		<rect x="109.75" y="89.75" fill="#555" stroke="#000" stroke-width="25" width="280.5" height="127.5"/>
+		<rect x="149.75" y="284.25" stroke="#000" stroke-width="25" width="200.5" height="127.5"/>
 	</svg>
 
 	<svg id="icon-align-right" viewBox="0 0 500 500">
-		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="415.625" y1="50.625" x2="415.625" y2="454.125"/>
-		<rect x="84.375" y="92.125" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="280.5" height="127.5"/>
-		<rect x="164.375" y="286.625" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="200.5" height="127.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" x1="415.625" y1="50.625" x2="415.625" y2="454.125"/>
+		<rect x="84.375" y="92.125" fill="#555" stroke="#000" stroke-width="25" width="280.5" height="127.5"/>
+		<rect x="164.375" y="286.625" stroke="#000" stroke-width="25" width="200.5" height="127.5"/>
 	</svg>
 
 	<svg id="icon-horizontal-centers" viewBox="0 0 500 500">
-		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="455.249" y1="159.251" x2="41.749" y2="159.251"/>
-		<rect x="109.247" y="95.002" fill="#555" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="280.5" height="127.5"/>
-		<rect x="149.247" y="289.502" stroke="#000" stroke-width="25" stroke-miterlimit="10" width="200.5" height="127.5"/>
-		<line fill="none" stroke="#000" stroke-width="25" stroke-miterlimit="10" x1="455.249" y1="353.252" x2="41.749" y2="353.252"/>
+		<line fill="none" stroke="#000" stroke-width="25" x1="455.249" y1="159.251" x2="41.749" y2="159.251"/>
+		<rect x="109.247" y="95.002" fill="#555" stroke="#000" stroke-width="25" width="280.5" height="127.5"/>
+		<rect x="149.247" y="289.502" stroke="#000" stroke-width="25" width="200.5" height="127.5"/>
+		<line fill="none" stroke="#000" stroke-width="25" x1="455.249" y1="353.252" x2="41.749" y2="353.252"/>
 	</svg>
 
 
