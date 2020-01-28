@@ -67,8 +67,6 @@
 		<polygon stroke="#000" stroke-width="3.2707" stroke-linejoin="round" points="267.574,413.877 458.667,191.5 479.576,91.537 300.663,280.05 "/>
 	</svg>
 
-
-
 	<svg id="tool-shape-rect" viewBox="0 0 500 500">
 		<rect x="39" y="97.5" fill="#00000050" stroke="#000" stroke-width="30" width="422" height="305"/>
 	</svg>
@@ -89,13 +87,14 @@
 		<polygon fill="#00000050" stroke="#000" stroke-width="30" stroke-linejoin="round" points=" 250,44.029 301.125,201.377 466.57,201.377 332.723,298.623 383.848,455.971 250,358.725 116.152,455.971 167.277,298.623  33.43,201.377 198.875,201.377 "/>
 	</svg>
 
+	<svg id="tool-shape-star" viewBox="0 0 500 500">
+		<polygon fill="#00000050" stroke="#000" stroke-width="30" stroke-linejoin="round" points=" 250,44.029 301.125,201.377 466.57,201.377 332.723,298.623 383.848,455.971 250,358.725 116.152,455.971 167.277,298.623  33.43,201.377 198.875,201.377 "/>
+	</svg>
+
 	<svg id="tool-shape-line" viewBox="0 0 500 500">
 		<line fill="none" stroke="#000" stroke-width="40" stroke-linejoin="round" x1="429.5" y1="70.5" x2="70.5" y2="429.5"/>
 	</svg>
 
-
-
-	
 	<svg id="tool-pointer" viewBox="0 0 500 500">
 		<polygon points="388.471,299.693 111.53,22.752 111.53,439.318 194.455,328.752 269.02,477.249 326.061,448.61 251.285,299.693 "/>
 	</svg>
@@ -195,6 +194,23 @@
 		<path d="M320.153,459.624v-49.075h89.152c4.51,0,8.179-3.668,8.179-8.178v-61.344c0-4.51-3.669-8.178-8.179-8.178h-89.152v-49.075 h89.152c31.568,0,57.253,25.684,57.253,57.253v61.344c0,31.568-25.685,57.253-57.253,57.253H320.153z"/>
 	</svg>
 
+
+
+	<svg id="icon-line-solid" viewBox="0 0 450 150">
+		<line fill="none" stroke="#000" stroke-width="25" x1="0" y1="75" x2="450" y2="75"/>
+	</svg>
+
+	<svg id="icon-line-dashed" viewBox="0 0 450 150">
+		<line fill="none" stroke="#000" stroke-width="25" stroke-dasharray="60,30" x1="0" y1="75" x2="450" y2="75"/>
+	</svg>
+
+	<svg id="icon-line-dotted" viewBox="0 0 450 150">
+		<line fill="none" stroke="#000" stroke-width="25" stroke-dasharray="25,25" x1="0" y1="75" x2="450" y2="75"/>
+	</svg>
+
+
+
+	
 	<svg id="icon-marquee-new" viewBox="0 0 500 500">
 		<rect x="70.833" y="70.833" fill="#00000070" stroke="#000000b0" stroke-width="25" width="358.334" height="358.334"/>
 	</svg>

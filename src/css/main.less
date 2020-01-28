@@ -158,12 +158,10 @@ content {
 		}
 
 		.option {
-			margin-right: 7px;
+			margin: -1px 7px 0 0;
 			transition: opacity 80ms ease-in-out;
 
 			&.input {
-				margin-top: 0;
-
 				.label {
 					vertical-align: middle;
 				}
@@ -181,6 +179,7 @@ content {
 					color: inherit;
 				}
 			}
+
 			&.preset {
 				.label {
 					display: inline-block;
@@ -194,6 +193,7 @@ content {
 					height: 20px;
 					vertical-align: middle;
 					padding: 0;
+					margin: -1px 0;
 				}
 			}
 		}
@@ -469,6 +469,12 @@ content {
 				text-align: center;
 				margin-right: -7px;
 				opacity: .5;
+			}
+
+			.icon {
+				height: 15px;
+				width: 45px;
+				margin: -1px 0 -1px 3px;
 			}
 
 			&:before {
