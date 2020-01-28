@@ -17,9 +17,9 @@ const photoshop = {
 
 
 		// temp
-		window.find(".zoom-slider input").val(235).trigger("input");
+		//window.find(".zoom-slider input").val(235).trigger("input");
 		//window.find('[data-content="channels"]').trigger("click");
-		window.find('.tool[data-content="type"]').trigger("click");
+		window.find('.tool[data-content="eraser"]').trigger("click");
 	},
 	dispatch(event) {
 		let self = photoshop,
