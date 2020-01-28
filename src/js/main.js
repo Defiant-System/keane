@@ -6,6 +6,8 @@ const photoshop = {
 		this.boxNavigator = window.find(".navigator-wrapper");
 
 		// auto store box HTML
+		window.store("tool-options/marquee.htm", '.tool-options-marquee');
+
 		let box = window.store("boxes/box-navigator.htm", 'div[data-box="navigator"]');
 		this.box.navigator.toggle(box, "on");
 		box = window.store("boxes/box-character.htm", 'div[data-box="character"]');
@@ -13,9 +15,11 @@ const photoshop = {
 		box = window.store("boxes/box-layers.htm", 'div[data-box="layers"]');
 		this.box.layers.toggle(box, "on");
 
+
 		// temp
 		window.find(".zoom-slider input").val(235).trigger("input");
 		//window.find('[data-content="boxes/box-color.htm"]').trigger("click");
+		window.find('.tool[data-options="character"]').trigger("click");
 	},
 	dispatch(event) {
 		let self = photoshop,
