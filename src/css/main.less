@@ -182,17 +182,16 @@ content {
 				}
 			}
 			&.preset {
-				.icon {
-					top: 2px;
+				.label {
 					display: inline-block;
 					vertical-align: middle;
-					margin-top: 0;
+					padding-top: 0;
 				}
 				.value {
-					top: -1px;
+					position: relative;
 					margin-right: 0;
 					width: 43px;
-					height: 19px;
+					height: 20px;
 					vertical-align: middle;
 					padding: 0;
 				}
@@ -407,9 +406,28 @@ content {
 				padding: 0 9px 1px;
 				border: 1px solid rgba(#011, .85);
 
-				&:before,
 				&:after {
-					display: none;
+					top: 7px;
+					right: 6px;
+					width: 6px;
+					height: 6px;
+					filter: invert() brightness(4) drop-shadow(0 0 1px #000);
+				}
+
+				&:before {
+					content: "";
+					display: block;
+					background: unset;
+					width: unset;
+					height: unset;
+					filter: unset;
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					box-shadow: inset 0 0 2px #fff;
+					border-radius: inherit;
 				}
 			}
 		}
@@ -610,6 +628,10 @@ content {
 				padding-right: 2px;
 				border-radius: 0 11px 11px 0;
 				backdrop-filter: blur(@backgrop-blur);
+
+				.value {
+					display: unset;
+				}
 			}
 		}
 
