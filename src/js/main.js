@@ -19,7 +19,7 @@ const photoshop = {
 		// temp
 		window.find(".zoom-slider input").val(235).trigger("input");
 		//window.find('[data-content="boxes/box-color.htm"]').trigger("click");
-		window.find('.tool[data-options="shape"]').trigger("click");
+		window.find('.tool[data-options="pointer"]').trigger("click");
 	},
 	dispatch(event) {
 		let self = photoshop,
@@ -37,7 +37,7 @@ const photoshop = {
 				break;
 			case "select-tool":
 				el = $(event.target);
-				if (el.hasClass("active")) return;
+				if (el.hasClass("active") || !el.data("options")) return;
 
 				el.parent().find(".active").removeClass("active");
 				el.addClass("active");
@@ -54,7 +54,7 @@ const photoshop = {
 				el.parent().find(".active").removeClass("active");
 				el.addClass("active");
 
-				let newBox = window.store(el.data("content")),
+				let newBox = window.store(`boxes/box-${el.data("content")}.htm`),
 					oldBox = el.parent().nextAll(".box-body").find("> div[data-box]");
 				
 				// notify box state = off
@@ -83,7 +83,9 @@ const photoshop = {
 		character: require("boxes/box-character.js"),
 		swatches: require("boxes/box-swatches.js"),
 		paragraph: require("boxes/box-paragraph.js"),
-		layers: require("boxes/box-layers.js")
+		layers: require("boxes/box-layers.js"),
+		channels: require("boxes/box-channels.js"),
+		paths: require("boxes/box-paths.js")
 	}
 };
 

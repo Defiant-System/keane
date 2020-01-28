@@ -5,11 +5,10 @@
 		<div class="tool" data-options="move" style="background-image: url(~/icons/tool-move.png);"></div>
 		<div class="tool" data-options="lasso" style="background-image: url(~/icons/tool-lasso.png);"></div>
 		<div class="tool" data-options="wand" style="background-image: url(~/icons/tool-wand.png);"></div>
-		<div class="tool" data-options="brush" style="background-image: url(~/icons/tool-brush.png);"></div>
 		<div class="tool" data-options="pipette" style="background-image: url(~/icons/tool-pipette.png);"></div>
 		<div class="divider"></div>
+		<div class="tool" data-options="brush" style="background-image: url(~/icons/tool-brush.png);"></div>
 		<div class="tool" data-options="pen" style="background-image: url(~/icons/tool-pen.png);"></div>
-		<div class="tool" data-options="zoom" style="background-image: url(~/icons/tool-zoom.png);"></div>
 		<div class="tool" data-options="eraser" style="background-image: url(~/icons/tool-eraser.png);"></div>
 		<div class="tool" data-options="droplet" style="background-image: url(~/icons/tool-droplet.png);"></div>
 		<div class="tool" data-options="character" style="background-image: url(~/icons/tool-character.png);"></div>
@@ -17,6 +16,8 @@
 		<div class="tool" data-options="shape" style="background-image: url(~/icons/tool-shape-rect.png);"></div>
 		<div class="divider"></div>
 		<div class="tool" data-options="pointer" style="background-image: url(~/icons/tool-pointer.png);"></div>
+		<div class="tool" data-options="zoom" style="background-image: url(~/icons/tool-zoom.png);"></div>
+		<div class="tool" style="background-image: url(~/icons/tool-hand.png);"></div>
 		<div class="tool" style="background-image: url(~/icons/icon-quick-mask.png);"></div>
 		<div class="tool" style="background-image: url(~/icons/tool-other-tools.png);"></div>
 		<div class="divider"></div>
@@ -57,9 +58,9 @@
 		<div class="sidebar-wrapper">
 			<div class="sidebar-box">
 				<div class="box-head" data-click="box-head-tab">
-					<div data-content="boxes/box-navigator.htm" class="active">Navigator</div>
-					<div data-content="boxes/box-color.htm">Color</div>
-					<div data-content="boxes/box-info.htm">Info</div>
+					<div data-content="navigator" class="active">Navigator</div>
+					<div data-content="color">Color</div>
+					<div data-content="info">Info</div>
 				</div>
 				<div class="box-body">
 					<!-- content goes here -->
@@ -71,9 +72,9 @@
 
 			<div class="sidebar-box">
 				<div class="box-head" data-click="box-head-tab">
-					<div data-content="boxes/box-character.htm" class="active">Character</div>
-					<div data-content="boxes/box-swatches.htm">Swatches</div>
-					<div data-content="boxes/box-paragraph.htm">Paragraph</div>
+					<div data-content="character" class="active">Character</div>
+					<div data-content="swatches">Swatches</div>
+					<div data-content="paragraph">Paragraph</div>
 				</div>
 				<div class="box-body">
 					<!-- content goes here -->
@@ -84,14 +85,16 @@
 			</div>
 
 			<div class="sidebar-box">
-				<div class="box-head">
-					<div class="active">Layers</div>
-					<div>Channels</div>
-					<div>Paths</div>
+				<div class="box-head" data-click="box-head-tab">
+					<div data-content="layers" class="active">Layers</div>
+					<div data-content="channels">Channels</div>
+					<div data-content="paths">Paths</div>
 				</div>
 				<div class="box-body">
 					<!-- content goes here -->
 					@import "boxes/box-layers.htm"
+					@store "boxes/box-channels.htm"
+					@store "boxes/box-paths.htm"
 				</div>
 			</div>
 		</div>
