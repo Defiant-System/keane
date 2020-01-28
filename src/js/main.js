@@ -18,8 +18,8 @@ const photoshop = {
 
 		// temp
 		window.find(".zoom-slider input").val(235).trigger("input");
-		//window.find('[data-content="boxes/box-color.htm"]').trigger("click");
-		window.find('.tool[data-options="pointer"]').trigger("click");
+		//window.find('[data-content="channels"]').trigger("click");
+		window.find('.tool[data-content="type"]').trigger("click");
 	},
 	dispatch(event) {
 		let self = photoshop,
@@ -37,12 +37,12 @@ const photoshop = {
 				break;
 			case "select-tool":
 				el = $(event.target);
-				if (el.hasClass("active") || !el.data("options")) return;
+				if (el.hasClass("active") || !el.data("content")) return;
 
 				el.parent().find(".active").removeClass("active");
 				el.addClass("active");
 
-				let newOpt = window.store(`tool-options/${el.data("options")}.htm`)
+				let newOpt = window.store(`tool-options/${el.data("content")}.htm`)
 					oldOpt = event.el.nextAll(".tools-options-bar").find("> div");
 
 				oldOpt.replace(newOpt);

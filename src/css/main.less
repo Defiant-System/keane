@@ -720,32 +720,32 @@ content {
 				position: relative;
 				flex: 1;
 
-				> [data-box] {
-					border-top: 1px solid rgba(#011, .55);
-				}
-
 				.divider {
 					background: rgba(#011, .35);
 					height: 1px;
 					margin: 3px 0;
 				}
 
-				div[data-box="layers"] {
+				div[data-box] {
 					display: flex;
 					flex-direction: column;
 					height: 100%;
-					border-top: 0;
+					border-top: 1px solid rgba(#011, .55);
+
+					&[data-box="layers"] {
+						border-top: 0;
+					}
 
 					.box-tools {
 						border-bottom: 1px solid rgba(#011, .55);
 						height: 37px;
 					}
 
-					.layers-wrapper {
+					.box-content-wrapper {
 						flex: 1;
 						position: relative;
 
-						.layers-list {
+						.box-content-list {
 							position: absolute;
 							top: 0;
 							left: 0;
