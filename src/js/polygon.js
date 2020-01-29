@@ -176,6 +176,7 @@ class Polygon {
 
 			this.vertices[i] = new Point(pointXr + center.x, pointYr + center.y);
 		});
+		console.log(this.vertices);
 	}
 	scale(scaleX, scaleY, center) {
 		center = center || this.getCentroid();

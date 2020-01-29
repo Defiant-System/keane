@@ -101,7 +101,6 @@
 				
 				if (Math.sqrt(dy * dy + dx * dx) <= 66) {
 					// event passed to shapeEvents
-					console.log(123);
 					return self.shapeEvents(event);
 				}
 
@@ -168,26 +167,23 @@
 		let root = photoshop,
 			self = root.box.color,
 			down = self.shapeDown,
-			offset,
 			shape,
 			point;
 
 		switch (event.type) {
 			case "mousedown":
 				if (self.shape.hasClass("triangle")) {
-					shape = new Polygon([[-16,-36], [82,17], [-16,72]]);
-					offset = 67;
+					shape = new Polygon([[42,22], [141,76], [42,130]]);
+					shape.rotate(0);
 				} else {
-					shape = new Polygon([[-6,-6], [83,-6], [83,83], [-6,83]]);
-					offset = 47;
+					shape = new Polygon([[32,32], [121,32], [121,121], [32,121]]);
 				}
-				//shape.rotate(180);
 				//console.log(self.shapeDown.shape.getCentroid());
 
 				self.shapeDown = {
 					shape,
-					offsetY: event.offsetY - offset,
-					offsetX: event.offsetX - offset,
+					offsetY: event.offsetY - 8,
+					offsetX: event.offsetX - 7,
 					clickY: event.clientY,
 					clickX: event.clientX,
 				};
@@ -209,6 +205,11 @@
 					event.clientX - down.clickX + down.offsetX, // left
 					event.clientY - down.clickY + down.offsetY, // top
 				]);
+
+				// point = {
+				// 	x: event.clientX - down.clickX + down.offsetX, // left
+				// 	y: event.clientY - down.clickY + down.offsetY, // top
+				// };
 
 				self.dot.css({
 					top: point.y +"px",
