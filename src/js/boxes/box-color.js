@@ -9,11 +9,17 @@
 			this.wheel = el.find(".color-wheel");
 			this.shape = el.find(".color-shape");
 			this.dot = el.find(".color-dot");
+
+			this.input = {
+				hue: el.find("input[name='color-hsl-hue']"),
+				saturation: el.find("input[name='color-hsl-saturation']"),
+				lightness: el.find("input[name='color-hsl-lightness']"),
+			};
+
 			this.el = el;
 
 			// bind event handlers
 			this.wheel.on("mousedown", this.wheelEvents)
-			//this.shape.on("mousedown", this.shapeEvents)
 
 		//	setTimeout(() => this.dispatch({
 		//			type: "set-color-hsl",
@@ -24,7 +30,6 @@
 		} else {
 			// unbind event handlers
 			this.wheel.off("mousedown", this.wheelEvents)
-			//this.shape.off("mousedown", this.shapeEvents)
 		}
 	},
 	dispatch(event) {
@@ -45,9 +50,9 @@
 					angle = hue,
 					speed = 250;
 
-				self.el.find("input[name='color-hsl-hue']").val(hue +"°");
-				self.el.find("input[name='color-hsl-saturation']").val(saturation +"%");
-				self.el.find("input[name='color-hsl-lightness']").val(brightness +"%");
+				self.input.hue.val(hue +"°");
+				self.input.saturation.val(saturation +"%");
+				self.input.lightness.val(brightness +"%");
 
 
 				style = `--color: hsl(${hue}, 100%, 50%); --rotation: rotate(${angle}deg); --speed: ${speed}ms;`;
@@ -76,6 +81,7 @@
 				break;
 		}
 	},
+	current: { angle: 0 },
 	wheelEvents(event) {
 		let root = photoshop,
 			self = root.box.color,
@@ -93,25 +99,68 @@
 				dy = event.offsetY - 83;
 				dx = event.offsetX - 83;
 				
-				if (Math.sqrt(dy * dy + dx * dx) <= 66) return; // event passed to shapeEvents
+				if (Math.sqrt(dy * dy + dx * dx) <= 66) {
+					// event passed to shapeEvents
+					console.log(123);
+					return self.shapeEvents(event);
+				}
 
 				angle = Math.round(Math.atan2(dy, dx) * 180 / Math.PI);
 				hue = angle < 0 ? 360 + angle : angle;
 
-				speed = 200; //Math.max(Math.abs(diff) * 2.5, 200);
+				// calculate angle diff & make sure rotation is shortest distance
+				diff = angle - self.current.angle;
+				if (diff < -180) {
+					diff = 360 + diff;
+					angle = self.current.angle + diff;
+				} else if (diff > 180) {
+					diff = diff - 360;
+					angle = self.current.angle + diff;
+				}
+
+				speed = Math.max(Math.abs(diff) * 2.5, 150);
 				style = `--color: hsl(${hue}, 100%, 50%); --rotation: rotate(${angle}deg); --speed: ${speed}ms;`;
+
+				// save current angle
+				self.current.angle = angle;
 
 				// shape rotation
 				self.wheelObject
 					.cssSequence("easeTo", "transitionend", i => self.wheelObject.removeClass("easeTo"))
 					.attr({ style });
 
-				self.el.find("input[name='color-hsl-hue']").val(hue +"°");
+				// update input field
+				self.input.hue.val(hue +"°");
+
+				// bind event handlers
+				self.wheel
+					.addClass("color-seek")
+					.on("mousemove mouseup mouseout", self.wheelEvents);
 				break;
 			case "mousemove":
+				self.wheelObject.removeClass("easeTo");
+
+				dy = event.offsetY - 83;
+				dx = event.offsetX - 83;
+				angle = Math.round(Math.atan2(dy, dx) * 180 / Math.PI);
+				hue = angle < 0 ? 360 + angle : angle;
+
+				// shape rotation
+				style =  `--color: hsl(${hue}, 100%, 50%); --rotation: rotate(${angle}deg);`;
+				self.wheelObject.attr({ style });
+
+				// update input field
+				self.input.hue.val(hue +"°");
+
+				// save current angle
+				self.current.angle = angle;
 				break;
 			case "mouseout":
 			case "mouseup":
+				// unbind event handlers
+				self.wheel
+					.removeClass("color-seek")
+					.off("mousemove mouseup mouseout", self.wheelEvents);
 				break;
 		}
 	},
@@ -119,27 +168,29 @@
 		let root = photoshop,
 			self = root.box.color,
 			down = self.shapeDown,
+			offset,
 			shape,
 			point;
 
 		switch (event.type) {
 			case "mousedown":
-				// stop event from bubbling up
-				event.stopPropagation();
-				event.preventDefault();
-
-				//console.log( event.offsetX, event.offsetY );
-				shape = new Polygon([[38,7], [185,90], [38,171]]);
+				if (self.shape.hasClass("triangle")) {
+					shape = new Polygon([[-16,-36], [82,17], [-16,72]]);
+					offset = 67;
+				} else {
+					shape = new Polygon([[-6,-6], [83,-6], [83,83], [-6,83]]);
+					offset = 47;
+				}
+				//shape.rotate(180);
+				//console.log(self.shapeDown.shape.getCentroid());
 
 				self.shapeDown = {
 					shape,
-					offsetY: event.offsetY,
-					offsetX: event.offsetX,
+					offsetY: event.offsetY - offset,
+					offsetX: event.offsetX - offset,
 					clickY: event.clientY,
 					clickX: event.clientX,
 				};
-
-				//console.log(self.shapeDown.shape.getCentroid());
 
 				//fake trigger event
 				self.shapeEvents({
@@ -149,13 +200,14 @@
 				});
 
 				// bind event handlers
-				self.wheelObject
+				self.wheel
+					.addClass("color-seek")
 					.on("mousemove mouseup mouseout", self.shapeEvents);
 				break;
 			case "mousemove":
 				point = down.shape.constrain([
-					event.clientX - down.clickX + down.offsetX - 9, // left
-					event.clientY - down.clickY + down.offsetY - 10, // top
+					event.clientX - down.clickX + down.offsetX, // left
+					event.clientY - down.clickY + down.offsetY, // top
 				]);
 
 				self.dot.css({
@@ -164,10 +216,10 @@
 				});
 				break;
 			case "mouseout":
-				if (event.target !== self.wheelObject[0]) return;
 			case "mouseup":
 				// unbind event handlers
-				self.wheelObject
+				self.wheel
+					.removeClass("color-seek")
 					.off("mousemove mouseup mouseout", self.shapeEvents);
 				break;
 		}
