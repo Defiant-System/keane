@@ -376,11 +376,11 @@ content {
 
 					&:checked + i {
 						position: absolute;
-						top: 3px;
+						top: 4px;
 						left: 2px;
 						width: 13px;
 						height: 7px;
-						transform: rotate(-45deg);
+						transform: rotate(-53deg);
 						border-left: 3px solid rgba(#eff, .75);
 						border-bottom: 3px solid rgba(#eff, .75);
 						box-shadow: -1px 1px 0 rgba(#011, .55);
@@ -734,6 +734,18 @@ content {
 
 					&[data-box="layers"] {
 						border-top: 0;
+
+						.row {
+							padding-left: 5px;
+						}
+					}
+
+					&[data-box="channels"] {
+						.icon.eye {
+							opacity: 1;
+							visibility: visible;
+							margin: 0 13px 0 0;
+						}
 					}
 
 					.box-tools {
@@ -1150,7 +1162,7 @@ content {
 				.row {
 					position: relative;
 					display: flex;
-					padding: 8px 29px 6px 5px;
+					padding: 8px 29px 6px 11px;
 					border-bottom: 1px solid rgba(#011, .35);
 
 					&:before { content: ""; }
@@ -1207,6 +1219,16 @@ content {
 						height: 21px;
 						margin: -1px 2px 0 -1px;
 						filter: drop-shadow(0 0 1px #000);
+
+						&.channel-red {
+							filter: grayscale(1) sepia(1) hue-rotate(90deg);
+						}
+						&.channel-green {
+							filter: grayscale(1) sepia(1) hue-rotate(180deg);
+						}
+						&.channel-blue {
+							filter: grayscale(1) sepia(1) hue-rotate(270deg);
+						}
 					}
 
 					.icon {
@@ -1323,11 +1345,15 @@ content {
 					}
 
 					&.disabled {
-						opacity: 0.45;
+						opacity: 0.5;
+
+						&[style*="selection-ring"] {
+							opacity: 0.85;
+						}
 					}
 
 					&:hover:not(.disabled):after {
-						opacity: 0.75;
+						opacity: 1;
 					}
 
 					&:after {
@@ -1335,7 +1361,7 @@ content {
 						position: absolute;
 						top: 1px;
 						left: 3px;
-						opacity: 0.5;
+						opacity: 0.65;
 						background-image: inherit;
 						background-size: cover;
 						background-repeat: no-repeat;
