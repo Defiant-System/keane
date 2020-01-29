@@ -654,7 +654,7 @@
 	</svg>
 
 	<svg id="icon-color-preset" viewBox="0 0 500 500">
-		<circle fill="#FFFFFF" cx="250" cy="250" r="205.346"/>
+		<circle fill="#fff" cx="250" cy="250" r="205.346"/>
 		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="378.1631" y1="24.9146" x2="458.0664" y2="163.3112" gradientTransform="matrix(1.2821 0 0 -1.2821 -234.2436 280.9369)">
 			<stop offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
 			<stop offset="1" style="stop-color:#FF0000;stop-opacity:0.7"/>
@@ -739,8 +739,8 @@
 	</svg>
 
 	<svg id="icon-black-white" viewBox="0 0 500 500">
-		<rect x="213.346" y="218.092" fill="#000" stroke="#FFFFFF" stroke-width="20" width="228.808" height="228.808"/>
-		<rect x="57.847" y="53.101" fill="#FFFFFF" stroke="#000" stroke-width="20" width="228.808" height="228.808"/>
+		<rect x="213.346" y="218.092" fill="#000" stroke="#fff" stroke-width="20" width="228.808" height="228.808"/>
+		<rect x="57.847" y="53.101" fill="#fff" stroke="#000" stroke-width="20" width="228.808" height="228.808"/>
 	</svg>
 
 </svg>
