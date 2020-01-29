@@ -15,10 +15,9 @@ const photoshop = {
 		box = window.store("boxes/box-layers.htm", 'div[data-box="layers"]');
 		this.box.layers.toggle(box, "on");
 
-
 		// temp
-		window.find(".zoom-slider input").val(235).trigger("input");
-		window.find('[data-content="color"]').trigger("click");
+		//window.find(".zoom-slider input").val(235).trigger("input");
+		//window.find('[data-content="color"]').trigger("click");
 		//window.find('.tool[data-content="brush"]').trigger("click");
 	},
 	dispatch(event) {
