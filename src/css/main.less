@@ -748,6 +748,18 @@ content {
 						}
 					}
 
+					&[data-box="paths"] {
+						.thumbnail {
+							background: #999;
+							width: 25px;
+							height: 25px;
+							border: 1px solid rgba(#000, .65);
+						}
+						.name {
+							padding-top: 5px;
+						}
+					}
+
 					.box-tools {
 						border-bottom: 1px solid rgba(#011, .55);
 						height: 37px;
@@ -916,6 +928,8 @@ content {
 									border-top: 55px solid transparent;
 									border-bottom: 55px solid transparent;
 									pointer-events: none;
+									transform-origin: 50% 50%;
+									transform: scale(.99);
 								}
 
 								&:after {
@@ -926,8 +940,6 @@ content {
 									width: 99px;
 									height: 110px;
 									background: url(~/img/sprite.png) -380px -28px no-repeat;
-								//	transform-origin: 50% 50%;
-								//	transform: scale(1.02);
 								}
 							}
 

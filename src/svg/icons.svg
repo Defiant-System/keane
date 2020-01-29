@@ -343,8 +343,24 @@
 	</svg>
 
 	<svg id="icon-selection-ring" viewBox="0 0 500 500">
-		<circle fill="none" stroke="#fff" stroke-width="29" stroke-miterlimit="10" cx="250" cy="250" r="190"/>
-		<circle fill="none" stroke="#000" stroke-width="29" stroke-miterlimit="10" stroke-dasharray="64" cx="250" cy="250" r="190"/>
+		<circle fill="none" stroke="#fff" stroke-width="29" cx="250" cy="250" r="190"/>
+		<circle fill="none" stroke="#000" stroke-width="29" stroke-dasharray="64" cx="250" cy="250" r="190"/>
+	</svg>
+
+	<svg id="icon-layer-path-fill" viewBox="0 0 500 500">
+		<circle fill="#00000060" stroke="#000" stroke-width="29" cx="250" cy="250" r="170"/>
+	</svg>
+
+	<svg id="icon-layer-path-brush" viewBox="0 0 500 500">
+		<circle fill="none" stroke="#000" stroke-width="29" cx="250" cy="250" r="170"/>
+	</svg>
+
+	<svg id="icon-layer-path-from-selection" viewBox="0 0 500 500">
+		<circle fill="none" stroke="#000" stroke-width="29" cx="250" cy="250" r="175"/>
+		<rect x="210" y="10" width="80" height="80"/>
+		<rect x="210" y="410" width="80" height="80"/>
+		<rect x="410" y="210" width="80" height="80"/>
+		<rect x="10" y="210" width="80" height="80"/>
 	</svg>
 
 	<svg id="icon-line-solid" viewBox="0 0 450 150">
