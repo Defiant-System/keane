@@ -1,4 +1,6 @@
 
+require("canvas.js")
+
 const photoshop = {
 	init() {
 		// fast references
@@ -26,9 +28,11 @@ const photoshop = {
 			boxEl,
 			boxName,
 			el;
-
 		switch (event.type) {
 			case "window.open":
+				break;
+			case "window.resize":
+				console.log(event);
 				break;
 			case "change-bg":
 				self.canvas.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
