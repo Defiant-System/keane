@@ -1,5 +1,8 @@
 
 require("canvas.js")
+require("polygon.js")
+
+//requ2ire("modules/psd.js")
 
 const photoshop = {
 	init() {
@@ -91,7 +94,5 @@ const photoshop = {
 		paths: require("boxes/box-paths.js")
 	}
 };
-
-require("polygon.js")
 
 window.exports = photoshop;

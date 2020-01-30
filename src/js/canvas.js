@@ -11,9 +11,12 @@ CVS.prop({
 		height: window.height +"px",
 	});
 
+CTX.translate(.5,.5);
+CTX.strokeStyle = "#000"
 CTX.fillStyle = "#fff"
 
+
 CTX.beginPath();
-//CTX.rect(160,250,460,340);
-CTX.fillRect(160,250,460,340);
+CTX.rect(160,250,460,340);
+//CTX.fillRect(160,250,460,340);
 CTX.stroke();
