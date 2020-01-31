@@ -503,6 +503,16 @@ content {
 
 	.cvs-wrapper {
 		height: 0;
+
+		&:before {
+			content: "";
+			background-color: #2f3437;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
 	
 		.canvas {
 			background: #2f3437;
@@ -513,20 +523,19 @@ content {
 			// width: 100%;
 			// height: 100%;
 		}
-	}
-
-	.canvas2 {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translateX(-50%) translateY(-50%);
-		border: 1px solid rgba(0,0,0,.3);
-		box-shadow: 0 0 29px rgba(0,0,0,.25);
-		margin-left: -120px;
-		background: @ws-image;
-		width: 600px;
-		height: 366px;
-		background-size: cover;
+		.canvas {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translateX(-50%) translateY(-50%);
+			border: 1px solid rgba(0,0,0,.3);
+			box-shadow: 0 0 29px rgba(0,0,0,.25);
+			margin-left: -120px;
+			background: @ws-image;
+			width: 600px;
+			height: 366px;
+			background-size: cover;
+		}
 	}
 
 	.workspace {

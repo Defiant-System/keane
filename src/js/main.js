@@ -1,6 +1,6 @@
 
-require("canvas.js")
-require("polygon.js")
+ant_require("canvas.js")
+ant_require("polygon.js")
 
 //requ2ire("modules/psd.js")
 
@@ -21,7 +21,7 @@ const photoshop = {
 		this.box.layers.toggle(box, "on");
 
 		// temp
-		//window.find(".zoom-slider input").val(235).trigger("input");
+		window.find(".zoom-slider input").val(235).trigger("input");
 		//window.find('[data-content="color"]').trigger("click");
 		//window.find('.tool[data-content="brush"]').trigger("click");
 	},
@@ -83,15 +83,15 @@ const photoshop = {
 		}
 	},
 	box: {
-		navigator: require("boxes/box-navigator.js"),
-		color: require("boxes/box-color.js"),
-		info: require("boxes/box-info.js"),
-		character: require("boxes/box-character.js"),
-		swatches: require("boxes/box-swatches.js"),
-		paragraph: require("boxes/box-paragraph.js"),
-		layers: require("boxes/box-layers.js"),
-		channels: require("boxes/box-channels.js"),
-		paths: require("boxes/box-paths.js")
+		navigator: ant_require("boxes/box-navigator.js"),
+		color: ant_require("boxes/box-color.js"),
+		info: ant_require("boxes/box-info.js"),
+		character: ant_require("boxes/box-character.js"),
+		swatches: ant_require("boxes/box-swatches.js"),
+		paragraph: ant_require("boxes/box-paragraph.js"),
+		layers: ant_require("boxes/box-layers.js"),
+		channels: ant_require("boxes/box-channels.js"),
+		paths: ant_require("boxes/box-paths.js")
 	}
 };
 

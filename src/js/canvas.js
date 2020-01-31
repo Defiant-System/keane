@@ -2,6 +2,7 @@
 const CVS = window.find("canvas");
 const CTX = CVS[0].getContext("2d");
 
+/*
 CVS.prop({
 		width: window.width,
 		height: window.height,
@@ -20,3 +21,4 @@ CTX.beginPath();
 CTX.rect(160,250,460,340);
 //CTX.fillRect(160,250,460,340);
 CTX.stroke();
+*/
