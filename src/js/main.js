@@ -7,8 +7,11 @@ ant_require("polygon.js")
 const photoshop = {
 	init() {
 		// fast references
-		this.canvas = window.find(".canvas");
 		this.boxNavigator = window.find(".navigator-wrapper");
+		this.canvas = window.find(".canvas");
+
+		// auto trigger resize event for canvas dimensions
+		this.dispatch({ event: "window.resize" });
 
 		// auto store box HTML
 		window.store("tool-options/marquee.htm", '.tool-options-marquee');
@@ -21,7 +24,7 @@ const photoshop = {
 		this.box.layers.toggle(box, "on");
 
 		// temp
-		window.find(".zoom-slider input").val(235).trigger("input");
+		//window.find(".zoom-slider input").val(235).trigger("input");
 		//window.find('[data-content="color"]').trigger("click");
 		//window.find('.tool[data-content="brush"]').trigger("click");
 	},
@@ -35,7 +38,11 @@ const photoshop = {
 			case "window.open":
 				break;
 			case "window.resize":
-				console.log(event);
+				// resize canvas to maintain correct pixel ratio
+				self.canvas.prop({
+					width: window.width,
+					height: window.height,
+				});
 				break;
 			case "change-bg":
 				self.canvas.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
