@@ -1,6 +1,6 @@
 
-ant_require("canvas.js")
-ant_require("polygon.js")
+defiant.require("canvas.js")
+defiant.require("polygon.js")
 
 //requ2ire("modules/psd.js")
 
@@ -90,15 +90,15 @@ const photoshop = {
 		}
 	},
 	box: {
-		navigator: ant_require("boxes/box-navigator.js"),
-		color: ant_require("boxes/box-color.js"),
-		info: ant_require("boxes/box-info.js"),
-		character: ant_require("boxes/box-character.js"),
-		swatches: ant_require("boxes/box-swatches.js"),
-		paragraph: ant_require("boxes/box-paragraph.js"),
-		layers: ant_require("boxes/box-layers.js"),
-		channels: ant_require("boxes/box-channels.js"),
-		paths: ant_require("boxes/box-paths.js")
+		navigator: defiant.require("boxes/box-navigator.js"),
+		color:     defiant.require("boxes/box-color.js"),
+		info:      defiant.require("boxes/box-info.js"),
+		character: defiant.require("boxes/box-character.js"),
+		swatches:  defiant.require("boxes/box-swatches.js"),
+		paragraph: defiant.require("boxes/box-paragraph.js"),
+		layers:    defiant.require("boxes/box-layers.js"),
+		channels:  defiant.require("boxes/box-channels.js"),
+		paths:     defiant.require("boxes/box-paths.js")
 	}
 };
 
