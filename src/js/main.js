@@ -1,17 +1,19 @@
 
+defiant.require("modules/psd.js")
 defiant.require("canvas.js")
-defiant.require("polygon.js")
 
-//requ2ire("modules/psd.js")
+const PSD = require("psd");
 
 const photoshop = {
 	init() {
 		// fast references
+		this.content = window.find("content");
+		this.workSpace = window.find(".workspace");
 		this.boxNavigator = window.find(".navigator-wrapper");
 		this.canvas = window.find(".canvas");
 
 		// auto trigger resize event for canvas dimensions
-		this.dispatch({ event: "window.resize" });
+		//this.dispatch({ event: "window.resize" });
 
 		// auto store box HTML
 		window.store("tool-options/marquee.htm", '.tool-options-marquee');
@@ -22,6 +24,9 @@ const photoshop = {
 		this.box.character.toggle(box, "on");
 		box = window.store("boxes/box-layers.htm", 'div[data-box="layers"]');
 		this.box.layers.toggle(box, "on");
+
+		// bind event handlers
+		this.content.bind("dragover drop", this.dispatch);
 
 		// temp
 		//window.find(".zoom-slider input").val(235).trigger("input");
@@ -35,6 +40,30 @@ const photoshop = {
 			boxName,
 			el;
 		switch (event.type) {
+			case "dragover":
+				event.stopPropagation();
+				event.preventDefault();
+				event.dataTransfer.dropEffect = 'copy';
+				break;
+			case "drop":
+				event.stopPropagation();
+				event.preventDefault();
+				
+				PSD.fromEvent(event).then(function (psd) {
+					var data = JSON.stringify(psd.tree().export(), undefined, 2),
+						img = new Image();
+
+					img.onload = () => {
+						CTX.drawImage(img, 70, 150)
+					};
+					
+					img.src = psd.image.toBase64();
+
+					// document.getElementById('data').innerHTML = data;
+					// document.getElementById('image').appendChild(psd.image.toPng());
+				});
+				break;
+
 			case "window.open":
 				break;
 			case "window.resize":
