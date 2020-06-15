@@ -23,20 +23,21 @@
 	},
 	dispatch(event) {
 		let root = photoshop,
-			self = root.box.navigator;
+			self = root.box.navigator,
+			value;
 		switch (event.type) {
 			case "input":
-				let percent = this.value / 100;
+				value = this.value / 100;
 
 				self.zoomValue.html(this.value + "%");
 
-				root.canvas.css({
-					width: (600 * percent) +"px",
-					height: (366 * percent) +"px",
-				});
+				// root.canvas.css({
+				// 	width: (600 * value) +"px",
+				// 	height: (366 * value) +"px",
+				// });
 
-				let width = Math.min((190 * 1.25) / percent, 190),
-					height = Math.min((120 * 1.25) / percent, 120),
+				let width = Math.min((190 * 1.25) / value, 190),
+					height = Math.min((120 * 1.25) / value, 120),
 					top = ((120 - height) / 2),
 					left = ((190 - width) / 2);
 
@@ -46,6 +47,8 @@
 					width: width +"px",
 					height: height +"px",
 				});
+
+				Canvas.dispatch({ type: "set-scale", scale: value });
 				break;
 		}
 	}

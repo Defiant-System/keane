@@ -1,8 +1,8 @@
 
-defiant.require("modules/psd.js")
+//defiant.req1uire("modules/psd.js")
 defiant.require("canvas.js")
 
-const PSD = require("psd");
+//const PSD = require1("psd");
 
 const photoshop = {
 	init() {
@@ -14,6 +14,8 @@ const photoshop = {
 
 		// auto trigger resize event for canvas dimensions
 		//this.dispatch({ event: "window.resize" });
+
+		Canvas.init();
 
 		// auto store box HTML
 		window.store("tool-options/marquee.htm", '.tool-options-marquee');
@@ -68,10 +70,7 @@ const photoshop = {
 				break;
 			case "window.resize":
 				// resize canvas to maintain correct pixel ratio
-				self.canvas.prop({
-					width: window.width,
-					height: window.height,
-				});
+				Canvas.dispatch(event);
 				break;
 			case "change-bg":
 				self.canvas.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
