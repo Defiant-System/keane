@@ -9,7 +9,12 @@
 			this.zoomRect = el.find(".view-rect");
 			this.zoomValue = el.find(".box-foot .value");
 			this.zoomSlider = el.find(".zoom-slider input");
+			this.navCvs = el.find(".nav-cvs");
+			this.navCtx = this.navCvs[0].getContext("2d");
 			this.el = el;
+
+			// available height
+			this.navHeight = this.wrapper.height();
 
 			// bind event handlers
 			this.zoomSlider.on("input", this.dispatch);
@@ -24,22 +29,21 @@
 	dispatch(event) {
 		let root = photoshop,
 			self = root.box.navigator,
-			value;
+			value,
+			width,
+			height,
+			top,
+			left;
 		switch (event.type) {
 			case "input":
 				value = this.value / 100;
 
 				self.zoomValue.html(this.value + "%");
 
-				// root.canvas.css({
-				// 	width: (600 * value) +"px",
-				// 	height: (366 * value) +"px",
-				// });
-
-				let width = Math.min((190 * 1.25) / value, 190),
-					height = Math.min((120 * 1.25) / value, 120),
-					top = ((120 - height) / 2),
-					left = ((190 - width) / 2);
+				width = Math.min((190 * 1.25) / value, 190);
+				height = Math.min((120 * 1.25) / value, 120);
+				top = ((120 - height) / 2);
+				left = ((190 - width) / 2);
 
 				self.zoomRect.css({
 					top: (top - 1) +"px",
@@ -49,6 +53,21 @@
 				});
 
 				Canvas.dispatch({ type: "set-scale", scale: value });
+				break;
+			case "zoom-out":
+				break;
+			case "zoom-in":
+				break;
+			case "update-canvas":
+				self.orgWidth = Canvas.w;
+				self.orgHeight = Canvas.h;
+				self.ratio = self.orgHeight / self.orgWidth;
+
+				// available width
+				self.navWidth = Math.round(self.navHeight / self.ratio);
+
+				width = self.navWidth +"px";
+				self.wrapper.css({ width });
 				break;
 		}
 	}

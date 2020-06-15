@@ -1,13 +1,14 @@
 <div data-box="navigator">
 	<div class="navigator-wrapper">
+		<canvas class="nav-cvs"></canvas>
 		<div class="view-rect"></div>
 	</div>
 	<div class="box-foot">
 		<div class="value">100%</div>
 		<div class="zoom-slider">
-			<div class="icon mini" style="background-image: url(~/icons/icon-mountain.png);"></div>
+			<div class="icon mini" data-click="zoom-out"></div>
 			<input class="mini-nob" type="range" value="100" min="25" max="400">
-			<div class="icon maxi" style="background-image: url(~/icons/icon-mountain.png);"></div>
+			<div class="icon maxi" data-click="zoom-in"></div>
 		</div>
 	</div>
 </div>

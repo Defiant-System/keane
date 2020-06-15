@@ -10,6 +10,9 @@ const Canvas = {
 		this.els.rulerTop = window.find(".ruler-top");
 		this.els.rulerLeft = window.find(".ruler-left");
 
+		this.excludeWidth = this.els.sideBar.width() + this.els.rulerLeft.width();
+		this.excludeHeight = this.els.toolBar.height() + this.els.optionsBar.height() + this.els.rulerTop.height() - this.els.statusBar.height();
+
 		this.cvs = window.find("canvas");
 		this.ctx = this.cvs[0].getContext("2d");
 
@@ -17,7 +20,6 @@ const Canvas = {
 		this.cvsBg.onload = () => this.cvsBgPattern = this.ctx.createPattern(this.cvsBg, "repeat");
 		this.cvsBg.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
 		
-
 		this.cvs.prop({
 			width: window.width,
 			height: window.height,
@@ -28,12 +30,13 @@ const Canvas = {
 
 		this.stack = [
 			{ type: "reset-canvas" },
-			{ type: "set-canvas", w: 600, h: 460, scale: 1 },
+			{ type: "set-canvas", w: 600, h: 460, scale: this.scale || 1 },
 			{ type: "draw-base-layer", fill: "#fff" },
 			// { type: "draw-base-layer", fill: "transparent" },
 			// { type: "draw-rect", x: 40, y: 50, w: 200, h: 140, fill: "red" },
 			// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
-			{ type: "draw-text", x: 140, y: 150, fill: "blue", size: 52, font: "Arial", text: "Defiant" },
+			{ type: "draw-text", x: 140, y: 150, fill: "blue", size: 52, font: "Helvetica", text: "Defiant" },
+			{ type: "update-navigator-canvas" },
 		];
 
 		setTimeout(() => this.stack.map(item => this.dispatch(item)), 200);
@@ -51,21 +54,24 @@ const Canvas = {
 		// save paint context
 		self.ctx.save();
 		self.ctx.translate(self.oX, self.oY);
+		self.ctx.scale(self.scale, self.scale);
 
 		switch (event.type) {
 			case "window.resize":
 				break;
 			case "reset-canvas":
-				self.cX = (window.width - self.els.sideBar.width() + self.els.rulerLeft.width()) / 2;
-				self.cY = (window.height + self.els.toolBar.height() + self.els.optionsBar.height() + self.els.rulerTop.height() - self.els.statusBar.height()) / 2;
-				self.ctx.clearRect(0, 0, 1e4, 1e4);
+				self.cX = (window.width - self.excludeWidth) / 2;
+				self.cY = (window.height + self.excludeHeight) / 2;
+				// clears canvas
+				self.cvs.prop({ width: window.width, height: window.height });
 				break;
 			case "set-canvas":
 				self.w = event.w;
 				self.h = event.h;
-				self.oX = self.cX - (self.w / 2);
-				self.oY = self.cY - (self.h / 2);
-				self.scale = event.scale;
+				self.scale = self.scale || event.scale;
+				
+				self.oX = self.cX - ((self.w * self.scale) / 2);
+				self.oY = self.cY - ((self.h * self.scale) / 2);
 
 				self.bgColor = "#000"
 				self.fgColor = "#fff"
@@ -73,6 +79,8 @@ const Canvas = {
 				break;
 			case "set-scale":
 				self.scale = event.scale;
+				
+				self.stack.map(item => self.dispatch(item));
 				break;
 			case "draw-base-layer":
 				self.ctx.fillStyle = event.fill === "transparent" ? self.cvsBgPattern : event.fill;
@@ -96,6 +104,9 @@ const Canvas = {
 				self.ctx.font = `${event.size}px ${event.font}`;
 				self.ctx.fillStyle = event.fill;
 				self.ctx.fillText(event.text, event.x, event.y);
+				break;
+			case "update-navigator-canvas":
+				photoshop.box.navigator.dispatch({ type: "update-canvas" });
 				break;
 		}
 		// restore paint context
