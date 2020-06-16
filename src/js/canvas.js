@@ -13,7 +13,7 @@ const Canvas = {
 		this.excludeWidth = this.els.sideBar.width() + this.els.rulerLeft.width();
 		this.excludeHeight = this.els.toolBar.height() + this.els.optionsBar.height() + this.els.rulerTop.height() - this.els.statusBar.height();
 
-		this.cvs = window.find("canvas");
+		this.cvs = window.find(".cvs-wrapper canvas");
 		this.ctx = this.cvs[0].getContext("2d");
 
 		this.cvsBg = new Image;
@@ -35,7 +35,7 @@ const Canvas = {
 			// { type: "draw-base-layer", fill: "transparent" },
 			// { type: "draw-rect", x: 40, y: 50, w: 200, h: 140, fill: "red" },
 			// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
-			{ type: "draw-text", x: 140, y: 150, fill: "blue", size: 52, font: "Helvetica", text: "Defiant" },
+			{ type: "draw-text", x: 140, y: 150, fill: "blue", size: 102, font: "Helvetica", text: "Defiant" },
 			{ type: "update-navigator-canvas" },
 		];
 

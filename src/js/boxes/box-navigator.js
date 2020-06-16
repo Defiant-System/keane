@@ -9,15 +9,20 @@
 			this.zoomRect = el.find(".view-rect");
 			this.zoomValue = el.find(".box-foot .value");
 			this.zoomSlider = el.find(".zoom-slider input");
+			this.el = el;
+
+			this.tmpCvs = $(document.createElement("canvas"));
+			this.tmpCtx = this.tmpCvs[0].getContext("2d");
 			this.navCvs = el.find(".nav-cvs");
 			this.navCtx = this.navCvs[0].getContext("2d");
-			this.el = el;
 
 			// available height
 			this.navHeight = this.wrapper.height();
 
 			// bind event handlers
 			this.zoomSlider.on("input", this.dispatch);
+
+			this.dispatch({ type: "update-canvas" });
 
 		} else {
 			// unbind event handlers
@@ -29,6 +34,7 @@
 	dispatch(event) {
 		let root = photoshop,
 			self = root.box.navigator,
+			data,
 			value,
 			width,
 			height,
@@ -40,14 +46,14 @@
 
 				self.zoomValue.html(this.value + "%");
 
-				width = Math.min((190 * 1.25) / value, 190);
-				height = Math.min((120 * 1.25) / value, 120);
-				top = ((120 - height) / 2);
-				left = ((190 - width) / 2);
+				width = Math.min((self.navWidth * 1.25) / value, self.navWidth);
+				height = Math.min((self.navHeight * 1.25) / value, self.navHeight);
+				top = ((self.navHeight - height) / 2);
+				left = ((self.navWidth - width) / 2);
 
 				self.zoomRect.css({
-					top: (top - 1) +"px",
-					left: (left - 1) +"px",
+					top: top +"px",
+					left: left +"px",
 					width: width +"px",
 					height: height +"px",
 				});
@@ -59,15 +65,22 @@
 			case "zoom-in":
 				break;
 			case "update-canvas":
-				self.orgWidth = Canvas.w;
-				self.orgHeight = Canvas.h;
-				self.ratio = self.orgHeight / self.orgWidth;
+				// calc ratio
+				self.ratio = Canvas.h / Canvas.w;
+				if (isNaN(self.ratio)) return;
 
 				// available width
 				self.navWidth = Math.round(self.navHeight / self.ratio);
+				self.scale = self.navHeight / Canvas.h;
 
-				width = self.navWidth +"px";
-				self.wrapper.css({ width });
+				self.wrapper.css({ width: self.navWidth +"px" });
+				self.navCvs.prop({ width: self.navWidth, height: self.navHeight });
+
+				data = Canvas.ctx.getImageData(Canvas.oX, Canvas.oY, Canvas.w * Canvas.scale, Canvas.h * Canvas.scale);
+				self.tmpCvs.prop({ width: Canvas.w * Canvas.scale, height: Canvas.h * Canvas.scale });
+				self.tmpCtx.putImageData(data, 0, 0);
+				self.navCtx.drawImage(self.tmpCvs[0], 0, 0, self.navWidth, self.navHeight);
+				self.wrapper.removeClass("hidden");
 				break;
 		}
 	}
