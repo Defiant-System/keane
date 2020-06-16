@@ -2,17 +2,17 @@
 // photoshop.box.navigator
 
 {
+	zoom: [10,25,50,75,100,200,300,400,600,800,1200,1500,1800],
 	toggle(el, state) {
 		if (state === "on") {
 			// fast references
+			this.statusZoom = window.find(".status-bar .option .value");
 			this.wrapper = el.find(".navigator-wrapper");
 			this.zoomRect = el.find(".view-rect");
 			this.zoomValue = el.find(".box-foot .value");
 			this.zoomSlider = el.find(".zoom-slider input");
 			this.el = el;
 
-			this.tmpCvs = $(document.createElement("canvas"));
-			this.tmpCtx = this.tmpCvs[0].getContext("2d");
 			this.navCvs = el.find(".nav-cvs");
 			this.navCtx = this.navCvs[0].getContext("2d");
 
@@ -23,7 +23,6 @@
 			this.zoomSlider.on("input", this.dispatch);
 
 			this.dispatch({ type: "update-canvas" });
-
 		} else {
 			// unbind event handlers
 			if (this.zoomSlider) this.zoomSlider.off("input", this.dispatch);
@@ -42,27 +41,31 @@
 			left;
 		switch (event.type) {
 			case "input":
-				value = this.value / 100;
+				value = self.zoom[this.value];
+				self.zoomValue.html(value + "%");
+				self.statusZoom.html(value + "%");
 
-				self.zoomValue.html(this.value + "%");
+				// width = Math.min(self.navWidth / (value / 100), self.navWidth);
+				// height = Math.min(self.navHeight / (value / 100), self.navHeight);
+				// top = 0; //(self.navHeight - height) / 2;
+				// left = 0; //(self.navWidth - width) / 2;
 
-				width = Math.min((self.navWidth * 1.25) / value, self.navWidth);
-				height = Math.min((self.navHeight * 1.25) / value, self.navHeight);
-				top = ((self.navHeight - height) / 2);
-				left = ((self.navWidth - width) / 2);
+				// self.zoomRect.css({
+				// 	top: top +"px",
+				// 	left: left +"px",
+				// 	width: width +"px",
+				// 	height: height +"px",
+				// });
 
-				self.zoomRect.css({
-					top: top +"px",
-					left: left +"px",
-					width: width +"px",
-					height: height +"px",
-				});
-
-				Canvas.dispatch({ type: "set-scale", scale: value });
+				Canvas.dispatch({ type: "set-scale", scale: value / 100 });
 				break;
 			case "zoom-out":
+				value = Math.max(+self.zoomSlider.val() - 1, 0);
+				self.zoomSlider.val(value.toString()).trigger("input");
 				break;
 			case "zoom-in":
+				value = Math.min(+self.zoomSlider.val() + 1, self.zoom.length - 1);
+				self.zoomSlider.val(value).trigger("input");
 				break;
 			case "update-canvas":
 				// calc ratio
@@ -71,15 +74,10 @@
 
 				// available width
 				self.navWidth = Math.round(self.navHeight / self.ratio);
-				self.scale = self.navHeight / Canvas.h;
 
 				self.wrapper.css({ width: self.navWidth +"px" });
 				self.navCvs.prop({ width: self.navWidth, height: self.navHeight });
-
-				data = Canvas.ctx.getImageData(Canvas.oX, Canvas.oY, Canvas.w * Canvas.scale, Canvas.h * Canvas.scale);
-				self.tmpCvs.prop({ width: Canvas.w * Canvas.scale, height: Canvas.h * Canvas.scale });
-				self.tmpCtx.putImageData(data, 0, 0);
-				self.navCtx.drawImage(self.tmpCvs[0], 0, 0, self.navWidth, self.navHeight);
+				self.navCtx.drawImage(Canvas.osCvs[0], 0, 0, self.navWidth, self.navHeight);
 				self.wrapper.removeClass("hidden");
 				break;
 		}
