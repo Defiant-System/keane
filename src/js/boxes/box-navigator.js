@@ -45,18 +45,6 @@
 				self.zoomValue.html(value + "%");
 				self.statusZoom.html(value + "%");
 
-				// width = Math.min(self.navWidth / (value / 100), self.navWidth);
-				// height = Math.min(self.navHeight / (value / 100), self.navHeight);
-				// top = 0; //(self.navHeight - height) / 2;
-				// left = 0; //(self.navWidth - width) / 2;
-
-				// self.zoomRect.css({
-				// 	top: top +"px",
-				// 	left: left +"px",
-				// 	width: width +"px",
-				// 	height: height +"px",
-				// });
-
 				Canvas.dispatch({ type: "set-scale", scale: value / 100 });
 				break;
 			case "zoom-out":
@@ -74,6 +62,18 @@
 
 				// available width
 				self.navWidth = Math.round(self.navHeight / self.ratio);
+
+				// width = Math.min(self.navWidth / (value / 100), self.navWidth);
+				// height = Math.min(self.navHeight / (value / 100), self.navHeight);
+				// top = 0; //(self.navHeight - height) / 2;
+				// left = 0; //(self.navWidth - width) / 2;
+
+				// self.zoomRect.css({
+				// 	top: top +"px",
+				// 	left: left +"px",
+				// 	width: width +"px",
+				// 	height: height +"px",
+				// });
 
 				self.wrapper.css({ width: self.navWidth +"px" });
 				self.navCvs.prop({ width: self.navWidth, height: self.navHeight });
