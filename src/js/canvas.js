@@ -63,6 +63,7 @@ const Canvas = {
 	dispatch(event) {
 		let APP = photoshop,
 			self = Canvas,
+			_navigator = APP.box.navigator,
 			pi2 = Math.PI * 2,
 			x, y, w, h,
 			pattern,
@@ -81,7 +82,7 @@ const Canvas = {
 				self.aX = self.els.rulerLeft.width();
 				self.aY = self.els.toolBar.height() + self.els.optionsBar.height() + self.els.rulerTop.height();
 				self.aW = window.width - self.aX - self.els.sideBar.width();
-				self.aH = window.height - self.aY - self.els.statusBar.height();
+				self.aH = window.height - self.aY; // - self.els.statusBar.height()
 				// center
 				self.cX = (window.width + self.aX - self.els.sideBar.width()) / 2;
 				self.cY = (window.height + self.aY - self.els.statusBar.height()) / 2;
@@ -157,8 +158,8 @@ const Canvas = {
 				self.ctx.translate(self.oX, self.oY);
 				self.ctx.drawImage(self.osCvs[0], 0, 0, self.w, self.h);
 				
-				APP.box.navigator.dispatch({ type: "set-zoom", arg: self.scale });
-				APP.box.navigator.dispatch({ type: "update-canvas" });
+				//_navigator.dispatch({ type: "set-zoom", arg: self.scale });
+				_navigator.dispatch({ type: "update-canvas" });
 				break;
 		}
 		// restore paint context

@@ -85,7 +85,7 @@ const photoshop = {
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
 							{ type: "draw-image", src: image },
-							// { type: "draw-rect", x: 40, y: 50, w: 200, h: 140, fill: "red" },
+							// { type: "draw-rect", x: 165, y: 84, w: 269, h: 230, fill: "white" },
 							// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },

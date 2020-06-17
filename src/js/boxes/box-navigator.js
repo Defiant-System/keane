@@ -33,8 +33,12 @@
 		}
 	},
 	dispatch(event) {
-		let root = photoshop,
-			self = root.box.navigator,
+		let Root = photoshop,
+			Self = Root.box.navigator,
+			_canvas = Canvas,
+			_round = Math.round,
+			_max = Math.max,
+			_min = Math.min,
 			data,
 			value,
 			width,
@@ -43,50 +47,46 @@
 			left;
 		switch (event.type) {
 			case "set-zoom":
-				value = self.zoom.indexOf(event.arg * 100);
-				self.els.zoomSlider.val(value);
+				value = Self.zoom.indexOf(event.arg * 100);
+				Self.els.zoomSlider.val(value);
 				/* falls through */
 			case "input":
-				value = self.zoom[self.els.zoomSlider.val()];
-				self.els.zoomValue.html(value + "%");
-				self.els.statusZoom.html(value + "%");
+				value = Self.zoom[Self.els.zoomSlider.val()];
+				Self.els.zoomValue.html(value + "%");
+				Self.els.statusZoom.html(value + "%");
 
-				Canvas.dispatch({ type: "set-scale", scale: value / 100 });
+				_canvas.dispatch({ type: "set-scale", scale: value / 100 });
 				break;
 			case "zoom-out":
-				value = Math.max(+self.els.zoomSlider.val() - 1, 0);
-				self.els.zoomSlider.val(value.toString()).trigger("input");
+				value = _max(+Self.els.zoomSlider.val() - 1, 0);
+				Self.els.zoomSlider.val(value.toString()).trigger("input");
 				break;
 			case "zoom-in":
-				value = Math.min(+self.els.zoomSlider.val() + 1, self.zoom.length - 1);
-				self.els.zoomSlider.val(value).trigger("input");
+				value = _min(+Self.els.zoomSlider.val() + 1, Self.zoom.length - 1);
+				Self.els.zoomSlider.val(value).trigger("input");
 				break;
 			case "update-canvas":
 				// calc ratio
-				self.ratio = Canvas.h / Canvas.w;
-				if (isNaN(self.ratio)) return;
+				Self.ratio = _canvas.h / _canvas.w;
+				if (isNaN(Self.ratio)) return;
 
 				// available width
-				self.navWidth = Math.round(self.navHeight / self.ratio);
+				Self.navWidth = _round(Self.navHeight / Self.ratio);
 
-				width = Canvas.aW - Canvas.w;
-				//console.log(width);
-				// width = Math.min(self.navWidth / (value / 100), self.navWidth);
-				// height = Math.min(self.navHeight / (value / 100), self.navHeight);
-				// top = 0; //(self.navHeight - height) / 2;
-				// left = 0; //(self.navWidth - width) / 2;
+				data = {
+					top:    _max((((_canvas.aY - _canvas.oY) / _canvas.h) * Self.navHeight) - 1, 0),
+					left:   _max((((_canvas.aX - _canvas.oX) / _canvas.w) * Self.navWidth) - 1, 0),
+				};
+				data.height = _min(((_canvas.aH / _canvas.h) * Self.navHeight) + 1, Self.navHeight - data.top);
+				data.width = _min(((_canvas.aW / _canvas.w) * Self.navWidth) + 1, Self.navWidth - data.left);
 
-				// self.zoomRect.css({
-				// 	top: top +"px",
-				// 	left: left +"px",
-				// 	width: width +"px",
-				// 	height: height +"px",
-				// });
+				for (let key in data) data[key] = _round(data[key]) +"px";
+				Self.els.zoomRect.css(data);
 
-				self.els.wrapper.css({ width: self.navWidth +"px" });
-				self.cvs.prop({ width: self.navWidth, height: self.navHeight });
-				self.ctx.drawImage(Canvas.osCvs[0], 0, 0, self.navWidth, self.navHeight);
-				self.els.wrapper.removeClass("hidden");
+				Self.els.wrapper.css({ width: Self.navWidth +"px" });
+				Self.cvs.prop({ width: Self.navWidth, height: Self.navHeight });
+				Self.ctx.drawImage(_canvas.osCvs[0], 0, 0, Self.navWidth, Self.navHeight);
+				Self.els.wrapper.removeClass("hidden");
 				break;
 		}
 	}
