@@ -27,8 +27,8 @@ const Canvas = {
 	},
 	pan(event) {
 		let APP = photoshop,
-			self = Canvas,
-			drag = self.panDrag,
+			Self = Canvas,
+			drag = Self.panDrag,
 			x, y,
 			el;
 		switch (event.type) {
@@ -36,27 +36,27 @@ const Canvas = {
 				// prevent default behaviour
 				event.preventDefault();
 
-				self.panDrag = {
+				Self.panDrag = {
 					clickX: event.clientX,
 					clickY: event.clientY,
-					oX: self.oX - self.cX + (self.w / 2),
-					oY: self.oY - self.cY + (self.h / 2),
+					oX: Self.oX - Self.cX + (Self.w / 2),
+					oY: Self.oY - Self.cY + (Self.h / 2),
 				};
 				// prevent mouse from triggering mouseover
 				APP.content.addClass("cover");
 				// bind event handlers
-				self.doc.on("mousemove mouseup", self.pan);
+				Self.doc.on("mousemove mouseup", Self.pan);
 				break;
 			case "mousemove":
 				x = event.clientX - drag.clickX + drag.oX;
 				y = event.clientY - drag.clickY + drag.oY;
-				self.dispatch({ type: "pan-canvas", x, y });
+				Self.dispatch({ type: "pan-canvas", x, y });
 				break;
 			case "mouseup":
 				// remove class
 				APP.content.removeClass("cover");
 				// unbind event handlers
-				self.doc.off("mousemove mouseup", self.pan);
+				Self.doc.off("mousemove mouseup", Self.pan);
 				break;
 		}
 	},
@@ -119,11 +119,12 @@ const Canvas = {
 				Self.stack.map(item => Self.dispatch(item));
 				break;
 			case "pan-canvas":
+				// reset canvas
 				Self.cvs.prop({ width: window.width, height: window.height });
 				
-				Self.oX = Self.cX - (Self.w / 2) + event.x;
-				Self.oY = Self.cY - (Self.h / 2) + event.y;
-				Self.dispatch({ type: "update-canvas" });
+				Self.oX = event.left || Self.cX - (Self.w / 2) + event.x;
+				Self.oY = event.top || Self.cY - (Self.h / 2) + event.y;
+				Self.dispatch({ type: "update-canvas", stop: event.stop });
 				break;
 			case "draw-base-layer":
 				Self.osCtx.fillStyle = event.fill === "transparent" ? Self.cvsBgPattern : event.fill;
@@ -160,8 +161,10 @@ const Canvas = {
 				Self.ctx.translate(Self.oX, Self.oY);
 				Self.ctx.drawImage(Self.osCvs[0], 0, 0, Self.w, Self.h);
 				
-				_navigator.dispatch({ type: "set-zoom", arg: Self.scale });
-				_navigator.dispatch({ type: "update-canvas" });
+				if (!event.stop) {
+					_navigator.dispatch({ type: "set-zoom", arg: Self.scale });
+					_navigator.dispatch({ type: "update-canvas" });
+				}
 				break;
 		}
 		// restore paint context
