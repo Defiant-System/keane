@@ -46,6 +46,18 @@ content {
 	display: flex;
 	flex-direction: column;
 
+	// prevent mouse from triggering mouseover when panning for instance
+	&.cover:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 99;
+		background: transparent;
+	}
+
 	.tools-bar {
 		background-color: rgba(#233,.75);
 		backdrop-filter: blur(@backgrop-blur);

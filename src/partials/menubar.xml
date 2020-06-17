@@ -11,20 +11,20 @@
 		<Menu name="Quit Photoshop" shell="win -c"/>
 	</Menu>
 	<Menu name="Background" for="workspace">
-		<Menu name="Drop of Water" arg="nature/drop-of-water" click="change-bg"/>
-		<Menu name="Barley Field" arg="nature/barley-field" click="change-bg"/>
-		<Menu name="Flower 1" arg="nature/flower" click="change-bg"/>
-		<Menu name="Flower 2" arg="nature/flower-2" click="change-bg"/>
-		<Menu name="Flower 3" arg="nature/flower-3" click="change-bg"/>
-		<Menu name="Grass" arg="nature/grass" click="change-bg"/>
-		<Menu name="Lotus" arg="nature/lotus" click="change-bg"/>
-		<Menu name="Meadow" arg="nature/meadow" click="change-bg"/>
-		<Menu name="Pink" arg="nature/pink" click="change-bg"/>
-		<Menu name="Rose" arg="nature/rose" click="change-bg"/>
-		<Menu name="Bloom" arg="nature/bloom" click="change-bg"/>
+		<Menu name="Drop of Water" arg="/cdn/img/bg/nature/drop-of-water.jpg" click="change-bg"/>
+		<Menu name="Barley Field" arg="/cdn/img/bg/nature/barley-field.jpg" click="change-bg"/>
+		<Menu name="Flower 1" arg="/cdn/img/bg/nature/flower.jpg" click="change-bg"/>
+		<Menu name="Flower 2" arg="/cdn/img/bg/nature/flower-2.jpg" click="change-bg"/>
+		<Menu name="Flower 3" arg="/cdn/img/bg/nature/flower-3.jpg" click="change-bg"/>
+		<Menu name="Grass" arg="/cdn/img/bg/nature/grass.jpg" click="change-bg"/>
+		<Menu name="Lotus" arg="/cdn/img/bg/nature/lotus.jpg" click="change-bg"/>
+		<Menu name="Meadow" arg="/cdn/img/bg/nature/meadow.jpg" click="change-bg"/>
+		<Menu name="Pink" arg="/cdn/img/bg/nature/pink.jpg" click="change-bg"/>
+		<Menu name="Rose" arg="/cdn/img/bg/nature/rose.jpg" click="change-bg"/>
+		<Menu name="Bloom" arg="/cdn/img/bg/nature/bloom.jpg" click="change-bg"/>
 		<Menu type="divider"/>
-		<Menu name="Bled" arg="wallpapers/bled" click="change-bg"/>
-		<Menu name="Golden Gate Bridge" arg="wallpapers/golden-gate-bridge" click="change-bg"/>
+		<Menu name="Bled" arg="/cdn/img/bg/wallpapers/bled.jpg" click="change-bg"/>
+		<Menu name="Golden Gate Bridge" arg="/cdn/img/bg/wallpapers/golden-gate-bridge.jpg" click="change-bg"/>
 	</Menu>
 	<Menu name="Help">
 		<Menu name="Help" click="open-help"/>

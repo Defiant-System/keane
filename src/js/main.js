@@ -31,12 +31,16 @@ const photoshop = {
 		this.content.bind("dragover drop", this.dispatch);
 
 		// temp
+		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
+		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/nature/rose.jpg" });
+
 		//window.find(".zoom-slider input").val(235).trigger("input");
 		//window.find('[data-content="color"]').trigger("click");
 		//window.find('.tool[data-content="brush"]').trigger("click");
 	},
 	dispatch(event) {
 		let self = photoshop,
+			image,
 			name,
 			boxEl,
 			boxName,
@@ -73,8 +77,23 @@ const photoshop = {
 				Canvas.dispatch(event);
 				break;
 			case "change-bg":
-				self.canvas.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
-				self.boxNavigator.css({"background-image": `url('/cdn/img/bg/${event.arg}.jpg')`});
+				image = new Image;
+				image.onload = () => {
+					let stack = [
+							{ type: "reset-canvas" },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
+							// { type: "draw-base-layer", fill: "#fff" },
+							// { type: "draw-base-layer", fill: "transparent" },
+							{ type: "draw-image", src: image },
+							// { type: "draw-rect", x: 40, y: 50, w: 200, h: 140, fill: "red" },
+							// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
+							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
+							{ type: "update-canvas" },
+						];
+
+					Canvas.dispatch({ type: "load-canvas", stack });
+				};
+				image.src = event.arg;
 				break;
 			case "select-tool":
 				el = $(event.target);
