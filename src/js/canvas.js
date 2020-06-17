@@ -32,14 +32,14 @@ const Canvas = {
 		// temp stack
 		this.stack = [
 			{ type: "reset-canvas" },
-			{ type: "set-canvas", w: 600, h: 398, scale: this.scale || 1 },
+			{ type: "set-canvas", w: 600, h: 398, scale: this.scale || 2 },
 			// { type: "draw-base-layer", fill: "#fff" },
 			// { type: "draw-base-layer", fill: "transparent" },
 			{ type: "draw-image" },
 			// { type: "draw-rect", x: 40, y: 50, w: 200, h: 140, fill: "red" },
 			// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
 			{ type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
-			{ type: "pan-canvas", x: -40, y: -40 },
+			// { type: "pan-canvas", x: 20, y: 0 },
 			{ type: "update-canvas" },
 		];
 
@@ -48,20 +48,22 @@ const Canvas = {
 	pan(event) {
 		let self = Canvas,
 			drag = self.panDrag,
-			mX, mY,
+			x, y,
 			el;
 		switch (event.type) {
 			case "mousedown":
 				self.panDrag = {
 					clickX: event.clientX,
 					clickY: event.clientY,
+					oX: self.oX - self.cX + (self.w / 2),
+					oY: self.oY - self.cY + (self.h / 2),
 				};
 				self.doc.on("mousemove mouseup", self.pan);
 				break;
 			case "mousemove":
-				mX = event.clientX - drag.clickX;
-				mY = event.clientY - drag.clickY;
-				console.log(mX, mY);
+				x = event.clientX - drag.clickX + drag.oX;
+				y = event.clientY - drag.clickY + drag.oY;
+				self.dispatch({ type: "pan-canvas", x, y });
 				break;
 			case "mouseup":
 				self.doc.off("mousemove mouseup", self.pan);
@@ -93,11 +95,14 @@ const Canvas = {
 				self.cvs.prop({ width: window.width, height: window.height });
 				break;
 			case "set-canvas":
+				// original dimension
 				self.oW = event.w;
 				self.oH = event.h;
+				// scaled dimension
 				self.scale = self.scale || event.scale;
 				self.w = self.oW * self.scale;
 				self.h = self.oH * self.scale;
+				// origo
 				self.oX = self.cX - (self.w / 2);
 				self.oY = self.cY - (self.h / 2);
 				// misc
@@ -117,6 +122,11 @@ const Canvas = {
 				self.stack.map(item => self.dispatch(item));
 				break;
 			case "pan-canvas":
+				self.cvs.prop({ width: window.width, height: window.height });
+				
+				self.oX = self.cX - (self.w / 2) + event.x;
+				self.oY = self.cY - (self.h / 2) + event.y;
+				self.dispatch({ type: "update-canvas" });
 				break;
 			case "draw-base-layer":
 				self.osCtx.fillStyle = event.fill === "transparent" ? self.cvsBgPattern : event.fill;
@@ -145,6 +155,10 @@ const Canvas = {
 				self.osCtx.drawImage(self.tmpImg, 0, 0);
 				break;
 			case "update-canvas":
+				self.ctx.shadowOffsetX = 0;
+				self.ctx.shadowOffsetY = 1;
+				self.ctx.shadowBlur = 3;
+				self.ctx.shadowColor = "#303030";
 				self.ctx.imageSmoothingEnabled = false;
 				self.ctx.translate(self.oX, self.oY);
 				self.ctx.drawImage(self.osCvs[0], 0, 0, self.w, self.h);
