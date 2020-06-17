@@ -157,6 +157,7 @@ const Canvas = {
 				self.ctx.translate(self.oX, self.oY);
 				self.ctx.drawImage(self.osCvs[0], 0, 0, self.w, self.h);
 				
+				APP.box.navigator.dispatch({ type: "set-zoom", arg: self.scale });
 				APP.box.navigator.dispatch({ type: "update-canvas" });
 				break;
 		}

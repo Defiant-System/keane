@@ -23,7 +23,8 @@
 			// bind event handlers
 			this.els.zoomSlider.on("input", this.dispatch);
 
-			this.dispatch({ type: "update-canvas" });
+			//this.dispatch({ type: "set-zoom", arg: 3 });
+			//this.dispatch({ type: "update-canvas" });
 		} else {
 			// unbind event handlers
 			if (this.els.zoomSlider) this.els.zoomSlider.off("input", this.dispatch);
@@ -41,19 +42,23 @@
 			top,
 			left;
 		switch (event.type) {
+			case "set-zoom":
+				value = self.zoom.indexOf(event.arg * 100);
+				self.els.zoomSlider.val(value);
+				/* falls through */
 			case "input":
-				value = self.zoom[this.value];
+				value = self.zoom[self.els.zoomSlider.val()];
 				self.els.zoomValue.html(value + "%");
-				self.statusZoom.html(value + "%");
+				self.els.statusZoom.html(value + "%");
 
 				Canvas.dispatch({ type: "set-scale", scale: value / 100 });
 				break;
 			case "zoom-out":
-				value = Math.max(+self.zoomSlider.val() - 1, 0);
+				value = Math.max(+self.els.zoomSlider.val() - 1, 0);
 				self.els.zoomSlider.val(value.toString()).trigger("input");
 				break;
 			case "zoom-in":
-				value = Math.min(+self.zoomSlider.val() + 1, self.zoom.length - 1);
+				value = Math.min(+self.els.zoomSlider.val() + 1, self.zoom.length - 1);
 				self.els.zoomSlider.val(value).trigger("input");
 				break;
 			case "update-canvas":
@@ -64,6 +69,8 @@
 				// available width
 				self.navWidth = Math.round(self.navHeight / self.ratio);
 
+				width = Canvas.aW - Canvas.w;
+				//console.log(width);
 				// width = Math.min(self.navWidth / (value / 100), self.navWidth);
 				// height = Math.min(self.navHeight / (value / 100), self.navHeight);
 				// top = 0; //(self.navHeight - height) / 2;
