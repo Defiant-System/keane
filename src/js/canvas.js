@@ -62,7 +62,7 @@ const Canvas = {
 	},
 	dispatch(event) {
 		let APP = photoshop,
-			self = Canvas,
+			Self = Canvas,
 			_navigator = APP.box.navigator,
 			pi2 = Math.PI * 2,
 			x, y, w, h,
@@ -70,99 +70,101 @@ const Canvas = {
 			el;
 
 		// save paint context
-		self.osCtx.save();
-		//self.osCtx.scale(self.scale, self.scale);
+		Self.osCtx.save();
+		//Self.osCtx.scale(Self.scale, Self.scale);
 
 		switch (event.type) {
 			case "load-canvas":
-				event.stack.map(item => self.dispatch(item));
+				Self.stack = event.stack;
+				// execute stack
+				event.stack.map(item => Self.dispatch(item));
 				break;
 			case "window.resize":
 			case "reset-canvas":
-				self.aX = self.els.rulerLeft.width();
-				self.aY = self.els.toolBar.height() + self.els.optionsBar.height() + self.els.rulerTop.height();
-				self.aW = window.width - self.aX - self.els.sideBar.width();
-				self.aH = window.height - self.aY; // - self.els.statusBar.height()
+				Self.aX = Self.els.rulerLeft.width();
+				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height() + Self.els.rulerTop.height();
+				Self.aW = window.width - Self.aX - Self.els.sideBar.width();
+				Self.aH = window.height - Self.aY; // - Self.els.statusBar.height()
 				// center
-				self.cX = (window.width + self.aX - self.els.sideBar.width()) / 2;
-				self.cY = (window.height + self.aY - self.els.statusBar.height()) / 2;
+				Self.cX = (window.width + Self.aX - Self.els.sideBar.width()) / 2;
+				Self.cY = (window.height + Self.aY - Self.els.statusBar.height()) / 2;
 				// clears canvas
-				self.cvs.prop({ width: window.width, height: window.height });
+				Self.cvs.prop({ width: window.width, height: window.height });
 				break;
 			case "set-canvas":
 				// original dimension
-				self.oW = event.w;
-				self.oH = event.h;
+				Self.oW = event.w;
+				Self.oH = event.h;
 				// scaled dimension
-				self.scale = self.scale || event.scale;
-				self.w = self.oW * self.scale;
-				self.h = self.oH * self.scale;
+				Self.scale = Self.scale || event.scale;
+				Self.w = Self.oW * Self.scale;
+				Self.h = Self.oH * Self.scale;
 				// origo
-				self.oX = self.cX - (self.w / 2);
-				self.oY = self.cY - (self.h / 2);
+				Self.oX = Self.cX - (Self.w / 2);
+				Self.oY = Self.cY - (Self.h / 2);
 				// misc
-				self.bgColor = "#000"
-				self.fgColor = "#fff"
-				self.lineWidth = 1;
+				Self.bgColor = "#000"
+				Self.fgColor = "#fff"
+				Self.lineWidth = 1;
 				// offscreen canvas
-				self.osCvs.prop({ width: self.oW, height: self.oH });
+				Self.osCvs.prop({ width: Self.oW, height: Self.oH });
 				break;
 			case "set-scale":
-				self.scale = event.scale;
-				self.w = self.oW * self.scale;
-				self.h = self.oH * self.scale;
-				self.oX = self.cX - (self.w / 2);
-				self.oY = self.cY - (self.h / 2);
+				Self.scale = event.scale;
+				Self.w = Self.oW * Self.scale;
+				Self.h = Self.oH * Self.scale;
+				Self.oX = Self.cX - (Self.w / 2);
+				Self.oY = Self.cY - (Self.h / 2);
 				// re-execute paint stack
-				//self.stack.map(item => self.dispatch(item));
+				Self.stack.map(item => Self.dispatch(item));
 				break;
 			case "pan-canvas":
-				self.cvs.prop({ width: window.width, height: window.height });
+				Self.cvs.prop({ width: window.width, height: window.height });
 				
-				self.oX = self.cX - (self.w / 2) + event.x;
-				self.oY = self.cY - (self.h / 2) + event.y;
-				self.dispatch({ type: "update-canvas" });
+				Self.oX = Self.cX - (Self.w / 2) + event.x;
+				Self.oY = Self.cY - (Self.h / 2) + event.y;
+				Self.dispatch({ type: "update-canvas" });
 				break;
 			case "draw-base-layer":
-				self.osCtx.fillStyle = event.fill === "transparent" ? self.cvsBgPattern : event.fill;
-				self.osCtx.fillRect(0, 0, self.w, self.h);
+				Self.osCtx.fillStyle = event.fill === "transparent" ? Self.cvsBgPattern : event.fill;
+				Self.osCtx.fillRect(0, 0, Self.w, Self.h);
 				break;
 			case "draw-rect":
 				if (event.fill) {
-					self.osCtx.fillStyle = event.fill;
-					self.osCtx.fillRect(event.x, event.y, event.w, event.h);
+					Self.osCtx.fillStyle = event.fill;
+					Self.osCtx.fillRect(event.x, event.y, event.w, event.h);
 				} else {
-					self.osCtx.strokeStyle = event.stroke || self.fgColor;
-					self.osCtx.lineWidth = event.width || self.lineWidth;
-					self.osCtx.translate(.5, .5);
-					self.osCtx.beginPath();
-					self.osCtx.rect(event.x, event.y, event.w, event.h);
-					self.osCtx.stroke();
+					Self.osCtx.strokeStyle = event.stroke || Self.fgColor;
+					Self.osCtx.lineWidth = event.width || Self.lineWidth;
+					Self.osCtx.translate(.5, .5);
+					Self.osCtx.beginPath();
+					Self.osCtx.rect(event.x, event.y, event.w, event.h);
+					Self.osCtx.stroke();
 				}
 				break;
 			case "draw-text":
-				self.osCtx.translate(.5, .5);
-				self.osCtx.font = `${event.size}px ${event.font}`;
-				self.osCtx.fillStyle = event.fill;
-				self.osCtx.fillText(event.text, event.x, event.y);
+				Self.osCtx.translate(.5, .5);
+				Self.osCtx.font = `${event.size}px ${event.font}`;
+				Self.osCtx.fillStyle = event.fill;
+				Self.osCtx.fillText(event.text, event.x, event.y);
 				break;
 			case "draw-image":
-				self.osCtx.drawImage(event.src, 0, 0);
+				Self.osCtx.drawImage(event.src, 0, 0);
 				break;
 			case "update-canvas":
-				self.ctx.shadowOffsetX = 0;
-				self.ctx.shadowOffsetY = 1;
-				self.ctx.shadowBlur = 3;
-				self.ctx.shadowColor = "#2c2c2c";
-				self.ctx.imageSmoothingEnabled = false;
-				self.ctx.translate(self.oX, self.oY);
-				self.ctx.drawImage(self.osCvs[0], 0, 0, self.w, self.h);
+				Self.ctx.shadowOffsetX = 0;
+				Self.ctx.shadowOffsetY = 1;
+				Self.ctx.shadowBlur = 3;
+				Self.ctx.shadowColor = "#2c2c2c";
+				Self.ctx.imageSmoothingEnabled = false;
+				Self.ctx.translate(Self.oX, Self.oY);
+				Self.ctx.drawImage(Self.osCvs[0], 0, 0, Self.w, Self.h);
 				
-				//_navigator.dispatch({ type: "set-zoom", arg: self.scale });
+				_navigator.dispatch({ type: "set-zoom", arg: Self.scale });
 				_navigator.dispatch({ type: "update-canvas" });
 				break;
 		}
 		// restore paint context
-		self.osCtx.restore();
+		Self.osCtx.restore();
 	}
 };

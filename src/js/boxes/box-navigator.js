@@ -33,13 +33,13 @@
 		}
 	},
 	dispatch(event) {
-		let Root = photoshop,
-			Self = Root.box.navigator,
+		let APP = photoshop,
+			Self = APP.box.navigator,
 			_canvas = Canvas,
 			_round = Math.round,
 			_max = Math.max,
 			_min = Math.min,
-			data,
+			data = {},
 			value,
 			width,
 			height,
@@ -49,13 +49,16 @@
 			case "set-zoom":
 				value = Self.zoom.indexOf(event.arg * 100);
 				Self.els.zoomSlider.val(value);
+				if (Self.zoomValue === Self.zoom[value]) return;
 				/* falls through */
 			case "input":
-				value = Self.zoom[Self.els.zoomSlider.val()];
-				Self.els.zoomValue.html(value + "%");
-				Self.els.statusZoom.html(value + "%");
+				Self.zoomValue = Self.zoom[Self.els.zoomSlider.val()];
+				Self.els.zoomValue.html(Self.zoomValue + "%");
+				Self.els.statusZoom.html(Self.zoomValue + "%");
 
-				_canvas.dispatch({ type: "set-scale", scale: value / 100 });
+				if (event.type === "input") {
+					_canvas.dispatch({ type: "set-scale", scale: Self.zoomValue / 100 });
+				}
 				break;
 			case "zoom-out":
 				value = _max(+Self.els.zoomSlider.val() - 1, 0);
@@ -73,12 +76,15 @@
 				// available width
 				Self.navWidth = _round(Self.navHeight / Self.ratio);
 
-				data = {
-					top:    _max((((_canvas.aY - _canvas.oY) / _canvas.h) * Self.navHeight) - 1, 0),
-					left:   _max((((_canvas.aX - _canvas.oX) / _canvas.w) * Self.navWidth) - 1, 0),
-				};
+				data.top = (((_canvas.aY - _canvas.oY) / _canvas.h) * Self.navHeight) - 1;
+				data.left = (((_canvas.aX - _canvas.oX) / _canvas.w) * Self.navWidth) - 1;
 				data.height = _min(((_canvas.aH / _canvas.h) * Self.navHeight) + 1, Self.navHeight - data.top);
 				data.width = _min(((_canvas.aW / _canvas.w) * Self.navWidth) + 1, Self.navWidth - data.left);
+				
+				if (data.top < 0) data.height = _min(data.height + data.top, data.height);
+				if (data.left < 0) data.width = _min(data.width + data.left, data.width);
+				data.top = _max(data.top, 0);
+				data.left = _max(data.left, 0);
 
 				for (let key in data) data[key] = _round(data[key]) +"px";
 				Self.els.zoomRect.css(data);
