@@ -810,9 +810,9 @@ content {
 					//background: @ws-image;
 					//background-size: cover;
 					position: relative;
-					margin: 7px auto;
-					height: 153px;
-					// width: 190px;
+					margin: 7px auto 5px;
+					height: 154px;
+					max-width: 260px;
 					//border: 1px solid rgba(#011, .65);
 
 					&.hidden {
@@ -822,10 +822,16 @@ content {
 						}
 					}
 
-					canvas.nav-cvs {
+					> div {
 						position: absolute;
-						top: 0;
-						left: 0;
+						top: 50%;
+						transform: translateY(-50%);
+					}
+
+					canvas.nav-cvs {
+						// position: absolute;
+						// top: 0;
+						// left: 0;
 						box-shadow: 0 0 0 1px rgba(#011, .65);
 					}
 

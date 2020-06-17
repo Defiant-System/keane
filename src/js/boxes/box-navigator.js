@@ -20,6 +20,7 @@
 
 			// available height
 			this.navHeight = this.els.wrapper.height();
+			this.maxWidth = parseInt(this.els.wrapper.css("max-width"), 10);
 
 			// bind event handlers
 			this.els.zoomRect.on("mousedown", this.pan);
@@ -72,8 +73,10 @@
 				Self.els.zoomSlider.val(value).trigger("input");
 				break;
 			case "pan-canvas":
-				top = _canvas.cY - _round((event.y / event.poH) * _canvas.h) - (_canvas.aH / 2);
-				left = _canvas.cX - _round((event.x / event.poW) * _canvas.w) - (_canvas.aW / 2);
+				top = _round((event.y / event.max.y) * event.max.h) + _canvas.aY;
+				left = _round((event.x / event.max.x) * event.max.w) + _canvas.aX;
+console.log(event.x / event.max.x);
+				// forward event to canvas
 				_canvas.dispatch({ type: "pan-canvas", top, left, stop: true });
 				break;
 			case "update-canvas":
@@ -83,11 +86,15 @@
 
 				// available width
 				Self.navWidth = _round(Self.navHeight / Self.ratio);
+				if (Self.navWidth > Self.maxWidth) {
+					Self.navWidth = Self.maxWidth;
+					Self.navHeight = Self.ratio * Self.navWidth;
+				}
 
-				data.top = (((_canvas.aY - _canvas.oY) / _canvas.h) * Self.navHeight) - 1;
-				data.left = (((_canvas.aX - _canvas.oX) / _canvas.w) * Self.navWidth) - 1;
-				data.height = _min(((_canvas.aH / _canvas.h) * Self.navHeight) + 2, Self.navHeight - data.top);
-				data.width = _min(((_canvas.aW / _canvas.w) * Self.navWidth) + 2, Self.navWidth - data.left);
+				data.top = (((_canvas.aY - _canvas.oY) / _canvas.h) * Self.navHeight);
+				data.left = (((_canvas.aX - _canvas.oX) / _canvas.w) * Self.navWidth);
+				data.height = _min(((_canvas.aH / _canvas.h) * Self.navHeight) - 2, Self.navHeight - data.top);
+				data.width = _min(((_canvas.aW / _canvas.w) * Self.navWidth) - 2, Self.navWidth - data.left);
 				
 				if (data.top < 0) data.height = _min(data.height + data.top, data.height);
 				if (data.left < 0) data.width = _min(data.width + data.left, data.width);
@@ -124,12 +131,12 @@
 					clickY: event.clientY,
 					oX: +el.prop("offsetLeft"),
 					oY: +el.prop("offsetTop"),
-					poW: +el.parent().prop("offsetWidth") - 4,
-					poH: +el.parent().prop("offsetHeight"),
 					min: { x: 0, y: 0 },
 					max: {
 						x: +el.parent().prop("offsetWidth") - +el.prop("offsetWidth"),
-						y: +el.parent().prop("offsetHeight") - +el.prop("offsetHeight"),
+						y: +el.parent().prop("offsetHeight") - +el.prop("offsetHeight") - 4,
+						w: Canvas.aW - Canvas.w,
+						h: Canvas.aH - Canvas.h,
 					}
 				};
 				// prevent mouse from triggering mouseover

@@ -31,6 +31,7 @@ const photoshop = {
 		this.content.bind("dragover drop", this.dispatch);
 
 		// temp
+		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
 		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/nature/rose.jpg" });
 
@@ -81,7 +82,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 3 },
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
 							{ type: "draw-image", src: image },
