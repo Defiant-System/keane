@@ -75,7 +75,8 @@
 			case "pan-canvas":
 				top = _round((event.y / event.max.y) * event.max.h) + _canvas.aY;
 				left = _round((event.x / event.max.x) * event.max.w) + _canvas.aX;
-console.log(event.x / event.max.x);
+				if (isNaN(top) || isNaN(left)) return;
+
 				// forward event to canvas
 				_canvas.dispatch({ type: "pan-canvas", top, left, stop: true });
 				break;
@@ -127,10 +128,8 @@ console.log(event.x / event.max.x);
 				el = $(event.target);
 				Self.panDrag = {
 					el,
-					clickX: event.clientX,
-					clickY: event.clientY,
-					oX: +el.prop("offsetLeft"),
-					oY: +el.prop("offsetTop"),
+					clickX: +el.prop("offsetLeft") - event.clientX,
+					clickY: +el.prop("offsetTop") - event.clientY,
 					min: { x: 0, y: 0 },
 					max: {
 						x: +el.parent().prop("offsetWidth") - +el.prop("offsetWidth"),
@@ -145,8 +144,8 @@ console.log(event.x / event.max.x);
 				Self.doc.on("mousemove mouseup", Self.pan);
 				break;
 			case "mousemove":
-				x = _min(_max(drag.oX + event.clientX - drag.clickX, drag.min.x), drag.max.x);
-				y = _min(_max(drag.oY + event.clientY - drag.clickY, drag.min.y), drag.max.y);
+				x = _min(_max(event.clientX + drag.clickX, drag.min.x), drag.max.x);
+				y = _min(_max(event.clientY + drag.clickY, drag.min.y), drag.max.y);
 
 				// moves navigator view rectangle
 				drag.el.css({ top: y +"px", left: x +"px" });

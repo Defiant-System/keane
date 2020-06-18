@@ -90,6 +90,7 @@ const photoshop = {
 							// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
+							//{ type: "pan-canvas", left: 17, top: 87 },
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};

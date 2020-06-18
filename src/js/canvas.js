@@ -25,41 +25,6 @@ const Canvas = {
 		// bind event handlers
 		this.cvs.on("mousedown", this.pan);
 	},
-	pan(event) {
-		let APP = photoshop,
-			Self = Canvas,
-			drag = Self.panDrag,
-			x, y,
-			el;
-		switch (event.type) {
-			case "mousedown":
-				// prevent default behaviour
-				event.preventDefault();
-
-				Self.panDrag = {
-					clickX: event.clientX,
-					clickY: event.clientY,
-					oX: Self.oX - Self.cX + (Self.w / 2),
-					oY: Self.oY - Self.cY + (Self.h / 2),
-				};
-				// prevent mouse from triggering mouseover
-				APP.content.addClass("cover");
-				// bind event handlers
-				Self.doc.on("mousemove mouseup", Self.pan);
-				break;
-			case "mousemove":
-				x = event.clientX - drag.clickX + drag.oX;
-				y = event.clientY - drag.clickY + drag.oY;
-				Self.dispatch({ type: "pan-canvas", x, y });
-				break;
-			case "mouseup":
-				// remove class
-				APP.content.removeClass("cover");
-				// unbind event handlers
-				Self.doc.off("mousemove mouseup", Self.pan);
-				break;
-		}
-	},
 	dispatch(event) {
 		let APP = photoshop,
 			Self = Canvas,
@@ -169,5 +134,48 @@ const Canvas = {
 		}
 		// restore paint context
 		Self.osCtx.restore();
+	},
+	pan(event) {
+		let APP = photoshop,
+			Self = Canvas,
+			drag = Self.panDrag,
+			_max = Math.max,
+			_min = Math.min,
+			x, y,
+			el;
+		switch (event.type) {
+			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+
+				Self.panDrag = {
+					clickX: event.clientX - (Self.oX - Self.cX + (Self.w / 2)),
+					clickY: event.clientY - (Self.oY - Self.cY + (Self.h / 2)),
+					min: {
+						x: 498,
+						y: 254
+					},
+					max: {
+						x: -496,
+						y: -229
+					},
+				};
+				// prevent mouse from triggering mouseover
+				APP.content.addClass("cover");
+				// bind event handlers
+				Self.doc.on("mousemove mouseup", Self.pan);
+				break;
+			case "mousemove":
+				x = _max(_min(event.clientX - drag.clickX, drag.min.x), drag.max.x);
+				y = _max(_min(event.clientY - drag.clickY, drag.min.y), drag.max.y);
+				Self.dispatch({ type: "pan-canvas", x, y });
+				break;
+			case "mouseup":
+				// remove class
+				APP.content.removeClass("cover");
+				// unbind event handlers
+				Self.doc.off("mousemove mouseup", Self.pan);
+				break;
+		}
 	}
 };
