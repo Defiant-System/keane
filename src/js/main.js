@@ -4,6 +4,8 @@ defiant.require("canvas.js")
 
 //const PSD = require1("psd");
 
+const ZOOM = [10,25,50,75,100,200,300,400,600,800,1200,1500,1800];
+
 const photoshop = {
 	init() {
 		// fast references
@@ -31,8 +33,8 @@ const photoshop = {
 		this.content.bind("dragover drop", this.dispatch);
 
 		// temp
-		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
-		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
+		this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
+		//this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/nature/rose.jpg" });
 
 		//window.find(".zoom-slider input").val(235).trigger("input");
@@ -82,7 +84,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 3 },
+							{ type: "set-canvas", w: image.width, h: image.height },
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
 							{ type: "draw-image", src: image },

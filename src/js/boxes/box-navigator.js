@@ -2,7 +2,6 @@
 // photoshop.box.navigator
 
 {
-	zoom: [10,25,50,75,100,200,300,400,600,800,1200,1500,1800],
 	els: {},
 	toggle(root, state) {
 		if (state === "on") {
@@ -26,7 +25,6 @@
 			this.els.zoomRect.on("mousedown", this.pan);
 			this.els.zoomSlider.on("input", this.dispatch);
 
-			//this.dispatch({ type: "set-zoom", arg: 3 });
 			this.dispatch({ type: "update-canvas" });
 		} else {
 			// unbind event handlers
@@ -52,12 +50,12 @@
 			left;
 		switch (event.type) {
 			case "set-zoom":
-				value = Self.zoom.indexOf(event.arg * 100);
+				value = ZOOM.indexOf(event.arg * 100);
 				Self.els.zoomSlider.val(value);
-				if (Self.zoomValue === Self.zoom[value]) return;
+				if (Self.zoomValue === ZOOM[value]) return;
 				/* falls through */
 			case "input":
-				Self.zoomValue = Self.zoom[Self.els.zoomSlider.val()];
+				Self.zoomValue = ZOOM[Self.els.zoomSlider.val()];
 				Self.els.zoomValue.html(Self.zoomValue + "%");
 				Self.els.statusZoom.html(Self.zoomValue + "%");
 
@@ -70,7 +68,7 @@
 				Self.els.zoomSlider.val(value.toString()).trigger("input");
 				break;
 			case "zoom-in":
-				value = _min(+Self.els.zoomSlider.val() + 1, Self.zoom.length - 1);
+				value = _min(+Self.els.zoomSlider.val() + 1, ZOOM.length - 1);
 				Self.els.zoomSlider.val(value).trigger("input");
 				break;
 			case "pan-canvas":

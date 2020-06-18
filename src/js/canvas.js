@@ -60,6 +60,19 @@ const Canvas = {
 				// original dimension
 				Self.oW = event.w;
 				Self.oH = event.h;
+
+				if (!event.scale) {
+					// default to first zoom level
+					event.scale = .1;
+					// iterate available zoom levels
+					ZOOM.filter(i => i <= 100)
+						.map(level => {
+							let scale = level / 100;
+							if (Self.aW > event.w * scale && Self.aH > event.h * scale) {
+								event.scale = scale;
+							}
+						});
+				}
 				// scaled dimension
 				Self.scale = Self.scale || event.scale;
 				Self.w = Self.oW * Self.scale;
