@@ -35,7 +35,6 @@ const Canvas = {
 			pi2 = Math.PI * 2,
 			x, y, w, h,
 			top, left,
-			isOn,
 			el;
 
 		// save paint context
@@ -44,11 +43,17 @@ const Canvas = {
 
 		switch (event.type) {
 			case "mousemove":
-				top = event.offsetY - Self.aY;
-				left = event.offsetX - Self.aX;
-				isOn = true;
-				Self.els.rulerTopValue.css({ left: left +"px" }).html(event.offsetX - Self.oX);
-				Self.els.rulerLeftValue.css({ top: top +"px" }).html(event.offsetY - Self.oY);
+				top = event.offsetY - Self.oY;
+				left = event.offsetX - Self.oX;
+
+				Self.els.rulerTopValue
+					.css({ left: (event.offsetX - Self.aX) +"px" })
+					.toggleClass("hidden", left >= 0 && left <= Self.w)
+					.html(left);
+				Self.els.rulerLeftValue
+					.css({ top: (event.offsetY - Self.aY) +"px" })
+					.toggleClass("hidden", top >= 0 && top <= Self.h)
+					.html(top);
 				break;
 			case "load-canvas":
 				Self.stack = event.stack;
@@ -172,6 +177,7 @@ const Canvas = {
 				// prevent default behaviour
 				event.preventDefault();
 
+				// dont pan if image fits available area
 				if (Self.w <= Self.aW && Self.h <= Self.aH) return;
 
 				Self.panDrag = {

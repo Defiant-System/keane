@@ -566,8 +566,12 @@ content {
 			> span {
 				//background: rgba(#fff, .3);
 				position: absolute;
-				top: 3px;
-				//left: 150px;
+				top: 0;
+				height: inherit;
+				padding-top: 3px;
+				margin-left: -5px;
+
+				&.hidden { display: none; }
 			}
 			&:before {
 				content: "";
@@ -596,9 +600,14 @@ content {
 			> span {
 				//background: rgba(#fff, .3);
 				position: absolute;
-				//top: 250px;
-				left: 1px;
+				left: 0;
+				height: 15px;
+				transform-origin: 0 0;
 				transform: rotate(-90deg);
+				padding-top: 3px;
+				margin-top: -5px;
+
+				&.hidden { display: none; }
 			}
 		}
 
