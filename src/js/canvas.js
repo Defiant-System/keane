@@ -140,9 +140,8 @@ const Canvas = {
 			Self = Canvas,
 			drag = Self.panDrag,
 			_max = Math.max,
-			_min = Math.min,
-			x, y,
-			el;
+			_min = Math.min;
+
 		switch (event.type) {
 			case "mousedown":
 				// prevent default behaviour
@@ -152,22 +151,23 @@ const Canvas = {
 					clickX: event.clientX - (Self.oX - Self.cX + (Self.w / 2)),
 					clickY: event.clientY - (Self.oY - Self.cY + (Self.h / 2)),
 					min: {
-						x: 498,
-						y: 254
+						x: Self.aX - Self.cX + (Self.w / 2),
+						y: Self.aY - Self.cY + (Self.h / 2),
 					},
 					max: {
-						x: -496,
-						y: -229
+						x: (Self.cX - Self.aX - (Self.w / 2)),
+						y: (Self.cY - Self.aY - (Self.h / 2)) + Self.els.statusBar.height(),
 					},
 				};
+
 				// prevent mouse from triggering mouseover
 				APP.content.addClass("cover");
 				// bind event handlers
 				Self.doc.on("mousemove mouseup", Self.pan);
 				break;
 			case "mousemove":
-				x = _max(_min(event.clientX - drag.clickX, drag.min.x), drag.max.x);
-				y = _max(_min(event.clientY - drag.clickY, drag.min.y), drag.max.y);
+				let x = _max(_min(event.clientX - drag.clickX, drag.min.x), drag.max.x),
+					y = _max(_min(event.clientY - drag.clickY, drag.min.y), drag.max.y);
 				Self.dispatch({ type: "pan-canvas", x, y });
 				break;
 			case "mouseup":
