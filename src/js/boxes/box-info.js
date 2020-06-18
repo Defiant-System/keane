@@ -33,6 +33,7 @@
 			Self = APP.box.info,
 			Detail = event.detail;
 
+		if (!Self.els.root) return;
 		switch (event.type) {
 			case "mouse-move":
 				Self.els.mouseY.html(Detail.isCanvasY ? Detail.top : "");

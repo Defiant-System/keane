@@ -26,6 +26,10 @@
 		<Menu name="Bled" arg="/cdn/img/bg/wallpapers/bled.jpg" click="change-bg"/>
 		<Menu name="Golden Gate Bridge" arg="/cdn/img/bg/wallpapers/golden-gate-bridge.jpg" click="change-bg"/>
 	</Menu>
+	<Menu name="View">
+		<Menu name="Rulers" click="toggle-rulers" check-group="toggle-rulers" is-checked="1" />
+		<Menu name="Status Bar" click="toggle-statusbar" check-group="toggle-statusbar" />
+	</Menu>
 	<Menu name="Help">
 		<Menu name="Help" click="open-help"/>
 		<Menu type="divider"/>

@@ -140,7 +140,7 @@
 					}
 				};
 				// prevent mouse from triggering mouseover
-				APP.content.addClass("cover");
+				APP.els.content.addClass("cover");
 				// bind event handlers
 				Self.doc.on("mousemove mouseup", Self.pan);
 				break;
@@ -155,7 +155,7 @@
 				break;
 			case "mouseup":
 				// remove class
-				APP.content.removeClass("cover");
+				APP.els.content.removeClass("cover");
 				// unbind event handlers
 				Self.doc.off("mousemove mouseup", Self.pan);
 				break;

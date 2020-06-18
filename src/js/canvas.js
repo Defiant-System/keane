@@ -63,7 +63,7 @@ const Canvas = {
 			case "load-canvas":
 				Self.stack = event.stack;
 				// execute stack
-				event.stack.map(item => Self.dispatch(item));
+				Self.stack.map(item => Self.dispatch(item));
 				break;
 			case "window.resize":
 			case "reset-canvas":
@@ -76,6 +76,11 @@ const Canvas = {
 				Self.cY = (window.height + Self.aY - Self.els.statusBar.height()) / 2;
 				// clears canvas
 				Self.cvs.prop({ width: window.width, height: window.height });
+
+				if (event.type === "window.resize") {
+					// execute stack
+					Self.stack.map(item => Self.dispatch(item));
+				}
 				break;
 			case "set-canvas":
 				// original dimension
@@ -199,7 +204,7 @@ const Canvas = {
 				};
 
 				// prevent mouse from triggering mouseover
-				APP.content.addClass("cover");
+				APP.els.content.addClass("cover");
 				// bind event handlers
 				Self.doc.on("mousemove mouseup", Self.pan);
 				break;
@@ -210,7 +215,7 @@ const Canvas = {
 				break;
 			case "mouseup":
 				// remove class
-				APP.content.removeClass("cover");
+				APP.els.content.removeClass("cover");
 				// unbind event handlers
 				Self.doc.off("mousemove mouseup", Self.pan);
 				break;

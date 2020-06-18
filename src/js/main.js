@@ -7,15 +7,12 @@ defiant.require("canvas.js")
 const ZOOM = [10,25,50,75,100,200,300,400,600,800,1200,1500,1800];
 
 const photoshop = {
+	els: {},
 	init() {
 		// fast references
-		this.content = window.find("content");
-		this.workSpace = window.find(".workspace");
-		this.boxNavigator = window.find(".navigator-wrapper");
-		this.canvas = window.find(".canvas");
-
-		// auto trigger resize event for canvas dimensions
-		//this.dispatch({ event: "window.resize" });
+		this.els.content = window.find("content");
+		this.els.rulers = window.find(".ruler-top, .ruler-left");
+		this.els.statusBar = window.find(".status-bar");
 
 		Canvas.init();
 
@@ -29,8 +26,11 @@ const photoshop = {
 		box = window.store("boxes/box-layers.htm", 'div[data-box="layers"]');
 		this.box.layers.toggle(box, "on");
 
+		// auto trigger resize event for canvas dimensions
+		//this.dispatch({ event: "window.resize" });
+
 		// bind event handlers
-		this.content.bind("dragover drop", this.dispatch);
+		this.els.content.bind("dragover drop", this.dispatch);
 
 		// temp
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
@@ -43,7 +43,7 @@ const photoshop = {
 		window.find('.sidebar-box div[data-content="info"]').trigger("click");
 	},
 	dispatch(event) {
-		let self = photoshop,
+		let Self = photoshop,
 			image,
 			name,
 			boxEl,
@@ -99,6 +99,14 @@ const photoshop = {
 				};
 				image.src = event.arg;
 				break;
+			case "toggle-rulers":
+				Self.els.rulers.toggleClass("hidden", event.checked === 1);
+				// trigger re-calculations + re-paint
+				Canvas.dispatch({ type: "window.resize" });
+				break;
+			case "toggle-statusbar":
+				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
+				break;
 			case "select-tool":
 				el = $(event.target);
 				if (el.hasClass("active") || !el.data("content")) return;
@@ -134,8 +142,8 @@ const photoshop = {
 				if (event.el) {
 					boxEl = event.el.parents("div[data-box]");
 					boxName = boxEl.attr("data-box");
-					if (boxEl.length && self.box[boxName].dispatch) {
-						self.box[boxName].dispatch(event);
+					if (boxEl.length && Self.box[boxName].dispatch) {
+						Self.box[boxName].dispatch(event);
 					}
 				}
 		}
