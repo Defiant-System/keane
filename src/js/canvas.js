@@ -172,6 +172,8 @@ const Canvas = {
 				// prevent default behaviour
 				event.preventDefault();
 
+				if (Self.w <= Self.aW && Self.h <= Self.aH) return;
+
 				Self.panDrag = {
 					clickX: event.clientX - (Self.oX - Self.cX + (Self.w / 2)),
 					clickY: event.clientY - (Self.oY - Self.cY + (Self.h / 2)),
