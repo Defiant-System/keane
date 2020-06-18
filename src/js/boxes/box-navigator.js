@@ -27,13 +27,14 @@
 			this.els.zoomSlider.on("input", this.dispatch);
 
 			//this.dispatch({ type: "set-zoom", arg: 3 });
-			//this.dispatch({ type: "update-canvas" });
+			this.dispatch({ type: "update-canvas" });
 		} else {
 			// unbind event handlers
 			if (this.els.zoomRect) this.els.zoomRect.off("mousedown", this.pan);
 			if (this.els.zoomSlider) this.els.zoomSlider.off("input", this.dispatch);
 
 			delete this.els;
+			this.els = {};
 		}
 	},
 	dispatch(event) {
@@ -94,8 +95,8 @@
 
 				data.top = (((_canvas.aY - _canvas.oY) / _canvas.h) * Self.navHeight);
 				data.left = (((_canvas.aX - _canvas.oX) / _canvas.w) * Self.navWidth);
-				data.height = _min(((_canvas.aH / _canvas.h) * Self.navHeight) - 2, Self.navHeight - data.top);
-				data.width = _min(((_canvas.aW / _canvas.w) * Self.navWidth) - 2, Self.navWidth - data.left);
+				data.height = _min(((_canvas.aH / _canvas.h) * Self.navHeight), Self.navHeight - data.top);
+				data.width = _min(((_canvas.aW / _canvas.w) * Self.navWidth), Self.navWidth - data.left);
 				
 				if (data.top < 0) data.height = _min(data.height + data.top, data.height);
 				if (data.left < 0) data.width = _min(data.width + data.left, data.width);
