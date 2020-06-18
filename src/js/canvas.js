@@ -34,7 +34,7 @@ const Canvas = {
 			_navigator = APP.box.navigator,
 			pi2 = Math.PI * 2,
 			x, y, w, h,
-			top, left,
+			data = {},
 			el;
 
 		// save paint context
@@ -43,17 +43,22 @@ const Canvas = {
 
 		switch (event.type) {
 			case "mousemove":
-				top = event.offsetY - Self.oY;
-				left = event.offsetX - Self.oX;
+				data.top = event.offsetY - Self.oY;
+				data.left = event.offsetX - Self.oX;
+
+				data.isCanvasX = data.left >= 0 && data.left <= Self.w;
+				data.isCanvasY = data.top >= 0 && data.top <= Self.h;
 
 				Self.els.rulerTopValue
 					.css({ left: (event.offsetX - Self.aX) +"px" })
-					.toggleClass("hidden", left >= 0 && left <= Self.w)
-					.html(left);
+					.toggleClass("hidden", data.isCanvasX)
+					.html(data.left);
 				Self.els.rulerLeftValue
 					.css({ top: (event.offsetY - Self.aY) +"px" })
-					.toggleClass("hidden", top >= 0 && top <= Self.h)
-					.html(top);
+					.toggleClass("hidden", data.isCanvasY)
+					.html(data.top);
+
+				defiant.emit("mouse-move", data);
 				break;
 			case "load-canvas":
 				Self.stack = event.stack;

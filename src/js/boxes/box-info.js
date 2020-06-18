@@ -13,14 +13,14 @@
 			this.els.rgbG = root.find("input[name='rgbG']");
 			this.els.rgbB = root.find("input[name='rgbB']");
 
-			this.els.mouseX = root.find("input[name='mouseX']");
-			this.els.mouseY = root.find("input[name='mouseY']");
+			this.els.mouseX = root.find(".value.mouseX");
+			this.els.mouseY = root.find(".value.mouseY");
 
 			this.els.selHeight = root.find("input[name='selHeight']");
 			this.els.selWidth = root.find("input[name='selWidth']");
 
 			// bind event handlers
-			
+			defiant.on("mouse-move", this.dispatch);
 		} else {
 
 			// clean up
@@ -30,10 +30,13 @@
 	},
 	dispatch(event) {
 		let APP = photoshop,
-			Self = APP.box.info;
+			Self = APP.box.info,
+			Detail = event.detail;
 
 		switch (event.type) {
-			case "type-of-event":
+			case "mouse-move":
+				Self.els.mouseY.html(Detail.isCanvasY ? Detail.top : "");
+				Self.els.mouseX.html(Detail.isCanvasX ? Detail.left : "");
 				break;
 		}
 	}

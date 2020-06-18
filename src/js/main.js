@@ -85,7 +85,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height },
+							{ type: "set-canvas", w: image.width, h: image.height, scale1: 2 },
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
 							{ type: "draw-image", src: image },
@@ -93,7 +93,7 @@ const photoshop = {
 							// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
-							//{ type: "pan-canvas", left: -600, top: 0 },
+							//{ type: "pan-canvas", left: -377, top: 4 },
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};
