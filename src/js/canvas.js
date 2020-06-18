@@ -10,6 +10,8 @@ const Canvas = {
 		this.els.statusBar = window.find(".status-bar");
 		this.els.rulerTop = window.find(".ruler-top");
 		this.els.rulerLeft = window.find(".ruler-left");
+		this.els.rulerTopValue = window.find(".ruler-top span");
+		this.els.rulerLeftValue = window.find(".ruler-left span");
 
 		// canvases
 		this.osCvs = $(document.createElement("canvas"));
@@ -24,6 +26,7 @@ const Canvas = {
 
 		// bind event handlers
 		this.cvs.on("mousedown", this.pan);
+		this.cvs.on("mousemove", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -31,7 +34,8 @@ const Canvas = {
 			_navigator = APP.box.navigator,
 			pi2 = Math.PI * 2,
 			x, y, w, h,
-			pattern,
+			top, left,
+			isOn,
 			el;
 
 		// save paint context
@@ -39,6 +43,13 @@ const Canvas = {
 		//Self.osCtx.scale(Self.scale, Self.scale);
 
 		switch (event.type) {
+			case "mousemove":
+				top = event.offsetY - Self.aY;
+				left = event.offsetX - Self.aX;
+				isOn = true;
+				Self.els.rulerTopValue.css({ left: left +"px" }).html(event.offsetX - Self.oX);
+				Self.els.rulerLeftValue.css({ top: top +"px" }).html(event.offsetY - Self.oY);
+				break;
 			case "load-canvas":
 				Self.stack = event.stack;
 				// execute stack

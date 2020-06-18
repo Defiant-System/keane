@@ -338,6 +338,11 @@ content {
 			height: inherit;
 			transition: opacity 80ms ease-in-out;
 		}
+
+		&.icon-pipette { background-image: url(~/icons/tool-pipette.png); }
+		&.icon-pipette { background-image: url(~/icons/tool-pipette.png); }
+		&.icon-cursor_pos { background-image: url(~/icons/icon-cursor-pos.png); }
+		&.icon-selection_dim { background-image: url(~/icons/icon-selection-dim.png); }
 	}
 
 	.option {
@@ -559,9 +564,10 @@ content {
 			z-index: 10;
 
 			> span {
+				//background: rgba(#fff, .3);
 				position: absolute;
 				top: 3px;
-				left: 150px;
+				//left: 150px;
 			}
 			&:before {
 				content: "";
@@ -588,9 +594,10 @@ content {
 			z-index: 10;
 
 			> span {
+				//background: rgba(#fff, .3);
 				position: absolute;
-				top: 250px;
-				left: 0;
+				//top: 250px;
+				left: 1px;
 				transform: rotate(-90deg);
 			}
 		}

@@ -33,13 +33,14 @@ const photoshop = {
 		this.content.bind("dragover drop", this.dispatch);
 
 		// temp
-		this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
-		//this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
+		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
+		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/nature/rose.jpg" });
 
 		//window.find(".zoom-slider input").val(235).trigger("input");
 		//window.find('[data-content="color"]').trigger("click");
 		//window.find('.tool[data-content="brush"]').trigger("click");
+		window.find('.sidebar-box div[data-content="info"]').trigger("click");
 	},
 	dispatch(event) {
 		let self = photoshop,

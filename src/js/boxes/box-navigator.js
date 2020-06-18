@@ -25,12 +25,13 @@
 			this.els.zoomRect.on("mousedown", this.pan);
 			this.els.zoomSlider.on("input", this.dispatch);
 
+			// update preview box
 			this.dispatch({ type: "update-canvas" });
 		} else {
 			// unbind event handlers
 			if (this.els.zoomRect) this.els.zoomRect.off("mousedown", this.pan);
 			if (this.els.zoomSlider) this.els.zoomSlider.off("input", this.dispatch);
-
+			// clean up
 			delete this.els;
 			this.els = {};
 		}
@@ -48,6 +49,7 @@
 			height,
 			top,
 			left;
+		if (!Self.els.root) return;
 		switch (event.type) {
 			case "set-zoom":
 				value = ZOOM.indexOf(event.arg * 100);
