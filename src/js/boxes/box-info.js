@@ -5,6 +5,7 @@
 	els: {},
 	toggle(root, state) {
 		if (state === "on") {
+			this.els.root = root;
 			this.els.hslH = root.find("input[name='hslH']");
 			this.els.hslS = root.find("input[name='hslS']");
 			this.els.hslL = root.find("input[name='hslL']");
@@ -19,7 +20,7 @@
 			this.els.selHeight = root.find("input[name='selHeight']");
 			this.els.selWidth = root.find("input[name='selWidth']");
 
-			// bind event handlers
+			// subscribe to events
 			defiant.on("mouse-move", this.dispatch);
 		} else {
 
@@ -36,8 +37,8 @@
 		if (!Self.els.root) return;
 		switch (event.type) {
 			case "mouse-move":
-				Self.els.mouseY.html(Detail.isCanvasY ? Detail.top : "");
-				Self.els.mouseX.html(Detail.isCanvasX ? Detail.left : "");
+				Self.els.mouseY.html(Detail.top);
+				Self.els.mouseX.html(Detail.left);
 				break;
 		}
 	}

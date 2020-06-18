@@ -14,7 +14,11 @@ const photoshop = {
 		this.els.rulers = window.find(".ruler-top, .ruler-left");
 		this.els.statusBar = window.find(".status-bar");
 
+		// init sub-objects
 		Canvas.init();
+		Object.keys(this)
+			.filter(item => this[item].init)
+			.map(item => this[item].init());
 
 		// auto store box HTML
 		window.store("tool-options/marquee.htm", '.tool-options-marquee');
@@ -148,6 +152,8 @@ const photoshop = {
 				}
 		}
 	},
+	rulers: defiant.require("modules/rulers.js"),
+	statusbar: defiant.require("modules/statusbar.js"),
 	box: {
 		navigator: defiant.require("boxes/box-navigator.js"),
 		color:     defiant.require("boxes/box-color.js"),

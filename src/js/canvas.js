@@ -10,8 +10,6 @@ const Canvas = {
 		this.els.statusBar = window.find(".status-bar");
 		this.els.rulerTop = window.find(".ruler-top");
 		this.els.rulerLeft = window.find(".ruler-left");
-		this.els.rulerTopValue = window.find(".ruler-top span");
-		this.els.rulerLeftValue = window.find(".ruler-left span");
 
 		// canvases
 		this.osCvs = $(document.createElement("canvas"));
@@ -32,6 +30,9 @@ const Canvas = {
 		let APP = photoshop,
 			Self = Canvas,
 			_navigator = APP.box.navigator,
+			_max = Math.max,
+			_min = Math.min,
+			_round = Math.round,
 			pi2 = Math.PI * 2,
 			x, y, w, h,
 			data = {},
@@ -43,21 +44,13 @@ const Canvas = {
 
 		switch (event.type) {
 			case "mousemove":
-				data.top = event.offsetY - Self.oY;
-				data.left = event.offsetX - Self.oX;
-
-				data.isCanvasX = data.left >= 0 && data.left <= Self.w;
-				data.isCanvasY = data.top >= 0 && data.top <= Self.h;
-
-				Self.els.rulerTopValue
-					.css({ left: (event.offsetX - Self.aX) +"px" })
-					.toggleClass("hidden", data.isCanvasX)
-					.html(data.left);
-				Self.els.rulerLeftValue
-					.css({ top: (event.offsetY - Self.aY) +"px" })
-					.toggleClass("hidden", data.isCanvasY)
-					.html(data.top);
-
+				data.top = _max(_round(event.offsetY - Self.oY), 0);
+				data.left = _round(event.offsetX - Self.oX);
+				data.offsetY = event.offsetY - Self.aY;
+				data.offsetX = event.offsetX - Self.aX;
+				// data.isCanvasY = data.top >= 0 && data.top <= Self.h;
+				// data.isCanvasX = data.left >= 0 && data.left <= Self.w;
+				// broadcast event
 				defiant.emit("mouse-move", data);
 				break;
 			case "load-canvas":
