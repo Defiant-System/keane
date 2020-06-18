@@ -87,8 +87,9 @@ const Canvas = {
 				// reset canvas
 				Self.cvs.prop({ width: window.width, height: window.height });
 				
-				Self.oX = event.left || Self.cX - (Self.w / 2) + event.x;
-				Self.oY = event.top || Self.cY - (Self.h / 2) + event.y;
+				Self.oX = Number.isInteger(event.left) ? event.left : Self.cX - (Self.w / 2) + event.x;
+				Self.oY = Number.isInteger(event.top) ? event.top : Self.cY - (Self.h / 2) + event.y;
+
 				Self.dispatch({ type: "update-canvas", stop: event.stop });
 				break;
 			case "draw-base-layer":
@@ -125,7 +126,7 @@ const Canvas = {
 				Self.ctx.imageSmoothingEnabled = false;
 				Self.ctx.translate(Self.oX, Self.oY);
 				Self.ctx.drawImage(Self.osCvs[0], 0, 0, Self.w, Self.h);
-				
+
 				if (!event.stop) {
 					_navigator.dispatch({ type: "set-zoom", arg: Self.scale });
 					_navigator.dispatch({ type: "update-canvas" });
