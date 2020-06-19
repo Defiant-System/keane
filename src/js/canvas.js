@@ -156,8 +156,8 @@ const Canvas = {
 			case "update-canvas":
 				Self.ctx.shadowOffsetX = 0;
 				Self.ctx.shadowOffsetY = 1;
-				Self.ctx.shadowBlur = 3;
-				Self.ctx.shadowColor = "#2c2c2c";
+				Self.ctx.shadowBlur = 5;
+				Self.ctx.shadowColor = "#292929";
 				Self.ctx.imageSmoothingEnabled = false;
 				Self.ctx.translate(Self.oX, Self.oY);
 				Self.ctx.drawImage(Self.osCvs[0], 0, 0, Self.w, Self.h);
