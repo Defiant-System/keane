@@ -532,15 +532,12 @@ content {
 			bottom: 0;
 		}
 	
-		.canvas {
+		canvas.canvas {
 			position: absolute;
 			top: 0;
 			left: 0;
 			z-index: 2;
-
-			canvas {
-
-			}
+			cursor: crosshair;
 		}
 	}
 
@@ -1039,16 +1036,30 @@ content {
 					color: rgba(#eff, .75);
 					font-size: 11px;
 
-					.field:last-child .info-area {
-						padding-top: 33px;
-						padding-left: 7px;
-						color: rgba(#eff, .45);
+					.field {
+						&:first-child .info-area:nth-child(1) {
+							flex: initial;
+							width: 137px;
+						}
+
+						&:last-child .info-area {
+							padding-top: 33px;
+							padding-left: 7px;
+							color: rgba(#eff, .45);
+						}
 					}
 
 					.info-area {
 						position: relative;
 						padding-left: 29px;
 						flex: 1;
+
+						&:nth-child(3) {
+							flex: initial;
+							width: 47px;
+							padding-top: 42px;
+							padding-left: 0;
+						}
 
 						> .icon {
 							position: absolute;
@@ -1063,6 +1074,8 @@ content {
 							padding: 2px 0;
 							display: flex;
 
+							&.hidden { display: none; }
+
 							.label {
 								display: inline-block;
 								vertical-align: middle;
@@ -1070,6 +1083,7 @@ content {
 								font-size: 11px;
 								color: rgba(#eff, .45);
 							}
+
 							.value {
 								height: 17px;
 								padding: 3px 0 0;
