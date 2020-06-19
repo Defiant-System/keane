@@ -2,6 +2,9 @@
 // TOOLS.move
 
 {
+	init() {
+		
+	},
 	dispatch(event) {
 		let APP = photoshop,
 			CVS = Canvas,

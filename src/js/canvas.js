@@ -54,14 +54,14 @@ const Canvas = {
 				defiant.emit("mouse-move", data);
 				break;
 			// custom events
-			case "enable":
-				// bind event handlers
-				//Self.cvs.on("mousemove", Self.dispatch);
-				break;
 			case "load-canvas":
 				Self.stack = event.stack;
 				// execute stack
 				Self.stack.map(item => Self.dispatch(item));
+				// bind event handlers
+				Self.cvs.on("mousemove", Self.dispatch);
+				// broadcast event
+				defiant.emit(event.type);
 				break;
 			case "window.resize":
 			case "reset-canvas":
@@ -156,13 +156,15 @@ const Canvas = {
 				Self.osCtx.drawImage(event.src, 0, 0);
 				break;
 			case "update-canvas":
+				Self.ctx.translate(Self.oX, Self.oY);
+				Self.ctx.save();
 				Self.ctx.shadowOffsetX = 0;
 				Self.ctx.shadowOffsetY = 1;
 				Self.ctx.shadowBlur = 5;
 				Self.ctx.shadowColor = "#292929";
 				Self.ctx.imageSmoothingEnabled = false;
-				Self.ctx.translate(Self.oX, Self.oY);
 				Self.ctx.drawImage(Self.osCvs[0], 0, 0, Self.w, Self.h);
+				Self.ctx.restore();
 
 				if (!event.stop) {
 					_navigator.dispatch({ type: "set-zoom", arg: Self.scale });

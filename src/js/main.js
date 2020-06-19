@@ -19,11 +19,10 @@ const photoshop = {
 		this.els.rulers = window.find(".ruler-top, .ruler-left");
 		this.els.statusBar = window.find(".status-bar");
 
-		// init sub-objects
+		// init objects
 		Canvas.init();
-		Object.keys(this)
-			.filter(item => this[item].init)
-			.map(item => this[item].init());
+		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
+		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
 
 		// auto store box HTML
 		window.store("tool-options/marquee.htm", '.tool-options-marquee');
@@ -39,7 +38,7 @@ const photoshop = {
 		//this.dispatch({ event: "window.resize" });
 
 		// auto-select initial tool
-		this.els.content.find(".tools-bar .tool[data-content='move']").trigger("click");
+		this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click");
 
 		// bind event handlers
 		this.els.content.bind("dragover drop", this.dispatch);
@@ -93,7 +92,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 3 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
 							{ type: "draw-image", src: image },
@@ -102,7 +101,6 @@ const photoshop = {
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
 							//{ type: "pan-canvas", left: -377, top: 4 },
-							{ type: "enable" },
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};
