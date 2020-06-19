@@ -4,8 +4,9 @@
 {
 	dispatch(event) {
 		let APP = photoshop,
+			CVS = Canvas,
 			Self = TOOLS.move,
-			drag = Self.panDrag,
+			Drag = Self.drag,
 			_max = Math.max,
 			_min = Math.min;
 
@@ -16,44 +17,43 @@
 				event.preventDefault();
 
 				// dont pan if image fits available area
-				if (Self.w <= Self.aW && Self.h <= Self.aH) return;
+				if (CVS.w <= CVS.aW && CVS.h <= CVS.aH) return;
 
-				Self.panDrag = {
-					clickX: event.clientX - (Self.oX - Self.cX + (Self.w / 2)),
-					clickY: event.clientY - (Self.oY - Self.cY + (Self.h / 2)),
+				Self.drag = {
+					clickX: event.clientX - (CVS.oX - CVS.cX + (CVS.w / 2)),
+					clickY: event.clientY - (CVS.oY - CVS.cY + (CVS.h / 2)),
 					min: {
-						x: Self.aX - Self.cX + (Self.w / 2),
-						y: Self.aY - Self.cY + (Self.h / 2),
+						x: CVS.aX - CVS.cX + (CVS.w / 2),
+						y: CVS.aY - CVS.cY + (CVS.h / 2),
 					},
 					max: {
-						x: (Self.cX - Self.aX - (Self.w / 2)),
-						y: (Self.cY - Self.aY - (Self.h / 2)) + Self.els.statusBar.height(),
+						x: (CVS.cX - CVS.aX - (CVS.w / 2)),
+						y: (CVS.cY - CVS.aY - (CVS.h / 2)) + CVS.els.statusBar.height(),
 					},
 				};
 
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover");
 				// bind event handlers
-				Self.doc.on("mousemove mouseup", Self.pan);
+				CVS.doc.on("mousemove mouseup", Self.dispatch);
 				break;
 			case "mousemove":
-				let x = _max(_min(event.clientX - drag.clickX, drag.min.x), drag.max.x),
-					y = _max(_min(event.clientY - drag.clickY, drag.min.y), drag.max.y);
-				Self.dispatch({ type: "pan-canvas", x, y });
+				let x = _max(_min(event.clientX - Drag.clickX, Drag.min.x), Drag.max.x),
+					y = _max(_min(event.clientY - Drag.clickY, Drag.min.y), Drag.max.y);
+				CVS.dispatch({ type: "pan-canvas", x, y });
 				break;
 			case "mouseup":
 				// remove class
 				APP.els.content.removeClass("cover");
 				// unbind event handlers
-				Self.doc.off("mousemove mouseup", Self.pan);
+				CVS.doc.off("mousemove mouseup", Self.dispatch);
 				break;
 			// custom events
 			case "enable":
-				console.log(event.type);
-				//Canvas.cvs.on("mousedown", this.pan);
+				CVS.cvs.on("mousedown", Self.dispatch);
 				break;
 			case "disable":
-				console.log(event.type);
+				CVS.cvs.off("mousedown", Self.dispatch);
 				break;
 		}
 	}

@@ -56,7 +56,7 @@ const Canvas = {
 			// custom events
 			case "enable":
 				// bind event handlers
-				Self.cvs.on("mousemove", this.dispatch);
+				//Self.cvs.on("mousemove", Self.dispatch);
 				break;
 			case "load-canvas":
 				Self.stack = event.stack;

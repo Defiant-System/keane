@@ -4,8 +4,9 @@
 {
 	dispatch(event) {
 		let APP = photoshop,
+			CVS = Canvas,
 			Self = TOOLS.marquee,
-			drag = Self.panDrag,
+			Drag = Self.drag,
 			_max = Math.max,
 			_min = Math.min;
 
@@ -19,11 +20,9 @@
 				break;
 			// custom events
 			case "enable":
-				console.log(event.type);
 				//Canvas.cvs.on("mousedown", this.pan);
 				break;
 			case "disable":
-				console.log(event.type);
 				break;
 		}
 	}

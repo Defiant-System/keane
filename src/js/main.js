@@ -128,7 +128,8 @@ const photoshop = {
 				}
 				if (TOOLS[el.data("content")]) {
 					// enable tool
-					TOOLS[el.data("content")].dispatch({ type: "enable" });
+					TOOLS._active = el.data("content");
+					TOOLS[TOOLS._active].dispatch({ type: "enable" });
 				}
 
 				let newOpt = window.store(`tool-options/${el.data("content")}.htm`)
