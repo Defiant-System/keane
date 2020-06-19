@@ -21,10 +21,6 @@ const Canvas = {
 		this.cvsBg = new Image;
 		this.cvsBg.onload = () => this.cvsBgPattern = this.osCtx.createPattern(this.cvsBg, "repeat");
 		this.cvsBg.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
-
-		// bind event handlers
-		this.cvs.on("mousedown", this.pan);
-		this.cvs.on("mousemove", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -43,6 +39,7 @@ const Canvas = {
 		//Self.osCtx.scale(Self.scale, Self.scale);
 
 		switch (event.type) {
+			// native events
 			case "mousemove":
 				data.top = _min(_max(_round(event.offsetY - Self.oY), 0), Self.h);
 				data.left = _min(_max(_round(event.offsetX - Self.oX), 0), Self.w);
@@ -55,6 +52,11 @@ const Canvas = {
 
 				// broadcast event
 				defiant.emit("mouse-move", data);
+				break;
+			// custom events
+			case "enable":
+				// bind event handlers
+				Self.cvs.on("mousemove", this.dispatch);
 				break;
 			case "load-canvas":
 				Self.stack = event.stack;
@@ -170,52 +172,6 @@ const Canvas = {
 		}
 		// restore paint context
 		Self.osCtx.restore();
-	},
-	pan(event) {
-		let APP = photoshop,
-			Self = Canvas,
-			drag = Self.panDrag,
-			_max = Math.max,
-			_min = Math.min;
-
-		switch (event.type) {
-			case "mousedown":
-				// prevent default behaviour
-				event.preventDefault();
-
-				// dont pan if image fits available area
-				if (Self.w <= Self.aW && Self.h <= Self.aH) return;
-
-				Self.panDrag = {
-					clickX: event.clientX - (Self.oX - Self.cX + (Self.w / 2)),
-					clickY: event.clientY - (Self.oY - Self.cY + (Self.h / 2)),
-					min: {
-						x: Self.aX - Self.cX + (Self.w / 2),
-						y: Self.aY - Self.cY + (Self.h / 2),
-					},
-					max: {
-						x: (Self.cX - Self.aX - (Self.w / 2)),
-						y: (Self.cY - Self.aY - (Self.h / 2)) + Self.els.statusBar.height(),
-					},
-				};
-
-				// prevent mouse from triggering mouseover
-				APP.els.content.addClass("cover");
-				// bind event handlers
-				Self.doc.on("mousemove mouseup", Self.pan);
-				break;
-			case "mousemove":
-				let x = _max(_min(event.clientX - drag.clickX, drag.min.x), drag.max.x),
-					y = _max(_min(event.clientY - drag.clickY, drag.min.y), drag.max.y);
-				Self.dispatch({ type: "pan-canvas", x, y });
-				break;
-			case "mouseup":
-				// remove class
-				APP.els.content.removeClass("cover");
-				// unbind event handlers
-				Self.doc.off("mousemove mouseup", Self.pan);
-				break;
-		}
 	},
 	hslToRgb(hsl) {
 		let _round = Math.round,

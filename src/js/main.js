@@ -1,10 +1,15 @@
 
-//defiant.req1uire("modules/psd.js")
 defiant.require("canvas.js")
-
+//defiant.req1uire("modules/psd.js")
 //const PSD = require1("psd");
 
 const ZOOM = [10,25,50,75,100,200,300,400,600,800,1200,1500,1800];
+
+const TOOLS = {
+	_active : false,
+	move    : defiant.require("tools/move.js"),
+	marquee : defiant.require("tools/marquee.js")
+};
 
 const photoshop = {
 	els: {},
@@ -33,6 +38,9 @@ const photoshop = {
 		// auto trigger resize event for canvas dimensions
 		//this.dispatch({ event: "window.resize" });
 
+		// auto-select initial tool
+		this.els.content.find(".tools-bar .tool[data-content='move']").trigger("click");
+
 		// bind event handlers
 		this.els.content.bind("dragover drop", this.dispatch);
 
@@ -40,11 +48,7 @@ const photoshop = {
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
 		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/nature/rose.jpg" });
-
-		//window.find(".zoom-slider input").val(235).trigger("input");
-		//window.find('[data-content="color"]').trigger("click");
-		//window.find('.tool[data-content="brush"]').trigger("click");
-		window.find('.sidebar-box div[data-content="info"]').trigger("click");
+		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
 	},
 	dispatch(event) {
 		let Self = photoshop,
@@ -89,7 +93,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale1: 2 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 3 },
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
 							{ type: "draw-image", src: image },
@@ -98,6 +102,7 @@ const photoshop = {
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
 							//{ type: "pan-canvas", left: -377, top: 4 },
+							{ type: "enable" },
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};
@@ -114,9 +119,17 @@ const photoshop = {
 			case "select-tool":
 				el = $(event.target);
 				if (el.hasClass("active") || !el.data("content")) return;
-
 				el.parent().find(".active").removeClass("active");
 				el.addClass("active");
+
+				if (TOOLS._active) {
+					// disable active tool
+					TOOLS[TOOLS._active].dispatch({ type: "disable" });
+				}
+				if (TOOLS[el.data("content")]) {
+					// enable tool
+					TOOLS[el.data("content")].dispatch({ type: "enable" });
+				}
 
 				let newOpt = window.store(`tool-options/${el.data("content")}.htm`)
 					oldOpt = event.el.nextAll(".tools-options-bar").find("> div");
