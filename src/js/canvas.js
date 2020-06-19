@@ -44,12 +44,10 @@ const Canvas = {
 
 		switch (event.type) {
 			case "mousemove":
-				data.top = _max(_round(event.offsetY - Self.oY), 0);
-				data.left = _round(event.offsetX - Self.oX);
-				data.offsetY = event.offsetY - Self.aY;
-				data.offsetX = event.offsetX - Self.aX;
-				// data.isCanvasY = data.top >= 0 && data.top <= Self.h;
-				// data.isCanvasX = data.left >= 0 && data.left <= Self.w;
+				data.top = _min(_max(_round(event.offsetY - Self.oY), 0), Self.h);
+				data.left = _min(_max(_round(event.offsetX - Self.oX), 0), Self.w);
+				data.offsetY = _min(_max(event.offsetY, Self.oY), Self.oY + Self.h) - Self.aY;
+				data.offsetX = _min(_max(event.offsetX, Self.oX), Self.oX + Self.w) - Self.aX;
 				// broadcast event
 				defiant.emit("mouse-move", data);
 				break;
