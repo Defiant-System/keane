@@ -41,11 +41,11 @@ const Canvas = {
 		switch (event.type) {
 			// native events
 			case "mousemove":
-				data.top = _min(_max(_round(event.offsetY - Self.oY), 0), Self.h);
-				data.left = _min(_max(_round(event.offsetX - Self.oX), 0), Self.w);
+				data.top = _round(_min(_max(event.offsetY - Self.oY, 0), Self.h) / Self.scale);
+				data.left = _round(_min(_max(event.offsetX - Self.oX, 0), Self.w) / Self.scale);
 				data.offsetY = _min(_max(event.offsetY, Self.oY), Self.oY + Self.h) - Self.aY;
 				data.offsetX = _min(_max(event.offsetX, Self.oX), Self.oX + Self.w) - Self.aX;
-				data.rgba = Self.ctx.getImageData(Self.oX + data.left, Self.oY + data.top, 1, 1).data;
+				data.rgba = Self.osCtx.getImageData(data.left, data.top, 1, 1).data;
 				data.hsl = Self.rgbToHsv.apply({}, data.rgba);
 				data.isOnCanvas = event.offsetY >= Self.oY && event.offsetY <= Self.oY + Self.h
 								&& event.offsetX >= Self.oX && event.offsetX <= Self.oX + Self.w;

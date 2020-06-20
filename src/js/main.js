@@ -38,7 +38,7 @@ const photoshop = {
 		//this.dispatch({ event: "window.resize" });
 
 		// auto-select initial tool
-		this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click");
+		this.els.content.find(".tools-bar .tool[data-content='move']").trigger("click");
 
 		// bind event handlers
 		this.els.content.bind("dragover drop", this.dispatch);
@@ -47,7 +47,7 @@ const photoshop = {
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
 		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/nature/rose.jpg" });
-		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
+		window.find('.sidebar-box div[data-content="info"]').trigger("click");
 	},
 	dispatch(event) {
 		let Self = photoshop,
@@ -92,7 +92,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 18 },
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
 							{ type: "draw-image", src: image },
@@ -100,7 +100,7 @@ const photoshop = {
 							// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
-							//{ type: "pan-canvas", left: -377, top: 4 },
+							{ type: "pan-canvas", x: 4996, y: 3225.5 },
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};
@@ -133,9 +133,9 @@ const photoshop = {
 					TOOLS[TOOLS._active].dispatch({ type: "enable" });
 				}
 
+				// replace existing tool options with selected
 				let newOpt = window.store(`tool-options/${el.data("content")}.htm`)
 					oldOpt = event.el.nextAll(".tools-options-bar").find("> div");
-
 				oldOpt.replace(newOpt);
 				break;
 			case "box-head-tab":
