@@ -102,8 +102,8 @@ const Canvas = {
 				Self.w = Self.oW * Self.scale;
 				Self.h = Self.oH * Self.scale;
 				// origo
-				Self.oX = Self.cX - (Self.w / 2);
-				Self.oY = Self.cY - (Self.h / 2);
+				Self.oX = _round(Self.cX - (Self.w / 2));
+				Self.oY = _round(Self.cY - (Self.h / 2));
 				// misc
 				Self.bgColor = "#000"
 				Self.fgColor = "#fff"
@@ -121,9 +121,10 @@ const Canvas = {
 				Self.reset();
 				break;
 			case "pan-canvas":
+				//console.log(event);  // for dev purposes
 				// reset canvas
 				Self.cvs.prop({ width: window.width, height: window.height });
-				
+
 				Self.oX = Number.isInteger(event.left) ? event.left : Self.cX - (Self.w / 2) + event.x;
 				Self.oY = Number.isInteger(event.top) ? event.top : Self.cY - (Self.h / 2) + event.y;
 

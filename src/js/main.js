@@ -3,7 +3,7 @@ defiant.require("canvas.js")
 //defiant.req1uire("modules/psd.js")
 //const PSD = require1("psd");
 
-const ZOOM = [10,25,50,75,100,200,300,400,600,800,1200,1500,1800];
+const ZOOM = [10,25,50,75,100,200,300,400,600,800,1200,1600,2400];
 
 const TOOLS = {
 	_active : false,
@@ -38,7 +38,7 @@ const photoshop = {
 		//this.dispatch({ event: "window.resize" });
 
 		// auto-select initial tool
-		this.els.content.find(".tools-bar .tool[data-content='move']").trigger("click");
+		this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click");
 
 		// bind event handlers
 		this.els.content.bind("dragover drop", this.dispatch);
@@ -47,7 +47,7 @@ const photoshop = {
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
 		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/nature/rose.jpg" });
-		window.find('.sidebar-box div[data-content="info"]').trigger("click");
+		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
 	},
 	dispatch(event) {
 		let Self = photoshop,
@@ -92,7 +92,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 18 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale1: 24 },
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
 							{ type: "draw-image", src: image },
@@ -100,7 +100,7 @@ const photoshop = {
 							// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
-							{ type: "pan-canvas", x: 4996, y: 3225.5 },
+							// { type: "pan-canvas", x: 6796, y: 4419.5 },
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};

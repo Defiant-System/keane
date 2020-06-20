@@ -5,7 +5,8 @@
 	init() {
 		this.cvs = $(document.createElement("canvas"));
 		this.ctx = this.cvs[0].getContext("2d");
-		
+
+		this.ctx.imageSmoothingEnabled = Canvas.ctx.imageSmoothingEnabled;
 		//this.ctx.translate(.5, .5);
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
