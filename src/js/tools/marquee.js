@@ -5,6 +5,8 @@
 	init() {
 		this.cvs = $(document.createElement("canvas"));
 		this.ctx = this.cvs[0].getContext("2d");
+		
+		this.ctx.translate(.5, .5);
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
 
@@ -24,6 +26,10 @@
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
+				// reset selection canvas
+				Self.cvs.prop({ width: Self.w, height: Self.h });
+				// stop marching ants, if marching
+				Self.ants();
 
 				Self.drag = {
 					clickX: event.clientX,
@@ -38,17 +44,19 @@
 				CVS.doc.on("mousemove mouseup", Self.dispatch);
 				break;
 			case "mousemove":
-				let x = event.clientX - Drag.clickX,
-					y = event.clientY - Drag.clickY;
+				Drag.oW = event.clientX - Drag.clickX;
+				Drag.oH = event.clientY - Drag.clickY;
 				
 				Self.cvs.prop({ width: Self.w, height: Self.h });
-				Self.ctx.fillRect(Drag.oX, Drag.oY, x, y);
-				
-				// overlay painted canvas
-				CVS.reset();
-				CVS.ctx.drawImage(Self.cvs[0], 0, 0, Self.w, Self.h);
+				Self.ctx.fillRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
+
+				// paint ants but no marching
+				Self.ants();
 				break;
 			case "mouseup":
+				// start marching if there is any box
+				if (Drag.oW && Drag.oH) Self.ants(true);
+
 				// remove class
 				APP.els.content.removeClass("cover");
 				// unbind event handlers
@@ -60,8 +68,7 @@
 				Self.h = CVS.oH;
 				Self.cvs.prop({ width: Self.w, height: Self.h });
 
-				// temp
-				//Self.ctx.translate(.5, .5);
+				/* temp
 				// Self.ctx.lineWidth = 15;
 				// Self.ctx.beginPath();
 				// Self.ctx.rect(60, 70, 100, 100);
@@ -69,9 +76,10 @@
 
 				Self.ctx.rect(60, 70, 100, 100);
 				//Self.ctx.fillRect(130, 120, 100, 100);
-				Self.ctx.arc(180, 180, 90, 0, 2 * Math.PI);
+				//Self.ctx.arc(180, 180, 90, 0, 2 * Math.PI);
     			Self.ctx.fill();
 				Self.ants();
+				*/
 				break;
 			case "enable":
 				CVS.cvs.on("mousedown", Self.dispatch);
@@ -118,17 +126,17 @@
 		}
 		return dstImg;
 	},
-	ants() {
+	ants(march) {
 		this.mask = this.getOutlineMask().data;
 		this.cvsImg = Canvas.osCtx.getImageData(0, 0, this.w, this.h);
 		this.aO = 0;
-		
-		//Canvas.ctx.putImageData(mask, CVS.oX, CVS.oY);
-		//Canvas.ctx.drawImage(this.cvs[0], 0, 0, this.w, this.h);
 
-		this.render();
+		// let marching start
+		this.halt = !march;
+
+		this.render(march);
 	},
-	render() {
+	render(march) {
 		let CVS = Canvas,
 			mask = this.mask,
 			cvsImg = this.cvsImg,
@@ -151,9 +159,11 @@
 			}
 		}
 		CVS.ctx.putImageData(cvsImg, CVS.oX, CVS.oY);
-		// ants march!
-		this.aO -= .25;
 
+		// march tiny ants!
+		this.aO -= .2;
+
+		if (this.halt) return;
 		requestAnimationFrame(() => this.render());
 	}
 }
