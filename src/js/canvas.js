@@ -56,8 +56,8 @@ const Canvas = {
 			// custom events
 			case "load-canvas":
 				Self.stack = event.stack;
-				// execute stack
-				Self.stack.map(item => Self.dispatch(item));
+				// reset canvas
+				Self.reset();
 				// bind event handlers
 				Self.cvs.on("mousemove", Self.dispatch);
 				// broadcast event
@@ -76,8 +76,8 @@ const Canvas = {
 				Self.cvs.prop({ width: window.width, height: window.height });
 
 				if (event.type === "window.resize") {
-					// execute stack
-					Self.stack.map(item => Self.dispatch(item));
+					// reset canvas
+					Self.reset();
 				}
 				break;
 			case "set-canvas":
@@ -117,8 +117,8 @@ const Canvas = {
 				Self.h = Self.oH * Self.scale;
 				Self.oX = Self.cX - (Self.w / 2);
 				Self.oY = Self.cY - (Self.h / 2);
-				// re-execute paint stack
-				Self.stack.map(item => Self.dispatch(item));
+				// reset canvas
+				Self.reset();
 				break;
 			case "pan-canvas":
 				// reset canvas
@@ -174,6 +174,10 @@ const Canvas = {
 		}
 		// restore paint context
 		Self.osCtx.restore();
+	},
+	reset() {
+		// re-paints paint stack
+		this.stack.map(item => this.dispatch(item));
 	},
 	hslToRgb(hsl) {
 		let _round = Math.round,
