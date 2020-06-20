@@ -53,8 +53,8 @@ const photoshop = {
 		let Self = photoshop,
 			image,
 			name,
-			boxEl,
 			boxName,
+			pEl,
 			el;
 		switch (event.type) {
 			case "dragover":
@@ -114,6 +114,9 @@ const photoshop = {
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
 				break;
+			case "enter-quick-mask":
+				console.log(event.el);
+				break;
 			case "select-tool":
 				el = $(event.target);
 				if (el.hasClass("active") || !el.data("content")) return;
@@ -156,9 +159,23 @@ const photoshop = {
 				break;
 			default:
 				if (event.el) {
-					boxEl = event.el.parents("div[data-box]");
-					boxName = boxEl.attr("data-box");
-					if (boxEl.length && Self.box[boxName].dispatch) {
+					pEl = event.el.parents(".tools-options-bar");
+					if (pEl.length) {
+						name = event.el.data("group");
+						if (event.el.hasClass("tool")) {
+							if (name) {
+								pEl.find(`.down[data-group="${name}"]`).removeClass("down");
+							}
+							event.el.addClass("down");
+						}
+						name = pEl.prev(".tools-bar").find(".active").data("content");
+						// dispatch event to tool object
+						TOOLS[name].dispatch(event);
+						return;
+					}
+					pEl = event.el.parents("div[data-box]");
+					boxName = pEl.attr("data-box");
+					if (pEl.length && Self.box[boxName].dispatch) {
 						Self.box[boxName].dispatch(event);
 					}
 				}

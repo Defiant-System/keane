@@ -9,6 +9,7 @@
 		this.ctx.translate(.5, .5);
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
+		this.shape = "elliptic";
 
 		// subscribe to events
 		defiant.on("load-canvas", this.dispatch);
@@ -48,7 +49,16 @@
 				Drag.oH = event.clientY - Drag.clickY;
 				
 				Self.cvs.prop({ width: Self.w, height: Self.h });
-				Self.ctx.fillRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
+
+				switch (Self.shape) {
+					case "rectangle":
+						Self.ctx.fillRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
+						break;
+					case "elliptic":
+						Self.ctx.arc(180, 180, 90, 0, 2 * Math.PI);
+		    			Self.ctx.fill();
+						break;
+				}
 
 				// paint ants but no marching
 				Self.ants();
@@ -67,19 +77,9 @@
 				Self.w = CVS.oW;
 				Self.h = CVS.oH;
 				Self.cvs.prop({ width: Self.w, height: Self.h });
-
-				/* temp
-				// Self.ctx.lineWidth = 15;
-				// Self.ctx.beginPath();
-				// Self.ctx.rect(60, 70, 100, 100);
-    			// Self.ctx.stroke();
-
-				Self.ctx.rect(60, 70, 100, 100);
-				//Self.ctx.fillRect(130, 120, 100, 100);
-				//Self.ctx.arc(180, 180, 90, 0, 2 * Math.PI);
-    			Self.ctx.fill();
-				Self.ants();
-				*/
+				break;
+			case "select-shape":
+				Self.shape = event.arg || "rectangle";
 				break;
 			case "enable":
 				CVS.cvs.on("mousedown", Self.dispatch);
