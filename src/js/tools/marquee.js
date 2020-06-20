@@ -6,10 +6,10 @@
 		this.cvs = $(document.createElement("canvas"));
 		this.ctx = this.cvs[0].getContext("2d");
 		
-		this.ctx.translate(.5, .5);
+		//this.ctx.translate(.5, .5);
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
-		this.shape = "elliptic";
+		this.shape = "rectangle";
 
 		// subscribe to events
 		defiant.on("load-canvas", this.dispatch);
@@ -55,10 +55,12 @@
 						Self.ctx.fillRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
 						break;
 					case "elliptic":
-						Self.ctx.arc(180, 180, 90, 0, 2 * Math.PI);
-		    			Self.ctx.fill();
+						let hW = Drag.oW / 2,
+							hH = Drag.oH / 2;
+						Self.ctx.ellipse(Drag.oX + hW, Drag.oY + hH, hW, hH, 0, 0, Math.PI*2);
 						break;
 				}
+		    	Self.ctx.fill();
 
 				// paint ants but no marching
 				Self.ants();
