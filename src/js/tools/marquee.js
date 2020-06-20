@@ -3,11 +3,9 @@
 
 {
 	init() {
-		this.dCvs = $(document.createElement("canvas"));
-		this.dCtx = this.dCvs[0].getContext("2d");
-		this.sCvs = $(document.createElement("canvas"));
-		this.sCtx = this.sCvs[0].getContext("2d");
-		this.sCtx.fillStyle = "#000";
+		this.cvs = $(document.createElement("canvas"));
+		this.ctx = this.cvs[0].getContext("2d");
+		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
 
 		// subscribe to events
@@ -43,12 +41,12 @@
 				let x = event.clientX - Drag.clickX,
 					y = event.clientY - Drag.clickY;
 				
-				Self.sCvs.prop({ width: Self.w, height: Self.h });
-				Self.sCtx.fillRect(Drag.oX, Drag.oY, x, y);
+				Self.cvs.prop({ width: Self.w, height: Self.h });
+				Self.ctx.fillRect(Drag.oX, Drag.oY, x, y);
 				
 				// overlay painted canvas
 				CVS.reset();
-				CVS.ctx.drawImage(Self.sCvs[0], 0, 0, Self.w, Self.h);
+				CVS.ctx.drawImage(Self.cvs[0], 0, 0, Self.w, Self.h);
 				break;
 			case "mouseup":
 				// remove class
@@ -60,19 +58,19 @@
 			case "load-canvas":
 				Self.w = CVS.oW;
 				Self.h = CVS.oH;
-				Self.sCvs.prop({ width: Self.w, height: Self.h });
+				Self.cvs.prop({ width: Self.w, height: Self.h });
 
 				// temp
-				//Self.sCtx.translate(.5, .5);
-				// Self.sCtx.lineWidth = 15;
-				// Self.sCtx.beginPath();
-				// Self.sCtx.rect(60, 70, 100, 100);
-    			// Self.sCtx.stroke();
+				//Self.ctx.translate(.5, .5);
+				// Self.ctx.lineWidth = 15;
+				// Self.ctx.beginPath();
+				// Self.ctx.rect(60, 70, 100, 100);
+    			// Self.ctx.stroke();
 
-				Self.sCtx.rect(60, 70, 100, 100);
-				//Self.sCtx.fillRect(130, 120, 100, 100);
-				Self.sCtx.arc(180, 180, 90, 0, 2 * Math.PI);
-    			Self.sCtx.fill();
+				Self.ctx.rect(60, 70, 100, 100);
+				//Self.ctx.fillRect(130, 120, 100, 100);
+				Self.ctx.arc(180, 180, 90, 0, 2 * Math.PI);
+    			Self.ctx.fill();
 				Self.ants();
 				break;
 			case "enable":
@@ -84,8 +82,8 @@
 		}
 	},
 	getOutlineMask() {
-		let srcImg = this.sCtx.getImageData(0, 0, this.w, this.h),
-			dstImg = this.sCtx.getImageData(0, 0, this.w, this.h),
+		let srcImg = this.ctx.getImageData(0, 0, this.w, this.h),
+			dstImg = this.ctx.getImageData(0, 0, this.w, this.h),
 			srcData = srcImg.data,
 			dstData = dstImg.data,
 			match = (x, y) => {
@@ -114,17 +112,48 @@
 		// iterate image data and find outline
 		for (let y=0; y<this.h; y++) {
 			for (let x=0; x<this.w; x++) {
-				let value = match(x, y) && isEdge(x, y) ? 0x00 : 0xFF;
-				set(x, y, value);
+				let v = match(x, y) && isEdge(x, y) ? 0x00 : 0xFF;
+				set(x, y, v);
 			}
 		}
 		return dstImg;
 	},
 	ants() {
-		let CVS = Canvas,
-			mask = this.getOutlineMask();
+		this.mask = this.getOutlineMask().data;
+		this.cvsImg = Canvas.osCtx.getImageData(0, 0, this.w, this.h);
+		this.aO = 0;
 		
-		CVS.ctx.putImageData(mask, CVS.oX, CVS.oY);
+		//Canvas.ctx.putImageData(mask, CVS.oX, CVS.oY);
 		//Canvas.ctx.drawImage(this.cvs[0], 0, 0, this.w, this.h);
+
+		this.render();
+	},
+	render() {
+		let CVS = Canvas,
+			mask = this.mask,
+			cvsImg = this.cvsImg,
+			data = this.cvsImg.data,
+			ant = (x, y, o) => ((5 + y + o % 10) + x) % 10 >= 5 ? 0x00 : 0xFF,
+			aO = this.aO;
+
+		for (let y=0; y<this.h; y++) {
+			for (let x=0; x<this.w; x++) {
+				let o = ((y * this.w) + x) * 4,
+					isEdge = mask[o] === 0x00;
+				// continue if it is not mask outline edge
+				if (!isEdge) continue;
+
+				let v = ant(x, y, aO);
+				data[o + 0] = v;
+				data[o + 1] = v;
+				data[o + 2] = v;
+				data[o + 3] = 0xFF;
+			}
+		}
+		CVS.ctx.putImageData(cvsImg, CVS.oX, CVS.oY);
+		// ants march!
+		this.aO -= .25;
+
+		requestAnimationFrame(() => this.render());
 	}
 }
