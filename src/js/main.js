@@ -47,7 +47,7 @@ const photoshop = {
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
 		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/nature/rose.jpg" });
-		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
+		window.find('.sidebar-box div[data-content="info"]').trigger("click");
 	},
 	dispatch(event) {
 		let Self = photoshop,
@@ -92,15 +92,17 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale1: 24 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
+							
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
 							{ type: "draw-image", src: image },
+
 							// { type: "draw-rect", x: 165, y: 84, w: 269, h: 230, fill: "white" },
 							// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
-							// { type: "pan-canvas", x: 6796, y: 4419.5 },
+							//{ type: "pan-canvas", x: 6796, y: 4419.5 },
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};

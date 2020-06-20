@@ -14,6 +14,8 @@ const Canvas = {
 		// canvases
 		this.osCvs = $(document.createElement("canvas"));
 		this.osCtx = this.osCvs[0].getContext("2d");
+		this.swapCvs = $(document.createElement("canvas"));
+		this.swapCtx = this.swapCvs[0].getContext("2d");
 		this.cvs = window.find(".cvs-wrapper canvas");
 		this.ctx = this.cvs[0].getContext("2d");
 		this.cvs.prop({ width: window.width, height: window.height, });
@@ -110,6 +112,7 @@ const Canvas = {
 				Self.lineWidth = 1;
 				// offscreen canvas
 				Self.osCvs.prop({ width: Self.oW, height: Self.oH });
+				Self.swapCvs.prop({ width: Self.oW, height: Self.oH });
 				break;
 			case "set-scale":
 				Self.scale = event.scale;
@@ -207,20 +210,17 @@ const Canvas = {
 		g /= 255;
 		b /= 255;
 		var _round = Math.round,
-			_min = Math.min,
-			_max = Math.max,
-			min = _min(r, _min(g, b)),
-			max = _max(r, _max(g, b)),
+			min = Math.min(r, g, b),
+			max = Math.max(r, g, b),
 			h = 0, s = 0, v = 0,
 			d, h;
 		// Black-gray-white
-		if (min === max) return [0, 0, min];
+		if (min === max) return [0, 0, _round(min * 100)];
 		// Colors other than black-gray-white:
 		d = (r === min) ? g - b : ((b === min) ? r - g : b - r);
 		h = (r === min) ? 3 : ((b === min) ? 1 : 5);
 		h = 60 * (h - d / (max - min));
 		s = (max - min) / max;
-		v = max;
-		return [_round(h), _round(s * 100), _round(v * 100)];
+		return [_round(h), _round(s * 100), _round(max * 100)];
 	}
 };
