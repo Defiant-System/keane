@@ -37,7 +37,7 @@ const photoshop = {
 		//this.dispatch({ event: "window.resize" });
 
 		// auto-select initial tool
-		this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click");
+		this.els.content.find(".tools-bar .tool[data-content='move']").trigger("click");
 
 		// bind event handlers
 		this.els.content.bind("dragover drop", this.dispatch);
@@ -46,7 +46,7 @@ const photoshop = {
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
 		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/nature/rose.jpg" });
-		window.find('.sidebar-box div[data-content="info"]').trigger("click");
+		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
 	},
 	dispatch(event) {
 		let Self = photoshop,
@@ -91,7 +91,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 3 },
 							
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },

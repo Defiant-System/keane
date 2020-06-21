@@ -158,8 +158,8 @@ const Canvas = {
 				Self.osCtx.drawImage(event.src, 0, 0);
 				break;
 			case "update-canvas":
-				Self.ctx.translate(Self.oX, Self.oY);
 				Self.ctx.save();
+				Self.ctx.translate(Self.oX, Self.oY);
 				Self.ctx.shadowOffsetX = 0;
 				Self.ctx.shadowOffsetY = 1;
 				Self.ctx.shadowBlur = 5;
@@ -167,6 +167,30 @@ const Canvas = {
 				Self.ctx.imageSmoothingEnabled = false;
 				Self.ctx.drawImage(Self.osCvs[0], 0, 0, Self.w, Self.h);
 				Self.ctx.restore();
+
+				// rulers
+				let rW = 18;
+
+				Self.ctx.save();
+				Self.ctx.translate(.5, .5);
+				Self.ctx.lineWidth = .5;
+				Self.ctx.fillStyle = "#112222e5";
+				Self.ctx.strokeStyle = "#000000ee";
+				Self.ctx.fillRect(Self.aX - 1, Self.aY - 1, Self.aW, rW);
+				Self.ctx.fillRect(Self.aX - 1, Self.aY + rW - 1, Self.aX + rW, Self.aH - rW + 1);
+
+				Self.ctx.beginPath();
+				Self.ctx.moveTo(Self.aX, Self.aY + rW - 1);
+				Self.ctx.lineTo(Self.aW, Self.aY + rW - 1);
+				Self.ctx.stroke();
+
+				Self.ctx.beginPath();
+				Self.ctx.moveTo(Self.aX + rW - 1, Self.aY - 1);
+				Self.ctx.lineTo(Self.aX + rW - 1, Self.aY + Self.aH);
+				Self.ctx.stroke();
+				
+				Self.ctx.restore();
+
 
 				if (!event.stop) {
 					_navigator.dispatch({ type: "set-zoom", arg: Self.scale });
