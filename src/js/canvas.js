@@ -8,8 +8,6 @@ const Canvas = {
 		this.els.optionsBar = window.find(".tools-options-bar");
 		this.els.sideBar = window.find(".sidebar-wrapper");
 		this.els.statusBar = window.find(".status-bar");
-		this.els.rulerTop = window.find(".ruler-top");
-		this.els.rulerLeft = window.find(".ruler-left");
 
 		// canvases
 		this.osCvs = $(document.createElement("canvas"));
@@ -67,8 +65,8 @@ const Canvas = {
 				break;
 			case "window.resize":
 			case "reset-canvas":
-				Self.aX = Self.els.rulerLeft.width();
-				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height() + Self.els.rulerTop.height();
+				Self.aX = 0;
+				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height();
 				Self.aW = window.width - Self.aX - Self.els.sideBar.width();
 				Self.aH = window.height - Self.aY; // - Self.els.statusBar.height()
 				// center

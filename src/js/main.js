@@ -16,7 +16,6 @@ const photoshop = {
 	init() {
 		// fast references
 		this.els.content = window.find("content");
-		this.els.rulers = window.find(".ruler-top, .ruler-left");
 		this.els.statusBar = window.find(".status-bar");
 
 		// init objects
@@ -109,9 +108,9 @@ const photoshop = {
 				image.src = event.arg;
 				break;
 			case "toggle-rulers":
-				Self.els.rulers.toggleClass("hidden", event.checked === 1);
+				//Self.els.rulers.toggleClass("hidden", event.checked === 1);
 				// trigger re-calculations + re-paint
-				Canvas.dispatch({ type: "window.resize" });
+				//Canvas.dispatch({ type: "window.resize" });
 				break;
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
@@ -183,7 +182,6 @@ const photoshop = {
 				}
 		}
 	},
-	rulers: defiant.require("modules/rulers.js"),
 	statusbar: defiant.require("modules/statusbar.js"),
 	box: {
 		navigator: defiant.require("boxes/box-navigator.js"),

@@ -634,65 +634,6 @@ content {
 		height: 100%;
 		//pointer-events: none;
 
-		.ruler-top {
-			background: rgba(#122, 0.85);
-			position: absolute;
-			left: 15px;
-			right: 276px;
-			top: 0;
-			height: 15px;
-			z-index: 2;
-			color: rgba(#9aa, .65);
-			font-size: 9px;
-			border-left: 1px dotted rgba(#677, .35);
-			z-index: 10;
-
-			&.hidden { display: none; }
-
-			> span {
-				//background: rgba(#fff, .3);
-				position: absolute;
-				top: 0;
-				height: inherit;
-				padding-top: 3px;
-			}
-			&:before {
-				content: "";
-				background: rgba(#122, 0.85);
-				position: absolute;
-				top: 0;
-				left: -16px;
-				width: 15px;
-				height: 15px;
-			}
-		}
-
-		.ruler-left {
-			background: rgba(#122, 0.85);
-			position: absolute;
-			top: 15px;
-			bottom: 0;
-			left: 0;
-			width: 15px;
-			z-index: 2;
-			color: rgba(#9aa, .65);
-			font-size: 9px;
-			border-top: 1px dotted rgba(#677, .35);
-			z-index: 10;
-
-			&.hidden { display: none; }
-
-			> span {
-				//background: rgba(#fff, .3);
-				position: absolute;
-				left: 0;
-				height: 15px;
-				transform-origin: 0 0;
-				transform: rotate(-90deg);
-				padding-top: 3px;
-			}
-		}
-
 		.status-bar {
 			position: absolute;
 			left: 15px;

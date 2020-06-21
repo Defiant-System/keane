@@ -32,7 +32,6 @@
 			if (this.els.zoomRect) this.els.zoomRect.off("mousedown", this.pan);
 			if (this.els.zoomSlider) this.els.zoomSlider.off("input", this.dispatch);
 			// clean up
-			delete this.els;
 			this.els = {};
 		}
 	},
