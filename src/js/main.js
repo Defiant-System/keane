@@ -3,13 +3,25 @@ defiant.require("canvas.js")
 //defiant.req1uire("modules/psd.js")
 //const PSD = require1("psd");
 
-const ZOOM = [10,25,50,75,100,200,300,400,600,800,1200,1600,2400];
-
 const TOOLS = {
 	_active : false,
 	move    : defiant.require("tools/move.js"),
 	marquee : defiant.require("tools/marquee.js")
 };
+
+const ZOOM =   [{ level: 10,   rG: [50,1,1] },
+				{ level: 25,   rG: [50,1,1] },
+				{ level: 50,   rG: [50,1,1] },
+				{ level: 75,   rG: [50,1,1] },
+				{ level: 100,  rG: [50,10,5] },
+				{ level: 200,  rG: [20,10,5] },
+				{ level: 300,  rG: [20,10,2] },
+				{ level: 400,  rG: [10,10,2] },
+				{ level: 600,  rG: [10,5,1] },
+				{ level: 800,  rG: [10,5,1] },
+				{ level: 1200, rG: [5,1,1] },
+				{ level: 1600, rG: [5,1,1] },
+				{ level: 2400, rG: [1,1,1] }];
 
 const photoshop = {
 	els: {},
@@ -68,13 +80,8 @@ const photoshop = {
 				PSD.fromEvent(event).then(function (psd) {
 					var data = JSON.stringify(psd.tree().export(), undefined, 2),
 						img = new Image();
-
-					img.onload = () => {
-						CTX.drawImage(img, 70, 150)
-					};
-					
+					img.onload = () => CTX.drawImage(img, 70, 150);
 					img.src = psd.image.toBase64();
-
 					// document.getElementById('data').innerHTML = data;
 					// document.getElementById('image').appendChild(psd.image.toPng());
 				});
@@ -91,7 +98,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 8 },
 							
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
@@ -101,7 +108,8 @@ const photoshop = {
 							// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
-							//{ type: "pan-canvas", x: 6796, y: 4419.5 },
+							//{ type: "pan-canvas", x: 197.5, y: 43 },
+							{ type: "pan-canvas", top: 90, left: 18 },
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};

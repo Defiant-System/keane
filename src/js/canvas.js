@@ -35,6 +35,7 @@ const Canvas = {
 		let APP = photoshop,
 			Self = Canvas,
 			_navigator = APP.box.navigator,
+			_abs = Math.abs,
 			_max = Math.max,
 			_min = Math.min,
 			_round = Math.round,
@@ -99,9 +100,9 @@ const Canvas = {
 					// default to first zoom level
 					event.scale = .1;
 					// iterate available zoom levels
-					ZOOM.filter(i => i <= 100)
-						.map(level => {
-							let scale = level / 100;
+					ZOOM.filter(z => z.level <= 100)
+						.map(zoom => {
+							let scale = zoom.level / 100;
 							if (Self.aW > event.w * scale && Self.aH > event.h * scale) {
 								event.scale = scale;
 							}
@@ -131,6 +132,7 @@ const Canvas = {
 				Self.oY = _round(Self.cY - (Self.h / 2));
 
 				// rulers
+				Self.rG = ZOOM.find(z => z.level === Self.scale * 100).rG;
 				Self.rW = _max(Self.w, window.width);
 				Self.rH = _max(Self.h, window.height);
 				Self.rulers = Self.createCanvas(Self.rW, Self.rH);
@@ -159,37 +161,38 @@ const Canvas = {
 				Self.rulers.ctx.stroke();
 
 
+				Self.rulers.ctx.textAlign = "left";
+				Self.rulers.ctx.fillStyle = "#555";
+				Self.rulers.ctx.font = `9px Arial`;
 				Self.rulers.ctx.strokeStyle = "#444";
 
-				Self.rulers.ctx.textAlign = "left";
-				Self.rulers.ctx.fillStyle = "#444";
-				Self.rulers.ctx.font = `10px Arial`;
-
-				let x = 0,
+				let xG = Self.rG[0] * Self.scale,
 					xl = Self.rW,
-					g = 50,
-					o = (Self.oX + 1) % g,
-					oX = Self.oX - o + 1;
-				for (; x<xl; x+=g) {
+					xO = Self.rT + 1,
+					oX = Self.oX - xO + 1,
+					x;
+				//console.log(oX);
+				for (x=0; x<xl; x+=xG) {
 					Self.rulers.ctx.beginPath();
-					Self.rulers.ctx.moveTo(x + o, 0);
-					Self.rulers.ctx.lineTo(x + o, Self.rT);
+					Self.rulers.ctx.moveTo(x + xO, 0);
+					Self.rulers.ctx.lineTo(x + xO, Self.rT);
 					Self.rulers.ctx.stroke();
 					// ruler numbers
-					Self.rulers.ctx.fillText(x - oX, x + 25, 9);
+					//Self.rulers.ctx.fillText(x, x + xO + 2, 9);
 				}
-
-				for (x=0, g=10; x<xl; x+=g) {
+				xG = Self.rG[1] * Self.scale;
+				for (x=0; x<xl; x+=xG) {
 					Self.rulers.ctx.beginPath();
-					Self.rulers.ctx.moveTo(x + o, 12);
-					Self.rulers.ctx.lineTo(x + o, Self.rT);
+					Self.rulers.ctx.moveTo(x + xO, 12);
+					Self.rulers.ctx.lineTo(x + xO, Self.rT);
 					Self.rulers.ctx.stroke();
 				}
-
-				for (x=0, g=5; x<xl; x+=g) {
+				
+				xG = Self.rG[2] * Self.scale;
+				for (x=0; x<xl; x+=xG) {
 					Self.rulers.ctx.beginPath();
-					Self.rulers.ctx.moveTo(x + o, 15);
-					Self.rulers.ctx.lineTo(x + o, Self.rT);
+					Self.rulers.ctx.moveTo(x + xO, 15);
+					Self.rulers.ctx.lineTo(x + xO, Self.rT);
 					Self.rulers.ctx.stroke();
 				}
 
@@ -197,7 +200,7 @@ const Canvas = {
 				if (!event.noReset) Self.reset();
 				break;
 			case "pan-canvas":
-				//console.log(event);  // for dev purposes
+				console.log(event);  // for dev purposes
 				// reset canvas
 				Self.cvs.prop({ width: window.width, height: window.height });
 

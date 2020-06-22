@@ -43,6 +43,7 @@
 			_max = Math.max,
 			_min = Math.min,
 			data = {},
+			zoom,
 			value,
 			width,
 			height,
@@ -51,12 +52,13 @@
 		if (!Self.els.root) return;
 		switch (event.type) {
 			case "set-zoom":
-				value = ZOOM.indexOf(event.arg * 100);
+				zoom = ZOOM.find(z => z.level === event.arg * 100) || ZOOM[4];
+				value = ZOOM.indexOf(zoom);
 				Self.els.zoomSlider.val(value);
-				if (Self.zoomValue === ZOOM[value]) return;
+				if (Self.zoomValue === value) return;
 				/* falls through */
 			case "input":
-				Self.zoomValue = ZOOM[Self.els.zoomSlider.val()];
+				Self.zoomValue = ZOOM[Self.els.zoomSlider.val()].level;
 				Self.els.zoomValue.html(Self.zoomValue + "%");
 				Self.els.statusZoom.html(Self.zoomValue + "%");
 

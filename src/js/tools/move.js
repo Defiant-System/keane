@@ -20,7 +20,7 @@
 				event.preventDefault();
 
 				// dont pan if image fits available area
-				if (CVS.w <= CVS.aW && CVS.h <= CVS.aH) return;
+				//if (CVS.w <= CVS.aW && CVS.h <= CVS.aH) return;
 
 				Self.drag = {
 					clickX: event.clientX - (CVS.oX - CVS.cX + (CVS.w / 2)),
@@ -43,6 +43,8 @@
 			case "mousemove":
 				let x = _max(_min(event.clientX - Drag.clickX, Drag.min.x), Drag.max.x),
 					y = _max(_min(event.clientY - Drag.clickY, Drag.min.y), Drag.max.y);
+				// let x = event.clientX - Drag.clickX,
+				// 	y = event.clientY - Drag.clickY;
 				CVS.dispatch({ type: "pan-canvas", x, y });
 				break;
 			case "mouseup":
