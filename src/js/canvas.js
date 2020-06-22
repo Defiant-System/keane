@@ -9,7 +9,7 @@ const Canvas = {
 		this.els.sideBar = window.find(".sidebar-wrapper");
 		this.els.statusBar = window.find(".status-bar");
 
-		this.rT = 19; // ruler thickness
+		this.rT = 18; // ruler thickness
 		this.showRulers = true;
 
 		// canvases
@@ -144,6 +144,7 @@ const Canvas = {
 				Self.rulers.ctx.lineWidth = 1;
 				Self.rulers.ctx.fillStyle = "#112222e5";
 				Self.rulers.ctx.strokeStyle = "#0000009e";
+
 				Self.rulers.ctx.fillRect(0, 0, Self.rW, Self.rT);
 				Self.rulers.ctx.fillRect(0, 0, Self.rT, Self.rH);
 
@@ -160,15 +161,22 @@ const Canvas = {
 
 				Self.rulers.ctx.strokeStyle = "#444";
 
+				Self.rulers.ctx.textAlign = "left";
+				Self.rulers.ctx.fillStyle = "#444";
+				Self.rulers.ctx.font = `10px Arial`;
+
 				let x = 0,
 					xl = Self.rW,
 					g = 50,
-					o = (Self.oX + 1) % g;
+					o = (Self.oX + 1) % g,
+					oX = Self.oX - o + 1;
 				for (; x<xl; x+=g) {
 					Self.rulers.ctx.beginPath();
 					Self.rulers.ctx.moveTo(x + o, 0);
 					Self.rulers.ctx.lineTo(x + o, Self.rT);
 					Self.rulers.ctx.stroke();
+					// ruler numbers
+					Self.rulers.ctx.fillText(x - oX, x + 25, 9);
 				}
 
 				for (x=0, g=10; x<xl; x+=g) {
