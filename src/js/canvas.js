@@ -9,6 +9,9 @@ const Canvas = {
 		this.els.sideBar = window.find(".sidebar-wrapper");
 		this.els.statusBar = window.find(".status-bar");
 
+		this.rT = 19; // ruler thickness
+		this.showRulers = true;
+
 		// canvases
 		this.osCvs = $(document.createElement("canvas"));
 		this.osCtx = this.osCvs[0].getContext("2d");
@@ -22,6 +25,12 @@ const Canvas = {
 		this.cvsBg.onload = () => this.cvsBgPattern = this.osCtx.createPattern(this.cvsBg, "repeat");
 		this.cvsBg.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
 	},
+	createCanvas(width, height) {
+		let cvs = $(document.createElement("canvas")),
+			ctx = cvs[0].getContext("2d");
+		cvs.prop({ width, height });
+		return { cvs, ctx }
+	},
 	dispatch(event) {
 		let APP = photoshop,
 			Self = Canvas,
@@ -32,6 +41,7 @@ const Canvas = {
 			pi2 = Math.PI * 2,
 			x, y, w, h,
 			data = {},
+			img,
 			el;
 
 		// save paint context
@@ -65,10 +75,10 @@ const Canvas = {
 				break;
 			case "window.resize":
 			case "reset-canvas":
-				Self.aX = 0;
-				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height();
-				Self.aW = window.width - Self.aX - Self.els.sideBar.width();
-				Self.aH = window.height - Self.aY; // - Self.els.statusBar.height()
+				Self.aX = Self.showRulers ? Self.rT : 0;
+				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height() + (Self.showRulers ? Self.rT : 0);
+				Self.aW = window.width - Self.aX - Self.els.sideBar.width() + (Self.showRulers ? Self.rT : 0);
+				Self.aH = window.height - Self.aY - (Self.showRulers ? Self.rT : 0); // - Self.els.statusBar.height()
 				// center
 				Self.cX = (window.width + Self.aX - Self.els.sideBar.width()) / 2;
 				Self.cY = (window.height + Self.aY - Self.els.statusBar.height()) / 2;
@@ -98,12 +108,11 @@ const Canvas = {
 						});
 				}
 				// scaled dimension
-				Self.scale = Self.scale || event.scale;
-				Self.w = Self.oW * Self.scale;
-				Self.h = Self.oH * Self.scale;
-				// origo
-				Self.oX = _round(Self.cX - (Self.w / 2));
-				Self.oY = _round(Self.cY - (Self.h / 2));
+				Self.dispatch({
+					type: "set-scale",
+					scale: Self.scale || event.scale,
+					noReset: true
+				});
 				// misc
 				Self.bgColor = "#000"
 				Self.fgColor = "#fff"
@@ -113,13 +122,71 @@ const Canvas = {
 				Self.swapCvs.prop({ width: Self.oW, height: Self.oH });
 				break;
 			case "set-scale":
+				// scaled dimension
 				Self.scale = event.scale;
 				Self.w = Self.oW * Self.scale;
 				Self.h = Self.oH * Self.scale;
-				Self.oX = Self.cX - (Self.w / 2);
-				Self.oY = Self.cY - (Self.h / 2);
+				// origo
+				Self.oX = _round(Self.cX - (Self.w / 2));
+				Self.oY = _round(Self.cY - (Self.h / 2));
+
+				// rulers
+				Self.rW = _max(Self.w, window.width);
+				Self.rH = _max(Self.h, window.height);
+				Self.rulers = Self.createCanvas(Self.rW, Self.rH);
+
+				Self.rulers.ctx.translate(-.5, -.5);
+				// debug
+				// Self.rulers.ctx.fillStyle = "#f00";
+				// Self.rulers.ctx.strokeStyle = "#000";
+				// Self.rulers.ctx.fillRect(0, 0, 1e4, 1e4);
+
+				Self.rulers.ctx.lineWidth = 1;
+				Self.rulers.ctx.fillStyle = "#112222e5";
+				Self.rulers.ctx.strokeStyle = "#0000009e";
+				Self.rulers.ctx.fillRect(0, 0, Self.rW, Self.rT);
+				Self.rulers.ctx.fillRect(0, 0, Self.rT, Self.rH);
+
+				Self.rulers.ctx.beginPath();
+				Self.rulers.ctx.moveTo(0, Self.rT);
+				Self.rulers.ctx.lineTo(Self.rW, Self.rT);
+				Self.rulers.ctx.stroke();
+
+				Self.rulers.ctx.beginPath();
+				Self.rulers.ctx.moveTo(Self.rT, 0);
+				Self.rulers.ctx.lineTo(Self.rT, Self.rH);
+				Self.rulers.ctx.stroke();
+
+
+				Self.rulers.ctx.strokeStyle = "#444";
+
+				let x = 0,
+					xl = Self.rW,
+					g = 50,
+					o = (Self.oX + 1) % g;
+				for (; x<xl; x+=g) {
+					Self.rulers.ctx.beginPath();
+					Self.rulers.ctx.moveTo(x + o, 0);
+					Self.rulers.ctx.lineTo(x + o, Self.rT);
+					Self.rulers.ctx.stroke();
+				}
+
+				for (x=0, g=10; x<xl; x+=g) {
+					Self.rulers.ctx.beginPath();
+					Self.rulers.ctx.moveTo(x + o, 12);
+					Self.rulers.ctx.lineTo(x + o, Self.rT);
+					Self.rulers.ctx.stroke();
+				}
+
+				for (x=0, g=5; x<xl; x+=g) {
+					Self.rulers.ctx.beginPath();
+					Self.rulers.ctx.moveTo(x + o, 15);
+					Self.rulers.ctx.lineTo(x + o, Self.rT);
+					Self.rulers.ctx.stroke();
+				}
+
 				// reset canvas
-				Self.reset();
+				if (!event.noReset) Self.reset();
 				break;
 			case "pan-canvas":
 				//console.log(event);  // for dev purposes
@@ -168,29 +235,24 @@ const Canvas = {
 				Self.ctx.drawImage(Self.osCvs[0], 0, 0, Self.w, Self.h);
 				Self.ctx.restore();
 
-				// rulers
-				let rW = 18;
-
-				Self.ctx.save();
-				Self.ctx.translate(.5, .5);
-				Self.ctx.lineWidth = .5;
-				Self.ctx.fillStyle = "#112222e5";
-				Self.ctx.strokeStyle = "#000000ee";
-				Self.ctx.fillRect(Self.aX - 1, Self.aY - 1, Self.aW, rW);
-				Self.ctx.fillRect(Self.aX - 1, Self.aY + rW - 1, Self.aX + rW, Self.aH - rW + 1);
-
-				Self.ctx.beginPath();
-				Self.ctx.moveTo(Self.aX, Self.aY + rW - 1);
-				Self.ctx.lineTo(Self.aW, Self.aY + rW - 1);
-				Self.ctx.stroke();
-
-				Self.ctx.beginPath();
-				Self.ctx.moveTo(Self.aX + rW - 1, Self.aY - 1);
-				Self.ctx.lineTo(Self.aX + rW - 1, Self.aY + Self.aH);
-				Self.ctx.stroke();
-				
-				Self.ctx.restore();
-
+				if (Self.showRulers) {
+					// move origo
+					Self.ctx.translate(0, Self.aY - Self.rT);
+					// rulers
+					img = Self.rulers.cvs[0];
+					// origo box
+					Self.ctx.drawImage(img,
+						0, 0, Self.rT, Self.rT,
+						0, 0, Self.rT, Self.rT);
+					// top ruler
+					Self.ctx.drawImage(img,
+						Self.rT, 0, Self.aW - Self.rT, Self.rT,
+						Self.rT, 0, Self.aW - Self.rT, Self.rT);
+					// left ruler
+					Self.ctx.drawImage(img,
+						0, Self.rT, Self.rT, Self.aH + Self.rT,
+						0, Self.rT, Self.rT, Self.aH + Self.rT);
+				}
 
 				if (!event.stop) {
 					_navigator.dispatch({ type: "set-zoom", arg: Self.scale });

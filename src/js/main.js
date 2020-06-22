@@ -91,7 +91,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 3 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
 							
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
@@ -108,9 +108,9 @@ const photoshop = {
 				image.src = event.arg;
 				break;
 			case "toggle-rulers":
-				//Self.els.rulers.toggleClass("hidden", event.checked === 1);
+				Canvas.showRulers = event.checked === 1;
 				// trigger re-calculations + re-paint
-				//Canvas.dispatch({ type: "window.resize" });
+				Canvas.dispatch({ type: "window.resize" });
 				break;
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
