@@ -146,15 +146,15 @@ const Canvas = {
 				Self.rulers.ctx.lineWidth = 1;
 				Self.rulers.ctx.fillStyle = "#112222e5";
 				Self.rulers.ctx.strokeStyle = "#0000009e";
-
+				// ruler bg's
 				Self.rulers.ctx.fillRect(0, 0, Self.rW, Self.rT);
-				Self.rulers.ctx.fillRect(0, 0, Self.rT, Self.rH);
-
+				Self.rulers.ctx.fillRect(0, Self.rT, Self.rT, Self.rH - Self.rT);
+				// top ruler bottom line
 				Self.rulers.ctx.beginPath();
 				Self.rulers.ctx.moveTo(0, Self.rT);
 				Self.rulers.ctx.lineTo(Self.rW, Self.rT);
 				Self.rulers.ctx.stroke();
-
+				// left ruler right line
 				Self.rulers.ctx.beginPath();
 				Self.rulers.ctx.moveTo(Self.rT, 0);
 				Self.rulers.ctx.lineTo(Self.rT, Self.rH);
@@ -171,25 +171,23 @@ const Canvas = {
 					xO = Self.rT + 1,
 					oX = Self.oX - xO + 1,
 					x;
-				//console.log(oX);
 				for (x=0; x<xl; x+=xG) {
 					Self.rulers.ctx.beginPath();
 					Self.rulers.ctx.moveTo(x + xO, 0);
 					Self.rulers.ctx.lineTo(x + xO, Self.rT);
 					Self.rulers.ctx.stroke();
 					// ruler numbers
-					//Self.rulers.ctx.fillText(x, x + xO + 2, 9);
+					Self.rulers.ctx.fillText(x / Self.scale, x + xO + 2, 9);
 				}
 				xG = Self.rG[1] * Self.scale;
-				for (x=0; x<xl; x+=xG) {
+				if (xG) for (x=0; x<xl; x+=xG) {
 					Self.rulers.ctx.beginPath();
 					Self.rulers.ctx.moveTo(x + xO, 12);
 					Self.rulers.ctx.lineTo(x + xO, Self.rT);
 					Self.rulers.ctx.stroke();
 				}
-				
 				xG = Self.rG[2] * Self.scale;
-				for (x=0; x<xl; x+=xG) {
+				if (xG) for (x=0; x<xl; x+=xG) {
 					Self.rulers.ctx.beginPath();
 					Self.rulers.ctx.moveTo(x + xO, 15);
 					Self.rulers.ctx.lineTo(x + xO, Self.rT);
@@ -200,7 +198,7 @@ const Canvas = {
 				if (!event.noReset) Self.reset();
 				break;
 			case "pan-canvas":
-				console.log(event);  // for dev purposes
+				//console.log(event);  // for dev purposes
 				// reset canvas
 				Self.cvs.prop({ width: window.width, height: window.height });
 
