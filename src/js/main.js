@@ -1,5 +1,6 @@
 
 defiant.require("canvas.js")
+defiant.require("modules/rulers.js")
 //defiant.req1uire("modules/psd.js")
 //const PSD = require1("psd");
 
@@ -98,7 +99,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: .125 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
 							
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
@@ -109,7 +110,7 @@ const photoshop = {
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
 							//{ type: "pan-canvas", x: 197.5, y: 43 },
-							{ type: "pan-canvas", top: 90, left: 18 },
+							//{ type: "pan-canvas", top: 90, left: 18 },
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};

@@ -9,7 +9,6 @@ const Canvas = {
 		this.els.sideBar = window.find(".sidebar-wrapper");
 		this.els.statusBar = window.find(".status-bar");
 
-		this.rT = 18; // ruler thickness
 		this.showRulers = true;
 
 		// canvases
@@ -24,6 +23,9 @@ const Canvas = {
 		this.cvsBg = new Image;
 		this.cvsBg.onload = () => this.cvsBgPattern = this.osCtx.createPattern(this.cvsBg, "repeat");
 		this.cvsBg.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
+
+		// init rulers
+		Rulers.init();
 	},
 	createCanvas(width, height) {
 		let cvs = $(document.createElement("canvas")),
@@ -42,7 +44,6 @@ const Canvas = {
 			pi2 = Math.PI * 2,
 			x, y, w, h,
 			data = {},
-			img,
 			el;
 
 		// save paint context
@@ -76,10 +77,10 @@ const Canvas = {
 				break;
 			case "window.resize":
 			case "reset-canvas":
-				Self.aX = Self.showRulers ? Self.rT : 0;
-				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height() + (Self.showRulers ? Self.rT : 0);
-				Self.aW = window.width - Self.aX - Self.els.sideBar.width() + (Self.showRulers ? Self.rT : 0);
-				Self.aH = window.height - Self.aY - (Self.showRulers ? Self.rT : 0); // - Self.els.statusBar.height()
+				Self.aX = Self.showRulers ? Rulers.rT : 0;
+				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height() + (Self.showRulers ? Rulers.rT : 0);
+				Self.aW = window.width - Self.aX - Self.els.sideBar.width() + (Self.showRulers ? Rulers.rT : 0);
+				Self.aH = window.height - Self.aY - (Self.showRulers ? Rulers.rT : 0); // - Self.els.statusBar.height()
 				// center
 				Self.cX = (window.width + Self.aX - Self.els.sideBar.width()) / 2;
 				Self.cY = (window.height + Self.aY - Self.els.statusBar.height()) / 2;
@@ -131,68 +132,8 @@ const Canvas = {
 				Self.oX = _round(Self.cX - (Self.w / 2));
 				Self.oY = _round(Self.cY - (Self.h / 2));
 
-				// rulers
-				Self.rG = ZOOM.find(z => z.level === Self.scale * 100).rG;
-				Self.rW = _max(Self.w, window.width);
-				Self.rH = _max(Self.h, window.height);
-				Self.rulers = Self.createCanvas(Self.rW, Self.rH);
-
-				Self.rulers.ctx.translate(-.5, -.5);
-				// debug
-				// Self.rulers.ctx.fillStyle = "#f00";
-				// Self.rulers.ctx.strokeStyle = "#000";
-				// Self.rulers.ctx.fillRect(0, 0, 1e4, 1e4);
-
-				Self.rulers.ctx.lineWidth = 1;
-				Self.rulers.ctx.fillStyle = "#112222e5";
-				Self.rulers.ctx.strokeStyle = "#0000009e";
-				// ruler bg's
-				Self.rulers.ctx.fillRect(0, 0, Self.rW, Self.rT);
-				Self.rulers.ctx.fillRect(0, Self.rT, Self.rT, Self.rH - Self.rT);
-				// top ruler bottom line
-				Self.rulers.ctx.beginPath();
-				Self.rulers.ctx.moveTo(0, Self.rT);
-				Self.rulers.ctx.lineTo(Self.rW, Self.rT);
-				Self.rulers.ctx.stroke();
-				// left ruler right line
-				Self.rulers.ctx.beginPath();
-				Self.rulers.ctx.moveTo(Self.rT, 0);
-				Self.rulers.ctx.lineTo(Self.rT, Self.rH);
-				Self.rulers.ctx.stroke();
-
-
-				Self.rulers.ctx.textAlign = "left";
-				Self.rulers.ctx.fillStyle = "#555";
-				Self.rulers.ctx.font = `9px Arial`;
-				Self.rulers.ctx.strokeStyle = "#444";
-
-				let xG = Self.rG[0] * Self.scale,
-					xl = Self.rW,
-					xO = Self.rT + 1,
-					oX = Self.oX - xO + 1,
-					x;
-				for (x=0; x<xl; x+=xG) {
-					Self.rulers.ctx.beginPath();
-					Self.rulers.ctx.moveTo(x + xO, 0);
-					Self.rulers.ctx.lineTo(x + xO, Self.rT);
-					Self.rulers.ctx.stroke();
-					// ruler numbers
-					Self.rulers.ctx.fillText(x / Self.scale, x + xO + 2, 9);
-				}
-				xG = Self.rG[1] * Self.scale;
-				if (xG) for (x=0; x<xl; x+=xG) {
-					Self.rulers.ctx.beginPath();
-					Self.rulers.ctx.moveTo(x + xO, 12);
-					Self.rulers.ctx.lineTo(x + xO, Self.rT);
-					Self.rulers.ctx.stroke();
-				}
-				xG = Self.rG[2] * Self.scale;
-				if (xG) for (x=0; x<xl; x+=xG) {
-					Self.rulers.ctx.beginPath();
-					Self.rulers.ctx.moveTo(x + xO, 15);
-					Self.rulers.ctx.lineTo(x + xO, Self.rT);
-					Self.rulers.ctx.stroke();
-				}
+				// render rulers according to scale
+				Rulers.render(Self);
 
 				// reset canvas
 				if (!event.noReset) Self.reset();
@@ -245,22 +186,25 @@ const Canvas = {
 				Self.ctx.restore();
 
 				if (Self.showRulers) {
-					// move origo
-					Self.ctx.translate(0, Self.aY - Self.rT);
 					// rulers
-					img = Self.rulers.cvs[0];
+					let img = Rulers.cvs[0],
+						rT = Rulers.rT,
+						aW = Self.aW,
+						aH = Self.aH;
+					// move origo
+					Self.ctx.translate(0, Self.aY - rT);
 					// origo box
 					Self.ctx.drawImage(img,
-						0, 0, Self.rT, Self.rT,
-						0, 0, Self.rT, Self.rT);
+						0, 0, rT, rT,
+						0, 0, rT, rT);
 					// top ruler
 					Self.ctx.drawImage(img,
-						Self.rT, 0, Self.aW - Self.rT, Self.rT,
-						Self.rT, 0, Self.aW - Self.rT, Self.rT);
+						rT, 0, aW - rT, rT,
+						rT, 0, aW - rT, rT);
 					// left ruler
 					Self.ctx.drawImage(img,
-						0, Self.rT, Self.rT, Self.aH + Self.rT,
-						0, Self.rT, Self.rT, Self.aH + Self.rT);
+						0, rT, rT, aH + rT,
+						0, rT, rT, aH + rT);
 				}
 
 				if (!event.stop) {
