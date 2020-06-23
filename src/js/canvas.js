@@ -194,21 +194,42 @@ const Canvas = {
 						oX = Self.oX,
 						oY = Self.oY,
 						aX = Self.aX,
-						aY = Self.aY;
+						aY = Self.aY,
+						cX, cY, cW, cH,
+						pX, pY, pW, pH;
 					// move origo
 					Self.ctx.translate(Self.aX - rT, Self.aY - rT);
+
 					// origo box
 					Self.ctx.drawImage(img,
 						0, 0, rT, rT,
 						0, 0, rT, rT);
+
 					// top ruler
-					Self.ctx.drawImage(img,
-						rT + aX - oX, 0, aW - oX, rT,
-						rT          , 0, aW - oX, rT);
+					cX = _max(rT + aX - oX, rT);
+					cY = 0;
+					cW = _max(aW - oX, aW);
+					cH = rT;
+
+					pX = rT;
+					pY = 0;
+					pW = _max(aW - oX, aW);
+					pH = rT;
+
+					Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
+					
 					// left ruler
-					Self.ctx.drawImage(img,
-						0, rT + aY - oY, rT, aH + rT,
-						0, rT          , rT, aH + rT);
+					cX = 0;
+					cY = _max(rT + aY - oY, rT);
+					cW = rT;
+					cH = aH + rT;
+
+					pX = 0;
+					pY = rT;
+					pW = rT;
+					pH = aH + rT;
+
+					Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
 				}
 
 				if (!event.stop) {

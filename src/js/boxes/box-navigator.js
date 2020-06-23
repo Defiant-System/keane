@@ -129,7 +129,7 @@
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
-				
+				// prepare drag object
 				el = $(event.target);
 				Self.drag = {
 					el,
@@ -151,10 +151,9 @@
 			case "mousemove":
 				x = _min(_max(event.clientX + Drag.clickX, Drag.min.x), Drag.max.x);
 				y = _min(_max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y);
-
 				// moves navigator view rectangle
 				Drag.el.css({ top: y +"px", left: x +"px" });
-
+				// emit pan-event
 				Self.dispatch({ type: "pan-canvas", ...Drag, x, y });
 				break;
 			case "mouseup":

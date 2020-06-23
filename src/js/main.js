@@ -68,8 +68,8 @@ const photoshop = {
 
 		// temp
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
-		//this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
-		this.dispatch({ type: "change-bg", arg: "~/img/lotus.jpg" });
+		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
+		//this.dispatch({ type: "change-bg", arg: "~/img/lotus.jpg" });
 		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
 	},
 	dispatch(event) {
@@ -110,7 +110,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 2 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
 							
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
@@ -120,7 +120,6 @@ const photoshop = {
 							// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
-							//{ type: "pan-canvas", x: 197.5, y: 43 },
 							//{ type: "pan-canvas", top: 90, left: 18 },
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
@@ -128,7 +127,6 @@ const photoshop = {
 				image.src = event.arg;
 				break;
 			case "toggle-rulers":
-				console.log(event);
 				Canvas.showRulers = event.checked === 1;
 				// trigger re-calculations + re-paint
 				Canvas.dispatch({ type: "window.resize" });
