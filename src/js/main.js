@@ -68,8 +68,8 @@ const photoshop = {
 
 		// temp
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
-		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
-		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/nature/rose.jpg" });
+		//this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
+		this.dispatch({ type: "change-bg", arg: "~/img/lotus.jpg" });
 		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
 	},
 	dispatch(event) {
@@ -110,7 +110,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 3 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 2 },
 							
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
