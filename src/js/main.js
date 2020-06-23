@@ -71,6 +71,7 @@ const photoshop = {
 		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "~/img/lotus.jpg" });
 		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
+		//window.find('.sidebar-box div[data-content="channels"]').trigger("click");
 	},
 	dispatch(event) {
 		let Self = photoshop,
