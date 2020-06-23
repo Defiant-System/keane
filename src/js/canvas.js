@@ -192,7 +192,9 @@ const Canvas = {
 						aW = Self.aW,
 						aH = Self.aH,
 						oX = Self.oX,
-						oY = Self.oY;
+						oY = Self.oY,
+						aX = Self.aX,
+						aY = Self.aY;
 					// move origo
 					Self.ctx.translate(Self.aX - rT, Self.aY - rT);
 					// origo box
@@ -201,12 +203,12 @@ const Canvas = {
 						0, 0, rT, rT);
 					// top ruler
 					Self.ctx.drawImage(img,
-						-oX + rT + rT, 0, aW - oX, rT,
-						rT, 0, aW - oX, rT);
+						rT + aX - oX, 0, aW - oX, rT,
+						rT          , 0, aW - oX, rT);
 					// left ruler
 					Self.ctx.drawImage(img,
-						0, rT, rT, aH + rT,
-						0, rT, rT, aH + rT);
+						0, rT + aY - oY, rT, aH + rT,
+						0, rT          , rT, aH + rT);
 				}
 
 				if (!event.stop) {
