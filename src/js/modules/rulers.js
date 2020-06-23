@@ -12,8 +12,8 @@ const Rulers = {
 			scale = Canvas.scale,
 			rG = ZOOM.find(z => z.level === scale * 100).rG;
 
-		this.rW = _max(Canvas.w, window.width) + Canvas.aX;
-		this.rH = _max(Canvas.h, window.height) + Canvas.aY;
+		this.rW = _max(Canvas.w, window.width) + Canvas.aX + 1;
+		this.rH = _max(Canvas.h, window.height) + Canvas.aY + 1;
 		// reset/resize canvas
 		this.cvs.prop({ width: this.rW, height: this.rH });
 		this.ctx.translate(-.5, -.5);

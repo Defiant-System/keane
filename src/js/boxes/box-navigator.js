@@ -39,6 +39,7 @@
 		let APP = photoshop,
 			Self = APP.box.navigator,
 			_canvas = Canvas,
+			_rulers = Rulers,
 			_round = Math.round,
 			_max = Math.max,
 			_min = Math.min,
@@ -96,8 +97,8 @@
 
 				data.top = (((_canvas.aY - _canvas.oY) / _canvas.h) * Self.navHeight);
 				data.left = (((_canvas.aX - _canvas.oX) / _canvas.w) * Self.navWidth);
-				data.height = _min(((_canvas.aH / _canvas.h) * Self.navHeight), Self.navHeight - data.top);
-				data.width = _min(((_canvas.aW / _canvas.w) * Self.navWidth), Self.navWidth - data.left);
+				data.height = _min((((_canvas.aH + _rulers.rT) / _canvas.h) * Self.navHeight), Self.navHeight - data.top);
+				data.width = _min((((_canvas.aW - _rulers.rT) / _canvas.w) * Self.navWidth), Self.navWidth - data.left);
 				
 				if (data.top < 0) data.height = _min(data.height + data.top, data.height);
 				if (data.left < 0) data.width = _min(data.width + data.left, data.width);
@@ -117,7 +118,8 @@
 	pan(event) {
 		let APP = photoshop,
 			Self = APP.box.navigator,
-			drag = Self.panDrag,
+			Drag = Self.drag,
+			_canvas = Canvas,
 			_max = Math.max,
 			_min = Math.min,
 			x, y,
@@ -128,7 +130,7 @@
 				event.preventDefault();
 				
 				el = $(event.target);
-				Self.panDrag = {
+				Self.drag = {
 					el,
 					clickX: +el.prop("offsetLeft") - event.clientX,
 					clickY: +el.prop("offsetTop") - event.clientY,
@@ -136,8 +138,8 @@
 					max: {
 						x: +el.parent().prop("offsetWidth") - +el.prop("offsetWidth"),
 						y: +el.parent().prop("offsetHeight") - +el.prop("offsetHeight") - 4,
-						w: Canvas.aW - Canvas.w,
-						h: Canvas.aH - Canvas.h,
+						w: Canvas.aW - Canvas.w, // + (Canvas.showRulers ? Rulers.rT : 0),
+						h: Canvas.aH - Canvas.h, // + (Canvas.showRulers ? Rulers.rT : 0),
 					}
 				};
 				// prevent mouse from triggering mouseover
@@ -146,13 +148,13 @@
 				Self.doc.on("mousemove mouseup", Self.pan);
 				break;
 			case "mousemove":
-				x = _min(_max(event.clientX + drag.clickX, drag.min.x), drag.max.x);
-				y = _min(_max(event.clientY + drag.clickY, drag.min.y), drag.max.y);
+				x = _min(_max(event.clientX + Drag.clickX, Drag.min.x), Drag.max.x);
+				y = _min(_max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y);
 
 				// moves navigator view rectangle
-				drag.el.css({ top: y +"px", left: x +"px" });
+				Drag.el.css({ top: y +"px", left: x +"px" });
 
-				Self.dispatch({ type: "pan-canvas", ...drag, x, y });
+				Self.dispatch({ type: "pan-canvas", ...Drag, x, y });
 				break;
 			case "mouseup":
 				// remove class
