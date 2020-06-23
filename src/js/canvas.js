@@ -190,17 +190,19 @@ const Canvas = {
 					let img = Rulers.cvs[0],
 						rT = Rulers.rT,
 						aW = Self.aW,
-						aH = Self.aH;
+						aH = Self.aH,
+						oX = Self.oX,
+						oY = Self.oY;
 					// move origo
-					Self.ctx.translate(0, Self.aY - rT);
+					Self.ctx.translate(Self.aX - rT, Self.aY - rT);
 					// origo box
 					Self.ctx.drawImage(img,
 						0, 0, rT, rT,
 						0, 0, rT, rT);
 					// top ruler
 					Self.ctx.drawImage(img,
-						rT, 0, aW - rT, rT,
-						rT, 0, aW - rT, rT);
+						-oX + rT + rT, 0, aW - oX, rT,
+						rT, 0, aW - oX, rT);
 					// left ruler
 					Self.ctx.drawImage(img,
 						0, rT, rT, aH + rT,
