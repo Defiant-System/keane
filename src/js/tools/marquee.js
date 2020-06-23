@@ -10,7 +10,7 @@
 		//this.ctx.translate(.5, .5);
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
-		this.shape = "rectangle";
+		this.option = "rectangle";
 
 		// subscribe to events
 		defiant.on("load-canvas", this.dispatch);
@@ -51,7 +51,7 @@
 				
 				Self.cvs.prop({ width: Self.w, height: Self.h });
 
-				switch (Self.shape) {
+				switch (Self.option) {
 					case "rectangle":
 						Self.ctx.fillRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
 						break;
@@ -81,8 +81,8 @@
 				Self.h = CVS.oH;
 				Self.cvs.prop({ width: Self.w, height: Self.h });
 				break;
-			case "select-shape":
-				Self.shape = event.arg || "rectangle";
+			case "select-option":
+				Self.option = event.arg || "rectangle";
 				break;
 			case "enable":
 				CVS.cvs.on("mousedown", Self.dispatch);

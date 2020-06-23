@@ -5,9 +5,20 @@ defiant.require("modules/rulers.js")
 //const PSD = require1("psd");
 
 const TOOLS = {
-	_active : false,
-	move    : defiant.require("tools/move.js"),
-	marquee : defiant.require("tools/marquee.js")
+	_active  : false,
+	marquee  : defiant.require("tools/marquee.js"),
+	move     : defiant.require("tools/move.js"),
+	pipette  : defiant.require("tools/pipette.js"),
+	brush    : defiant.require("tools/brush.js"),
+	gradient : defiant.require("tools/gradient.js"),
+	type     : defiant.require("tools/type.js"),
+	crop     : defiant.require("tools/crop.js"),
+	blur     : defiant.require("tools/blur.js"),
+	stamp    : defiant.require("tools/stamp.js"),
+	pen      : defiant.require("tools/pen.js"),
+	shape    : defiant.require("tools/shape.js"),
+	pointer  : defiant.require("tools/pointer.js"),
+	zoom     : defiant.require("tools/zoom.js"),
 };
 
 const ZOOM =   [{ level: 12.5, rG: [200,100,50] },
@@ -179,9 +190,14 @@ const photoshop = {
 							}
 							event.el.addClass("down");
 						}
-						name = pEl.prev(".tools-bar").find(".active").data("content");
+						pEl = pEl.prevAll(".tools-bar").find(".active");
+						if (event.el.data("option") === "main") {
+							// change root tool icon
+							image = event.el.css("background-image").replace(/http(s?):\/\/.*?\//, "/");
+							pEl.css({ "background-image": image });
+						}
 						// dispatch event to tool object
-						TOOLS[name].dispatch(event);
+						TOOLS[pEl.data("content")].dispatch(event);
 						return;
 					}
 					pEl = event.el.parents("div[data-box]");

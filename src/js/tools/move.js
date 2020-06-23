@@ -3,7 +3,7 @@
 
 {
 	init() {
-		
+		this.option = "move";
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -53,6 +53,9 @@
 				CVS.doc.off("mousemove mouseup", Self.dispatch);
 				break;
 			// custom events
+			case "select-option":
+				Self.option = event.arg || "move";
+				break;
 			case "enable":
 				CVS.cvs.on("mousedown", Self.dispatch);
 				break;
