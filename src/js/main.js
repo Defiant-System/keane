@@ -117,6 +117,7 @@ const photoshop = {
 				image.src = event.arg;
 				break;
 			case "toggle-rulers":
+				console.log(event);
 				Canvas.showRulers = event.checked === 1;
 				// trigger re-calculations + re-paint
 				Canvas.dispatch({ type: "window.resize" });

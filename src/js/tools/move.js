@@ -41,14 +41,12 @@
 				CVS.doc.on("mousemove mouseup", Self.dispatch);
 				break;
 			case "mousemove":
-				let x = _max(_min(event.clientX - Drag.clickX, Drag.min.x), Drag.max.x),
-					y = _max(_min(event.clientY - Drag.clickY, Drag.min.y), Drag.max.y);
-				// let x = event.clientX - Drag.clickX,
-				// 	y = event.clientY - Drag.clickY;
-				CVS.dispatch({ type: "pan-canvas", x, y });
-				CVS.dispatch({ type: "pan-canvas", x, y });
+				Drag.x = _max(_min(event.clientX - Drag.clickX, Drag.min.x), Drag.max.x),
+				Drag.y = _max(_min(event.clientY - Drag.clickY, Drag.min.y), Drag.max.y);
+				CVS.dispatch({ type: "pan-canvas", x: Drag.x, y: Drag.y });
 				break;
 			case "mouseup":
+				//CVS.stack.push({ type: "pan-canvas", x: Drag.x, y: Drag.y });
 				// remove class
 				APP.els.content.removeClass("cover");
 				// unbind event handlers

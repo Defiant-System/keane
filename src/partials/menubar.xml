@@ -27,7 +27,7 @@
 		<Menu name="Golden Gate Bridge" arg="/cdn/img/bg/wallpapers/golden-gate-bridge.jpg" click="change-bg"/>
 	</Menu>
 	<Menu name="View">
-		<Menu name="Rulers" click="toggle-rulers" check-group="toggle-rulers" is-checked="1" />
+		<Menu name="Rulers" click="toggle-rulers" check-group="toggle-rulers" is-checked="1" hotkey="alt+r" />
 		<Menu name="Status Bar" click="toggle-statusbar" check-group="toggle-statusbar" />
 	</Menu>
 	<Menu name="Help">
