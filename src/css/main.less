@@ -404,7 +404,7 @@ content {
 		margin: 0 2px;
 		z-index: 2;
 
-		&[style*="icon-color-preset"] {
+		&.icon-color-preset {
 			&:after {
 				opacity: .9;
 				filter: none;
@@ -427,17 +427,55 @@ content {
 			transition: opacity 80ms ease-in-out;
 		}
 
-		&.icon-pipette        { background-image: url(~/icons/tool-pipette.png); }
-		&.icon-pipette        { background-image: url(~/icons/tool-pipette.png); }
-		&.icon-cursor_pos     { background-image: url(~/icons/icon-cursor-pos.png); }
-		&.icon-selection_dim  { background-image: url(~/icons/icon-selection-dim.png); }
+		&.icon-triangle         {background-image: url(~/icons/icon-triangle.png); }
+		&.icon-rectangle        {background-image: url(~/icons/icon-rectangle.png); }
+		&.icon-pipette          { background-image: url(~/icons/tool-pipette.png); }
+		&.icon-cursor_pos       { background-image: url(~/icons/icon-cursor-pos.png); }
+		&.icon-selection_dim    { background-image: url(~/icons/icon-selection-dim.png); }
+		&.icon-eye-on           { background-image: url(~/icons/icon-eye-on.png); }
+		&.icon-eye-off          { background-image: url(~/icons/icon-eye-off.png); }
+		&.icon-selection-ring   { background-image: url(~/icons/icon-selection-ring.png); }
+		&.icon-new              { background-image: url(~/icons/icon-new.png); }
+		&.icon-trashcan         { background-image: url(~/icons/icon-trashcan.png); }
+		&.icon-folder           { background-image: url(~/icons/icon-folder.png); }
+		&.icon-folder-open      { background-image: url(~/icons/icon-folder-open.png); }
+		&.icon-layer-link       { background-image: url(~/icons/icon-layer-link.png); }
+		&.icon-layer-mask       { background-image: url(~/icons/icon-layer-mask.png); }
+		&.icon-layer-fx         { background-image: url(~/icons/icon-layer-fx.png); }
+		&.icon-layer-adjustment { background-image: url(~/icons/icon-layer-adjustment.png); }
+		&.icon-layer-path-fill  { background-image: url(~/icons/icon-layer-path-fill.png); }
+		&.icon-layer-path-brush { background-image: url(~/icons/icon-layer-path-brush.png); }
+		&.icon-layer-path-from-selection { background-image: url(~/icons/icon-layer-path-from-selection.png); }
 
-		&.icon-eye-on          { background-image: url(~/icons/icon-eye-on.png); }
-		&.icon-eye-off         { background-image: url(~/icons/icon-eye-off.png); }
-		&.icon-selection-ring  { background-image: url(~/icons/icon-selection-ring.png); }
-		&.icon-layer-mask      { background-image: url(~/icons/icon-layer-mask.png); }
-		&.icon-new             { background-image: url(~/icons/icon-new.png); }
-		&.icon-trashcan        { background-image: url(~/icons/icon-trashcan.png); }
+		&.icon-font-size           { background-image: url(~/icons/icon-font-size.png); }
+		&.icon-line-height         { background-image: url(~/icons/icon-line-height.png); }
+		&.icon-font-kerning        { background-image: url(~/icons/icon-font-kerning.png); }
+		&.icon-font-tracking       { background-image: url(~/icons/icon-font-tracking.png); }
+		&.icon-scale-vert          { background-image: url(~/icons/icon-scale-vert.png); }
+		&.icon-scale-hori          { background-image: url(~/icons/icon-scale-hori.png); }
+		&.icon-baseline-shift      { background-image: url(~/icons/icon-baseline-shift.png); }
+		&.icon-color-preset        { background-image: url(~/icons/icon-color-preset.png); }
+		&.icon-font-bold           { background-image: url(~/icons/icon-font-bold.png); }
+		&.icon-font-italic         { background-image: url(~/icons/icon-font-italic.png); }
+		&.icon-font-underlined     { background-image: url(~/icons/icon-font-underlined.png); }
+		&.icon-font-strike-through { background-image: url(~/icons/icon-font-strike-through.png); }
+		&.icon-font-super          { background-image: url(~/icons/icon-font-super.png); }
+		&.icon-font-sub            { background-image: url(~/icons/icon-font-sub.png); }
+		&.icon-font-small-caps     { background-image: url(~/icons/icon-font-small-caps.png); }
+		&.icon-font-all-caps       { background-image: url(~/icons/icon-font-all-caps.png); }
+
+		&.icon-justify-left        { background-image: url(~/icons/icon-justify-left.png); }
+		&.icon-justify-center      { background-image: url(~/icons/icon-justify-center.png); }
+		&.icon-justify-right       { background-image: url(~/icons/icon-justify-right.png); }
+		&.icon-justify-full-left   { background-image: url(~/icons/icon-justify-full-left.png); }
+		&.icon-justify-full-center { background-image: url(~/icons/icon-justify-full-center.png); }
+		&.icon-justify-full-right  { background-image: url(~/icons/icon-justify-full-right.png); }
+		&.icon-justify-full        { background-image: url(~/icons/icon-justify-full.png); }
+		&.icon-indent-left         { background-image: url(~/icons/icon-indent-left.png); }
+		&.icon-indent-right        { background-image: url(~/icons/icon-indent-right.png); }
+		&.icon-indent-first-line   { background-image: url(~/icons/icon-indent-first-line.png); }
+		&.icon-padding-top         { background-image: url(~/icons/icon-padding-top.png); }
+		&.icon-padding-bottom      { background-image: url(~/icons/icon-padding-bottom.png); }
 	}
 
 	.option {
@@ -814,7 +852,7 @@ content {
 							padding-left: 5px;
 							
 							.thumbnail {
-								margin: -1px 5px 0 3px;
+								margin: 0 5px 0 3px;
 							}
 							.name {
 								padding-left: 1px;
@@ -828,24 +866,10 @@ content {
 							visibility: visible;
 							margin: 7px 13px 0 0;
 						}
-
-						canvas {
-							background: #fff;
-							width: 100%;
-							height: 100%;
-						}
 					}
 
 					&[data-box="paths"] {
-						.thumbnail {
-							background: #999;
-							width: 25px;
-							height: 25px;
-							border: 1px solid rgba(#000, .65);
-						}
-						.name {
-							padding-top: 5px;
-						}
+						
 					}
 
 					.box-tools {
@@ -1338,13 +1362,8 @@ content {
 					}
 
 					.thumbnail {
-						//background-color: #ffffff20;
-						background-size: contain;
-						background-position: 50% 50%;
-						background-repeat: no-repeat;
 						max-width: 31px;
 						max-height: 31px;
-						filter: drop-shadow(0 0 1px #000);
 
 						&.channel-red {
 							//filter: grayscale(1) sepia(1) hue-rotate(90deg);
@@ -1354,6 +1373,12 @@ content {
 						}
 						&.channel-blue {
 							//filter: grayscale(1) sepia(1) hue-rotate(270deg);
+						}
+
+						canvas {
+							background: #ffffff50;
+							width: 100%;
+							height: 100%;
 						}
 					}
 
@@ -1402,7 +1427,7 @@ content {
 							bottom: 0;
 							left: 2px;
 							width: 7px;
-							filter: invert() brightness(0);
+							filter: invert() brightness(5) drop-shadow(0 1px 0 rgba(#000, .4));
 							opacity: .5;
 						}
 						&:before {
