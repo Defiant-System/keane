@@ -5,6 +5,8 @@ const Rulers = {
 		this.cvs = cvs;
 		this.ctx = ctx;
 		this.rT = 18;
+		this.oX = this.rT;
+		this.oY = 0;
 	},
 	render(Canvas) {
 		let _max = Math.max,
@@ -12,7 +14,6 @@ const Rulers = {
 			_abs = Math.abs,
 			scale = Canvas.scale,
 			rG = ZOOM.find(z => z.level === scale * 100).rG,
-			rT = this.rT,
 			line = (p1x, p1y, p2x, p2y) => {
 				this.ctx.beginPath();
 				this.ctx.moveTo(p1x, p1y);
@@ -26,93 +27,49 @@ const Rulers = {
 		this.cvs.prop({ width: this.rW, height: this.rH });
 		this.ctx.translate(-.5, -.5);
 
-		// debug
-		// this.ctx.fillStyle = "#f00";
-		// this.ctx.strokeStyle = "#000";
-		// this.ctx.fillRect(0, 0, 1e4, 1e4);
-
 		this.ctx.lineWidth = 1;
 		this.ctx.fillStyle = "#112222e5";
 		this.ctx.strokeStyle = "#0000009e";
 
-		// ruler bg's
-		this.ctx.fillRect(0, 0, this.rW, rT);
-		this.ctx.fillRect(0, rT, rT, this.rH - rT);
-		// top ruler bottom line
-		line(0, rT, this.rW, rT);
-		// left ruler right line
-		line(rT, 0, rT, this.rH);
+		let rT = this.rT,
+			rW = this.rW * 1.5,
+			rH = this.rH * 1.5,
+			coX = Canvas.oX - Canvas.aX + rT,
+			coY = Canvas.oY - Canvas.aY + rT,
+			oX = coX,
+			oY = coY
 
-		this.ctx.textAlign = "left";
-		this.ctx.fillStyle = "#666";
-		this.ctx.font = `9px Arial`;
+		this.oX = oX - 1;
+		this.oY = oY - 1;
+
+		// ruler bg's
+		this.ctx.fillRect(0, 0, rW, rT);
+		this.ctx.fillRect(0, rT, rT, rH);
+		// top ruler bottom line
+		line(0, rT, rW, rT);
+		// left ruler right line
+		line(rT, 0, rT, rH);
+
+
 		this.ctx.strokeStyle = "#444";
 
-		this.oX = 0;
-		this.oY = 0;
-
 		// top ruler
-		let oX = Canvas.oX - rT - 6,
-			xG = rG[0] * scale,
-			xl = this.rW,
-			xO = rT + 1,
-			x;
-		// ruler numbers
-		for (x=0; x<xl; x+=xG) {
-			let lX = x + xO - oX,
-				nr = _abs((x / scale) - 250);
-			if (lX < rT) continue;
-			if (nr === 0) this.oX = lX + rT - 1;
-			this.ctx.fillText(nr, lX + 2, 9);
-		}
-		for (x=0; x<xl; x+=xG) {
-			let lX = x + xO - oX;
-			if (lX < rT) continue;
+		let xG = rG[0] * scale,
+			xl = rW,
+			x = rT + 1;
+		for (x; x<xl; x+=xG) {
+			let lX = x ;
 			line(lX, 0, lX, rT);
 		}
-		xG = rG[1] * scale;
-		if (xG) for (x=0; x<xl; x+=xG) {
-			let lX = x + xO - oX;
-			if (lX < rT) continue;
-			line(lX, 12, lX, rT);
-		}
-		xG = rG[2] * scale;
-		if (xG) for (x=0; x<xl; x+=xG) {
-			let lX = x + xO - oX;
-			if (lX < rT) continue;
-			line(lX, 15, lX, rT);
-		}
 
-		// left ruler
-		let oY = Canvas.oY - 2,
-			yG = rG[0] * scale,
-			yl = this.rH + oY,
-			yO = rT + 1,
-			y;
-		// ruler numbers
-		for (y=0; y<yl; y+=yG) {
-			let lY = y + yO - oY,
-				nr = _abs((y / scale) - 400);
-			if (lY < rT) continue;
-			if (nr === 0) this.oY = lY - 1;
-			nr.toString().split("").map((c, i) => this.ctx.fillText(c, 4, lY + 9 + (i * 9)));
-		}
-		for (y=0; y<yl; y+=yG) {
-			let lY = y + yO - oY;
-			if (lY < rT) continue;
-			line(0, lY, rT, lY);
-		}
-		yG = rG[1] * scale;
-		if (yG) for (y=0; y<yl; y+=yG) {
-			let lY = y + yO - oY;
-			if (lY < rT) continue;
-			line(12, lY, rT, lY);
-		}
-		yG = rG[2] * scale;
-		if (yG) for (y=0; y<yl; y+=yG) {
-			let lY = y + yO - oY;
-			if (lY < rT) continue;
-			line(15, lY, rT, lY);
-		}
+
+		this.ctx.strokeStyle = "#fff";
+		line(oX, 0, oX, rT);
+		line(0, oY, rT, oY);
+
+		// debug
+		// this.ctx.fillStyle = "#f00";
+		// this.ctx.strokeStyle = "#000";
+		// this.ctx.fillRect(0, 0, 1e4, 1e4);
 	}
 };

@@ -208,7 +208,7 @@ const Canvas = {
 
 					// top ruler
 					//cX = _max(rT + aX - oX, rT);
-					cX = _rulers.oX - oX;
+					cX = _rulers.oX - oX + rT;
 					cY = 0;
 					cW = _max(aW - oX, aW);
 					cH = rT;
