@@ -37,6 +37,7 @@ const Canvas = {
 		let APP = photoshop,
 			Self = Canvas,
 			_navigator = APP.box.navigator,
+			_rulers = Rulers,
 			_abs = Math.abs,
 			_max = Math.max,
 			_min = Math.min,
@@ -77,10 +78,10 @@ const Canvas = {
 				break;
 			case "window.resize":
 			case "reset-canvas":
-				Self.aX = Self.showRulers ? Rulers.rT : 0;
-				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height() + (Self.showRulers ? Rulers.rT : 0);
-				Self.aW = window.width - Self.aX - Self.els.sideBar.width() + (Self.showRulers ? Rulers.rT : 0);
-				Self.aH = window.height - Self.aY - (Self.showRulers ? Rulers.rT : 0); // - Self.els.statusBar.height()
+				Self.aX = Self.showRulers ? _rulers.rT : 0;
+				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height() + (Self.showRulers ? _rulers.rT : 0);
+				Self.aW = window.width - Self.aX - Self.els.sideBar.width() + (Self.showRulers ? _rulers.rT : 0);
+				Self.aH = window.height - Self.aY - (Self.showRulers ? _rulers.rT : 0); // - Self.els.statusBar.height()
 				// center
 				Self.cX = (window.width + Self.aX - Self.els.sideBar.width()) / 2;
 				Self.cY = (window.height + Self.aY - Self.els.statusBar.height()) / 2;
@@ -133,7 +134,7 @@ const Canvas = {
 				Self.oY = _round(Self.cY - (Self.h / 2));
 
 				// render rulers according to scale
-				Rulers.render(Self);
+				_rulers.render(Self);
 
 				// reset canvas
 				if (!event.noReset) Self.reset();
@@ -187,8 +188,8 @@ const Canvas = {
 
 				if (Self.showRulers) {
 					// rulers
-					let img = Rulers.cvs[0],
-						rT = Rulers.rT,
+					let img = _rulers.cvs[0],
+						rT = _rulers.rT,
 						aW = Self.aW,
 						aH = Self.aH,
 						oX = Self.oX,
@@ -198,7 +199,7 @@ const Canvas = {
 						cX, cY, cW, cH,
 						pX, pY, pW, pH;
 					// move origo
-					Self.ctx.translate(Self.aX - rT, Self.aY - rT);
+					Self.ctx.translate(aX - rT, aY - rT);
 
 					// origo box
 					Self.ctx.drawImage(img,
@@ -206,7 +207,8 @@ const Canvas = {
 						0, 0, rT, rT);
 
 					// top ruler
-					cX = _max(rT + aX - oX, rT);
+					//cX = _max(rT + aX - oX, rT);
+					cX = _rulers.oX - oX;
 					cY = 0;
 					cW = _max(aW - oX, aW);
 					cH = rT;
@@ -220,7 +222,8 @@ const Canvas = {
 					
 					// left ruler
 					cX = 0;
-					cY = _max(rT + aY - oY, rT);
+					//cY = _max(rT + aY - oY, rT);
+					cY = _rulers.oY - oY + aY;
 					cW = rT;
 					cH = aH + rT;
 

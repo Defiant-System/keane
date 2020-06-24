@@ -48,6 +48,9 @@ const Rulers = {
 		this.ctx.font = `9px Arial`;
 		this.ctx.strokeStyle = "#444";
 
+		this.oX = 0;
+		this.oY = 0;
+
 		// top ruler
 		let oX = Canvas.oX - rT - 6,
 			xG = rG[0] * scale,
@@ -56,9 +59,11 @@ const Rulers = {
 			x;
 		// ruler numbers
 		for (x=0; x<xl; x+=xG) {
-			let lX = x + xO - oX;
+			let lX = x + xO - oX,
+				nr = _abs((x / scale) - 250);
 			if (lX < rT) continue;
-			this.ctx.fillText(_abs((x / scale) - 250), lX + 2, 9);
+			if (nr === 0) this.oX = lX + rT - 1;
+			this.ctx.fillText(nr, lX + 2, 9);
 		}
 		for (x=0; x<xl; x+=xG) {
 			let lX = x + xO - oX;
@@ -87,9 +92,10 @@ const Rulers = {
 		// ruler numbers
 		for (y=0; y<yl; y+=yG) {
 			let lY = y + yO - oY,
-				txt = _abs((y / scale) - 400).toString().split("");
+				nr = _abs((y / scale) - 400);
 			if (lY < rT) continue;
-			txt.map((c, i) => this.ctx.fillText(c, 4, lY + 9 + (i * 9)));
+			if (nr === 0) this.oY = lY - 1;
+			nr.toString().split("").map((c, i) => this.ctx.fillText(c, 4, lY + 9 + (i * 9)));
 		}
 		for (y=0; y<yl; y+=yG) {
 			let lY = y + yO - oY;
