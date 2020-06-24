@@ -427,10 +427,17 @@ content {
 			transition: opacity 80ms ease-in-out;
 		}
 
-		&.icon-pipette { background-image: url(~/icons/tool-pipette.png); }
-		&.icon-pipette { background-image: url(~/icons/tool-pipette.png); }
-		&.icon-cursor_pos { background-image: url(~/icons/icon-cursor-pos.png); }
-		&.icon-selection_dim { background-image: url(~/icons/icon-selection-dim.png); }
+		&.icon-pipette        { background-image: url(~/icons/tool-pipette.png); }
+		&.icon-pipette        { background-image: url(~/icons/tool-pipette.png); }
+		&.icon-cursor_pos     { background-image: url(~/icons/icon-cursor-pos.png); }
+		&.icon-selection_dim  { background-image: url(~/icons/icon-selection-dim.png); }
+
+		&.icon-eye-on          { background-image: url(~/icons/icon-eye-on.png); }
+		&.icon-eye-off         { background-image: url(~/icons/icon-eye-off.png); }
+		&.icon-selection-ring  { background-image: url(~/icons/icon-selection-ring.png); }
+		&.icon-layer-mask      { background-image: url(~/icons/icon-layer-mask.png); }
+		&.icon-new             { background-image: url(~/icons/icon-new.png); }
+		&.icon-trashcan        { background-image: url(~/icons/icon-trashcan.png); }
 	}
 
 	.option {
@@ -807,7 +814,7 @@ content {
 							padding-left: 5px;
 							
 							.thumbnail {
-								margin: -1px 4px 0 2px;
+								margin: -1px 5px 0 3px;
 							}
 							.name {
 								padding-left: 1px;
@@ -819,7 +826,13 @@ content {
 						.icon.eye {
 							opacity: 1;
 							visibility: visible;
-							margin: 7px 11px 0 0;
+							margin: 7px 13px 0 0;
+						}
+
+						canvas {
+							background: #fff;
+							width: 100%;
+							height: 100%;
 						}
 					}
 
@@ -1268,7 +1281,7 @@ content {
 					position: relative;
 
 					&.expanded {
-						> .row:not(:first-child):before { margin: 0 0 0 31px; }
+						> .row:not(:first-child):before { margin: 0 0 0 29px; }
 					}
 				}
 
@@ -1321,7 +1334,7 @@ content {
 
 					.name {
 						flex: 1;
-						padding: 9px 0 0 7px;
+						padding: 8px 0 0 7px;
 					}
 
 					.thumbnail {
@@ -1329,25 +1342,25 @@ content {
 						background-size: contain;
 						background-position: 50% 50%;
 						background-repeat: no-repeat;
-						width: 31px;
-						height: 31px;
+						max-width: 31px;
+						max-height: 31px;
 						filter: drop-shadow(0 0 1px #000);
 
 						&.channel-red {
-							filter: grayscale(1) sepia(1) hue-rotate(90deg);
+							//filter: grayscale(1) sepia(1) hue-rotate(90deg);
 						}
 						&.channel-green {
-							filter: grayscale(1) sepia(1) hue-rotate(180deg);
+							//filter: grayscale(1) sepia(1) hue-rotate(180deg);
 						}
 						&.channel-blue {
-							filter: grayscale(1) sepia(1) hue-rotate(270deg);
+							//filter: grayscale(1) sepia(1) hue-rotate(270deg);
 						}
 					}
 
 					.icon {
 						width: 23px;
 						height: 17px;
-						margin: 6px 7px 0;
+						margin: 6px 9px 0 5px;
 
 						&:after {
 							left: 3px;
