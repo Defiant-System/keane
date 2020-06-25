@@ -49,26 +49,40 @@ const Rulers = {
 
 		// ruler fg & style
 		this.ctx.strokeStyle = "#444";
+		this.ctx.textAlign = "left";
+		this.ctx.fillStyle = "#666";
+		this.ctx.font = `9px Arial`;
 
 		// top ruler
 		let dX = (oX - t) % rG[0],
 			xG = rG[0] * scale,
 			x = t + 1;
-
-		for (; x<w; x+=xG) line(x + dX, 0, x + dX, t);
-
+		// numbers
+		for (; x<w; x+=xG) {
+			let nr = _round(_abs(((x + dX - oX - 1) / scale)));
+			this.ctx.fillText(nr, x + dX + 2, 9);
+		}
+		for (x=t+1; x<w; x+=xG) line(x + dX, 0, x + dX, t);
 		xG = rG[1] * scale;
 		if (xG) for (x=t+1; x<w; x+=xG) line(x + dX, 12, x + dX, t);
-
 		xG = rG[2] * scale;
 		if (xG) for (x=t+1; x<w; x+=xG) line(x + dX, 15, x + dX, t);
 
+		// left ruler
+		let dY = (oY - t) % rG[0],
+			yG = rG[0] * scale,
+			y = t + 1;
+		for (; y<h; y+=yG) line(0, y + dY, t, y + dY);
+		yG = rG[1] * scale;
+		if (yG) for (y=t+1; y<h; y+=yG) line(12, y + dY, t, y + dY);
+		yG = rG[2] * scale;
+		if (yG) for (y=t+1; y<h; y+=yG) line(15, y + dY, t, y + dY);
 
+		// debug
 		this.ctx.strokeStyle = "#fff";
 		line(oX, 0, oX, t);
 		line(0, oY, t, oY);
 
-		// debug
 		// this.ctx.fillStyle = "#f00";
 		// this.ctx.strokeStyle = "#000";
 		// this.ctx.fillRect(0, 0, 1e4, 1e4);
