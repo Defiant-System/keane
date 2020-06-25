@@ -78,10 +78,10 @@ const Canvas = {
 				break;
 			case "window.resize":
 			case "reset-canvas":
-				Self.aX = Self.showRulers ? _rulers.rT : 0;
-				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height() + (Self.showRulers ? _rulers.rT : 0);
-				Self.aW = window.width - Self.aX - Self.els.sideBar.width() + (Self.showRulers ? _rulers.rT : 0);
-				Self.aH = window.height - Self.aY - (Self.showRulers ? _rulers.rT : 0); // - Self.els.statusBar.height()
+				Self.aX = Self.showRulers ? _rulers.t : 0;
+				Self.aY = Self.els.toolBar.height() + Self.els.optionsBar.height() + (Self.showRulers ? _rulers.t : 0);
+				Self.aW = window.width - Self.aX - Self.els.sideBar.width() + (Self.showRulers ? _rulers.t : 0);
+				Self.aH = window.height - Self.aY - (Self.showRulers ? _rulers.t : 0); // - Self.els.statusBar.height()
 				// center
 				Self.cX = (window.width + Self.aX - Self.els.sideBar.width()) / 2;
 				Self.cY = (window.height + Self.aY - Self.els.statusBar.height()) / 2;
@@ -189,7 +189,7 @@ const Canvas = {
 				if (Self.showRulers) {
 					// rulers
 					let img = _rulers.cvs[0],
-						rT = _rulers.rT,
+						t = _rulers.t,
 						aW = Self.aW,
 						aH = Self.aH,
 						oX = Self.oX,
@@ -199,38 +199,38 @@ const Canvas = {
 						cX, cY, cW, cH,
 						pX, pY, pW, pH;
 					// move origo
-					Self.ctx.translate(aX - rT, aY - rT);
+					Self.ctx.translate(aX - t, aY - t);
 
 					// origo box
 					Self.ctx.drawImage(img,
-						0, 0, rT, rT,
-						0, 0, rT, rT);
+						0, 0, t, t,
+						0, 0, t, t);
 
 					// top ruler
-					//cX = _max(rT + aX - oX, rT);
-					cX = _rulers.oX - oX + rT;
+					//cX = _max(t + aX - oX, t);
+					cX = _rulers.oX - oX + t;
 					cY = 0;
 					cW = _max(aW - oX, aW);
-					cH = rT;
+					cH = t;
 
-					pX = rT;
+					pX = t;
 					pY = 0;
 					pW = _max(aW - oX, aW);
-					pH = rT;
+					pH = t;
 
 					Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
 					
 					// left ruler
 					cX = 0;
-					//cY = _max(rT + aY - oY, rT);
+					//cY = _max(t + aY - oY, t);
 					cY = _rulers.oY - oY + aY;
-					cW = rT;
-					cH = aH + rT;
+					cW = t;
+					cH = aH + t;
 
 					pX = 0;
-					pY = rT;
-					pW = rT;
-					pH = aH + rT;
+					pY = t;
+					pW = t;
+					pH = aH + t;
 
 					Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
 				}

@@ -4,16 +4,20 @@ const Rulers = {
 		let { cvs, ctx } = Canvas.createCanvas(1, 1);
 		this.cvs = cvs;
 		this.ctx = ctx;
-		this.rT = 18;
-		this.oX = this.rT;
+		this.t = 18;  // ruler thickness
+		this.oX = this.t;
 		this.oY = 0;
 	},
 	render(Canvas) {
 		let _max = Math.max,
 			_min = Math.min,
 			_abs = Math.abs,
+			_round = Math.round,
 			scale = Canvas.scale,
 			rG = ZOOM.find(z => z.level === scale * 100).rG,
+			t = this.t,
+			w = _round(Canvas.aW * 1.5),
+			h = _round(Canvas.aH * 1.5),
 			line = (p1x, p1y, p2x, p2y) => {
 				this.ctx.beginPath();
 				this.ctx.moveTo(p1x, p1y);
@@ -21,51 +25,48 @@ const Rulers = {
 				this.ctx.stroke();
 			};
 
-		this.rW = _max(Canvas.w, window.width) + Canvas.aX + 1;
-		this.rH = _max(Canvas.h, window.height) + Canvas.aY + 1;
+		this.w = w;
+		this.h = h;
 		// reset/resize canvas
-		this.cvs.prop({ width: this.rW, height: this.rH });
+		this.cvs.prop({ width: w, height: h });
 		this.ctx.translate(-.5, -.5);
 
-		this.ctx.lineWidth = 1;
-		this.ctx.fillStyle = "#112222e5";
-		this.ctx.strokeStyle = "#0000009e";
-
-		let rT = this.rT,
-			rW = this.rW * 1.5,
-			rH = this.rH * 1.5,
-			coX = Canvas.oX - Canvas.aX + rT,
-			coY = Canvas.oY - Canvas.aY + rT,
-			oX = coX,
-			oY = coY
+		let oX = _round(Canvas.oX + (Canvas.aW * .25)),
+			oY = _round(Canvas.oY + (Canvas.aH * .25));
 
 		this.oX = oX - 1;
 		this.oY = oY - 1;
 
-		// ruler bg's
-		this.ctx.fillRect(0, 0, rW, rT);
-		this.ctx.fillRect(0, rT, rT, rH);
-		// top ruler bottom line
-		line(0, rT, rW, rT);
-		// left ruler right line
-		line(rT, 0, rT, rH);
+		// ruler bg & style
+		this.ctx.lineWidth = 1;
+		this.ctx.fillStyle = "#112222e5";
+		this.ctx.strokeStyle = "#0000009e";
 
+		this.ctx.fillRect(0, 0, w, t);
+		this.ctx.fillRect(0, t, t, h);
+		line(0, t, w, t);  // top ruler bottom line
+		line(t, 0, t, h);  // left ruler right line
 
+		// ruler fg & style
 		this.ctx.strokeStyle = "#444";
 
 		// top ruler
-		let xG = rG[0] * scale,
-			xl = rW,
-			x = rT + 1;
-		for (x; x<xl; x+=xG) {
-			let lX = x ;
-			line(lX, 0, lX, rT);
-		}
+		let dX = (oX - t) % rG[0],
+			xG = rG[0] * scale,
+			x = t + 1;
+
+		for (; x<w; x+=xG) line(x + dX, 0, x + dX, t);
+
+		xG = rG[1] * scale;
+		if (xG) for (x=t+1; x<w; x+=xG) line(x + dX, 12, x + dX, t);
+
+		xG = rG[2] * scale;
+		if (xG) for (x=t+1; x<w; x+=xG) line(x + dX, 15, x + dX, t);
 
 
 		this.ctx.strokeStyle = "#fff";
-		line(oX, 0, oX, rT);
-		line(0, oY, rT, oY);
+		line(oX, 0, oX, t);
+		line(0, oY, t, oY);
 
 		// debug
 		// this.ctx.fillStyle = "#f00";
