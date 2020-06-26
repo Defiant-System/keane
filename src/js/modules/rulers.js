@@ -30,15 +30,6 @@ const Rulers = {
 		if (this.scale === Canvas.scale) return;
 		this.scale = Canvas.scale;
 
-		this.maxed = false;
-		if (w > this.MAX || h > this.MAX) {
-			this.maxed = true;
-			// prepare to create repeatable pattern
-			w = h = (rG[0] * scale * 10);
-			oX = _round(w * .3);
-			oY = _round(h * .3);
-		}
-
 		this.w = w;
 		this.h = h;
 		this.oX = oX;
@@ -65,53 +56,37 @@ const Rulers = {
 		this.ctx.font = `9px Arial`;
 
 		// top ruler
-		let xG = rG[0] * scale,
-			yG = rG[0] * scale,
-			x = oX % xG,
-			y = oY % yG;
+		let g = rG[0] * scale,
+			x = oX % g,
+			y = oY % g;
+
 		// numbers
-		if (!this.maxed) for (; x<w; x+=xG) {
+		for (; x<w; x+=g) {
 			if (x < t) continue;
 			let nr = _round(_abs(x - oX) / scale);
 			this.ctx.fillText(nr, x + 3, 9);
 		}
 		// top ruler
-		for (x=(oX%xG)+1; x<w; x+=xG) if (x>t) line(x, 0, x, t);
-		xG = rG[1] * scale;
-		if (xG) for (x=(oX%xG)+1; x<w; x+=xG) if (x>t) line(x, 12, x, t);
-		xG = rG[2] * scale;
-		if (xG) for (x=(oX%xG)+1; x<w; x+=xG) if (x>t) line(x, 15, x, t);
+		for (x=(oX%g)+1; x<w; x+=g) if (x>t) line(x, 0, x, t);
+		g = rG[1] * scale;
+		if (g) for (x=(oX%g)+1; x<w; x+=g) if (x>t) line(x, 12, x, t);
+		g = rG[2] * scale;
+		if (g) for (x=(oX%g)+1; x<w; x+=g) if (x>t) line(x, 15, x, t);
 
 		// ruler numbers
-		if (!this.maxed) for (; y<h; y+=yG) {
+		g = rG[0] * scale;
+		for (; y<h; y+=g) {
 			if (y < t) continue;
 			let nr = _round(_abs(y - oY) / scale);
 			nr.toString().split("").map((c, i) => this.ctx.fillText(c, 4, y + 1 + ((i + 1) * 9)));
 		}
 		// left ruler
-		for (y=(oY%yG)+1; y<h; y+=yG) if (y>t) line(0, y, t, y);
-		yG = rG[1] * scale;
-		if (yG) for (y=(oY%yG)+1; y<h; y+=yG) if (y>t) line(12, y, t, y);
-		yG = rG[2] * scale;
-		if (yG) for (y=(oY%yG)+1; y<h; y+=yG) if (y>t) line(15, y, t, y);
-
-		if (this.maxed) {
-			let pW = rG[0] * scale,
-				poX = _round(Canvas.oX % pW),
-				poY = _round(Canvas.oY % pW),
-				pattern = Canvas.createCanvas(pW, pW);
-			
-			pattern.ctx.drawImage(this.cvs[0],
-				oX - poX, 0, pW, t,
-				0, 0, pW, t);
-			this.xRepeat = this.ctx.createPattern(pattern.cvs[0], "repeat");
-
-			//pattern.cvs.prop({ width: pW, height: pW });
-			pattern.ctx.drawImage(this.cvs[0],
-				0, oY - poY, t, pW,
-				0, 0, t, pW);
-			this.yRepeat = this.ctx.createPattern(pattern.cvs[0], "repeat");
-		}
+		g = rG[0] * scale;
+		for (y=(oY%g)+1; y<h; y+=g) if (y>t) line(0, y, t, y);
+		g = rG[1] * scale;
+		if (g) for (y=(oY%g)+1; y<h; y+=g) if (y>t) line(12, y, t, y);
+		g = rG[2] * scale;
+		if (g) for (y=(oY%g)+1; y<h; y+=g) if (y>t) line(15, y, t, y);
 
 		// debug
 		// this.ctx.strokeStyle = "#fff";
