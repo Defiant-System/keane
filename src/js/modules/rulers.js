@@ -26,7 +26,7 @@ const Rulers = {
 			};
 		if (this.scale === Canvas.scale) return;
 		this.scale = Canvas.scale;
-console.log(w, Canvas.w);
+
 		this.w = w;
 		this.h = h;
 		// reset/resize canvas
@@ -55,15 +55,33 @@ console.log(w, Canvas.w);
 		this.ctx.font = `9px Arial`;
 
 		// top ruler
-		let dX = oX % rG[0],
-			dY = oY % rG[0],
-			xG = rG[0] * scale,
+		let xG = rG[0] * scale,
 			yG = rG[0] * scale,
-			x, y;
-		
-		for (x=dX; x<w; x+=xG) {
-			line(x, 0, x, t);
+			x = oX % xG,
+			y = oY % yG;
+		// numbers
+		for (; x<w; x+=xG) {
+			let nr = _round(_abs(x - oX) / scale);
+			this.ctx.fillText(nr, x + 2, 9);
 		}
+		// top ruler
+		for (x=oX%xG; x<w; x+=xG) line(x, 0, x, t);
+		xG = rG[1] * scale;
+		if (xG) for (x=oX%xG; x<w; x+=xG) line(x, 12, x, t);
+		xG = rG[2] * scale;
+		if (xG) for (x=oX%xG; x<w; x+=xG) line(x, 15, x, t);
+
+		// ruler numbers
+		for (; y<h; y+=yG) {
+			let nr = _round(_abs(y - oY) / scale);
+			nr.toString().split("").map((c, i) => this.ctx.fillText(c, 4, y + ((i + 1) * 9)));
+		}
+		// left ruler
+		for (y=oY%yG; y<h; y+=yG) line(0, y, t, y);
+		yG = rG[1] * scale;
+		if (yG) for (y=oY%yG; y<h; y+=yG) line(12, y, t, y);
+		yG = rG[2] * scale;
+		if (yG) for (y=oY%yG; y<h; y+=yG) line(15, y, t, y);
 
 		// debug
 		this.ctx.strokeStyle = "#fff";
