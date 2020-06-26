@@ -206,27 +206,35 @@ const Canvas = {
 						0, 0, t, t,
 						0, 0, t, t);
 
-					// top ruler
-					cX = _rulers.oX - oX + t;
-					cY = 0;
-					cW = _max(aW - oX, aW);
-					cH = t;
-					pX = t;
-					pY = 0;
-					pW = _max(aW - oX, aW);
-					pH = t;
-					Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
-					
-					// left ruler
-					cX = 0;
-					cY = _rulers.oY - oY + aY;
-					cW = t;
-					cH = aH + t;
-					pX = 0;
-					pY = t;
-					pW = t;
-					pH = aH + t;
-					Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
+					if (_rulers.xRepeat) {
+						Self.ctx.fillStyle = _rulers.xRepeat;
+						Self.ctx.fillRect(t, 0, aW - t, t);
+
+						Self.ctx.fillStyle = _rulers.yRepeat;
+						Self.ctx.fillRect(0, t, t, aH + t);
+					} else {
+						// top ruler
+						cX = _rulers.oX - oX + t;
+						cY = 0;
+						cW = _max(aW - oX, aW);
+						cH = t;
+						pX = t;
+						pY = 0;
+						pW = _max(aW - oX, aW);
+						pH = t;
+						Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
+						
+						// left ruler
+						cX = 0;
+						cY = _rulers.oY - oY + aY;
+						cW = t;
+						cH = aH + t;
+						pX = 0;
+						pY = t;
+						pW = t;
+						pH = aH + t;
+						Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
+					}
 				}
 
 				if (!event.stop) {

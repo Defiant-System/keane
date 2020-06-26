@@ -33,7 +33,7 @@ const ZOOM =   [{ level: 12.5, rG: [200, 100, 50] },
 				{ level: 800,  rG: [10,  5,   1 ] },
 				{ level: 1200, rG: [5,   0,   1 ] },
 				{ level: 1600, rG: [2,   0,   1 ] },
-				{ level: 3200, rG: [2,   0,   1 ] }];
+				{ level: 3200, rG: [2,   1,   0 ] }];
 
 const photoshop = {
 	els: {},
@@ -112,7 +112,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 32 },
 							
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
