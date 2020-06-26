@@ -16,26 +16,27 @@ const Rulers = {
 			scale = Canvas.scale,
 			rG = ZOOM.find(z => z.level === scale * 100).rG,
 			t = this.t,
-			w = _round(Canvas.aW * 1.5),
-			h = _round(Canvas.aH * 1.5),
+			w = _round(_max(Canvas.w, window.width) * 1.5),
+			h = _round(_max(Canvas.h, window.height) * 1.5),
 			line = (p1x, p1y, p2x, p2y) => {
 				this.ctx.beginPath();
 				this.ctx.moveTo(p1x, p1y);
 				this.ctx.lineTo(p2x, p2y);
 				this.ctx.stroke();
 			};
-
+		if (this.scale === Canvas.scale) return;
+		this.scale = Canvas.scale;
+console.log(w, Canvas.w);
 		this.w = w;
 		this.h = h;
 		// reset/resize canvas
 		this.cvs.prop({ width: w, height: h });
 		this.ctx.translate(-.5, -.5);
 
-		let oX = _round(Canvas.oX + (Canvas.aW * .25)),
-			oY = _round(Canvas.oY + (Canvas.aH * .25));
-
-		this.oX = oX - 1;
-		this.oY = oY - 1;
+		let oX = _round(Canvas.oX + (Canvas.aW * .5)),
+			oY = _round(Canvas.oY + (Canvas.aH * .5));
+		this.oX = oX;
+		this.oY = oY;
 
 		// ruler bg & style
 		this.ctx.lineWidth = 1;
@@ -54,29 +55,15 @@ const Rulers = {
 		this.ctx.font = `9px Arial`;
 
 		// top ruler
-		let dX = (oX - t) % rG[0],
+		let dX = oX % rG[0],
+			dY = oY % rG[0],
 			xG = rG[0] * scale,
-			x = t + 1;
-		// numbers
-		for (; x<w; x+=xG) {
-			let nr = _round(_abs(((x + dX - oX - 1) / scale)));
-			this.ctx.fillText(nr, x + dX + 2, 9);
-		}
-		for (x=t+1; x<w; x+=xG) line(x + dX, 0, x + dX, t);
-		xG = rG[1] * scale;
-		if (xG) for (x=t+1; x<w; x+=xG) line(x + dX, 12, x + dX, t);
-		xG = rG[2] * scale;
-		if (xG) for (x=t+1; x<w; x+=xG) line(x + dX, 15, x + dX, t);
-
-		// left ruler
-		let dY = (oY - t) % rG[0],
 			yG = rG[0] * scale,
-			y = t + 1;
-		for (; y<h; y+=yG) line(0, y + dY, t, y + dY);
-		yG = rG[1] * scale;
-		if (yG) for (y=t+1; y<h; y+=yG) line(12, y + dY, t, y + dY);
-		yG = rG[2] * scale;
-		if (yG) for (y=t+1; y<h; y+=yG) line(15, y + dY, t, y + dY);
+			x, y;
+		
+		for (x=dX; x<w; x+=xG) {
+			line(x, 0, x, t);
+		}
 
 		// debug
 		this.ctx.strokeStyle = "#fff";
