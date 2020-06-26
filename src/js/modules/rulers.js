@@ -16,8 +16,10 @@ const Rulers = {
 			scale = Canvas.scale,
 			rG = ZOOM.find(z => z.level === scale * 100).rG,
 			t = this.t,
-			w = _round(_max(Canvas.w, window.width) * 1.5),
-			h = _round(_max(Canvas.h, window.height) * 1.5),
+			w = _round(_max(Canvas.w, window.width)),
+			h = _round(_max(Canvas.h, window.height)),
+			oX = _round(w * .3),
+			oY = _round(h * .3),
 			line = (p1x, p1y, p2x, p2y) => {
 				this.ctx.beginPath();
 				this.ctx.moveTo(p1x, p1y);
@@ -29,14 +31,14 @@ const Rulers = {
 
 		this.w = w;
 		this.h = h;
+		this.oX = oX;
+		this.oY = oY;
+
+		console.log(w, h, oX, oY);
+			
 		// reset/resize canvas
 		this.cvs.prop({ width: w, height: h });
 		this.ctx.translate(-.5, -.5);
-
-		let oX = _round(Canvas.oX + (Canvas.aW * .5)),
-			oY = _round(Canvas.oY + (Canvas.aH * .5));
-		this.oX = oX;
-		this.oY = oY;
 
 		// ruler bg & style
 		this.ctx.lineWidth = 1;
@@ -61,35 +63,33 @@ const Rulers = {
 			y = oY % yG;
 		// numbers
 		for (; x<w; x+=xG) {
+			if (x < t) continue;
 			let nr = _round(_abs(x - oX) / scale);
-			this.ctx.fillText(nr, x + 2, 9);
+			this.ctx.fillText(nr, x + 3, 9);
 		}
 		// top ruler
-		for (x=oX%xG; x<w; x+=xG) line(x, 0, x, t);
+		for (x=(oX%xG)+1; x<w; x+=xG) if (x>t) line(x, 0, x, t);
 		xG = rG[1] * scale;
-		if (xG) for (x=oX%xG; x<w; x+=xG) line(x, 12, x, t);
+		if (xG) for (x=(oX%xG)+1; x<w; x+=xG) if (x>t) line(x, 12, x, t);
 		xG = rG[2] * scale;
-		if (xG) for (x=oX%xG; x<w; x+=xG) line(x, 15, x, t);
+		if (xG) for (x=(oX%xG)+1; x<w; x+=xG) if (x>t) line(x, 15, x, t);
 
 		// ruler numbers
 		for (; y<h; y+=yG) {
+			if (y < t) continue;
 			let nr = _round(_abs(y - oY) / scale);
-			nr.toString().split("").map((c, i) => this.ctx.fillText(c, 4, y + ((i + 1) * 9)));
+			nr.toString().split("").map((c, i) => this.ctx.fillText(c, 4, y + 1 + ((i + 1) * 9)));
 		}
 		// left ruler
-		for (y=oY%yG; y<h; y+=yG) line(0, y, t, y);
+		for (y=(oY%yG)+1; y<h; y+=yG) if (y>t) line(0, y, t, y);
 		yG = rG[1] * scale;
-		if (yG) for (y=oY%yG; y<h; y+=yG) line(12, y, t, y);
+		if (yG) for (y=(oY%yG)+1; y<h; y+=yG) if (y>t) line(12, y, t, y);
 		yG = rG[2] * scale;
-		if (yG) for (y=oY%yG; y<h; y+=yG) line(15, y, t, y);
+		if (yG) for (y=(oY%yG)+1; y<h; y+=yG) if (y>t) line(15, y, t, y);
 
 		// debug
-		this.ctx.strokeStyle = "#fff";
-		line(oX, 0, oX, t);
-		line(0, oY, t, oY);
-
-		// this.ctx.fillStyle = "#f00";
-		// this.ctx.strokeStyle = "#000";
-		// this.ctx.fillRect(0, 0, 1e4, 1e4);
+		// this.ctx.strokeStyle = "#fff";
+		// line(oX, 0, oX, t);
+		// line(0, oY, t, oY);
 	}
 };

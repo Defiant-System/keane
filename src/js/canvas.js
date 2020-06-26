@@ -207,38 +207,32 @@ const Canvas = {
 						0, 0, t, t);
 
 					// top ruler
-					//cX = _max(t + aX - oX, t);
 					cX = _rulers.oX - oX + t;
 					cY = 0;
 					cW = _max(aW - oX, aW);
 					cH = t;
-
 					pX = t;
 					pY = 0;
 					pW = _max(aW - oX, aW);
 					pH = t;
-
 					Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
 					
 					// left ruler
 					cX = 0;
-					//cY = _max(t + aY - oY, t);
 					cY = _rulers.oY - oY + aY;
 					cW = t;
 					cH = aH + t;
-
 					pX = 0;
 					pY = t;
 					pW = t;
 					pH = aH + t;
-
 					Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
 				}
 
 				if (!event.stop) {
 					_navigator.dispatch({ type: "set-zoom", arg: Self.scale });
-					_navigator.dispatch({ type: "update-canvas" });
 				}
+				_navigator.dispatch({ type: "update-canvas" });
 				break;
 		}
 		// restore paint context
