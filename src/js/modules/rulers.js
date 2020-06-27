@@ -4,12 +4,23 @@ const Rulers = {
 		let { cvs, ctx } = Canvas.createCanvas(1, 1);
 		this.cvs = cvs;
 		this.ctx = ctx;
-		this.MAX = 16384,
 		this.t = 18;  // ruler thickness
 		this.oX = this.t;
 		this.oY = 0;
 	},
 	render(Canvas) {
+		this.render_(Canvas);
+
+		let _abs = Math.abs,
+			_round = Math.round,
+			t = this.t,
+			scale = Canvas.scale,
+			sX = (Canvas.oX - t) / -scale,
+			eX = (Canvas.aW - Canvas.oX) / scale;
+
+		console.log(sX, eX);
+	},
+	render_(Canvas) {
 		let _max = Math.max,
 			_min = Math.min,
 			_abs = Math.abs,

@@ -134,7 +134,7 @@ const Canvas = {
 				Self.oY = _round(Self.cY - (Self.h / 2));
 
 				// render rulers according to scale
-				_rulers.render(Self);
+				//_rulers.render(Self);
 
 				// reset canvas
 				if (!event.noReset) Self.reset();
@@ -187,6 +187,9 @@ const Canvas = {
 				Self.ctx.restore();
 
 				if (Self.showRulers) {
+					// render rulers according to scale
+					_rulers.render(Self);
+					
 					// rulers
 					let img = _rulers.cvs[0],
 						t = _rulers.t,
