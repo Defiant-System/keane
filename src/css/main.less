@@ -682,7 +682,7 @@ content {
 
 		.status-bar {
 			position: absolute;
-			left: 15px;
+			left: 18px;
 			right: 0;
 			bottom: 0;
 			height: 25px;
@@ -849,8 +849,6 @@ content {
 						border-top: 0;
 
 						.row {
-							padding-left: 5px;
-							
 							.thumbnail {
 								margin: 0 5px 0 3px;
 							}
@@ -861,10 +859,12 @@ content {
 					}
 
 					&[data-box="channels"] {
-						.icon.eye {
-							opacity: 1;
-							visibility: visible;
-							margin: 7px 13px 0 0;
+						.row {
+							padding: 0 7px;
+
+							.icon {
+								margin: 7px 0 0 0;
+							}
 						}
 					}
 
@@ -1313,7 +1313,7 @@ content {
 					position: relative;
 					display: flex;
 					height: 31px;
-					padding: 0 29px 0 11px;
+					padding: 0 29px 0 5px;
 					border-bottom: 1px solid rgba(#011, .35);
 
 					&:before { content: ""; }
@@ -1328,9 +1328,11 @@ content {
 								opacity: 0.75;
 							}
 						}
-						.icon.eye[style*="eye-on"] {
-							opacity: 1;
-							visibility: visible;
+						.icon {
+							&.icon-eye-on {
+								opacity: 1;
+								visibility: visible;
+							}
 						}
 					}
 
@@ -1353,7 +1355,7 @@ content {
 						font-size: 12px;
 						color: rgba(#dee, .65);
 						text-shadow: 0 1px 0 rgba(#000, .25);
-						transition: color 80ms ease-in-out;
+						//transition: color 80ms ease-in-out;
 					}
 
 					.name {
@@ -1393,18 +1395,23 @@ content {
 							height: 17px;
 						}
 
-						&.eye {
+						&.icon-eye-on,
+						&.icon-eye-off {
 							width: 17px;
+							cursor: pointer;
+							opacity: 0;
+							visibility: hidden;
+							//transition: opacity 80ms ease-in-out;
 
 							&:after {
 								top: 1px;
 								width: 15px;
 								height: 15px;
 							}
-							&[style*="eye-on"] {
-								opacity: 0;
-								visibility: hidden;
-								transition: opacity 80ms ease-in-out;
+
+							&.icon-eye-off {
+								opacity: 1;
+								visibility: visible;
 							}
 						}
 					}

@@ -61,15 +61,15 @@ const photoshop = {
 		//this.dispatch({ event: "window.resize" });
 
 		// auto-select initial tool
-		this.els.content.find(".tools-bar .tool[data-content='move']").trigger("click");
+		this.els.content.find(".tools-bar .tool[data-content='brush']").trigger("click");
 
 		// bind event handlers
 		this.els.content.bind("dragover drop", this.dispatch);
 
 		// temp
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
-		this.dispatch({ type: "change-bg", arg: "~/img/small.jpg" });
-		//this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
+		//this.dispatch({ type: "change-bg", arg: "~/img/small.jpg" });
+		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "~/img/lotus.jpg" });
 		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
 		//window.find('.sidebar-box div[data-content="channels"]').trigger("click");
