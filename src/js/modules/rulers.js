@@ -9,16 +9,28 @@ const Rulers = {
 		this.oY = 0;
 	},
 	render(Canvas) {
-		this.render_(Canvas);
+		//this.render_(Canvas);
 
 		let _abs = Math.abs,
 			_round = Math.round,
+			ctx = Canvas.ctx,
 			t = this.t,
 			scale = Canvas.scale,
-			sX = (Canvas.oX - t) / -scale,
-			eX = (Canvas.aW - Canvas.oX) / scale;
+			sX = (Canvas.oX - Canvas.aX) / -scale,
+			sY = (Canvas.oY - Canvas.aY) / -scale,
+			eX = (Canvas.aW - Canvas.oX) / scale,
+			eY = (Canvas.aH - Canvas.oY + Canvas.aY) / scale;
+		// console.log(sX, eX);
+		// console.log(sY, eY);
 
-		console.log(sX, eX);
+		// ruler bg & style
+		ctx.lineWidth = 1;
+		ctx.fillStyle = "#112222e5";
+		ctx.strokeStyle = "#0000009e";
+		ctx.translate(Canvas.aX - t, Canvas.aY - t);
+
+		ctx.fillRect(0, 0, Canvas.aW, t);
+		ctx.fillRect(0, t, t, Canvas.aW);
 	},
 	render_(Canvas) {
 		let _max = Math.max,
