@@ -1,13 +1,6 @@
 
 const Rulers = {
-	init() {
-		let { cvs, ctx } = Canvas.createCanvas(1, 1);
-		this.cvs = cvs;
-		this.ctx = ctx;
-		this.t = 18;  // ruler thickness
-		this.oX = this.t;
-		this.oY = 0;
-	},
+	t: 18, // ruler thickness
 	render(Canvas) {
 		let _abs = Math.abs,
 			_round = Math.round,
@@ -56,22 +49,22 @@ const Rulers = {
 		ctx.font = `9px Arial`;
 
 		// top ruler
-		for (x=sX, g=rG[0]*scale; x<eX; x+=g) if (x >= t) line(x + 1, 0,  x + 1, t);
-		for (x=sX, g=rG[1]*scale; x<eX; x+=g) if (x >= t) line(x + 1, 12, x + 1, t);
-		for (x=sX, g=rG[2]*scale; x<eX; x+=g) if (x >= t) line(x + 1, 15, x + 1, t);
+		for (x=sX, g=rG[0]*scale || 1e9; x<eX; x+=g) if (x >= t) line(x + 1, 0,  x + 1, t);
+		for (x=sX, g=rG[1]*scale || 1e9; x<eX; x+=g) if (x >= t) line(x + 1, 12, x + 1, t);
+		for (x=sX, g=rG[2]*scale || 1e9; x<eX; x+=g) if (x >= t) line(x + 1, 15, x + 1, t);
 		// numbers
-		for (x=sX, g=rG[0]*scale; x<eX; x+=g) {
+		for (x=sX, g=rG[0]*scale || 1e9; x<eX; x+=g) {
 			if (x <= t - 4)  continue;
 			let nr = _round(_abs(x - oX) / scale);
 			ctx.fillText(nr, x + 3, 9);
 		}
 
 		// left ruler
-		for (y=sY, g=rG[0]*scale; y<eY; y+=g) if (y >= t) line(0,  y + 1, t, y + 1);
-		for (y=sY, g=rG[1]*scale; y<eY; y+=g) if (y >= t) line(12, y + 1, t, y + 1);
-		for (y=sY, g=rG[2]*scale; y<eY; y+=g) if (y >= t) line(15, y + 1, t, y + 1);
+		for (y=sY, g=rG[0]*scale || 1e9; y<eY; y+=g) if (y >= t) line(0,  y + 1, t, y + 1);
+		for (y=sY, g=rG[1]*scale || 1e9; y<eY; y+=g) if (y >= t) line(12, y + 1, t, y + 1);
+		for (y=sY, g=rG[2]*scale || 1e9; y<eY; y+=g) if (y >= t) line(15, y + 1, t, y + 1);
 		// numbers
-		for (y=sY, g=rG[0]*scale; y<eY; y+=g) {
+		for (y=sY, g=rG[0]*scale || 1e9; y<eY; y+=g) {
 			if (y <= t - 4)  continue;
 			let nr = _round(_abs(y - oY - t + aY) / scale);
 			nr.toString().split("").map((c, i) => ctx.fillText(c, 4, y + 1 + ((i + 1) * 9)));

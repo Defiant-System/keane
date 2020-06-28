@@ -23,9 +23,6 @@ const Canvas = {
 		this.cvsBg = new Image;
 		this.cvsBg.onload = () => this.cvsBgPattern = this.osCtx.createPattern(this.cvsBg, "repeat");
 		this.cvsBg.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
-
-		// init rulers
-		Rulers.init();
 	},
 	createCanvas(width, height) {
 		let cvs = $(document.createElement("canvas")),
@@ -189,47 +186,6 @@ const Canvas = {
 				if (Self.showRulers) {
 					// render rulers according to scale
 					_rulers.render(Self);
-					
-					// rulers
-					let img = _rulers.cvs[0],
-						t = _rulers.t,
-						aW = Self.aW,
-						aH = Self.aH,
-						oX = Self.oX,
-						oY = Self.oY,
-						aX = Self.aX,
-						aY = Self.aY,
-						cX, cY, cW, cH,
-						pX, pY, pW, pH;
-					// move origo
-					Self.ctx.translate(aX - t, aY - t);
-
-					// origo box
-					Self.ctx.drawImage(img,
-						0, 0, t, t,
-						0, 0, t, t);
-
-					// top ruler
-					cX = _rulers.oX - oX + t;
-					cY = 0;
-					cW = _max(aW - oX, aW);
-					cH = t;
-					pX = t;
-					pY = 0;
-					pW = _max(aW - oX, aW);
-					pH = t;
-					Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
-					
-					// left ruler
-					cX = 0;
-					cY = _rulers.oY - oY + aY;
-					cW = t;
-					cH = aH + t;
-					pX = 0;
-					pY = t;
-					pW = t;
-					pH = aH + t;
-					Self.ctx.drawImage(img, cX, cY, cW, cH, pX, pY, pW, pH);
 				}
 
 				if (!event.stop) {
