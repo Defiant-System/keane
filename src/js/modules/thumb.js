@@ -25,21 +25,16 @@ const Thumb = {
 		// original canvas image
 		Ctx.drawImage(_canvas.osCvs[0], l, t, w, h);
 
-		c = ["red", "blue", "green"].indexOf(options.channel);
+		c = ["red", "green", "blue"].indexOf(options.channel);
 		if (c > -1) {
 			let img = Ctx.getImageData(l, t, w, h),
 				data = img.data;
 
-			for (let y=0; y<h; y++) {
-				for (let x=0; x<w; x++) {
-					let o = ((y * w) + x) * 4;
-					data[o + 0] = data[o + c]; // * 0.2126;
-					data[o + 1] = data[o + c]; // * 0.7152;
-					data[o + 2] = data[o + c]; // * 0.0722;
-					data[o + 3] = data[o + 3];
-				}
+			for (let i=0, il=data.length; i<il; i+=4) {
+				data[i + 0] = data[i + c];
+				data[i + 1] = data[i + c];
+				data[i + 2] = data[i + c];
 			}
-
 			Ctx.putImageData(img, l, t);
 		}
 
