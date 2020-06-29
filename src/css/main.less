@@ -47,7 +47,8 @@ content {
 	flex-direction: column;
 
 	// prevent mouse from triggering mouseover when panning for instance
-	&.cover:after {
+	&.cover:after,
+	&.no-cursor:after {
 		content: "";
 		position: absolute;
 		top: 0;
@@ -56,6 +57,10 @@ content {
 		bottom: 0;
 		z-index: 99;
 		background: transparent;
+	}
+
+	&.no-cursor:after {
+		cursor: none;
 	}
 
 	.tools-bar {
