@@ -10,6 +10,9 @@
 			// subscribe to events
 			defiant.on("mouse-move", this.dispatch);
 		} else {
+			// subscribe to events
+			defiant.off("mouse-move", this.dispatch);
+			
 			// clean up
 			this.els = {};
 		}

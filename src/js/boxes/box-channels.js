@@ -9,10 +9,13 @@
 			this.els.root = root;
 
 			// subscribe to events
-			defiant.on("cavas-update", this.dispatch);
+			defiant.on("canvas-update", this.dispatch);
+
+			// auto trigger
+			this.dispatch({ type: "canvas-update" });
 		} else {
 			// subscribe to events
-			defiant.off("cavas-update", this.dispatch);
+			defiant.off("canvas-update", this.dispatch);
 
 			// clean up
 			this.els = {};
@@ -26,13 +29,15 @@
 			el;
 
 		switch (event.type) {
-			case "cavas-update":
+			// subscribed events
+			case "canvas-update":
 				Self.els.root.find(".row canvas").map(cvs => {
 					let el = $(cvs),
 						channel = el.parents(".row").data("channel");
 					Thumb.render({ el, channel });
 				});
 				break;
+			// custom events
 			case "select-channel":
 				isOn = event.el.data("channel") === "rgb";
 				Self.els.rows.map(row => $(row)[isOn ? "removeClass" : "addClass"]("off"));
