@@ -171,6 +171,9 @@ const Canvas = {
 				break;
 			case "draw-image":
 				Self.osCtx.drawImage(event.src, 0, 0);
+
+				// broadcast event
+				defiant.emit("cavas-update");
 				break;
 			case "update-canvas":
 				Self.ctx.save();

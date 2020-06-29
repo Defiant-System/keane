@@ -2,16 +2,18 @@
 // photoshop.box.character
 
 {
-	toggle(el, state) {
+	els: {},
+	toggle(root, state) {
 		if (state === "on") {
-			
+			this.els.root = root;
 		} else {
-
+			// clean up
+			this.els = {};
 		}
 	},
 	dispatch(event) {
-		let root = photoshop,
-			self = root.box.character;
+		let APP = photoshop,
+			Self = root.box.character;
 
 		switch (event.type) {
 			case "type-of-event":
