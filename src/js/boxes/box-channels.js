@@ -5,6 +5,7 @@
 	els: {},
 	toggle(root, state) {
 		if (state === "on") {
+			this.els.rows = root.find(".row");
 			this.els.root = root;
 
 			// subscribe to events
@@ -32,23 +33,19 @@
 					Thumb.render({ el, channel });
 				});
 				break;
+			case "select-channel":
+				isOn = event.el.data("channel") === "rgb";
+				Self.els.rows.map(row => $(row)[isOn ? "removeClass" : "addClass"]("off"));
+				event.el.removeClass("off");
+				break;
 			case "toggle-visibility":
 				el = event.el;
 				row = el.parents(".row");
-				isOn = el.hasClass("icon-eye-on");
-				el.removeClass("icon-eye-on icon-eye-off")
-					.addClass(isOn ? "icon-eye-off" : "icon-eye-on");
+				isOn = row.hasClass("off");
+				row[isOn ? "removeClass" : "addClass"]("off");
 
-				if (row.data("channel") === "rgb") {
-					row.parent().find(".row .icon")
-						.removeClass("icon-eye-on icon-eye-off")
-						.addClass(isOn ? "icon-eye-off" : "icon-eye-on");
-				}
-
-				isOn = row.parent().find(".row:not([data-channel='rgb']) .icon-eye-on").length === 3;
-				row.parent().find(".row[data-channel='rgb'] .icon")
-					.removeClass("icon-eye-on icon-eye-off")
-					.addClass(isOn ? "icon-eye-on" : "icon-eye-off");
+				isOn = Self.els.root.find(".row:not(.off):not([data-channel='rgb'])").length === 3;
+				Self.els.root.find(".row[data-channel='rgb']")[isOn ? "removeClass" : "addClass"]("off");
 				break;
 		}
 	}

@@ -1336,16 +1336,17 @@ content {
 						}
 					}
 
-					&.active {
-						background: rgba(#20b4d0, .65);
-
-						.icon:after {
-							opacity: .85;
+					&.off {
+						background: rgba(0,0,0,.15);
+						
+						.name {
+							color: #aaa;
 						}
 
-						> div {
-							color: rgba(#dee, .75);
-							text-shadow: 0 1px 0 rgba(#000, .25);
+						.icon.icon-eye-on {
+							background-image: url(~/icons/icon-eye-off.png);
+							opacity: 1;
+							visibility: visible;
 						}
 					}
 
