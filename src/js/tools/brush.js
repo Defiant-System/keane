@@ -4,13 +4,23 @@
 {
 	init() {
 		this.option = "brush";
+		this.preset = {
+			name: "circle",
+			size: 10,
+			tip: false
+		};
+
+		this.dispatch({ type: "select-preset-tip", arg: "circle" });
 	},
 	dispatch(event) {
 		let APP = photoshop,
 			Cvs = Canvas,
 			Ctx = Canvas.ctx,
 			Self = TOOLS.brush,
-			Drag = Self.drag;
+			Drag = Self.drag,
+			preset,
+			svg,
+			t, l, w, h;
 
 		switch (event.type) {
 			// native events
@@ -30,9 +40,7 @@
 					clickY: event.clientY - (Cvs.oY - Cvs.cY + (Cvs.h / 2)),
 				};
 
-				Cvs.swapCtx.strokeStyle = "red";
-				Cvs.swapCtx.lineWidth = 5;
-				Cvs.swapCtx.beginPath();
+				Self.dispatch({ type: "swap-paint", ...Self.drag.mouse });
 
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
@@ -42,11 +50,13 @@
 			case "mousemove":
 				Drag.x = Drag.mouse.x + event.clientX - Drag.clickX;
 				Drag.y = Drag.mouse.y + event.clientY - Drag.clickY;
-
-				Cvs.swapCtx.lineTo(Drag.x, Drag.y);
-				Cvs.swapCtx.stroke();
-
+			case "swap-paint":
 				// put swap canvas on UI canvas
+				w =
+				h = Self.preset.size;
+				l = (Drag.x || event.x) - (w/2);
+				t = (Drag.y || event.y) - (h/2);
+				Cvs.swapCtx.drawImage(Self.preset.tip, l, t, w, h);
 				Cvs.ctx.drawImage(Cvs.swapCvs[0], Cvs.oX, Cvs.oY);
 				break;
 			case "mouseup":
@@ -58,6 +68,14 @@
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "brush";
+				break;
+			case "select-preset-tip":
+				Self.preset.name = event.arg || "circle";
+				svg = window.find("svg#brush-preset-"+ Self.preset.name)[0].xml
+							.replace(/--color/ig, Cvs.fgColor);
+
+				Self.preset.tip = new Image();
+				Self.preset.tip.src = 'data:image/svg+xml;base64,'+ btoa(svg);
 				break;
 			case "enable":
 				Cvs.cvs.on("mousedown", Self.dispatch);
