@@ -1,5 +1,6 @@
 
 defiant.require("canvas.js")
+defiant.require("modules/ui.js")
 defiant.require("modules/rulers.js")
 defiant.require("modules/thumb.js")
 //defiant.req1uire("modules/psd.js")
@@ -44,6 +45,7 @@ const photoshop = {
 		this.els.statusBar = window.find(".status-bar");
 
 		// init objects
+		UI.init();
 		Canvas.init();
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
@@ -75,6 +77,25 @@ const photoshop = {
 		//this.dispatch({ type: "change-bg", arg: "~/img/lotus.jpg" });
 		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
 		//window.find('.sidebar-box div[data-content="channels"]').trigger("click");
+
+		/*
+		window.render({
+			template: "knob",
+			target: window.find(".test1")
+		});
+
+		window.render({
+			template: "swatches",
+			match: `//Swatches`,
+			target: window.find(".test2")
+		});
+
+		window.render({
+			template: "blend-modes",
+			match: `//BlendModes`,
+			target: window.find(".test3")
+		});
+		*/
 	},
 	dispatch(event) {
 		let Self = photoshop,

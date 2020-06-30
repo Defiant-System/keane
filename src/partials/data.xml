@@ -1,0 +1,70 @@
+
+<Data>
+	<Swatches>
+		<i value="#5cc2fc" />
+		<i value="#79fce9" />
+		<i value="#8cf85a" />
+		<i value="#feef63" />
+		<i value="#fd978f" />
+		<i value="#fd97ca" />
+		<i value="#1ca4fc" />
+		<i value="#2fe6cf" />
+		<i value="#65d643" />
+		<i value="#fed846" />
+		<i value="#fc6554" />
+		<i value="#fc48a1" />
+		<i value="#1177b8" />
+		<i value="#1aaa8e" />
+		<i value="#29af1d" />
+		<i value="#fcad2a" />
+		<i value="#eb261f" />
+		<i value="#d12177" />
+		<i value="#084e7e" />
+		<i value="#0c6c65" />
+		<i value="#0d700f" />
+		<i value="#f07220" />
+		<i value="#b31a10" />
+		<i value="#951453" />
+		<i value="#ffffff" />
+		<i value="#d5d5d5" />
+		<i value="#929292" />
+		<i value="#5e5e5e" />
+		<i value="#313131" />
+		<i value="#000000" />
+	</Swatches>
+
+	<BlendModes>
+		<i type="option" name="Normal"/>
+		<i type="option" name="Dissolve"/>
+		<i type="divider"/>
+		<i type="option" name="Darken"/>
+		<i type="option" name="Multiply"/>
+		<i type="option" name="Color Burn"/>
+		<i type="option" name="Linear Burn"/>
+		<i type="option" name="Darker Color"/>
+		<i type="divider"/>
+		<i type="option" name="Lighten"/>
+		<i type="option" name="Screen"/>
+		<i type="option" name="Color Dodge"/>
+		<i type="option" name="Linear Dodge"/>
+		<i type="option" name="Lighter Color"/>
+		<i type="divider"/>
+		<i type="option" name="Overlay"/>
+		<i type="option" name="Soft Light"/>
+		<i type="option" name="Hard Light"/>
+		<i type="option" name="Vivid Light"/>
+		<i type="option" name="Linear Light"/>
+		<i type="option" name="Pin Light"/>
+		<i type="option" name="Hard Mix"/>
+		<i type="divider"/>
+		<i type="option" name="Difference"/>
+		<i type="option" name="Exclusion"/>
+		<i type="option" name="Subtract"/>
+		<i type="option" name="Divide"/>
+		<i type="divider"/>
+		<i type="option" name="Hue"/>
+		<i type="option" name="Saturation"/>
+		<i type="option" name="Color"/>
+		<i type="option" name="Luminosity"/>
+	</BlendModes>
+</Data>

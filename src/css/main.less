@@ -1588,8 +1588,6 @@ content {
 		z-index: 99;
 		border-radius: 7px;
 		padding: 1px;
-		//box-shadow: 0 2px 7px rgba(0,0,0,.5);
-		//box-shadow: 0 0 0 1px rgba(0,0,0,.35);
 		filter: drop-shadow(0 1px 3px rgba(0,0,0,.5));
 
 		&:after {
@@ -1642,7 +1640,7 @@ content {
 			}
 
 			hr {
-				background: rgba(0,0,0,.25);
+				background: linear-gradient(90deg, transparent 0%, #788 50%, transparent 100%); //rgba(255,255,255,0.15);
 				margin: 3px 0 4px;
 			}
 
@@ -1653,33 +1651,32 @@ content {
 			.option {
 				display: block;
 				opacity: 1;
-				margin: 0;
+				margin: 1px 0;
 				white-space: nowrap;
 				padding: 3px 17px 1px 11px;
-				color: #011;
-				// color: #cdd;
-				// text-shadow: 0 1px 0 #344;
+				color: rgba(255,255,255,0.75);
+				text-shadow: 0 1px 0 #344;
+				cursor: pointer;
 
-				&:hover {
-					background: #69d;
-					//color: #fff;
+				&:not(.active):not(.disabled):hover {
+					background: #69e;
+					color: #eff;
+					text-shadow: 0 1px 0 #249;
+				}
+
+				&.disabled {
+					color: #899;
+					cursor: default;
+					text-shadow: 0 1px 0 #566;
+				}
+
+				&.active {
+					background: #899;
+					color: #eff;
+					// text-shadow: 0 1px 0 #249;
+					cursor: default;
 				}
 			}
-		}
-
-		&.test1 {
-			top: 75px;
-			left: 288px;
-		}
-
-		&.test2 {
-			top: 483px;
-			left: 995px;
-		}
-
-		&.test3 {
-			top: 75px;
-			left: 388px;
 		}
 	}
 
