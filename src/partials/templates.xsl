@@ -1,15 +1,15 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template name="knob">
-	<div class="inline-menubox">
+	<div class="inline-menubox" data-ui="doKnob">
 		<div class="inline-content">
-			<div class="knob" data-value="30"></div>
+			<div class="knob"></div>
 		</div>
 	</div>
 </xsl:template>
 
 <xsl:template name="swatches">
-	<div class="inline-menubox">
+	<div class="inline-menubox" data-ui="doSwatches">
 		<div class="inline-content swatches">
 			<xsl:for-each select="./*">
 				<div class="swatch">
@@ -21,7 +21,7 @@
 </xsl:template>
 
 <xsl:template name="blend-modes">
-	<div class="inline-menubox">
+	<div class="inline-menubox" data-ui="doBlendModes">
 		<div class="inline-content">
 			<xsl:for-each select="./*">
 				<xsl:choose>
