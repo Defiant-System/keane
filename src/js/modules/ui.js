@@ -38,16 +38,16 @@ const UI = {
 				if (el.data("match")) data.match = el.data("match");
 
 				// render menubox
-				menu = window.render(data);
+				Self.menu = window.render(data);
 
 				// initial value of knob
 				value = parseInt(el.find(".value").text(), 10);
-				menu.find(".knob").data({ value });
+				Self.menu.find(".knob").data({ value });
 
 				// position menubox
-				menu.css({
+				Self.menu.css({
 					top: (rect.top - window.top + rect.height + 9) +"px",
-					left: (rect.left - window.left + (rect.width / 2) - (menu[0].offsetWidth / 2)) +"px",
+					left: (rect.left - window.left + (rect.width / 2) - (Self.menu[0].offsetWidth / 2)) +"px",
 				});
 				break;
 			case "mousedown":
@@ -103,6 +103,9 @@ const UI = {
 				// unbind event handlers
 				Self.content.removeClass("no-cursor");
 				Self.doc.off("mousemove mouseup", Self.doKnob);
+
+				Self.srcEl = false;
+				Self.menu.remove();
 				break;
 		}
 	}
