@@ -13,7 +13,12 @@ const UI = {
 			el;
 		switch (event.type) {
 			case "click":
-				
+				el = $(this.parentNode);
+				console.log(el[0]);
+				// window.render({
+				// 	template: "knob",
+				// 	target: window.find(".test1")
+				// });
 				break;
 		}
 	}
