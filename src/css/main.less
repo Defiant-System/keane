@@ -670,12 +670,27 @@ content {
 			bottom: 0;
 		}
 	
-		canvas.canvas {
-			position: absolute;
-			top: 0;
-			left: 0;
-			z-index: 2;
-			cursor: crosshair;
+		canvas {
+			&.canvas {
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 2;
+				cursor: crosshair;
+			}
+			&.overlay {
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 3;
+				//background: #fff;
+				display: none;
+				pointer-events: none;
+
+				&.show {
+					display: block;
+				}
+			}
 		}
 	}
 

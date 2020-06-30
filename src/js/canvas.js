@@ -17,9 +17,9 @@ const Canvas = {
 		// canvases
 		this.osCvs = $(document.createElement("canvas"));
 		this.osCtx = this.osCvs[0].getContext("2d");
-		this.swapCvs = $(document.createElement("canvas"));
-		this.swapCtx = this.swapCvs[0].getContext("2d");
-		this.cvs = window.find(".cvs-wrapper canvas");
+		this.olCvs = window.find(".cvs-wrapper .overlay");
+		this.olCtx = this.olCvs[0].getContext("2d");
+		this.cvs = window.find(".cvs-wrapper .canvas");
 		this.ctx = this.cvs[0].getContext("2d");
 		this.cvs.prop({ width: window.width, height: window.height, });
 
@@ -118,7 +118,18 @@ const Canvas = {
 				});
 				// offscreen canvas
 				Self.osCvs.prop({ width: Self.oW, height: Self.oH });
-				Self.swapCvs.prop({ width: Self.oW, height: Self.oH });
+				/* falls through */
+			case "sync-overlay-canvas":
+				// sync overlay canvas
+				Self.olCvs
+					.prop({
+						width: Self.oX > 0 ? Self.oW : Self.aW - (Self.showRulers ? _rulers.t : 0),
+						height: Self.oY > 0 ? Self.oH : Self.aH + (Self.showRulers ? _rulers.t : 0)
+					})
+					.css({
+						top: _max(Self.oY, Self.aY) +"px",
+						left: _max(Self.oX, Self.aX) +"px"
+					});
 				break;
 			case "set-scale":
 				// scaled dimension
@@ -128,9 +139,6 @@ const Canvas = {
 				// origo
 				Self.oX = _round(Self.cX - (Self.w / 2));
 				Self.oY = _round(Self.cY - (Self.h / 2));
-
-				// render rulers according to scale
-				//_rulers.render(Self);
 
 				// reset canvas
 				if (!event.noReset) Self.reset();
@@ -169,7 +177,17 @@ const Canvas = {
 				Self.osCtx.fillText(event.text, event.x, event.y);
 				break;
 			case "draw-image":
-				Self.osCtx.drawImage(event.src, 0, 0);
+				Self.dispatch({ type: "commit", image: event.src });
+				break;
+			case "commit":
+				Self.osCtx.drawImage(event.image, 0, 0);
+
+				Self.stack = [
+					{ type: "reset-canvas" },
+					{ type: "update-canvas" },
+				];
+
+				Self.reset();
 
 				// broadcast event
 				defiant.emit("canvas-update");
