@@ -1,7 +1,7 @@
 <Application>
 	<Head>
 		<meta name="id" value="photoshop"/>
-		<meta name="title" value="Photoshop" version="1.0"/>
+		<meta name="title" value="Photoshop" version="1.1"/>
 		<meta name="author" value="Hakan Bilgin" namespace="ant"/>
 		<meta name="license" value="AGPL-3.0"/>
 		<meta name="width" value="1150" min="920"/>
@@ -22,5 +22,5 @@
 	</Head>
 
 	@import "src/partials/data.xml"
-	
+
 </Application>

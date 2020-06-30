@@ -88,6 +88,18 @@
 				Self.preset.tip = new Image();
 				Self.preset.tip.src = 'data:image/svg+xml;base64,'+ btoa(svg);
 				break;
+			case "change-mode":
+				console.log(event);
+				break;
+			case "change-size":
+				console.log(event);
+				break;
+			case "change-opacity":
+				console.log(event);
+				break;
+			case "change-flow":
+				console.log(event);
+				break;
 			case "enable":
 				_canvas.cvs.on("mousedown", Self.dispatch);
 				break;

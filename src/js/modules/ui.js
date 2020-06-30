@@ -62,11 +62,13 @@ const UI = {
 
 	},
 	doKnob(event) {
-		let Self = UI,
+		let APP = photoshop,
+			Self = UI,
 			Drag = Self.drag,
 			_round = Math.round,
 			_min = Math.min,
 			_max = Math.max,
+			data,
 			value,
 			el;
 		switch (event.type) {
@@ -96,10 +98,19 @@ const UI = {
 				value = _min(_max(value, 0), 100);
 				Drag.el.data({ value });
 
-				value = Drag.min + _round((value / 100) * (Drag.max - Drag.min));
-				Drag.src.html(value + Drag.unit);
+				Drag.newValue = Drag.min + _round((value / 100) * (Drag.max - Drag.min));
+				Drag.src.html(Drag.newValue + Drag.unit);
 				break;
 			case "mouseup":
+				data = {
+					type: Self.srcEl.data("change"),
+					el: Self.srcEl,
+					old: Drag.value,
+					new: Drag.newValue,
+				};
+				// dispatch event to be forwarded
+				if (data.type) APP.dispatch(data);
+
 				// unbind event handlers
 				Self.content.removeClass("no-cursor");
 				Self.doc.off("mousemove mouseup", Self.doKnob);
