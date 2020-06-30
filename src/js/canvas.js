@@ -10,6 +10,9 @@ const Canvas = {
 		this.els.statusBar = window.find(".status-bar");
 
 		this.showRulers = true;
+		this.bgColor = "#000"
+		this.fgColor = "#fff"
+		this.lineWidth = 1;
 
 		// canvases
 		this.osCvs = $(document.createElement("canvas"));
@@ -113,10 +116,6 @@ const Canvas = {
 					scale: Self.scale || event.scale,
 					noReset: true
 				});
-				// misc
-				Self.bgColor = "#000"
-				Self.fgColor = "#fff"
-				Self.lineWidth = 1;
 				// offscreen canvas
 				Self.osCvs.prop({ width: Self.oW, height: Self.oH });
 				Self.swapCvs.prop({ width: Self.oW, height: Self.oH });

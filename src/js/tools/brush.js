@@ -6,7 +6,7 @@
 		this.option = "brush";
 		this.preset = {
 			name: "circle",
-			size: 10,
+			size: 15,
 			tip: false
 		};
 
@@ -57,9 +57,10 @@
 				l = (Drag.x || event.x) - (w/2);
 				t = (Drag.y || event.y) - (h/2);
 				Cvs.swapCtx.drawImage(Self.preset.tip, l, t, w, h);
-				Cvs.ctx.drawImage(Cvs.swapCvs[0], Cvs.oX, Cvs.oY);
 				break;
 			case "mouseup":
+				Cvs.ctx.drawImage(Cvs.swapCvs[0], Cvs.oX, Cvs.oY);
+			
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
@@ -75,6 +76,7 @@
 							.replace(/--color/ig, Cvs.fgColor);
 
 				Self.preset.tip = new Image();
+				//Self.preset.tip.src = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAoCAYAAABw65OnAAABz0lEQVRYR+3XuYpUQRTG8d+4b7ihuC+goZEImuuDCAYGoqCJiZFv4BOIiehDmKtgZiIauMy4oLjhviEf1IWmQayacS49ciu5dPehzv+e9espE3CmJoDBANFlYYjEEInxjlzQNbEca7ACi/ALX/ABX1tnz2wisRYbkecqLMZPfMJ7vC7PapZWiLz9FmzGBqzGEvzAR7zBS7woUakCaYXYge3Yik1Yh2X4hnd4hed4ipkqAprG9krswk4EZhv2lNQkBY/wrDifxhN8rgFpiURqYHcBCcxeHMZ+PMAtPCzOA/C4tjbmCnFkBOJmHxATkY6kd7ww12MpvuNtH4UZiPEWzeeuRTOoemnRgHTDKu2ZFHXDKp2QNp33YdV13OjY7iB6Hds1rd9k09KiTRe3GA8Qg7z7r+RdS/H/1XZBd0f2RRRVdGV38l12SRZZ02mNREb0AZwo4vZs8XYOJ4uwyW45j3u1JK0QedOLOIQ7CEQiEpmf3yJ2LxQxfHq+ILp7TxVF1UUiyjtrPH8BbuASrvUNEX8HcRl3S7qyVatOazr+FImjuIozuF7lecToX0DkjoiZY7jdChD7uUDsQ7oikv/+mPMrOF4LNFuI2vur7CYC4jdO2WMpsiUYLgAAAABJRU5ErkJggg==`;
 				Self.preset.tip.src = 'data:image/svg+xml;base64,'+ btoa(svg);
 				break;
 			case "enable":
