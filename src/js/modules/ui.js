@@ -8,12 +8,6 @@ const UI = {
 		// bind event handlers
 		this.content.on("click", ".option .value", this.dispatch);
 		this.content.on("mousedown", "[data-ui]", this.dispatch);
-
-		// temp
-		setTimeout(() => {
-			//this.content.find(".option[data-options='blend-modes'] .value").trigger("click");
-			this.content.find(".option[data-options='swatches'] .value").trigger("click");
-		}, 200);
 	},
 	dispatch(event) {
 		let APP = photoshop,

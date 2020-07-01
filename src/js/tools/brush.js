@@ -92,7 +92,7 @@
 				console.log(event);
 				break;
 			case "change-size":
-				console.log(event);
+				Self.preset.size = event.value;
 				break;
 			case "change-opacity":
 				console.log(event);
