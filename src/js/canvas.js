@@ -33,6 +33,28 @@ const Canvas = {
 		cvs.prop({ width, height });
 		return { cvs, ctx }
 	},
+	reset() {
+		// re-paints paint stack
+		this.stack.map(item => this.dispatch(item));
+	},
+	translatePoints(points) {
+		let _round = Math.round,
+			scale = this.scale;
+
+		return points.map(p => {
+			let point = {};
+
+			Object.keys(p).map(k => {
+				switch (k) {
+					case "x": point.x = _round((p.x - this.oX) / scale); break;
+					case "y": point.y = _round((p.y - this.oY) / scale); break;
+					default: point[k] = _round(p[k] / scale);
+				}
+			});
+			
+			return point;
+		});
+	},
 	dispatch(event) {
 		let APP = photoshop,
 			Self = Canvas,
@@ -216,9 +238,5 @@ const Canvas = {
 		}
 		// restore paint context
 		Self.osCtx.restore();
-	},
-	reset() {
-		// re-paints paint stack
-		this.stack.map(item => this.dispatch(item));
 	}
 };

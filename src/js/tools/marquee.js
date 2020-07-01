@@ -28,6 +28,15 @@
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
+
+				let x = event.layerX,
+					y = event.layerY,
+					r = 320,
+					p = CVS.translatePoints([{ x, y, r }]);
+
+				console.log(p[0].x, p[0].y, p[0].r);
+				return;
+
 				// reset selection canvas
 				Self.cvs.prop({ width: Self.w, height: Self.h });
 				// stop marching ants, if marching
