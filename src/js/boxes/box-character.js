@@ -13,10 +13,11 @@
 	},
 	dispatch(event) {
 		let APP = photoshop,
-			Self = root.box.character;
+			Self = APP.box.character;
 
 		switch (event.type) {
-			case "type-of-event":
+			case "set-color":
+				console.log(event);
 				break;
 		}
 	}

@@ -10,9 +10,10 @@ const UI = {
 		this.content.on("mousedown", "[data-ui]", this.dispatch);
 
 		// temp
-		// setTimeout(() => {
-		// 	this.content.find(".option[data-options='blend-modes'] .value").trigger("click");
-		// }, 200);
+		setTimeout(() => {
+			//this.content.find(".option[data-options='blend-modes'] .value").trigger("click");
+			this.content.find(".option[data-options='swatches'] .value").trigger("click");
+		}, 200);
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -82,10 +83,31 @@ const UI = {
 		switch (event.type) {
 			// native events
 			case "mousedown":
+				el = $(event.target);
+				// selected option - UI update
+				el.parent().find(".selected").removeClass("selected");
+				el.addClass("selected");
+
+				data = {
+					type: Self.srcEl.data("change"),
+					el: Self.srcEl,
+					old: Color.rgbToHex(Self.srcEl.find(".value").css("background-color")),
+					value: Color.rgbToHex(el.css("background-color")),
+				};
+				// dispatch event to be forwarded
+				if (data.type) APP.dispatch(data);
+
+				// update source element
+				Self.srcEl.find(".value").css({ background: data.value });
+				// clean up
+				Self.srcEl = false;
+				Self.menu.remove();
 				break;
 			// custom events
 			case "set-initial-value":
 				// initial value
+				value = Color.rgbToHex(event.el.find(".value").css("background-color"));
+				Self.menu.find(`.swatch[style="background: ${value};"]`).addClass("selected")
 				break;
 		}
 	},
@@ -112,9 +134,9 @@ const UI = {
 				};
 				// dispatch event to be forwarded
 				if (data.type) APP.dispatch(data);
-				
+
 				// update source element
-				Self.srcEl.find(".value").html(el.html());
+				Self.srcEl.find(".value").html(data.value);
 				// clean up
 				Self.srcEl = false;
 				Self.menu.remove();
@@ -122,8 +144,12 @@ const UI = {
 			// custom events
 			case "set-initial-value":
 				// initial value
-				//console.log(event);
-				Self.menu.find(".option:first").addClass("selected");
+				value = event.el.find(".value").text();
+				Self.menu.find(".option").map(elem => {
+					if (elem.textContent === value) {
+						elem.className += " selected";
+					}
+				});
 				break;
 		}
 	},

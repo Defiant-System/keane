@@ -1,5 +1,6 @@
 
 defiant.require("canvas.js")
+defiant.require("modules/color.js")
 defiant.require("modules/ui.js")
 defiant.require("modules/rulers.js")
 defiant.require("modules/thumb.js")
