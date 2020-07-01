@@ -8,6 +8,11 @@ const UI = {
 		// bind event handlers
 		this.content.on("click", ".option .value", this.dispatch);
 		this.content.on("mousedown", "[data-ui]", this.dispatch);
+
+		// temp
+		// setTimeout(() => {
+		// 	this.content.find(".option[data-options='blend-modes'] .value").trigger("click");
+		// }, 200);
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -70,10 +75,57 @@ const UI = {
 		}
 	},
 	doSwatches(event) {
-
+		let APP = photoshop,
+			Self = UI,
+			value,
+			el;
+		switch (event.type) {
+			// native events
+			case "mousedown":
+				break;
+			// custom events
+			case "set-initial-value":
+				// initial value
+				break;
+		}
 	},
-	doBlendModes(event) {
+	doSelectbox(event) {
+		let APP = photoshop,
+			Self = UI,
+			data,
+			value,
+			el;
+		switch (event.type) {
+			// native events
+			case "mousedown":
+				el = $(event.target);
+				if (!el.hasClass("option")) el = el.parents(".option");
+				// selected option - UI update
+				el.parent().find(".selected").removeClass("selected");
+				el.addClass("selected");
 
+				data = {
+					type: Self.srcEl.data("change"),
+					el: Self.srcEl,
+					old: Self.srcEl.find(".value").html(),
+					value: el.html(),
+				};
+				// dispatch event to be forwarded
+				if (data.type) APP.dispatch(data);
+				
+				// update source element
+				Self.srcEl.find(".value").html(el.html());
+				// clean up
+				Self.srcEl = false;
+				Self.menu.remove();
+				break;
+			// custom events
+			case "set-initial-value":
+				// initial value
+				//console.log(event);
+				Self.menu.find(".option:first").addClass("selected");
+				break;
+		}
 	},
 	doKnob(event) {
 		let APP = photoshop,
@@ -118,7 +170,7 @@ const UI = {
 					type: Self.srcEl.data("change"),
 					el: Self.srcEl,
 					old: Drag.value,
-					new: Drag.newValue,
+					value: Drag.newValue,
 				};
 				// dispatch event to be forwarded
 				if (data.type) APP.dispatch(data);
@@ -126,7 +178,7 @@ const UI = {
 				// unbind event handlers
 				Self.content.removeClass("no-cursor");
 				Self.doc.off("mousemove mouseup", Self.doKnob);
-
+				// clean up
 				Self.srcEl = false;
 				Self.menu.remove();
 				break;

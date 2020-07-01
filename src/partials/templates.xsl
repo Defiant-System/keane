@@ -21,7 +21,7 @@
 </xsl:template>
 
 <xsl:template name="blend-modes">
-	<div class="inline-menubox" data-ui="doBlendModes">
+	<div class="inline-menubox" data-ui="doSelectbox">
 		<div class="inline-content">
 			<xsl:for-each select="./*">
 				<xsl:choose>

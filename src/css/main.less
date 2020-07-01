@@ -1665,11 +1665,12 @@ content {
 			}
 
 			.option {
+				position: relative;
 				display: block;
 				opacity: 1;
 				margin: 1px 0;
 				white-space: nowrap;
-				padding: 3px 17px 1px 11px;
+				padding: 3px 23px 1px 23px;
 				color: rgba(255,255,255,0.75);
 				text-shadow: 0 1px 0 #344;
 				cursor: pointer;
@@ -1686,11 +1687,24 @@ content {
 					text-shadow: 0 1px 0 #566;
 				}
 
-				&.active {
+				&.selected {
 					background: #899;
 					color: #eff;
 					// text-shadow: 0 1px 0 #249;
 					cursor: default;
+
+					&:before {
+						content: "";
+						position: absolute;
+						top: 5px;
+						left: 6px;
+						width: 8px;
+						height: 3px;
+						border-left: 3px solid #dee;
+						border-bottom: 3px solid #dee;
+						transform: rotate(-53deg);
+						filter: drop-shadow(-1px 1px 0 #566);
+					}
 				}
 			}
 		}
