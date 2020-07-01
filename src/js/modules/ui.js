@@ -40,18 +40,32 @@ const UI = {
 				// render menubox
 				Self.menu = window.render(data);
 
-				// initial value of knob
-				value = parseInt(el.find(".value").text(), 10);
-				Self.menu.find(".knob").data({ value });
-
 				// position menubox
 				Self.menu.css({
 					top: (rect.top - window.top + rect.height + 9) +"px",
 					left: (rect.left - window.left + (rect.width / 2) - (Self.menu[0].offsetWidth / 2)) +"px",
 				});
+
+				// set inital value - by associated event handler
+				Self[Self.menu.data("ui")]({ type: "set-initial-value", el });
+
+				// event handler checks for clicks outside inline-menubox
+				Self.doc.on("mousedown", Self.dispatch);
 				break;
 			case "mousedown":
-				Self[this.dataset.ui](event);
+				// prevent default behaviour
+				event.preventDefault();
+
+				if ($(event.target).parents(".inline-menubox").length) {
+					// forward event to fitting handler
+					Self[this.dataset.ui](event);
+				} else {
+					// clean up
+					Self.srcEl = false;
+					Self.menu.remove();
+				}
+				// unbind event handler
+				Self.doc.off("mousedown", Self.dispatch);
 				break;
 		}
 	},
@@ -72,10 +86,8 @@ const UI = {
 			value,
 			el;
 		switch (event.type) {
+			// native events
 			case "mousedown":
-				// prevent default behaviour
-				event.preventDefault();
-
 				el = $(event.target);
 				value = +el.data("value");
 
@@ -117,6 +129,12 @@ const UI = {
 
 				Self.srcEl = false;
 				Self.menu.remove();
+				break;
+			// custom events
+			case "set-initial-value":
+				// initial value of knob
+				value = parseInt(event.el.find(".value").text(), 10);
+				Self.menu.find(".knob").data({ value });
 				break;
 		}
 	}
