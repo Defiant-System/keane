@@ -76,7 +76,7 @@ const photoshop = {
 		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "~/img/mona-lisa.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "~/img/lotus.jpg" });
-		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
+		window.find('.sidebar-box div[data-content="info"]').trigger("click");
 		//window.find('.sidebar-box div[data-content="channels"]').trigger("click");
 	},
 	dispatch(event) {
@@ -117,9 +117,9 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: .75 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 32 },
 							
-							// { type: "draw-base-layer", fill: "#fff" },
+							// { type: "draw-base-layer", fill: "#555" },
 							// { type: "draw-base-layer", fill: "transparent" },
 							{ type: "draw-image", src: image },
 
@@ -128,7 +128,7 @@ const photoshop = {
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
 							//{ type: "pan-canvas", top: 90, left: 18 },
-							//{type: "pan-canvas", top: 90, left: 18, stop: true},
+							{type: "pan-canvas", top: 90, left: 18, stop: true},
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};

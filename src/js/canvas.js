@@ -15,17 +15,17 @@ const Canvas = {
 		this.lineWidth = 1;
 
 		// canvases
-		this.osCvs = $(document.createElement("canvas"));
-		this.osCtx = this.osCvs[0].getContext("2d");
-		this.olCvs = window.find(".cvs-wrapper .overlay");
-		this.olCtx = this.olCvs[0].getContext("2d");
+		let { cvs, ctx } = this.createCanvas(1, 1);
+		this.osCvs = cvs;
+		this.osCtx = ctx;
+		
+		this.overlay = {};
+		this.overlay.cvs = window.find(".cvs-wrapper .overlay");
+		this.overlay.ctx = this.overlay.cvs[0].getContext("2d");
+
 		this.cvs = window.find(".cvs-wrapper .canvas");
 		this.ctx = this.cvs[0].getContext("2d");
 		this.cvs.prop({ width: window.width, height: window.height, });
-
-		// disable smoothing
-		this.olCtx.imageSmoothingEnabled =
-		this.ctx.imageSmoothingEnabled = false;
 
 		this.cvsBg = new Image;
 		this.cvsBg.onload = () => this.cvsBgPattern = this.osCtx.createPattern(this.cvsBg, "repeat");
@@ -149,15 +149,19 @@ const Canvas = {
 				Self.osCvs.prop({ width: Self.oW, height: Self.oH });
 				/* falls through */
 			case "sync-overlay-canvas":
+				Self.overlay.width = Self.aX - Self.oX < 0 ? Self.w : Self.aW - (Self.showRulers ? _rulers.t : 0);
+				Self.overlay.height = Self.aY - Self.oY < 0 ? Self.h : Self.aH + (Self.showRulers ? _rulers.t : 0);
+				Self.overlay.top = _max(Self.oY, Self.aY);
+				Self.overlay.left = _max(Self.oX, Self.aX);
 				// sync overlay canvas
-				Self.olCvs
+				Self.overlay.cvs
 					.prop({
-						width: Self.aX - Self.oX < 0 ? Self.w : Self.aW - (Self.showRulers ? _rulers.t : 0),
-						height: Self.aY - Self.oY < 0 ? Self.h : Self.aH + (Self.showRulers ? _rulers.t : 0)
+						width: Self.overlay.width,
+						height: Self.overlay.height,
 					})
 					.css({
-						top: _max(Self.oY, Self.aY) +"px",
-						left: _max(Self.oX, Self.aX) +"px"
+						top: Self.overlay.top +"px",
+						left: Self.overlay.left +"px"
 					});
 				break;
 			case "set-scale":
@@ -230,6 +234,7 @@ const Canvas = {
 				Self.ctx.shadowOffsetY = 1;
 				Self.ctx.shadowBlur = 5;
 				Self.ctx.shadowColor = "#292929";
+				Self.ctx.imageSmoothingEnabled = false;
 				Self.ctx.drawImage(Self.osCvs[0], 0, 0, Self.w, Self.h);
 				Self.ctx.restore();
 
