@@ -23,6 +23,10 @@ const Canvas = {
 		this.ctx = this.cvs[0].getContext("2d");
 		this.cvs.prop({ width: window.width, height: window.height, });
 
+		// disable smoothing
+		this.olCtx.imageSmoothingEnabled =
+		this.ctx.imageSmoothingEnabled = false;
+
 		this.cvsBg = new Image;
 		this.cvsBg.onload = () => this.cvsBgPattern = this.osCtx.createPattern(this.cvsBg, "repeat");
 		this.cvsBg.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
@@ -226,7 +230,6 @@ const Canvas = {
 				Self.ctx.shadowOffsetY = 1;
 				Self.ctx.shadowBlur = 5;
 				Self.ctx.shadowColor = "#292929";
-				Self.ctx.imageSmoothingEnabled = false;
 				Self.ctx.drawImage(Self.osCvs[0], 0, 0, Self.w, Self.h);
 				Self.ctx.restore();
 
