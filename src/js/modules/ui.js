@@ -17,7 +17,6 @@ const UI = {
 			menu,
 			min,
 			max,
-			unit,
 			rect,
 			el;
 		//console.log(event);
@@ -167,7 +166,7 @@ const UI = {
 					el,
 					value,
 					src: Self.srcEl.find(".value"),
-					unit: Self.srcEl.data("unit") || "",
+					suffix: Self.srcEl.data("suffix") || "",
 					min: +Self.srcEl.data("min"),
 					max: +Self.srcEl.data("max"),
 					clientY: event.clientY,
@@ -183,7 +182,7 @@ const UI = {
 				Drag.el.data({ value });
 
 				Drag.newValue = Drag.min + _round((value / 100) * (Drag.max - Drag.min));
-				Drag.src.html(Drag.newValue + Drag.unit);
+				Drag.src.html(Drag.newValue + Drag.suffix);
 				break;
 			case "mouseup":
 				data = {

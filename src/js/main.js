@@ -65,7 +65,7 @@ const photoshop = {
 		//this.dispatch({ event: "window.resize" });
 
 		// auto-select initial tool
-		this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click");
+		this.els.content.find(".tools-bar .tool[data-content='brush']").trigger("click");
 
 		// bind event handlers
 		this.els.content.bind("dragover drop", this.dispatch);
@@ -117,7 +117,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 32 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: .75 },
 							
 							// { type: "draw-base-layer", fill: "#fff" },
 							// { type: "draw-base-layer", fill: "transparent" },
@@ -128,7 +128,7 @@ const photoshop = {
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
 							//{ type: "pan-canvas", top: 90, left: 18 },
-							{type: "pan-canvas", top: 90, left: 18, stop: true},
+							//{type: "pan-canvas", top: 90, left: 18, stop: true},
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};
@@ -151,6 +151,11 @@ const photoshop = {
 				el.parent().find(".active").removeClass("active");
 				el.addClass("active");
 
+				// replace existing tool options with selected
+				let newEl = window.store(`tool-options/${el.data("content")}.htm`),
+					oldEl = event.el.nextAll(".tools-options-bar").find("> div"),
+					root = oldEl.replace(newEl);
+
 				if (TOOLS._active) {
 					// disable active tool
 					TOOLS[TOOLS._active].dispatch({ type: "disable" });
@@ -158,13 +163,8 @@ const photoshop = {
 				if (TOOLS[el.data("content")]) {
 					// enable tool
 					TOOLS._active = el.data("content");
-					TOOLS[TOOLS._active].dispatch({ type: "enable" });
+					TOOLS[TOOLS._active].dispatch({ type: "enable", root });
 				}
-
-				// replace existing tool options with selected
-				let newOpt = window.store(`tool-options/${el.data("content")}.htm`)
-					oldOpt = event.el.nextAll(".tools-options-bar").find("> div");
-				oldOpt.replace(newOpt);
 				break;
 			case "box-head-tab":
 				el = $(event.target);

@@ -17,7 +17,7 @@
 	},
 	dispatch(event) {
 		let APP = photoshop,
-			CVS = Canvas,
+			_canvas = Canvas,
 			Self = TOOLS.marquee,
 			Drag = Self.drag,
 			_max = Math.max,
@@ -29,14 +29,6 @@
 				// prevent default behaviour
 				event.preventDefault();
 
-				let x = event.layerX,
-					y = event.layerY,
-					r = 320,
-					p = CVS.translatePoints([{ x, y, r }]);
-
-				console.log(p[0].x, p[0].y, p[0].r);
-				return;
-
 				// reset selection canvas
 				Self.cvs.prop({ width: Self.w, height: Self.h });
 				// stop marching ants, if marching
@@ -45,14 +37,14 @@
 				Self.drag = {
 					clickX: event.clientX,
 					clickY: event.clientY,
-					oX: event.offsetX - CVS.oX,
-					oY: event.offsetY - CVS.oY,
+					oX: event.offsetX - _canvas.oX,
+					oY: event.offsetY - _canvas.oY,
 				};
 
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover");
 				// bind event handlers
-				CVS.doc.on("mousemove mouseup", Self.dispatch);
+				_canvas.doc.on("mousemove mouseup", Self.dispatch);
 				break;
 			case "mousemove":
 				Drag.oW = event.clientX - Drag.clickX;
@@ -82,22 +74,22 @@
 				// remove class
 				APP.els.content.removeClass("cover");
 				// unbind event handlers
-				CVS.doc.off("mousemove mouseup", Self.dispatch);
+				_canvas.doc.off("mousemove mouseup", Self.dispatch);
 				break;
 			// custom events
 			case "load-canvas":
-				Self.w = CVS.oW;
-				Self.h = CVS.oH;
+				Self.w = _canvas.oW;
+				Self.h = _canvas.oH;
 				Self.cvs.prop({ width: Self.w, height: Self.h });
 				break;
 			case "select-option":
 				Self.option = event.arg || "rectangle";
 				break;
 			case "enable":
-				CVS.cvs.on("mousedown", Self.dispatch);
+				_canvas.cvs.on("mousedown", Self.dispatch);
 				break;
 			case "disable":
-				CVS.cvs.off("mousedown", Self.dispatch);
+				_canvas.cvs.off("mousedown", Self.dispatch);
 				break;
 		}
 	},
@@ -149,7 +141,7 @@
 		this.render(march);
 	},
 	render(march) {
-		let CVS = Canvas,
+		let _canvas = Canvas,
 			mask = this.mask,
 			cvsImg = this.cvsImg,
 			data = this.cvsImg.data,
@@ -170,10 +162,10 @@
 				data[o + 3] = 0xFF;
 			}
 		}
-		CVS.ctx.putImageData(cvsImg, CVS.oX, CVS.oY);
+		_canvas.ctx.putImageData(cvsImg, _canvas.oX, _canvas.oY);
 		
-		// CVS.swapCtx.putImageData(cvsImg, 0, 0);
-		// CVS.ctx.drawImage(CVS.swapCvs[0], CVS.oX, CVS.oY, CVS.w, CVS.h);
+		// _canvas.swapCtx.putImageData(cvsImg, 0, 0);
+		// _canvas.ctx.drawImage(_canvas.swapCvs[0], _canvas.oX, _canvas.oY, _canvas.w, _canvas.h);
 
 		// march tiny ants!
 		this.aO -= .2;

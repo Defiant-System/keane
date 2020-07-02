@@ -8,7 +8,7 @@
 		// default preset
 		this.preset = {
 			name: "circle",
-			size: 15,
+			size: 10,
 			tip: false
 		};
 
@@ -20,15 +20,20 @@
 			Self = TOOLS.brush,
 			Drag = Self.drag,
 			_canvas = Canvas,
+			mouse,
 			preset,
 			svg,
-			t, l, w, h;
+			t, l, w, h,
+			el;
 
 		switch (event.type) {
 			// native events
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
+
+				mouse = _canvas.translatePoints({ x: event.layerX, y: event.layerY });
+				//return console.log(mouse);
 
 				// reset & sync overlay canvas
 				_canvas.dispatch({ type: "sync-overlay-canvas" });
@@ -38,10 +43,11 @@
 					// show overlay canvas
 					cvs: _canvas.olCvs.addClass("show"),
 					ctx: _canvas.olCtx,
-					mouse: {
-						x: event.clientX - window.left - _canvas.oX,
-						y: event.clientY - window.top - _canvas.oY,
-					},
+					mouse,
+					// mouse: {
+					// 	x: event.clientX - window.left - _canvas.oX,
+					// 	y: event.clientY - window.top - _canvas.oY,
+					// },
 					clickX: event.clientX - (_canvas.oX - _canvas.cX + (_canvas.w / 2)),
 					clickY: event.clientY - (_canvas.oY - _canvas.cY + (_canvas.h / 2)),
 				};
@@ -101,6 +107,10 @@
 				console.log(event);
 				break;
 			case "enable":
+				// temp
+				el = event.root.find(".option[data-change='change-size']");
+				el.find(".value").html( Self.preset.size +el.data("suffix") );
+
 				_canvas.cvs.on("mousedown", Self.dispatch);
 				break;
 			case "disable":

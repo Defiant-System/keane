@@ -37,23 +37,26 @@ const Canvas = {
 		// re-paints paint stack
 		this.stack.map(item => this.dispatch(item));
 	},
-	translatePoints(points) {
+	translatePoints(p) {
 		let _round = Math.round,
-			scale = this.scale;
+			_max = Math.max,
+			_min = Math.min,
+			scale = this.scale,
+			oX = this.oX,
+			oY = this.oY,
+			w = this.oW,
+			h = this.oH,
+			point = {};
 
-		return points.map(p => {
-			let point = {};
-
-			Object.keys(p).map(k => {
-				switch (k) {
-					case "x": point.x = _round((p.x - this.oX) / scale); break;
-					case "y": point.y = _round((p.y - this.oY) / scale); break;
-					default: point[k] = _round(p[k] / scale);
-				}
-			});
-			
-			return point;
+		Object.keys(p).map(k => {
+			switch (k) {
+				case "x": point.x = _min(_max(_round((p.x - oX) / scale), 0), w); break;
+				case "y": point.y = _min(_max(_round((p.y - oY) / scale), 0), h); break;
+				default: point[k] = _round(p[k] / scale);
+			}
 		});
+
+		return point;
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -145,8 +148,8 @@ const Canvas = {
 				// sync overlay canvas
 				Self.olCvs
 					.prop({
-						width: Self.oX > 0 ? Self.oW : Self.aW - (Self.showRulers ? _rulers.t : 0),
-						height: Self.oY > 0 ? Self.oH : Self.aH + (Self.showRulers ? _rulers.t : 0)
+						width: Self.aX - Self.oX < 0 ? Self.w : Self.aW - (Self.showRulers ? _rulers.t : 0),
+						height: Self.aY - Self.oY < 0 ? Self.h : Self.aH + (Self.showRulers ? _rulers.t : 0)
 					})
 					.css({
 						top: _max(Self.oY, Self.aY) +"px",
@@ -161,6 +164,8 @@ const Canvas = {
 				// origo
 				Self.oX = _round(Self.cX - (Self.w / 2));
 				Self.oY = _round(Self.cY - (Self.h / 2));
+
+				Self.dispatch({ type: "sync-overlay-canvas" });
 
 				// reset canvas
 				if (!event.noReset) Self.reset();
