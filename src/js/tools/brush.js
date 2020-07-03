@@ -23,8 +23,7 @@
 			Drag = Self.drag,
 			_canvas = Canvas,
 			_round = Math.round,
-			mouse,
-			preset,
+			image,
 			svg,
 			y, x, w, h,
 			y2, x2, w2, h2,
@@ -35,34 +34,31 @@
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
-
 				// reset & sync overlay canvas
 				_canvas.dispatch({ type: "sync-overlay-canvas" });
 				// disable image smoothing
 				_canvas.overlay.ctx.imageSmoothingEnabled = false;
 
-				preset = {
-					size: Self.preset.size,
-					scaled: Self.preset.size * _canvas.scale,
-				};
-				mouse = {
-					x: event.offsetX - _canvas.overlay.left - (preset.scaled / 2),
-					y: event.offsetY - _canvas.overlay.top - (preset.scaled / 2),
-					oL: (_canvas.oX - _canvas.overlay.left) % _canvas.scale,
-					oT: (_canvas.oY - _canvas.overlay.top) % _canvas.scale,
-				};
-				mouse.x -= mouse.x % _canvas.scale;
-				mouse.y -= mouse.y % _canvas.scale;
-
 				// prepare paint
 				Self.drag = {
-					// show overlay canvas
-					cvs: _canvas.overlay.cvs.addClass("show"),
+					cvs: _canvas.overlay.cvs.addClass("show"), // show overlay canvas
 					ctx: _canvas.overlay.ctx,
 					clickX: event.offsetX,
 					clickY: event.offsetY,
-					mouse,
-					preset,
+					scale: _canvas.scale,
+					coL: _canvas.overlay.left,
+					coT: _canvas.overlay.top,
+					mouse: {
+						x: event.offsetX - _canvas.overlay.left - Self.preset.sW,
+						y: event.offsetY - _canvas.overlay.top - Self.preset.sH,
+						oL: (_canvas.oX - _canvas.overlay.left) % _canvas.scale,
+						oT: (_canvas.oY - _canvas.overlay.top) % _canvas.scale,
+					},
+					preset: {
+						size: Self.preset.size,
+						sW: (Self.preset.size * _canvas.scale) / 2,
+						sH: (Self.preset.size * _canvas.scale) / 2,
+					},
 				};
 
 				// trigger first paint
@@ -74,38 +70,43 @@
 				break;
 			case "mousemove":
 				// paint on overlay canvas
-				if (!event.offsetX) mouse = event;
-				else {
-					mouse = {
-						...Drag.mouse,
-						x: event.offsetX - _canvas.overlay.left - (Drag.preset.scaled / 2),
-						y: event.offsetY - _canvas.overlay.top - (Drag.preset.scaled / 2),
-					};
-					mouse.x -= mouse.x % _canvas.scale;
-					mouse.y -= mouse.y % _canvas.scale;
+				if (event.offsetX) {
+					Drag.mouse.x = event.offsetX - Drag.coL - Drag.preset.sW;
+					Drag.mouse.y = event.offsetY - Drag.coT - Drag.preset.sH;
 				}
+				Drag.mouse.x -= Drag.mouse.x % _canvas.scale;
+				Drag.mouse.y -= Drag.mouse.y % _canvas.scale;
+
 				// prevents painting same are when zoomed in
-				if (Drag.mouse.nX === mouse.x && Drag.mouse.nY === mouse.y) return;
-				Drag.mouse.nX = mouse.x;
-				Drag.mouse.nY = mouse.y;
+				if (Drag.mouse.nX === Drag.mouse.x && Drag.mouse.nY === Drag.mouse.y) return;
+				Drag.mouse.nX = Drag.mouse.x;
+				Drag.mouse.nY = Drag.mouse.y;
 
 				x = 0;
 				y = 0;
 				w = Drag.preset.size;
 				h = Drag.preset.size;
-				x2 = mouse.x + mouse.oL;
-				y2 = mouse.y + mouse.oT;
-				w2 = Drag.preset.scaled;
-				h2 = Drag.preset.scaled;
+				x2 = Drag.mouse.x + Drag.mouse.oL;
+				y2 = Drag.mouse.y + Drag.mouse.oT;
+				w2 = Drag.preset.sW * 2;
+				h2 = Drag.preset.sH * 2;
 				Drag.ctx.drawImage(Self.tip.cvs[0], x, y, w, h, x2, y2, w2, h2);
 				break;
 			case "mouseup":
-				// transfer contents of overlay canvas to real canvas
-			//	_canvas.osCtx.drawImage(Drag.cvs[0], 0, 0);
+				// transfer contents of overlay canvas to real offscreen canvas
+				image = _canvas.overlay.cvs[0];
+				x = 0;
+				y = 0;
+				w = _canvas.overlay.width;
+				h = _canvas.overlay.height;
+				x2 = _round(-_canvas.oX / Drag.scale) + (_canvas.aX / Drag.scale);
+				y2 = _round(-_canvas.oY / Drag.scale) + (_canvas.aY / Drag.scale);
+				w2 = _canvas.overlay.width / Drag.scale;
+				h2 = _canvas.overlay.height / Drag.scale;
 				// commit changes
-			//	_canvas.dispatch({ type: "commit", image: _canvas.overlay.cvs[0] });
+				_canvas.dispatch({ type: "commit", image, x, y, w, h, x2, y2, w2, h2 });
 				// hide overlay canvas
-			//	_canvas.overlay.cvs.removeClass("show");
+				_canvas.overlay.cvs.removeClass("show");
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers

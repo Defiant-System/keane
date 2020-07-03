@@ -212,10 +212,23 @@ const Canvas = {
 				Self.osCtx.fillText(event.text, event.x, event.y);
 				break;
 			case "draw-image":
-				Self.dispatch({ type: "commit", image: event.src });
+				Self.dispatch({ type: "commit", image: event.src, x: 0, y: 0 });
 				break;
 			case "commit":
-				Self.osCtx.drawImage(event.image, 0, 0);
+				if (event.x2) {
+					Self.osCtx.drawImage(
+						event.image,
+						event.x,
+						event.y,
+						event.w,
+						event.h,
+						event.x2,
+						event.y2,
+						event.w2,
+						event.h2);
+				} else {
+					Self.osCtx.drawImage(event.image, event.x, event.y);
+				}
 
 				Self.stack = [
 					{ type: "reset-canvas" },
