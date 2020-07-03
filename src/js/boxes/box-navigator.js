@@ -81,7 +81,7 @@
 				if (isNaN(top) || isNaN(left)) return;
 
 				// forward event to canvas
-				_canvas.dispatch({ type: "pan-canvas", top, left, stop: true });
+				_canvas.dispatch({ type: "pan-canvas", top, left, noZoom: true });
 				break;
 			case "update-canvas":
 				// calc ratio

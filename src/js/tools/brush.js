@@ -78,7 +78,7 @@
 
 				// clear and transfer to canvas
 				_canvas.cvs.prop({ width: window.width, height: window.height });
-				_canvas.dispatch({ type: "update-canvas", stop: true });
+				_canvas.dispatch({ type: "update-canvas", noZoom: true });
 				break;
 			case "mouseup":
 				// remove class

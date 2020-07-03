@@ -256,7 +256,7 @@ const Canvas = {
 					_rulers.render(Self);
 				}
 
-				if (!event.stop) {
+				if (!event.noZoom) {
 					_navigator.dispatch({ type: "set-zoom", arg: Self.scale });
 				}
 				_navigator.dispatch({ type: "update-canvas" });
