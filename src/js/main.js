@@ -128,7 +128,7 @@ const photoshop = {
 							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
 							{ type: "update-canvas" },
 							//{ type: "pan-canvas", top: 90, left: 18 },
-							{type: "pan-canvas", top: 90, left: 18, stop: true},
+							//{type: "pan-canvas", top: 90, left: 18, stop: true},
 						];
 					Canvas.dispatch({ type: "load-canvas", stack });
 				};

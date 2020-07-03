@@ -27,6 +27,7 @@
 			preset,
 			svg,
 			y, x, w, h,
+			y2, x2, w2, h2,
 			el;
 
 		switch (event.type) {
@@ -47,11 +48,11 @@
 				mouse = {
 					x: event.offsetX - _canvas.overlay.left - (preset.scaled / 2),
 					y: event.offsetY - _canvas.overlay.top - (preset.scaled / 2),
+					oL: (_canvas.oX - _canvas.overlay.left) % _canvas.scale,
+					oT: (_canvas.oY - _canvas.overlay.top) % _canvas.scale,
 				};
 				mouse.x -= mouse.x % _canvas.scale;
 				mouse.y -= mouse.y % _canvas.scale;
-				mouse.x += (_canvas.oX - _canvas.overlay.left) % _canvas.scale;
-				mouse.y += (_canvas.oY - _canvas.overlay.top) % _canvas.scale;
 
 				// prepare paint
 				Self.drag = {
@@ -76,15 +77,27 @@
 				if (!event.offsetX) mouse = event;
 				else {
 					mouse = {
-						x: event.offsetX - Drag.clickX,
-						y: event.offsetY - Drag.clickY,
+						...Drag.mouse,
+						x: event.offsetX - _canvas.overlay.left - (Drag.preset.scaled / 2),
+						y: event.offsetY - _canvas.overlay.top - (Drag.preset.scaled / 2),
 					};
+					mouse.x -= mouse.x % _canvas.scale;
+					mouse.y -= mouse.y % _canvas.scale;
 				}
+				// prevents painting same are when zoomed in
+				if (Drag.mouse.nX === mouse.x && Drag.mouse.nY === mouse.y) return;
+				Drag.mouse.nX = mouse.x;
+				Drag.mouse.nY = mouse.y;
 
-				Drag.ctx.drawImage(
-					Self.tip.cvs[0],
-					0, 0, Drag.preset.size, Drag.preset.size,
-					mouse.x, mouse.y, Drag.preset.scaled, Drag.preset.scaled);
+				x = 0;
+				y = 0;
+				w = Drag.preset.size;
+				h = Drag.preset.size;
+				x2 = mouse.x + mouse.oL;
+				y2 = mouse.y + mouse.oT;
+				w2 = Drag.preset.scaled;
+				h2 = Drag.preset.scaled;
+				Drag.ctx.drawImage(Self.tip.cvs[0], x, y, w, h, x2, y2, w2, h2);
 				break;
 			case "mouseup":
 				// transfer contents of overlay canvas to real canvas
