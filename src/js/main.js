@@ -117,7 +117,7 @@ const photoshop = {
 				image.onload = () => {
 					let stack = [
 							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 8 },
+							{ type: "set-canvas", w: image.width, h: image.height, scale: 3 },
 							
 							// { type: "draw-base-layer", fill: "#555" },
 							// { type: "draw-base-layer", fill: "transparent" },
