@@ -1664,11 +1664,12 @@ content {
 					}
 
 					&:not(.selected):hover {
-						box-shadow: inset 0 0 0 1px #fff;
+						box-shadow: inset 0 0 0 1px #bcc;
 					}
 
 					&.selected {
-						box-shadow: 0 0 0 1px #fff,
+						cursor: default;
+						box-shadow: 0 0 0 1px #cdd,
 									inset 0 0 0 1px #222;
 					}
 				}
@@ -1683,20 +1684,14 @@ content {
 					display: flex;
 
 					> div {
-						flex: 1;
-						text-align: center;
-						
-						&:not(:last-child) {
-							margin-right: 5px;
-						}
-
-						.rotation {
+						&.rotation {
 							//background: rgba(0,0,0,.05);
 							border: 1px dashed #455;
 							border-radius: 3px;
 							position: relative;
 							width: 71px;
 							height: 71px;
+							margin-right: 7px;
 
 							.gyro {
 								position: absolute;
@@ -1706,6 +1701,7 @@ content {
 								height: 49px;
 								border-radius: 50%;
 								border: 1px solid #dee;
+								transform: rotate(45deg);
 
 								&:before {
 									content: "";
@@ -1737,6 +1733,7 @@ content {
 									background: #eff;
 									border: 1px solid #344;
 									border-radius: 50%;
+									cursor: ns-resize;
 
 									&:nth-child(2) {
 										top: auto;
@@ -1753,6 +1750,39 @@ content {
 									border-left: 6px solid #eff;
 									border-top: 3px solid transparent;
 									border-bottom: 3px solid transparent;
+									cursor: grab;
+								}
+							}
+						}
+
+						&.ranges {
+							flex: auto;
+
+							> div {
+								display: flex;
+								position: relative;
+								padding: 0 0 23px;
+								font-size: 11px;
+								color: #bcc;
+								text-shadow: 0 1px 0 #344;
+
+								.label {
+									flex: auto;
+									text-transform: uppercase;
+									padding-top: 2px;
+								}
+
+								.value {
+									background: rgba(0,0,0,0.3);
+									border-radius: 21px;
+									padding: 2px 0;
+									width: 43px;
+									text-align: center;
+								}
+
+								.mini-range {
+									position: absolute;
+									bottom: 3px;
 								}
 							}
 						}
@@ -1763,15 +1793,30 @@ content {
 					font-size: 0;
 
 					> div {
-						background: #33444480;
+						background-color: #33444480;
+						background-position: 50% 50%;
+						background-repeat: no-repeat;
+						//background-size: 75% auto;
 						border-radius: 3px;
 						display: inline-block;
 						width: 31px;
 						height: 31px;
 						margin: 0 4px 4px 0;
+						cursor: pointer;
 
 						&:nth-child(6n) {
 							margin-right: 0;
+						}
+
+						&:not(.selected):hover {
+							box-shadow: 0 0 0 1px #bcc;
+						}
+
+						&:nth-child(11),
+						.selected {
+							//background-color: transparent;
+							box-shadow: 0 0 0 1px #cdd;
+							cursor: default;
 						}
 					}
 				}

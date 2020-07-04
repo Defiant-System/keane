@@ -39,59 +39,37 @@
 	<div class="inline-menubox" data-ui="doBrushTips">
 		<div class="inline-content brush-tips">
 			<div class="tip-presets">
-				<div>
-					<div class="rotation">
-						<div class="gyro">
-							<div class="handle"></div>
-							<div class="handle"></div>
-							<div class="direction"></div>
-						</div>
+				<div class="rotation">
+					<div class="gyro">
+						<div class="handle"></div>
+						<div class="handle"></div>
+						<div class="direction"></div>
 					</div>
 				</div>
-				<div>
-					<!--<div class="knob" data-value="20"></div>-->
-				</div>
-				<div>
-					<!--<div class="knob" data-value="20"></div>-->
+				<div class="ranges">
+					<div>
+						<span class="label">Size:</span>
+						<span class="value">21px</span>
+						<input class="mini-range" type="range" value="4" min="0" max="12" />
+					</div>
+					<div>
+						<span class="label">Hardness:</span>
+						<span class="value">81%</span>
+						<input class="mini-range" type="range" value="4" min="0" max="12" />
+					</div>
 				</div>
 			</div>
 			<div class="shape-list">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
+				<xsl:for-each select="./*">
+					<div>
+						<xsl:if test="@tip">
+							<xsl:attribute name="style">
+								background-image: url(~/icons/brush-preset-<xsl:value-of select="@tip"/>.png);
+								background-size: <xsl:value-of select="@size"/>px auto;
+							</xsl:attribute>
+						</xsl:if>
+					</div>
+				</xsl:for-each>
 			</div>
 		</div>
 	</div>

@@ -857,7 +857,7 @@
 
 	<svg id="brush-preset-soft-round" viewBox="0 0 500 500">
 		<radialGradient id="SVGID_1_" cx="250" cy="250" r="250" gradientUnits="userSpaceOnUse">
-			<stop offset="0" stop-color="#fff" stop-opacity=".25"/>
+			<stop offset="0" stop-color="#fff" stop-opacity="1"/>
 			<stop offset="1" stop-color="#fff" stop-opacity="0"/>
 		</radialGradient>
 		<circle fill="url(#SVGID_1_)" class="st0" cx="250" cy="250" r="250"/>

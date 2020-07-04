@@ -67,4 +67,44 @@
 		<i type="option" name="Color"/>
 		<i type="option" name="Luminosity"/>
 	</BlendModes>
+
+	<TipShapes>
+		<i tip="hard-round" size="5" />
+		<i tip="hard-round" size="7" />
+		<i tip="hard-round" size="13" />
+		<i tip="hard-round" size="17" />
+		<i tip="hard-round" size="21" />
+		<i tip="hard-round" size="25" />
+
+		<i tip="soft-round" size="5" />
+		<i tip="soft-round" size="7" />
+		<i tip="soft-round" size="13" />
+		<i tip="soft-round" size="17" />
+		<i tip="soft-round" size="21" />
+		<i tip="soft-round" size="25" />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+		<i />
+	</TipShapes>
 </Data>
