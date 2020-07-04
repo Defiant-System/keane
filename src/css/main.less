@@ -490,6 +490,7 @@ content {
 
 		&.opt-tiny .value { width: 65px; }
 		&.opt-small .value { width: 69px; }
+		&.opt-medium .value { width: 79px; }
 
 		&:last-child {
 			margin-right: 7px;
@@ -613,6 +614,19 @@ content {
 			border-radius: 21px;
 			display: inline-block;
 			flex: 1;
+
+			&.prefix-icon {
+				padding-left: 25px;
+
+				.icon {
+					//background: #fff;
+					position: absolute;
+					top: 3px;
+					left: 4px;
+					width: 16px;
+					height: 16px;
+				}
+			}
 
 			.prefix {
 				display: inline-block;
@@ -1660,6 +1674,109 @@ content {
 				}
 			}
 
+			&.brush-tips {
+				width: 220px;
+				padding: 7px 7px 6px;
+
+				.tip-presets {
+					margin-bottom: 9px;
+					display: flex;
+
+					> div {
+						flex: 1;
+						text-align: center;
+						
+						&:not(:last-child) {
+							margin-right: 5px;
+						}
+
+						.rotation {
+							//background: rgba(0,0,0,.05);
+							border: 1px dashed #455;
+							border-radius: 3px;
+							position: relative;
+							width: 71px;
+							height: 71px;
+
+							.gyro {
+								position: absolute;
+								top: 10px;
+								left: 10px;
+								width: 49px;
+								height: 49px;
+								border-radius: 50%;
+								border: 1px solid #dee;
+
+								&:before {
+									content: "";
+									position: absolute;
+									top: 23px;
+									left: 0;
+									right: 0;
+									height: 1px;
+									background: #788;
+								}
+
+								&:after {
+									content: "";
+									position: absolute;
+									top: 0;
+									bottom: 0;
+									left: 23px;
+									width: 1px;
+									background: #788;
+								}
+
+								.handle {
+									position: absolute;
+									top: -5px;
+									left: calc( 50% - 4px );
+									width: 9px;
+									height: 9px;
+									z-index: 2;
+									background: #eff;
+									border: 1px solid #344;
+									border-radius: 50%;
+
+									&:nth-child(2) {
+										top: auto;
+										bottom: -5px;
+									}
+								}
+
+								.direction {
+									position: absolute;
+									top: calc( 50% - 3px );
+									right: -9px;
+									width: 0;
+									height: 0;
+									border-left: 6px solid #eff;
+									border-top: 3px solid transparent;
+									border-bottom: 3px solid transparent;
+								}
+							}
+						}
+					}
+				}
+				.shape-list {
+					height: 207px;
+					font-size: 0;
+
+					> div {
+						background: #33444480;
+						border-radius: 3px;
+						display: inline-block;
+						width: 31px;
+						height: 31px;
+						margin: 0 4px 4px 0;
+
+						&:nth-child(6n) {
+							margin-right: 0;
+						}
+					}
+				}
+			}
+
 			hr {
 				background: linear-gradient(90deg, transparent 0%, #788 50%, transparent 100%); //rgba(255,255,255,0.15);
 				margin: 3px 0 4px;
@@ -1676,7 +1793,7 @@ content {
 				margin: 1px 0;
 				white-space: nowrap;
 				padding: 3px 23px 1px 23px;
-				color: rgba(255,255,255,0.75);
+				color: #bcc;
 				text-shadow: 0 1px 0 #344;
 				cursor: pointer;
 

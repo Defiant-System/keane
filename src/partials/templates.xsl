@@ -35,4 +35,66 @@
 	</div>
 </xsl:template>
 
+<xsl:template name="brush-tips">
+	<div class="inline-menubox" data-ui="doBrushTips">
+		<div class="inline-content brush-tips">
+			<div class="tip-presets">
+				<div>
+					<div class="rotation">
+						<div class="gyro">
+							<div class="handle"></div>
+							<div class="handle"></div>
+							<div class="direction"></div>
+						</div>
+					</div>
+				</div>
+				<div>
+					<!--<div class="knob" data-value="20"></div>-->
+				</div>
+				<div>
+					<!--<div class="knob" data-value="20"></div>-->
+				</div>
+			</div>
+			<div class="shape-list">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+	</div>
+</xsl:template>
+
 </xsl:stylesheet>

@@ -7,15 +7,13 @@
 		this.option = "brush";
 		// default preset
 		this.preset = {
-			name: "circle",
-			size: 10,
+			name: "hard-round",
+			size: 20,
 			tip: Canvas.createCanvas(1, 1),
 		};
 
 		// auto load preset tip
 		this.dispatch({ type: "select-preset-tip", arg: this.preset.name });
-
-		//this.line(0, 0, 20, 10);
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -100,20 +98,20 @@
 				Self.option = event.arg || "brush";
 				break;
 			case "select-preset-tip":
-				Self.preset.name = event.arg || "circle";
-				image = window.find("svg#brush-preset-"+ Self.preset.name)[0].xml
-							.replace(/--color/ig, _canvas.fgColor);
-
 				width = Self.preset.size;
 				height = Self.preset.size;
 				Self.preset.tipImage = new Image(width, height);
+				Self.preset.name = event.arg || "hard-round";
 
 				Self.preset.tipImage.onload = () => {
 					// resize tip canvas
 					Self.preset.tip.cvs.prop({ width, height });
 					Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, 0, width, height);
+					Self.preset.tip.ctx.globalCompositeOperation = "source-atop";
+					Self.preset.tip.ctx.fillStyle = _canvas.fgColor;
+					Self.preset.tip.ctx.fillRect(0, 0, 1e4, 1e4);
 				};
-				Self.preset.tipImage.src = 'data:image/svg+xml;base64,'+ btoa(image);
+				Self.preset.tipImage.src = "~/icons/brush-preset-"+ Self.preset.name +".png";
 				break;
 			case "change-mode":
 				console.log(event);
@@ -135,8 +133,8 @@
 				break;
 			case "enable":
 				// temp
-				el = event.root.find(".option[data-change='change-size']");
-				el.find(".value").html( Self.preset.size +el.data("suffix") );
+				// el = event.root.find(".option[data-change='change-size']");
+				// el.find(".value").html( Self.preset.size +el.data("suffix") );
 
 				_canvas.cvs.on("mousedown", Self.dispatch);
 				break;

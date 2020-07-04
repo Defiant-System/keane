@@ -8,6 +8,10 @@ const UI = {
 		// bind event handlers
 		this.content.on("click", ".option .value", this.dispatch);
 		this.content.on("mousedown", "[data-ui]", this.dispatch);
+
+		// temp
+		setTimeout(() =>
+			this.content.find(".option[data-options='brush-tips'] .value").trigger("click"), 200);
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -67,6 +71,9 @@ const UI = {
 				Self.doc.off("mousedown", Self.dispatch);
 				break;
 		}
+	},
+	doBrushTips(event) {
+
 	},
 	doSwatches(event) {
 		let APP = photoshop,

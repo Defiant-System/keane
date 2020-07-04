@@ -851,17 +851,14 @@
 		<path class="st1" d="M26,1727.9l-8.8-10.9"/>
 	</svg>
 
-	<svg id="brush-preset-circle1" viewBox="0 0 20 20" cache="false">
-		<style>
-			.st0 { fill: --color; }
-		</style>
-		<circle class="st0" cx="10" cy="10" r="10"/>
+	<svg id="brush-preset-hard-round" viewBox="0 0 500 500">
+		<circle fill="#fff" class="st0" cx="250" cy="250" r="250"/>
 	</svg>
 
-	<svg id="brush-preset-circle" viewBox="0 0 500 500" cache="false">
+	<svg id="brush-preset-soft-round" viewBox="0 0 500 500">
 		<radialGradient id="SVGID_1_" cx="250" cy="250" r="250" gradientUnits="userSpaceOnUse">
-			<stop offset="0" stop-color="--color" stop-opacity="1"/>
-			<stop offset="1" stop-color="--color" stop-opacity="0"/>
+			<stop offset="0" stop-color="#fff" stop-opacity=".25"/>
+			<stop offset="1" stop-color="#fff" stop-opacity="0"/>
 		</radialGradient>
 		<circle fill="url(#SVGID_1_)" class="st0" cx="250" cy="250" r="250"/>
 	</svg>
