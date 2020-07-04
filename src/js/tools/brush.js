@@ -8,12 +8,14 @@
 		// default preset
 		this.preset = {
 			name: "circle",
-			size: 11,
+			size: 10,
 			tip: Canvas.createCanvas(1, 1),
 		};
 
 		// auto load preset tip
 		this.dispatch({ type: "select-preset-tip", arg: this.preset.name });
+
+		//this.line(0, 0, 20, 10);
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -48,7 +50,23 @@
 						...Self.preset,
 						oX: _floor(Self.preset.size / 2),
 						oY: _floor(Self.preset.size / 2),
+						image: Self.preset.tip.cvs[0],
 					},
+					// Bresenham's line algorithm
+					line: (x0, y0, x1, y1, cb) => {
+						let dx = Math.abs(x1 - x0),
+							dy = Math.abs(y1 - y0),
+							sx = (x0 < x1) ? 1 : -1,
+							sy = (y0 < y1) ? 1 : -1,
+							err = dx - dy;
+						while(true) {
+							cb(x0, y0);
+							if (x0 === x1 && y0 === y1) break;
+							let e2 = 2 * err;
+							if (e2 > -dy) { err -= dy; x0 += sx; }
+							if (e2 < dx) { err += dx; y0 += sy; }
+						}
+					}
 				};
 
 				// trigger first paint
@@ -64,21 +82,25 @@
 					Drag.mX = _floor((event.offsetX - Drag.coX) / Drag.scale);
 					Drag.mY = _floor((event.offsetY - Drag.coY) / Drag.scale);
 				}
-				// prevents painting same are when zoomed in
-				if (Drag.oldX === Drag.mX && Drag.oldY === Drag.mY) return;
-				Drag.oldX = Drag.mX;
-				Drag.oldY = Drag.mY;
 				// center the tip
 				Drag.mX -= Drag.preset.oX;
 				Drag.mY -= Drag.preset.oY;
 
+				// prevents painting same are when zoomed in
+				if (Drag.oldX === Drag.mX && Drag.oldY === Drag.mY) return;
+
 				size = Drag.preset.size;
-				image = Self.preset.tip.cvs[0];
-				Drag.ctx.drawImage(image, 0, 0, size, size, Drag.mX, Drag.mY, size, size);
+				image = Drag.preset.image;
+				Drag.line(Drag.oldX || Drag.mX, Drag.oldY || Drag.mY, Drag.mX, Drag.mY, (x, y) =>
+					Drag.ctx.drawImage(image, 0, 0, size, size, x, y, size, size));
 
 				// clear and transfer to canvas
 				_canvas.cvs.prop({ width: window.width, height: window.height });
 				_canvas.dispatch({ type: "update-canvas", noZoom: true });
+
+				// same mouse point
+				Drag.oldX = Drag.mX;
+				Drag.oldY = Drag.mY;
 				break;
 			case "mouseup":
 				// remove class
