@@ -7,8 +7,8 @@
 		this.option = "brush";
 		// default preset
 		this.preset = {
-			name: "hard-round",
-			size: 20,
+			name: "sponge-1",
+			size: 50,
 			tip: Canvas.createCanvas(1, 1),
 		};
 

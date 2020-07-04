@@ -863,5 +863,71 @@
 		<circle fill="url(#SVGID_1_)" class="st0" cx="250" cy="250" r="250"/>
 	</svg>
 
+	<svg id="brush-preset-box" viewBox="0 0 500 500">
+		<rect fill="#fff" x="20" y="20" width="460" height="460"/>
+	</svg>
+
+	<svg id="brush-preset-triangle" viewBox="0 0 500 500">
+		<path fill="#fff" d="M492.7,434.2L262.9,49.7c-5.9-9.5-19.8-9.5-25.8,0L7.3,434.2c-6.3,10.1,1,23.2,12.9,23.2h459.6 C491.7,457.4,499,444.3,492.7,434.2z" />
+	</svg>
+
+	<svg id="brush-preset-heart" viewBox="0 0 500 500">
+		<path fill="#fff" d="M367.7,20.5c-52.1,0-97,42.4-117.7,86.7c-20.8-44.3-65.6-86.7-117.7-86.7C60.4,20.5,2.1,78.8,2.1,150.6 c0,146.1,147.4,184.5,247.9,328.9C345,336,497.9,292.1,497.9,150.6C497.9,78.8,439.6,20.5,367.7,20.5L367.7,20.5z"/>
+	</svg>
+
+	<svg id="brush-preset-star" viewBox="0 0 500 500">
+		<path fill="#fff" d="M496.7,194.6l-170.5-24.8L250,15.4l-76.2,154.5L3.3,194.6l123.4,120.2L97.5,484.6L250,404.5l152.5,80.2l-29.1-169.8 L496.7,194.6L496.7,194.6z" />
+	</svg>
+
+	<svg id="brush-preset-sponge-1" viewBox="0 0 50 50">
+		<image height="50" width="50" href="data:image/png;base64,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"/>
+	</svg>
+
+	<svg id="brush-preset-sponge-2" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
+	<svg id="brush-preset-sponge-3" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
+	<svg id="brush-preset-sponge-4" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
+	<svg id="brush-preset-sponge-5" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
+	<svg id="brush-preset-sponge-6" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
+
+
+	<svg id="brush-preset-spatter-1" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
+	<svg id="brush-preset-spatter-2" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
+	<svg id="brush-preset-spatter-3" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
+	<svg id="brush-preset-spatter-4" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
+	<svg id="brush-preset-spatter-5" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
+	<svg id="brush-preset-spatter-6" viewBox="0 0 50 50">
+		<image height="50" width="50" href=""/>
+	</svg>
+
 </svg>
 

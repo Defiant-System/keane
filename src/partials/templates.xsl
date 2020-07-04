@@ -50,26 +50,28 @@
 					<div>
 						<span class="label">Size:</span>
 						<span class="value">21px</span>
-						<input class="mini-range" type="range" value="4" min="0" max="12" />
+						<input class="mini-range" type="range" value="34" min="1" max="200" />
 					</div>
 					<div>
 						<span class="label">Hardness:</span>
 						<span class="value">81%</span>
-						<input class="mini-range" type="range" value="4" min="0" max="12" />
+						<input class="mini-range" type="range" value="24" min="0" max="100" />
 					</div>
 				</div>
 			</div>
 			<div class="shape-list">
 				<xsl:for-each select="./*">
 					<div>
-						<xsl:if test="@tip">
+						<xsl:if test="@name">
 							<xsl:attribute name="style">
-								background-image: url(~/icons/brush-preset-<xsl:value-of select="@tip"/>.png);
-								background-size: <xsl:value-of select="@size"/>px auto;
+								background-image: url(~/icons/brush-preset-<xsl:value-of select="@name"/>.png);
 							</xsl:attribute>
 						</xsl:if>
 					</div>
 				</xsl:for-each>
+			</div>
+			<div class="preview">
+				
 			</div>
 		</div>
 	</div>
