@@ -108,6 +108,17 @@ const UI = {
 				roundness = +xShape.getAttribute("roundness");
 				angle     = +xShape.getAttribute("angle");
 
+
+				data = {
+					type: Self.srcEl.data("change"),
+					el: Self.srcEl,
+					//old: Color.rgbToHex(Self.srcEl.find(".value").css("background-color")),
+					arg: name,
+				};
+				// dispatch event to be forwarded
+				if (data.type) APP.dispatch(data);
+
+
 				Self.menu.find(".gyro").css({
 					height: (roundness / 100) * 49.5 +"px",
 					transform: `translateX(-50%) translateY(-50%) rotate(${angle}deg)`,
