@@ -56,7 +56,9 @@ const UI = {
 				Self.doc.on("mousedown", Self.dispatch);
 				break;
 			case "mousedown":
-				if ($(event.target).parents(".inline-menubox").length) {
+				el = $(event.target).parents(".inline-menubox");
+				if (el.length) {
+					if (el.data("ui") === "doBrushTips") return;
 					// forward event to fitting handler
 					Self[this.dataset.ui](event);
 				} else {
