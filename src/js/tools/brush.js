@@ -7,7 +7,7 @@
 		this.option = "brush";
 		// default preset
 		this.preset = {
-			name: "crayon-1",
+			name: "sponge-1",
 			size: 50,
 			tip: Canvas.createCanvas(1, 1),
 		};
