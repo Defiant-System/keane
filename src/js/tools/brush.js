@@ -8,7 +8,7 @@
 		// default preset
 		this.preset = {
 			name: "sponge-1",
-			size: 50,
+			size: 40,
 			tip: Canvas.createCanvas(1, 1),
 		};
 

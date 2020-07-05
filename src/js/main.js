@@ -204,8 +204,11 @@ const photoshop = {
 							pEl.css({ "background-image": image });
 						}
 						// dispatch event to tool object
-						TOOLS[pEl.data("content")].dispatch(event);
-						return;
+						return TOOLS[pEl.data("content")].dispatch(event);
+					}
+					pEl = event.el.parents(".inline-menubox");
+					if (pEl.length) {
+						return UI.dispatch(event);
 					}
 					pEl = event.el.parents("div[data-box]");
 					boxName = pEl.attr("data-box");

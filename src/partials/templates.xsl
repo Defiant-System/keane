@@ -47,30 +47,31 @@
 					</div>
 				</div>
 				<div class="ranges">
-					<div>
+					<div class="tip-size">
 						<span class="label">Size:</span>
-						<span class="value">21px</span>
-						<input type="range" class="mini-range" value="34" min="1" max="200" />
+						<span class="value" data-suffix="px">21px</span>
+						<input type="range" data-change="tip-menu-set-size" class="mini-range" min="1" max="200" />
 					</div>
-					<div>
+					<div class="tip-hardness">
 						<span class="label">Hardness:</span>
-						<span class="value">81%</span>
-						<input type="range" class="mini-range" value="24" min="0" max="100" />
+						<span class="value" data-suffix="%">81%</span>
+						<input type="range" data-change="tip-menu-set-hardness" class="mini-range" min="0" max="100" />
 					</div>
 				</div>
 			</div>
 			<div class="shape-list">
 				<xsl:for-each select="./*">
-					<div>
+					<div data-click="tip-menu-set-tip">
+						<xsl:attribute name="data-name">
+							<xsl:value-of select="@name"/>
+						</xsl:attribute>
 						<xsl:attribute name="class">
 							<xsl:if test="@type = 'texture'">texture</xsl:if>
 							<xsl:if test="@tip = 'round'"> round</xsl:if>
 						</xsl:attribute>
-						<xsl:if test="@name">
-							<xsl:attribute name="style">
-								--image: url(~/icons/brush-preset-<xsl:value-of select="@name"/>.png);
-							</xsl:attribute>
-						</xsl:if>
+						<xsl:attribute name="style">
+							--image: url(~/icons/brush-preset-<xsl:value-of select="@name"/>.png);
+						</xsl:attribute>
 					</div>
 				</xsl:for-each>
 			</div>

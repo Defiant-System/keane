@@ -67,18 +67,67 @@ const UI = {
 				// unbind event handler
 				Self.doc.off("mousedown", Self.dispatch);
 				break;
+			default:
+				// forward route events
+				data = event.el.parents("[data-ui]").data("ui");
+				Self[data](event);
 		}
 	},
 	doBrushTips(event) {
 		let APP = photoshop,
 			Self = UI,
+			xShape,
+			name,
+			size,
+			hardness,
+			roundness,
+			angle,
 			el;
 		//console.log(event);
 		switch (event.type) {
 			case "mousedown":
 				break;
+			case "mousemove":
+				break;
+			case "mouseup":
+				break;
 			// custom events
 			case "set-initial-value":
+				el = Self.menu.find(".shape-list > div").get(0);
+				Self.doBrushTips({ type: "tip-menu-set-tip", el });
+				break;
+			case "tip-menu-set-tip":
+				el = event.el;
+				el.parent().find(".selected").removeClass("selected");
+				el.addClass("selected");
+
+				name = el.data("name");
+				xShape = window.bluePrint.selectSingleNode(`//TipShapes/*[@name="${name}"]`);
+				size      = +xShape.getAttribute("size");
+				hardness  = +xShape.getAttribute("hardness");
+				roundness = +xShape.getAttribute("roundness");
+				angle     = +xShape.getAttribute("angle");
+
+				Self.menu.find(".gyro").css({
+					height: (roundness / 100) * 49.5 +"px",
+					transform: `translateX(-50%) translateY(-50%) rotate(${angle}deg)`,
+				});
+
+				// update size range / field
+				Self.menu.find(".tip-size input").val(size);
+				Self.doBrushTips({ type: "tip-menu-set-size", value: size });
+				
+				// update hardness range / field
+				Self.menu.find(".tip-hardness input").val(hardness);
+				Self.doBrushTips({ type: "tip-menu-set-hardness", value: hardness });
+				break;
+			case "tip-menu-set-size":
+				el = Self.menu.find(".tip-size .value");
+				el.html(event.value + el.data("suffix"));
+				break;
+			case "tip-menu-set-hardness":
+				el = Self.menu.find(".tip-hardness .value");
+				el.html(event.value + el.data("suffix"));
 				break;
 		}
 
