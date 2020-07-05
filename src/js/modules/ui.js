@@ -56,9 +56,6 @@ const UI = {
 				Self.doc.on("mousedown", Self.dispatch);
 				break;
 			case "mousedown":
-				// prevent default behaviour
-				event.preventDefault();
-
 				if ($(event.target).parents(".inline-menubox").length) {
 					// forward event to fitting handler
 					Self[this.dataset.ui](event);
@@ -75,37 +72,13 @@ const UI = {
 	doBrushTips(event) {
 		let APP = photoshop,
 			Self = UI,
-			data,
-			value,
-			menu,
-			min,
-			max,
-			rect,
 			el;
 		//console.log(event);
 		switch (event.type) {
-			case "click":
-				// event handler checks for clicks outside inline-menubox
-				Self.doc.on("mousedown", Self.dispatch);
-				break;
 			case "mousedown":
-				// prevent default behaviour
-				event.preventDefault();
-
-				if ($(event.target).parents(".inline-menubox").length) {
-					
-				} else {
-					// clean up
-					Self.srcEl = false;
-					Self.menu.remove();
-				}
-				// unbind event handler
-				Self.doc.off("mousedown", Self.dispatch);
 				break;
 			// custom events
 			case "set-initial-value":
-				// initial value
-				Self.menu.find(`.shape-list > div`).get(2).addClass("selected");
 				break;
 		}
 
@@ -155,6 +128,9 @@ const UI = {
 		switch (event.type) {
 			// native events
 			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+
 				el = $(event.target);
 				if (!el.hasClass("option")) el = el.parents(".option");
 				// selected option - UI update
@@ -201,6 +177,9 @@ const UI = {
 		switch (event.type) {
 			// native events
 			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+
 				el = $(event.target);
 				value = +el.data("value");
 

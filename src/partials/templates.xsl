@@ -50,12 +50,12 @@
 					<div>
 						<span class="label">Size:</span>
 						<span class="value">21px</span>
-						<input class="mini-range" type="range" value="34" min="1" max="200" />
+						<input type="range" class="mini-range" value="34" min="1" max="200" />
 					</div>
 					<div>
 						<span class="label">Hardness:</span>
 						<span class="value">81%</span>
-						<input class="mini-range" type="range" value="24" min="0" max="100" />
+						<input type="range" class="mini-range" value="24" min="0" max="100" />
 					</div>
 				</div>
 			</div>
