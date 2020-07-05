@@ -62,16 +62,20 @@
 			<div class="shape-list">
 				<xsl:for-each select="./*">
 					<div>
+						<xsl:attribute name="class">
+							<xsl:if test="@type = 'texture'">texture</xsl:if>
+							<xsl:if test="@tip = 'round'"> round</xsl:if>
+						</xsl:attribute>
 						<xsl:if test="@name">
 							<xsl:attribute name="style">
-								background-image: url(~/icons/brush-preset-<xsl:value-of select="@name"/>.png);
+								--image: url(~/icons/brush-preset-<xsl:value-of select="@name"/>.png);
 							</xsl:attribute>
 						</xsl:if>
 					</div>
 				</xsl:for-each>
 			</div>
 			<div class="preview">
-				
+
 			</div>
 		</div>
 	</div>

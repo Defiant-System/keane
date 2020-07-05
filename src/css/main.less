@@ -1815,6 +1815,7 @@ content {
 						background-position: 50% 50%;
 						background-repeat: no-repeat;
 						background-size: 17px auto;
+						background-image: var( --image );
 						border-radius: 3px;
 						display: inline-block;
 						width: 31px;
@@ -1835,6 +1836,30 @@ content {
 							//background-color: transparent;
 							box-shadow: 0 0 0 1px #cdd;
 							cursor: default;
+						}
+
+						&.texture {
+							position: relative;
+							background-image: none;
+
+							&.round:after {
+								border-radius: 50%;
+								background-position: 100% 100%;
+							}
+							
+							&:after {
+								content: "";
+								position: absolute;
+								top: 5px;
+								left: 5px;
+								right: 5px;
+								bottom: 5px;
+								border-radius: 1px;
+								background-position: 0 0;
+								background-size: 50px auto;
+								background-repeat: repeat;
+								background-image: var( --image );
+							}
 						}
 					}
 				}

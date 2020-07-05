@@ -90,11 +90,11 @@
 		<i name="splatter-5" />
 		<i name="splatter-6" />
 
-		<i />
-		<i />
-		<i />
-		<i />
-		<i />
-		<i />
+		<i name="crayon-1" type="texture" tip="round" />
+		<i name="crayon-1" type="texture" />
+		<i name="crayon-2" type="texture" tip="round" />
+		<i name="crayon-2" type="texture" />
+		<i name="crayon-3" type="texture" tip="round" />
+		<i name="crayon-3" type="texture" />
 	</TipShapes>
 </Data>
