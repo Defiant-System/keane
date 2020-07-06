@@ -69,7 +69,7 @@
 	</BlendModes>
 
 	<TipShapes>
-		<i name="hard-round" size="21" hardness="100" roundness="100" angle="0" />
+		<i name="hard-round" size="21" hardness="100" roundness="50" angle="40" />
 		<i name="soft-round" size="37" hardness="0" roundness="50" angle="78" />
 		<i name="box" size="40" hardness="100" roundness="100" angle="0" />
 		<i name="triangle" size="40" hardness="100" roundness="100" angle="0" />

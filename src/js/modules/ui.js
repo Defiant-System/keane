@@ -121,7 +121,9 @@ const UI = {
 					Self.drag.min = 5;
 					Self.drag.max = 49.5;
 				} else {
-					Self.drag.value = 0;
+					Self.drag.value = 45;
+					Self.drag.min = -60;
+					Self.drag.max = 60;
 				}
 
 				// bind event handlers
@@ -138,9 +140,11 @@ const UI = {
 					roundness = _round((value / Drag.max) * 100);
 				} else {
 					// this type affects tip angle
-					console.log(Drag.clientY - event.clientY);
-					return;
-
+					value = _min(_max(event.clientY - Drag.clientY, Drag.min), Drag.max);
+					value = Drag.value + _round((value / 120) * 360);
+					data.transform = `translateX(-50%) translateY(-50%) rotate(${value}deg)`;
+					// set angle
+					angle = (value + 360) % 360;
 				}
 				// UI update for gyro
 				Drag.el.css(data);
