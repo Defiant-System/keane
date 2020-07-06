@@ -7,7 +7,9 @@
 		this.option = "brush";
 		// default preset
 		this.preset = {
-			name: "sponge-1",
+			name: "hard-round",
+			rotation: 15,
+			height: 10,
 			size: 40,
 			tip: Canvas.createCanvas(1, 1),
 		};
@@ -98,18 +100,23 @@
 				Self.option = event.arg || "brush";
 				break;
 			case "select-preset-tip":
-				width = Self.preset.size;
-				height = Self.preset.size;
-				Self.preset.tipImage = new Image(width, height);
+				size = Self.preset.size;
+				Self.preset.tipImage = new Image(size, size);
 				Self.preset.name = event.arg || "hard-round";
 
 				Self.preset.tipImage.onload = () => {
 					// resize tip canvas
-					Self.preset.tip.cvs.prop({ width, height });
-					Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, 0, width, height);
-					Self.preset.tip.ctx.globalCompositeOperation = "source-atop";
+					let height = Self.preset.height,
+						y = (size - height) * .5,
+						hS = size / 2;
+					Self.preset.tip.cvs.prop({ width: size, height: size });
+					Self.preset.tip.ctx.translate(hS, hS);
+					Self.preset.tip.ctx.rotate(Self.preset.rotation * Math.PI / 180);
+					Self.preset.tip.ctx.translate(-hS, -hS);
+					Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, y, size, height);
+					Self.preset.tip.ctx.globalCompositeOperation = "source-atop"; // difference
 					Self.preset.tip.ctx.fillStyle = _canvas.fgColor;
-					Self.preset.tip.ctx.fillRect(0, 0, 1e4, 1e4);
+					Self.preset.tip.ctx.fillRect(0, 0, size, size);
 
 					if (event.callback) event.callback();
 				};
