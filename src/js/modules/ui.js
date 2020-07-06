@@ -27,23 +27,27 @@ const UI = {
 		switch (event.type) {
 			case "click":
 				el = $(this.parentNode);
-				if (!el.data("options")) return;
+				value = el.data("options");
+				if (!value) return;
+
+				if (value !== "brush-tips") {
+					// prevent default behaviour
+					event.preventDefault();
+				}
 
 				// save reference to source element
 				Self.srcEl = el;
 
-				rect = this.getBoundingClientRect();
 				data = {
-					template: el.data("options"),
-					append: Self.content
+					template: value,
+					append: Self.content,
+					match: el.data("match") || false,
 				};
-				// add xpath match
-				if (el.data("match")) data.match = el.data("match");
-
 				// render menubox
 				Self.menu = window.render(data);
 
 				// position menubox
+				rect = this.getBoundingClientRect();
 				Self.menu.css({
 					top: (rect.top - window.top + rect.height + 9) +"px",
 					left: (rect.left - window.left + (rect.width / 2) - (Self.menu[0].offsetWidth / 2)) +"px",
@@ -78,6 +82,7 @@ const UI = {
 	doBrushTips(event) {
 		let APP = photoshop,
 			Self = UI,
+			_cos = Math.cos,
 			xShape,
 			name,
 			size,
@@ -102,38 +107,33 @@ const UI = {
 
 				el = Self.menu.find(".shape-list > div").get(0);
 				Self.doBrushTips({ type: "tip-menu-set-tip", el });
-
-				Self.doBrushTips({ type: "draw-preview-curve" });
 				break;
 			case "draw-preview-curve":
-				// reset canvas
-				Self.ctx.clearRect(0, 0, 1e4, 1e4);
+				// reset context
+				Self.cvs.prop({ width: 206, height: 78 });
+				Self.ctx.translate(5, 28);
 				Self.ctx.fillStyle = "#fff";
 
 				image = TOOLS.brush.preset.tip.cvs[0];
-				size = 25;
-
-				let x = 0,
-					hs = size/2,
-					oX = 12-hs;
-				for (; x<180; x+=1) {
-					let y = 39 - Math.sin(x * 0.0365) * 15;
-
-					Self.ctx.drawImage(image, 0, 0, size, size, x+oX, y-hs, size, size)
+				size = TOOLS.brush.preset.size;
+				for (let i=0; i<178; i++) {
+					Self.ctx.translate(1, _cos(i * 0.035) * .65);
+					Self.ctx.drawImage(image, 0, 0, size, size, 0, 0, 17, 17);
 				}
+
 				break;
 			case "tip-menu-set-tip":
 				el = event.el;
 				el.parent().find(".selected").removeClass("selected");
 				el.addClass("selected");
 
+				// assemble info about preset
 				name = el.data("name");
 				xShape = window.bluePrint.selectSingleNode(`//TipShapes/*[@name="${name}"]`);
 				size      = +xShape.getAttribute("size");
 				hardness  = +xShape.getAttribute("hardness");
 				roundness = +xShape.getAttribute("roundness");
 				angle     = +xShape.getAttribute("angle");
-
 
 				// dispatch event to be forwarded
 				data = {
@@ -214,9 +214,6 @@ const UI = {
 		switch (event.type) {
 			// native events
 			case "mousedown":
-				// prevent default behaviour
-				event.preventDefault();
-
 				el = $(event.target);
 				if (!el.hasClass("option")) el = el.parents(".option");
 				// selected option - UI update
@@ -263,9 +260,6 @@ const UI = {
 		switch (event.type) {
 			// native events
 			case "mousedown":
-				// prevent default behaviour
-				event.preventDefault();
-
 				el = $(event.target);
 				value = +el.data("value");
 
