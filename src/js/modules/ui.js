@@ -110,27 +110,40 @@ const UI = {
 
 				Self.drag = {
 					el: el.parent(),
-					mirror: el.index() === 0 ? -1 : 1,
-					value: el.parent()[0].offsetHeight,
+					type: el.prop("className"),
 					clientY: event.clientY,
 					clientX: event.clientX,
-					min: 5,
-					max: 49.5,
-					preset: Brush.preset,
-					size: Brush.preset.size,
 				};
+
+				if (Self.drag.type === "handle") {
+					Self.drag.mirror = el.index() === 0 ? -1 : 1;
+					Self.drag.value = el.parent()[0].offsetHeight;
+					Self.drag.min = 5;
+					Self.drag.max = 49.5;
+				} else {
+					Self.drag.value = 0;
+				}
+
 				// bind event handlers
 				Self.content.addClass("no-cursor");
 				Self.doc.on("mousemove mouseup", Self.doBrushTips);
 				break;
 			case "mousemove":
-				value = Drag.value - (Drag.mirror * (Drag.clientY - event.clientY));
-				value = _min(_max(value, Drag.min), Drag.max);
-				data.height = value +"px";
+				if (Drag.type === "handle") {
+					// this type affects tip roundness
+					value = Drag.value - (Drag.mirror * (Drag.clientY - event.clientY));
+					value = _min(_max(value, Drag.min), Drag.max);
+					data.height = value +"px";
+					// set roundness
+					roundness = _round((value / Drag.max) * 100);
+				} else {
+					// this type affects tip angle
+					console.log(Drag.clientY - event.clientY);
+					return;
 
+				}
+				// UI update for gyro
 				Drag.el.css(data);
-
-				roundness = _round((value / Drag.max) * 100);
 
 				Brush.dispatch({ type: "resize-rotate-tip", roundness, angle });
 				Self.doBrushTips({ type: "draw-preview-curve" });
