@@ -163,6 +163,9 @@
 				el = APP.els.content.find(".option[data-change='select-preset-tip']");
 				el.find(".value span").html(event.value + el.data("suffix"));
 				break;
+			case "change-hardness":
+				console.log(event);
+				break;
 			case "change-opacity":
 				console.log(event);
 				break;

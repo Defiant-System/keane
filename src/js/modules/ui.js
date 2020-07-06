@@ -91,7 +91,6 @@ const UI = {
 			_max = Math.max,
 			_cos = Math.cos,
 			data = {},
-			xShape,
 			name,
 			size,
 			hardness,
@@ -113,17 +112,17 @@ const UI = {
 					type: el.prop("className"),
 					clientY: event.clientY,
 					clientX: event.clientX,
-					roundness: +el.data("roundness"),
-					angle: +el.data("angle"),
+					roundness: +Self.xShape.getAttribute("roundness"),
+					angle: +Self.xShape.getAttribute("angle"),
 				};
 
 				if (Self.drag.type === "handle") {
 					Self.drag.mirror = el.index() === 0 ? -1 : 1;
-					Self.drag.value = el.parent()[0].offsetHeight;
+					Self.drag.value = 49.5 * (Self.drag.roundness / 100);
 					Self.drag.min = 5;
 					Self.drag.max = 49.5;
 				} else {
-					Self.drag.value = 45;
+					Self.drag.value = Self.drag.angle;
 					Self.drag.min = -60;
 					Self.drag.max = 60;
 				}
@@ -133,6 +132,9 @@ const UI = {
 				Self.doc.on("mousemove mouseup", Self.doBrushTips);
 				break;
 			case "mousemove":
+				roundness = Drag.roundness;
+				angle = Drag.angle;
+
 				if (Drag.type === "handle") {
 					// this type affects tip roundness
 					value = Drag.value - (Drag.mirror * (Drag.clientY - event.clientY));
@@ -151,10 +153,7 @@ const UI = {
 				// UI update for gyro
 				Drag.el.css(data);
 
-				// roundness = roundness || Drag.roundness;
-				// angle = angle || Drag.angle;
-
-				Tool.dispatch({ type: "resize-rotate-tip", roundness, angle });
+				Self.doBrushTips({ type: "tip-menu-set-roundness-angle", roundness, angle });
 				Self.doBrushTips({ type: "draw-preview-curve" });
 				break;
 			case "mouseup":
@@ -192,11 +191,11 @@ const UI = {
 
 				// assemble info about preset
 				name = el.data("name");
-				xShape = window.bluePrint.selectSingleNode(`//TipShapes/*[@name="${name}"]`);
-				size      = +xShape.getAttribute("size");
-				hardness  = +xShape.getAttribute("hardness");
-				roundness = +xShape.getAttribute("roundness");
-				angle     = +xShape.getAttribute("angle");
+				Self.xShape = window.bluePrint.selectSingleNode(`//TipShapes/*[@name="${name}"]`);
+				size      = +Self.xShape.getAttribute("size");
+				hardness  = +Self.xShape.getAttribute("hardness");
+				roundness = +Self.xShape.getAttribute("roundness");
+				angle     = +Self.xShape.getAttribute("angle");
 
 				// dispatch event to be forwarded
 				data = {
@@ -221,15 +220,30 @@ const UI = {
 				Self.menu.find(".tip-hardness input").val(hardness);
 				Self.doBrushTips({ type: "tip-menu-set-hardness", value: hardness });
 				break;
+			case "tip-menu-set-roundness-angle":
+				// update xml node
+				Self.xShape.setAttribute("roundness", event.roundness);
+				Self.xShape.setAttribute("angle", event.angle);
+				// forward event to active tool
+				Tool.dispatch({ ...event, type: "resize-rotate-tip" });
+				break;
 			case "tip-menu-set-size":
 				el = Self.menu.find(".tip-size .value");
 				el.html(event.value + el.data("suffix"));
 
+				// update xml node
+				Self.xShape.setAttribute("size", event.value);
+				// forward event to active tool
 				Tool.dispatch({ ...event, type: "change-size"});
 				break;
 			case "tip-menu-set-hardness":
 				el = Self.menu.find(".tip-hardness .value");
 				el.html(event.value + el.data("suffix"));
+
+				// update xml node
+				Self.xShape.setAttribute("hardness", event.value);
+				// forward event to active tool
+				Tool.dispatch({ ...event, type: "change-hardness"});
 				break;
 		}
 
