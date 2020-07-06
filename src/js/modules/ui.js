@@ -85,7 +85,7 @@ const UI = {
 		let APP = photoshop,
 			Self = UI,
 			Drag = Self.drag,
-			Brush = TOOLS.brush,
+			Tool = TOOLS[TOOLS._active],
 			_round = Math.round,
 			_min = Math.min,
 			_max = Math.max,
@@ -154,7 +154,7 @@ const UI = {
 				// roundness = roundness || Drag.roundness;
 				// angle = angle || Drag.angle;
 
-				Brush.dispatch({ type: "resize-rotate-tip", roundness, angle });
+				Tool.dispatch({ type: "resize-rotate-tip", roundness, angle });
 				Self.doBrushTips({ type: "draw-preview-curve" });
 				break;
 			case "mouseup":
@@ -178,8 +178,8 @@ const UI = {
 				Self.ctx.translate(4, 28);
 				Self.ctx.fillStyle = "#fff";
 
-				image = Brush.preset.tip.cvs[0];
-				size = Brush.preset.size;
+				image = Tool.preset.tip.cvs[0];
+				size = Tool.preset.size;
 				for (let i=0; i<180; i++) {
 					Self.ctx.translate(1, _cos(i * 0.035) * .65);
 					Self.ctx.drawImage(image, 0, 0, size, size, 0, 0, 17, 17);
@@ -225,7 +225,7 @@ const UI = {
 				el = Self.menu.find(".tip-size .value");
 				el.html(event.value + el.data("suffix"));
 
-				Brush.dispatch({ ...event, type: "change-size"});
+				Tool.dispatch({ ...event, type: "change-size"});
 				break;
 			case "tip-menu-set-hardness":
 				el = Self.menu.find(".tip-hardness .value");
