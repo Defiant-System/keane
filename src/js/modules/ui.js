@@ -10,8 +10,8 @@ const UI = {
 		this.content.on("mousedown", "[data-ui]", this.dispatch);
 
 		// temp
-		// setTimeout(() =>
-		// 	this.content.find(".option[data-options='brush-tips'] .value").trigger("click"), 200);
+		setTimeout(() =>
+			this.content.find(".option[data-options='brush-tips'] .value").trigger("click"), 200);
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -62,9 +62,11 @@ const UI = {
 			case "mousedown":
 				el = $(event.target).parents(".inline-menubox");
 				if (el.length) {
-					if (el.data("ui") === "doBrushTips") return;
+					if (this === document) return;
 					// forward event to fitting handler
 					Self[this.dataset.ui](event);
+					// handles event differently for brush menu box
+					if (this.dataset.ui === "doBrushTips") return;
 				} else {
 					// clean up
 					Self.srcEl = false;
@@ -82,7 +84,13 @@ const UI = {
 	doBrushTips(event) {
 		let APP = photoshop,
 			Self = UI,
+			Drag = Self.drag,
+			Brush = TOOLS.brush,
+			_round = Math.round,
+			_min = Math.min,
+			_max = Math.max,
 			_cos = Math.cos,
+			data = {},
 			xShape,
 			name,
 			size,
@@ -94,11 +102,43 @@ const UI = {
 		//console.log(event);
 		switch (event.type) {
 			case "mousedown":
-				
+				el = $(event.target);
+				// special handling for gyro events
+				if (!["handle", "direction"].includes(el.prop("className"))) return;
+				// prevent default behaviour
+				event.preventDefault();
+
+				Self.drag = {
+					el: el.parent(),
+					mirror: el.index() === 0 ? -1 : 1,
+					value: el.parent()[0].offsetHeight,
+					clientY: event.clientY,
+					clientX: event.clientX,
+					min: 5,
+					max: 49.5,
+					preset: Brush.preset,
+					size: Brush.preset.size,
+				};
+				// bind event handlers
+				Self.content.addClass("no-cursor");
+				Self.doc.on("mousemove mouseup", Self.doBrushTips);
 				break;
 			case "mousemove":
+				value = Drag.value - (Drag.mirror * (Drag.clientY - event.clientY));
+				value = _min(_max(value, Drag.min), Drag.max);
+				data.height = value +"px";
+
+				Drag.el.css(data);
+
+				roundness = _round((value / Drag.max) * 100);
+
+				Brush.dispatch({ type: "resize-rotate-tip", roundness, angle });
+				Self.doBrushTips({ type: "draw-preview-curve" });
 				break;
 			case "mouseup":
+				// unbind event handlers
+				Self.content.removeClass("no-cursor");
+				Self.doc.off("mousemove mouseup", Self.doBrushTips);
 				break;
 			// custom events
 			case "set-initial-value":
@@ -112,16 +152,15 @@ const UI = {
 			case "draw-preview-curve":
 				// reset context
 				Self.cvs.prop({ width: 206, height: 78 });
-				Self.ctx.translate(5, 28);
+				Self.ctx.translate(4, 28);
 				Self.ctx.fillStyle = "#fff";
 
-				image = TOOLS.brush.preset.tip.cvs[0];
-				size = TOOLS.brush.preset.size;
-				for (let i=0; i<178; i++) {
+				image = Brush.preset.tip.cvs[0];
+				size = Brush.preset.size;
+				for (let i=0; i<180; i++) {
 					Self.ctx.translate(1, _cos(i * 0.035) * .65);
 					Self.ctx.drawImage(image, 0, 0, size, size, 0, 0, 17, 17);
 				}
-
 				break;
 			case "tip-menu-set-tip":
 				el = event.el;
@@ -279,7 +318,7 @@ const UI = {
 				Self.doc.on("mousemove mouseup", Self.doKnob);
 				break;
 			case "mousemove":
-				value = ((Drag.clientY - event.clientY)) + Drag.value;
+				value = (Drag.clientY - event.clientY) + Drag.value;
 				value = _min(_max(value, 0), 100);
 				Drag.el.data({ value });
 

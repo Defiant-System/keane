@@ -8,8 +8,8 @@
 		// default preset
 		this.preset = {
 			name: "hard-round",
-			rotation: 15,
-			height: 10,
+			roundness: 100,
+			angle: 0,
 			size: 40,
 			tip: Canvas.createCanvas(1, 1),
 		};
@@ -22,12 +22,15 @@
 			Self = TOOLS.brush,
 			Drag = Self.drag,
 			_floor = Math.floor,
+			_round = Math.round,
 			_canvas = Canvas,
 			size,
 			tip,
 			image,
 			width,
 			height,
+			roundness,
+			angle,
 			el;
 
 		switch (event.type) {
@@ -105,22 +108,30 @@
 				Self.preset.name = event.arg || "hard-round";
 
 				Self.preset.tipImage.onload = () => {
-					// resize tip canvas
-					let height = Self.preset.height,
-						y = (size - height) * .5,
-						hS = size / 2;
-					Self.preset.tip.cvs.prop({ width: size, height: size });
-					Self.preset.tip.ctx.translate(hS, hS);
-					Self.preset.tip.ctx.rotate(Self.preset.rotation * Math.PI / 180);
-					Self.preset.tip.ctx.translate(-hS, -hS);
-					Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, y, size, height);
-					Self.preset.tip.ctx.globalCompositeOperation = "source-atop"; // difference
-					Self.preset.tip.ctx.fillStyle = _canvas.fgColor;
-					Self.preset.tip.ctx.fillRect(0, 0, size, size);
-
+					// resize / rotate tip
+					Self.dispatch({ type: "resize-rotate-tip" });
+					// callback if any
 					if (event.callback) event.callback();
 				};
 				Self.preset.tipImage.src = "~/icons/brush-preset-"+ Self.preset.name +".png";
+				break;
+			case "resize-rotate-tip":
+				// resize tip canvas
+				size = Self.preset.size;
+				angle = event.angle || Self.preset.angle;
+				roundness = event.roundness || Self.preset.roundness;
+				height = _round(size * (roundness / 100));
+
+				let y = (size - height) * .5,
+					hS = size / 2;
+				Self.preset.tip.cvs.prop({ width: size, height: size });
+				Self.preset.tip.ctx.translate(hS, hS);
+				Self.preset.tip.ctx.rotate(angle * Math.PI / 180);
+				Self.preset.tip.ctx.translate(-hS, -hS);
+				Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, y, size, height);
+				Self.preset.tip.ctx.globalCompositeOperation = "source-atop"; // difference
+				Self.preset.tip.ctx.fillStyle = _canvas.fgColor;
+				Self.preset.tip.ctx.fillRect(0, 0, size, size);
 				break;
 			case "change-mode":
 				console.log(event);
