@@ -113,6 +113,8 @@ const UI = {
 					type: el.prop("className"),
 					clientY: event.clientY,
 					clientX: event.clientX,
+					roundness: +el.data("roundness"),
+					angle: +el.data("angle"),
 				};
 
 				if (Self.drag.type === "handle") {
@@ -149,6 +151,9 @@ const UI = {
 				// UI update for gyro
 				Drag.el.css(data);
 
+				// roundness = roundness || Drag.roundness;
+				// angle = angle || Drag.angle;
+
 				Brush.dispatch({ type: "resize-rotate-tip", roundness, angle });
 				Self.doBrushTips({ type: "draw-preview-curve" });
 				break;
@@ -163,8 +168,9 @@ const UI = {
 				Self.ctx = Self.cvs[0].getContext("2d");
 				Self.cvs.prop({ width: 206, height: 78 });
 
-				el = Self.menu.find(".shape-list > div").get(0);
-				Self.doBrushTips({ type: "tip-menu-set-tip", el });
+				// indicate currect tip in menu
+				name = Self.srcEl.data("name");
+				Self.menu.find(`.shape-list > div[data-name="${name}"]`).trigger("click");
 				break;
 			case "draw-preview-curve":
 				// reset context
@@ -218,6 +224,8 @@ const UI = {
 			case "tip-menu-set-size":
 				el = Self.menu.find(".tip-size .value");
 				el.html(event.value + el.data("suffix"));
+
+				Brush.dispatch({ ...event, type: "change-size"});
 				break;
 			case "tip-menu-set-hardness":
 				el = Self.menu.find(".tip-hardness .value");

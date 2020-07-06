@@ -5,17 +5,17 @@
 	init() {
 		// default option
 		this.option = "brush";
+
+		let xShape = window.bluePrint.selectSingleNode("//TipShapes/*");
+
 		// default preset
 		this.preset = {
-			name: "hard-round",
-			roundness: 100,
-			angle: 0,
-			size: 40,
-			tip: Canvas.createCanvas(1, 1),
+			name      : xShape.getAttribute("name"),
+			roundness : +xShape.getAttribute("roundness"),
+			angle     : +xShape.getAttribute("angle"),
+			size      : +xShape.getAttribute("size"),
+			tip       : Canvas.createCanvas(1, 1),
 		};
-
-		// auto load preset tip
-		this.dispatch({ type: "select-preset-tip", arg: this.preset.name });
 	},
 	dispatch(event) {
 		let APP = photoshop,
@@ -24,6 +24,7 @@
 			_floor = Math.floor,
 			_round = Math.round,
 			_canvas = Canvas,
+			name,
 			size,
 			tip,
 			image,
@@ -103,17 +104,30 @@
 				Self.option = event.arg || "brush";
 				break;
 			case "select-preset-tip":
-				size = Self.preset.size;
-				Self.preset.tipImage = new Image(size, size);
-				Self.preset.name = event.arg || "hard-round";
+				el = APP.els.content.find(".option[data-change='select-preset-tip']");
+				// get brush tip details
+				name      = event.arg       ||  el.data("name")      || Self.preset.name;
+				size      = event.size      || +el.data("size")      || Self.preset.size;
+				roundness = event.roundness || +el.data("roundness") || Self.preset.roundness;
+				angle     = event.angle     || +el.data("angle")     || Self.preset.angle;
 
+				// prepare to load image into tip-canvas
+				Self.preset.tipImage = new Image(size, size);
+				Self.preset.name = name;
 				Self.preset.tipImage.onload = () => {
 					// resize / rotate tip
 					Self.dispatch({ type: "resize-rotate-tip" });
 					// callback if any
 					if (event.callback) event.callback();
 				};
+				
+				// load tip image
 				Self.preset.tipImage.src = "~/icons/brush-preset-"+ Self.preset.name +".png";
+				// update toolbar
+				el.find(".tip-icon").css({"background-image": `url(${Self.preset.tipImage.src})`});
+				el.find(".value span").html(size + el.data("suffix"));
+				// update toolbar option
+				el.data({ name, size, roundness, angle });
 				break;
 			case "resize-rotate-tip":
 				// resize tip canvas
@@ -144,6 +158,10 @@
 				// resize tip canvas
 				Self.preset.tip.cvs.prop({ width, height });
 				Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, 0, width, height);
+
+				// update toolbar
+				el = APP.els.content.find(".option[data-change='select-preset-tip']");
+				el.find(".value span").html(event.value + el.data("suffix"));
 				break;
 			case "change-opacity":
 				console.log(event);
@@ -152,9 +170,8 @@
 				console.log(event);
 				break;
 			case "enable":
-				// temp
-				// el = event.root.find(".option[data-change='change-size']");
-				// el.find(".value").html( Self.preset.size +el.data("suffix") );
+				// auto load preset tip
+				Self.dispatch({ type: "select-preset-tip", ...this.preset });
 
 				_canvas.cvs.on("mousedown", Self.dispatch);
 				break;
