@@ -110,6 +110,8 @@
 					Self.preset.tip.ctx.globalCompositeOperation = "source-atop";
 					Self.preset.tip.ctx.fillStyle = _canvas.fgColor;
 					Self.preset.tip.ctx.fillRect(0, 0, 1e4, 1e4);
+
+					if (event.callback) event.callback();
 				};
 				Self.preset.tipImage.src = "~/icons/brush-preset-"+ Self.preset.name +".png";
 				break;

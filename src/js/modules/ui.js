@@ -84,6 +84,7 @@ const UI = {
 			hardness,
 			roundness,
 			angle,
+			image,
 			el;
 		//console.log(event);
 		switch (event.type) {
@@ -95,8 +96,31 @@ const UI = {
 				break;
 			// custom events
 			case "set-initial-value":
+				Self.cvs = Self.menu.find(".preview canvas");
+				Self.ctx = Self.cvs[0].getContext("2d");
+				Self.cvs.prop({ width: 206, height: 78 });
+
 				el = Self.menu.find(".shape-list > div").get(0);
 				Self.doBrushTips({ type: "tip-menu-set-tip", el });
+
+				Self.doBrushTips({ type: "draw-preview-curve" });
+				break;
+			case "draw-preview-curve":
+				// reset canvas
+				Self.ctx.clearRect(0, 0, 1e4, 1e4);
+				Self.ctx.fillStyle = "#fff";
+
+				image = TOOLS.brush.preset.tip.cvs[0];
+				size = 25;
+
+				let x = 0,
+					hs = size/2,
+					oX = 12-hs;
+				for (; x<180; x+=1) {
+					let y = 39 - Math.sin(x * 0.0365) * 15;
+
+					Self.ctx.drawImage(image, 0, 0, size, size, x+oX, y-hs, size, size)
+				}
 				break;
 			case "tip-menu-set-tip":
 				el = event.el;
@@ -111,13 +135,13 @@ const UI = {
 				angle     = +xShape.getAttribute("angle");
 
 
+				// dispatch event to be forwarded
 				data = {
 					type: Self.srcEl.data("change"),
 					el: Self.srcEl,
-					//old: Color.rgbToHex(Self.srcEl.find(".value").css("background-color")),
 					arg: name,
+					callback: () => Self.doBrushTips({ type: "draw-preview-curve" })
 				};
-				// dispatch event to be forwarded
 				if (data.type) APP.dispatch(data);
 
 

@@ -59,6 +59,7 @@
 					</div>
 				</div>
 			</div>
+			<hr/>
 			<div class="shape-list">
 				<xsl:for-each select="./*">
 					<div data-click="tip-menu-set-tip">
@@ -75,8 +76,9 @@
 					</div>
 				</xsl:for-each>
 			</div>
+			<hr/>
 			<div class="preview">
-
+				<canvas></canvas>
 			</div>
 		</div>
 	</div>
