@@ -59,6 +59,7 @@
 					// Bresenham's line algorithm
 					line: (...args) => Misc.bresenhamLine(...args)
 				};
+				//_canvas.osCtx.globalCompositeOperation = "difference";
 
 				// trigger first paint
 				Self.dispatch({ type: "mousemove" });
@@ -147,7 +148,7 @@
 				Self.preset.tip.ctx.fillStyle = _canvas.fgColor;
 				Self.preset.tip.ctx.fillRect(0, 0, size, size);
 				break;
-			case "change-mode":
+			case "change-blend-mode":
 				console.log(event);
 				break;
 			case "change-size":

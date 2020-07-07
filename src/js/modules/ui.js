@@ -10,8 +10,8 @@ const UI = {
 		this.content.on("mousedown", "[data-ui]", this.dispatch);
 
 		// temp
-		setTimeout(() =>
-			this.content.find(".option[data-options='brush-tips'] .value").trigger("click"), 200);
+		// setTimeout(() =>
+		// 	this.content.find(".option[data-options='brush-tips'] .value").trigger("click"), 200);
 	},
 	dispatch(event) {
 		let APP = photoshop,
