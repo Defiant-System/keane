@@ -1,14 +1,13 @@
 
-//defiant.require1("canvas.js")
 defiant.require("classes/canvas.js")
 defiant.require("classes/layer.js")
+
+defiant.require("modules/projector.js")
 defiant.require("modules/misc.js")
 defiant.require("modules/color.js")
 defiant.require("modules/ui.js")
 defiant.require("modules/rulers.js")
 defiant.require("modules/thumb.js")
-// defiant.requir1e("modules/psd.js")
-// const PSD = requir1e("psd");
 
 
 const TOOLS = {
@@ -36,44 +35,23 @@ const photoshop = {
 		this.els.content = window.find("content");
 		this.els.statusBar = window.find(".status-bar");
 
-		// canvas
-		this.cvs = window.find(".cvs-wrapper .canvas");
-		this.ctx = this.cvs[0].getContext("2d");
-		this.cvs.prop({ width: window.width, height: window.height, });
-
 		// init objects
 		UI.init();
-		//Canvas.init();
+		Projector.init();
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
 
-		// auto store box HTML
+		// auto store first visible tool-options HTML
 		window.store("tool-options/marquee.htm", '.tool-options-marquee');
 
-		let box = window.store("boxes/box-navigator.htm", 'div[data-box="navigator"]');
-		this.box.navigator.toggle(box, "on");
-		box = window.store("boxes/box-character.htm", 'div[data-box="character"]');
-		this.box.character.toggle(box, "on");
-		box = window.store("boxes/box-layers.htm", 'div[data-box="layers"]');
-		this.box.layers.toggle(box, "on");
-
-		// auto trigger resize event for canvas dimensions
-		//this.dispatch({ event: "window.resize" });
+		// init sidebar initial boxes
+		["navigator", "character", "layers"].map(item => {
+			let box = window.store(`boxes/box-${item}.htm`, `div[data-box="${item}"]`);
+			this.box[item].toggle(box, "on");
+		});
 
 		// auto-select initial tool
-		this.els.content.find(".tools-bar .tool[data-content='brush']").trigger("click");
-
-		// bind event handlers
-		this.els.content.bind("dragover drop", this.dispatch);
-
-		// temp
-		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
-		//this.dispatch({ type: "change-bg", arg: "~/img/small.jpg" });
-		//this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
-		//this.dispatch({ type: "change-bg", arg: "~/img/mona-lisa.jpg" });
-		//this.dispatch({ type: "change-bg", arg: "~/img/lotus.jpg" });
-		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
-		//window.find('.sidebar-box div[data-content="channels"]').trigger("click");
+		//this.els.content.find(".tools-bar .tool[data-content='brush']").trigger("click");
 	},
 	dispatch(event) {
 		let Self = photoshop,
@@ -83,64 +61,17 @@ const photoshop = {
 			pEl,
 			el;
 		switch (event.type) {
-			case "dragover":
-				event.stopPropagation();
-				event.preventDefault();
-				event.dataTransfer.dropEffect = 'copy';
-				break;
-			case "drop":
-				event.stopPropagation();
-				event.preventDefault();
-				
-				PSD.fromEvent(event).then(function (psd) {
-					var data = JSON.stringify(psd.tree().export(), undefined, 2),
-						img = new Image();
-					console.log(data);
-					// img.onload = () => CTX.drawImage(img, 70, 150);
-					// img.src = psd.image.toBase64();
-					// document.getElementById('data').innerHTML = data;
-					// document.getElementById('image').appendChild(psd.image.toPng());
-				});
-				break;
-
 			case "window.open":
 				break;
 			case "window.resize":
-				// resize canvas to maintain correct pixel ratio
-				Canvas.dispatch(event);
-				break;
-			case "change-bg":
-				image = new Image;
-				image.onload = () => {
-					let stack = [
-							{ type: "reset-canvas" },
-							{ type: "set-canvas", w: image.width, h: image.height, scale: 1 },
-							
-							// { type: "draw-base-layer", fill: "#555" },
-							// { type: "draw-base-layer", fill: "transparent" },
-							{ type: "draw-image", src: image },
-
-							// { type: "draw-rect", x: 165, y: 84, w: 269, h: 230, fill: "white" },
-							// { type: "draw-rect", x: 140, y: 150, w: 200, h: 140, stroke: "blue", width: 5 },
-							// { type: "draw-text", x: 70, y: 70, fill: "#fff", size: 37, font: "Helvetica", text: "Defiant" },
-							{ type: "update-canvas" },
-							//{ type: "pan-canvas", top: 90, left: 18 },
-							//{type: "pan-canvas", top: 90, left: 18, stop: true},
-						];
-					Canvas.dispatch({ type: "load-canvas", stack });
-				};
-				image.src = event.arg;
 				break;
 			case "toggle-rulers":
-				Canvas.showRulers = event.checked === 1;
-				// trigger re-calculations + re-paint
-				Canvas.dispatch({ type: "window.resize" });
+				// Canvas.showRulers = event.checked === 1;
+				// // trigger re-calculations + re-paint
+				// Canvas.dispatch({ type: "window.resize" });
 				break;
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
-				break;
-			case "enter-quick-mask":
-				console.log(event.el);
 				break;
 			case "select-tool":
 				el = $(event.target);
@@ -155,12 +86,12 @@ const photoshop = {
 
 				if (TOOLS._active) {
 					// disable active tool
-					TOOLS[TOOLS._active].dispatch({ type: "disable" });
+				//	TOOLS[TOOLS._active].dispatch({ type: "disable" });
 				}
 				if (TOOLS[el.data("content")]) {
 					// enable tool
 					TOOLS._active = el.data("content");
-					TOOLS[TOOLS._active].dispatch({ type: "enable", root });
+				//	TOOLS[TOOLS._active].dispatch({ type: "enable", root });
 				}
 				break;
 			case "box-head-tab":

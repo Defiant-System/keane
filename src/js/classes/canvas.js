@@ -6,6 +6,7 @@ class Canvas {
 		// layers stack
 		this.layers = [];
 		// defaults
+		this.scale = 1;
 		this.showRulers = true;
 		this.bgColor = "#000"
 		this.fgColor = "#fff"
@@ -56,6 +57,24 @@ class Canvas {
 
 		// save paint context
 		this.osCtx.save();
+
+		switch (event.type) {
+			case "enter-quick-mask":
+				console.log(event.el);
+				break;
+			case "set-scale":
+				// scaled dimension
+				this.scale = event.scale;
+				this.w = this.oW * this.scale;
+				this.h = this.oH * this.scale;
+				// origo
+				this.oX = _round(this.cX - (this.w / 2));
+				this.oY = _round(this.cY - (this.h / 2));
+
+				// reset canvas
+				if (!event.noReset) this.render();
+				break;
+		}
 
 		// restore paint context
 		this.osCtx.restore();

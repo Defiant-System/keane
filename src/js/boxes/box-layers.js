@@ -11,7 +11,7 @@
 			defiant.on("canvas-update", this.dispatch);
 
 			// auto trigger
-			this.dispatch({ type: "canvas-update" });
+			//this.dispatch({ type: "canvas-update" });
 		} else {
 			// subscribe to events
 			defiant.off("canvas-update", this.dispatch);
