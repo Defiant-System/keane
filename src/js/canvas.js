@@ -18,10 +18,6 @@ const Canvas = {
 		let { cvs, ctx } = this.createCanvas(1, 1);
 		this.osCvs = cvs;
 		this.osCtx = ctx;
-		
-		this.overlay = {};
-		this.overlay.cvs = window.find(".cvs-wrapper .overlay");
-		this.overlay.ctx = this.overlay.cvs[0].getContext("2d");
 
 		this.cvs = window.find(".cvs-wrapper .canvas");
 		this.ctx = this.cvs[0].getContext("2d");
@@ -147,22 +143,6 @@ const Canvas = {
 				});
 				// offscreen canvas
 				Self.osCvs.prop({ width: Self.oW, height: Self.oH });
-				/* falls through */
-			case "sync-overlay-canvas":
-				Self.overlay.width = Self.aX - Self.oX < 0 ? Self.w : Self.aW - (Self.showRulers ? _rulers.t : 0);
-				Self.overlay.height = Self.aY - Self.oY < 0 ? Self.h : Self.aH + (Self.showRulers ? _rulers.t : 0);
-				Self.overlay.top = _max(Self.oY, Self.aY);
-				Self.overlay.left = _max(Self.oX, Self.aX);
-				// sync overlay canvas
-				Self.overlay.cvs
-					.prop({
-						width: Self.overlay.width,
-						height: Self.overlay.height,
-					})
-					.css({
-						top: Self.overlay.top +"px",
-						left: Self.overlay.left +"px"
-					});
 				break;
 			case "set-scale":
 				// scaled dimension
@@ -172,8 +152,6 @@ const Canvas = {
 				// origo
 				Self.oX = _round(Self.cX - (Self.w / 2));
 				Self.oY = _round(Self.cY - (Self.h / 2));
-
-				Self.dispatch({ type: "sync-overlay-canvas" });
 
 				// reset canvas
 				if (!event.noReset) Self.reset();
