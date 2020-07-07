@@ -2,15 +2,31 @@
 	<Menu name="Photoshop">
 		<Menu name="About Photoshop"/>
 		<Menu type="divider"/>
-		<Menu name="New Game" click="restart"/>
-		<Menu type="divider"/>
 		<Menu name="Hide Photoshop"/>
 		<Menu name="Hide Others"/>
 		<Menu name="Show All" disabled="1"/>
 		<Menu type="divider"/>
 		<Menu name="Quit Photoshop" shell="win -c"/>
 	</Menu>
-	<Menu name="Background" for="workspace">
+	<Menu name="File">
+		<Menu name="New"/>
+		<Menu name="Open&#8230;"/>
+		<Menu type="divider"/>
+		<Menu name="Close"/>
+		<Menu name="Close All"/>
+		<Menu name="Save"/>
+		<Menu name="Save As&#8230;"/>
+		<Menu type="divider"/>
+		<Menu name="Export"/>
+	</Menu>
+	<Menu name="Edit">
+		<Menu name="Cut"/>
+		<Menu name="Copy"/>
+		<Menu name="Paste"/>
+		<Menu name="Clear"/>
+	</Menu>
+	<!--
+	<Menu name="Background">
 		<Menu name="Drop of Water" arg="/cdn/img/bg/nature/drop-of-water.jpg" click="change-bg"/>
 		<Menu name="Barley Field" arg="/cdn/img/bg/nature/barley-field.jpg" click="change-bg"/>
 		<Menu name="Flower 1" arg="/cdn/img/bg/nature/flower.jpg" click="change-bg"/>
@@ -26,9 +42,22 @@
 		<Menu name="Bled" arg="/cdn/img/bg/wallpapers/bled.jpg" click="change-bg"/>
 		<Menu name="Golden Gate Bridge" arg="/cdn/img/bg/wallpapers/golden-gate-bridge.jpg" click="change-bg"/>
 	</Menu>
+	-->
 	<Menu name="View">
 		<Menu name="Rulers" click="toggle-rulers" check-group="toggle-rulers" is-checked="1" hotkey="alt+r" />
 		<Menu name="Status Bar" click="toggle-statusbar" check-group="toggle-statusbar" />
+	</Menu>
+	<Menu name="Window">
+		<Menu name="Navigator" check-group="sidebar-top" is-checked="1"/>
+		<Menu name="Color" check-group="sidebar-top"/>
+		<Menu name="Info" check-group="sidebar-top"/>
+		<Menu name="Character" check-group="sidebar-middle" is-checked="1"/>
+		<Menu name="Paragraph" check-group="sidebar-middle"/>
+		<Menu name="Swatches" check-group="sidebar-middle"/>
+		<Menu name="Layers" check-group="sidebar-bottom" is-checked="1"/>
+		<Menu name="Channels" check-group="sidebar-bottom"/>
+		<Menu name="Paths" check-group="sidebar-bottom"/>
+		<Menu type="divider"/>
 	</Menu>
 	<Menu name="Help">
 		<Menu name="Help" click="open-help"/>

@@ -2,6 +2,7 @@
 defiant.require("classes/file.js")
 defiant.require("classes/layer.js")
 
+defiant.require("modules/files.js")
 defiant.require("modules/projector.js")
 defiant.require("modules/misc.js")
 defiant.require("modules/color.js")
@@ -40,6 +41,7 @@ const photoshop = {
 
 		// init objects
 		UI.init();
+		Files.init();
 		Projector.init();
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
@@ -58,13 +60,11 @@ const photoshop = {
 
 		// temp
 		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg" });
-		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg" });
+		this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg" });
 		//this.dispatch({ type: "open-file", path: "~/img/small.jpg" });
 	},
 	dispatch(event) {
 		let Self = photoshop,
-			file,
-			path,
 			image,
 			name,
 			boxName,
@@ -72,24 +72,14 @@ const photoshop = {
 			el;
 		switch (event.type) {
 			case "open-file":
-				file = new File(event.path);
-				Self.files.push(file);
-				// append file tab in status bar
-				Self.els.statusBar
-					.prepend(`<div class="file" data-click="switch-file" data-path="${file.path}">
-								<span>${file.name}</span><div class="close"></div></div>`);
-				/* falls through */
-			case "switch-file":
-				if (event.el) {
-					el = event.el;
-					path = el.data("path");
-					file = Self.files.find(f => f.path === path);
-				} else if (file) {
-					el = Self.els.statusBar.find(`.file[data-path="${file.path}"]`);
-				}
-				// ui update active element
-				el.parent().find(".active").removeClass("active");
-				el.addClass("active");
+				Files.open(event.path);
+				break;
+			case "select-file":
+				Files.select(event.arg);
+				break;
+			case "close-file":
+				el = event.el.parent();
+				Files.close(el.data("arg"));
 				break;
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);

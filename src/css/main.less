@@ -735,9 +735,10 @@ content {
 				font-size: 11px;
 				margin-right: 1px;
 
-				&:hover:not(.active) {
-					color: rgba(#fff,.75);
-
+				&:hover {
+					&:not(.active) {
+						color: rgba(#fff,.75);
+					}
 					.close {
 						display: block;
 					}

@@ -8,6 +8,10 @@ class File {
 		this.history = new window.History;
 		// layers stack
 		this.layers = [];
+		// canvases
+		let { cvs, ctx } = Misc.createCanvas(1, 1);
+		this.cvs = cvs;
+		this.ctx = ctx;
 		// defaults
 		this.scale = 1;
 		this.showRulers = true;
@@ -15,10 +19,7 @@ class File {
 		this.fgColor = "#fff"
 		this.lineWidth = 1;
 
-		// canvases
-		let { cvs, ctx } = Misc.createCanvas(1, 1);
-		this.cvs = cvs;
-		this.ctx = ctx;
+		//this.dispatch({ type: "load-image", path });
 	}
 	translatePoints(p) {
 		let _round = Math.round,
@@ -56,14 +57,15 @@ class File {
 			pi2 = Math.PI * 2,
 			x, y, w, h,
 			data = {},
+			image,
 			el;
 
 		// save paint context
-		this.osCtx.save();
+		this.ctx.save();
 
+		console.log(event);
 		switch (event.type) {
 			case "enter-quick-mask":
-				console.log(event.el);
 				break;
 			case "set-scale":
 				// scaled dimension
@@ -80,6 +82,6 @@ class File {
 		}
 
 		// restore paint context
-		this.osCtx.restore();
+		this.ctx.restore();
 	}
 }
