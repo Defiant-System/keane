@@ -1,6 +1,9 @@
 
 class File {
 	constructor(path) {
+		// file path + name
+		this.path = path;
+		this.name = path.slice(path.lastIndexOf("/") + 1);
 		// undo history
 		this.history = new window.History;
 		// layers stack

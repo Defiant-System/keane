@@ -35,6 +35,9 @@ const photoshop = {
 		this.els.content = window.find("content");
 		this.els.statusBar = window.find(".status-bar");
 
+		// file stack
+		this.files = [];
+
 		// init objects
 		UI.init();
 		Projector.init();
@@ -55,15 +58,39 @@ const photoshop = {
 
 		// temp
 		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg" });
+		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg" });
+		//this.dispatch({ type: "open-file", path: "~/img/small.jpg" });
 	},
 	dispatch(event) {
 		let Self = photoshop,
+			file,
+			path,
 			image,
 			name,
 			boxName,
 			pEl,
 			el;
 		switch (event.type) {
+			case "open-file":
+				file = new File(event.path);
+				Self.files.push(file);
+				// append file tab in status bar
+				Self.els.statusBar
+					.prepend(`<div class="file" data-click="switch-file" data-path="${file.path}">
+								<span>${file.name}</span><div class="close"></div></div>`);
+				/* falls through */
+			case "switch-file":
+				if (event.el) {
+					el = event.el;
+					path = el.data("path");
+					file = Self.files.find(f => f.path === path);
+				} else if (file) {
+					el = Self.els.statusBar.find(`.file[data-path="${file.path}"]`);
+				}
+				// ui update active element
+				el.parent().find(".active").removeClass("active");
+				el.addClass("active");
+				break;
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
 				break;
