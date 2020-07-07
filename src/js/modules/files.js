@@ -14,8 +14,6 @@ const Files = {
 						<span>${file.name}</span><div class="close" data-click="close-file"></div></div>`);
 		// add to stack
 		this.stack.push(file);
-		// select newly added file
-		this.select(path);
 
 		// add option to menubar
 		window.menuBar.add({
@@ -26,6 +24,9 @@ const Files = {
 			"arg": file.path,
 			"name": file.name,
 		});
+		
+		// select newly added file
+		this.select(path);
 
 		return file;
 	},
