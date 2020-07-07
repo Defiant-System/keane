@@ -1,5 +1,5 @@
 
-class Canvas {
+class File {
 	constructor(path) {
 		// undo history
 		this.history = new window.History;

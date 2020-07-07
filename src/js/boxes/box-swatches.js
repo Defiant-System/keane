@@ -5,6 +5,7 @@
 	els: {},
 	toggle(root, state) {
 		if (state === "on") {
+			// fast references
 			this.els.root = root;
 		} else {
 			// clean up
@@ -13,10 +14,12 @@
 	},
 	dispatch(event) {
 		let APP = photoshop,
-			Self = APP.box.swatches;
+			Self = APP.box.swatches,
+			el;
 
 		switch (event.type) {
-			case "type-of-event":
+			// custom events
+			case "custom-event":
 				break;
 		}
 	}

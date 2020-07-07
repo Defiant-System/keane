@@ -5,6 +5,7 @@
 	els: {},
 	toggle(root, state) {
 		if (state === "on") {
+			// fast references
 			this.els.root = root;
 		} else {
 			// clean up
@@ -13,11 +14,12 @@
 	},
 	dispatch(event) {
 		let APP = photoshop,
-			Self = APP.box.character;
+			Self = APP.box.character,
+			el;
 
 		switch (event.type) {
-			case "set-color":
-				console.log(event);
+			// custom events
+			case "custom-event":
 				break;
 		}
 	}

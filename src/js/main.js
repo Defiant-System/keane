@@ -1,5 +1,5 @@
 
-defiant.require("classes/canvas.js")
+defiant.require("classes/file.js")
 defiant.require("classes/layer.js")
 
 defiant.require("modules/projector.js")
@@ -41,17 +41,20 @@ const photoshop = {
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
 
-		// auto store first visible tool-options HTML
-		window.store("tool-options/marquee.htm", '.tool-options-marquee');
-
 		// init sidebar initial boxes
 		["navigator", "character", "layers"].map(item => {
 			let box = window.store(`boxes/box-${item}.htm`, `div[data-box="${item}"]`);
-			this.box[item].toggle(box, "on");
+		//	this.box[item].toggle(box, "on");
 		});
 
+		// auto store first visible tool-options HTML
+		window.store("tool-options/marquee.htm", '.tool-options-marquee');
+
 		// auto-select initial tool
-		//this.els.content.find(".tools-bar .tool[data-content='brush']").trigger("click");
+		this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click");
+
+		// temp
+		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg" });
 	},
 	dispatch(event) {
 		let Self = photoshop,
@@ -61,15 +64,6 @@ const photoshop = {
 			pEl,
 			el;
 		switch (event.type) {
-			case "window.open":
-				break;
-			case "window.resize":
-				break;
-			case "toggle-rulers":
-				// Canvas.showRulers = event.checked === 1;
-				// // trigger re-calculations + re-paint
-				// Canvas.dispatch({ type: "window.resize" });
-				break;
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
 				break;
@@ -106,10 +100,8 @@ const photoshop = {
 				
 				// notify box state = off
 				this.box[oldBox.data("box")].toggle(oldBox, "off");
-
 				// replace box body
 				newBox = oldBox.replace(newBox);
-
 				// notify box state = on
 				this.box[newBox.data("box")].toggle(newBox, "on");
 				break;
