@@ -1,12 +1,15 @@
 
-defiant.require("canvas.js")
+//defiant.require1("canvas.js")
+defiant.require("classes/canvas.js")
+defiant.require("classes/layer.js")
 defiant.require("modules/misc.js")
 defiant.require("modules/color.js")
 defiant.require("modules/ui.js")
 defiant.require("modules/rulers.js")
 defiant.require("modules/thumb.js")
-//defiant.req1uire("modules/psd.js")
-//const PSD = require1("psd");
+// defiant.requir1e("modules/psd.js")
+// const PSD = requir1e("psd");
+
 
 const TOOLS = {
 	_active  : false,
@@ -25,19 +28,6 @@ const TOOLS = {
 	zoom     : defiant.require("tools/zoom.js"),
 };
 
-const ZOOM =   [{ level: 12.5, rG: [200, 100, 50] },
-				{ level: 25,   rG: [100, 0,   20] },
-				{ level: 50,   rG: [100, 50,  10] },
-				{ level: 75,   rG: [50,  0,   5 ] },
-				{ level: 100,  rG: [50,  10,  5 ] },
-				{ level: 200,  rG: [20,  10,  5 ] },
-				{ level: 300,  rG: [20,  10,  2 ] },
-				{ level: 400,  rG: [10,  10,  2 ] },
-				{ level: 600,  rG: [10,  5,   1 ] },
-				{ level: 800,  rG: [10,  5,   1 ] },
-				{ level: 1200, rG: [5,   0,   1 ] },
-				{ level: 1600, rG: [2,   0,   1 ] },
-				{ level: 3200, rG: [2,   1,   0 ] }];
 
 const photoshop = {
 	els: {},
@@ -46,9 +36,14 @@ const photoshop = {
 		this.els.content = window.find("content");
 		this.els.statusBar = window.find(".status-bar");
 
+		// canvas
+		this.cvs = window.find(".cvs-wrapper .canvas");
+		this.ctx = this.cvs[0].getContext("2d");
+		this.cvs.prop({ width: window.width, height: window.height, });
+
 		// init objects
 		UI.init();
-		Canvas.init();
+		//Canvas.init();
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
 
@@ -74,7 +69,7 @@ const photoshop = {
 		// temp
 		//this.dispatch({ type: "change-bg", arg: "/cdn/img/bg/wide/shoreline.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "~/img/small.jpg" });
-		this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
+		//this.dispatch({ type: "change-bg", arg: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "~/img/mona-lisa.jpg" });
 		//this.dispatch({ type: "change-bg", arg: "~/img/lotus.jpg" });
 		//window.find('.sidebar-box div[data-content="info"]').trigger("click");
@@ -100,8 +95,9 @@ const photoshop = {
 				PSD.fromEvent(event).then(function (psd) {
 					var data = JSON.stringify(psd.tree().export(), undefined, 2),
 						img = new Image();
-					img.onload = () => CTX.drawImage(img, 70, 150);
-					img.src = psd.image.toBase64();
+					console.log(data);
+					// img.onload = () => CTX.drawImage(img, 70, 150);
+					// img.src = psd.image.toBase64();
 					// document.getElementById('data').innerHTML = data;
 					// document.getElementById('image').appendChild(psd.image.toPng());
 				});

@@ -14,6 +14,12 @@ const Canvas = {
 		this.fgColor = "#fff"
 		this.lineWidth = 1;
 
+		// undo history
+		this.history = new window.History;
+		// layers stack
+		this.layers = [];
+		//this.layers.push( new Layer("Background") );
+
 		// canvases
 		let { cvs, ctx } = this.createCanvas(1, 1);
 		this.osCvs = cvs;

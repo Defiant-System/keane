@@ -14,7 +14,7 @@
 			roundness : +xShape.getAttribute("roundness"),
 			angle     : +xShape.getAttribute("angle"),
 			size      : +xShape.getAttribute("size"),
-			tip       : Canvas.createCanvas(1, 1),
+			tip       : Misc.createCanvas(1, 1),
 		};
 	},
 	dispatch(event) {
