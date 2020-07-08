@@ -6,7 +6,13 @@
 	toggle(root, state) {
 		if (state === "on") {
 			// fast references
+			this.els.channelList = root.find(".box-content-list");
 			this.els.root = root;
+
+			window.render({
+				template: "channels",
+				target: this.els.channelList,
+			});
 		} else {
 			// clean up
 			this.els = {};

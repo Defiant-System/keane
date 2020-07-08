@@ -736,7 +736,10 @@ content {
 				background: rgba(#455,.75);
 				backdrop-filter: blur(@backgrop-blur);
 				font-size: 11px;
-				margin-right: 1px;
+				
+				&:not(:first-child) {
+					border-left: 1px solid rgba(#233,.75);
+				}
 
 				&:hover {
 					&:not(.active) {

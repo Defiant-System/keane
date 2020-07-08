@@ -1,5 +1,69 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+<xsl:template name="layers">
+	<xsl:for-each select="./*">
+		<xsl:choose>
+			<xsl:when test="@type = 'folder'">
+				<div class="group">
+					<div class="row">
+						<div class="icon icon-folder"></div>
+						<div class="name"><xsl:value-of select="@name"/></div>
+						<div data-click="toggle-visibility">
+							<xsl:attribute name="class">icon
+								<xsl:if test="@state = 'hidden'"> icon-eye-off</xsl:if>
+								<xsl:if test="@state = 'visible'"> icon-eye-on</xsl:if>
+							</xsl:attribute>
+						</div>
+					</div>
+				</div>
+			</xsl:when>
+			<xsl:when test="@type = 'layer'">
+				<div class="row">
+					<div class="thumbnail"><canvas></canvas></div>
+					<div class="name"><xsl:value-of select="@name"/></div>
+					<div data-click="toggle-visibility">
+						<xsl:attribute name="class">icon
+							<xsl:if test="@state = 'hidden'"> icon-eye-off</xsl:if>
+							<xsl:if test="@state = 'visible'"> icon-eye-on</xsl:if>
+						</xsl:attribute>
+					</div>
+					<xsl:if test="@fx"><div class="fx-applied"></div></xsl:if>
+				</div>
+			</xsl:when>
+		</xsl:choose>
+	</xsl:for-each>
+</xsl:template>
+
+<xsl:template name="channels">
+	<div class="row" data-channel="rgb" data-click="select-channel">
+		<div class="thumbnail"><canvas></canvas></div>
+		<div class="name">RGB</div>
+		<div class="icon icon-eye-on" data-click="toggle-visibility"></div>
+	</div>
+	<div class="row" data-channel="red" data-click="select-channel">
+		<div class="thumbnail channel-red"><canvas></canvas></div>
+		<div class="name">Red</div>
+		<div class="icon icon-eye-on" data-click="toggle-visibility"></div>
+	</div>
+	<div class="row" data-channel="green" data-click="select-channel">
+		<div class="thumbnail channel-green"><canvas></canvas></div>
+		<div class="name">Green</div>
+		<div class="icon icon-eye-on" data-click="toggle-visibility"></div>
+	</div>
+	<div class="row" data-channel="blue" data-click="select-channel">
+		<div class="thumbnail channel-blue"><canvas></canvas></div>
+		<div class="name">Blue</div>
+		<div class="icon icon-eye-on" data-click="toggle-visibility"></div>
+	</div>
+</xsl:template>
+
+<xsl:template name="paths">
+	<div class="row">
+		<div class="thumbnail"><canvas></canvas></div>
+		<div class="name">Name of path</div>
+	</div>
+</xsl:template>
+
 <xsl:template name="knob">
 	<div class="inline-menubox" data-ui="doKnob">
 		<div class="inline-content">
