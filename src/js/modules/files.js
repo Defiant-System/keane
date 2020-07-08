@@ -7,8 +7,8 @@ const Files = {
 		// file stack
 		this.stack = [];
 	},
-	open(path) {
-		let file = new File(path),
+	open(opt) {
+		let file = new File(opt),
 			el = this.statusBar
 					.prepend(`<div class="file" data-click="select-file" data-arg="${file.path}">
 						<span>${file.name}</span><div class="close" data-click="close-file"></div></div>`);
@@ -26,7 +26,7 @@ const Files = {
 		});
 
 		// select newly added file
-		this.select(path);
+		this.select(opt.path);
 
 		return file;
 	},

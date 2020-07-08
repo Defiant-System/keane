@@ -83,6 +83,9 @@ const photoshop = {
 				el = event.el.parent();
 				Files.close(el.data("arg"));
 				break;
+			case "toggle-rulers":
+				Files._active.dispatch(event);
+				break;
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
 				break;

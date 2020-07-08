@@ -46,7 +46,6 @@ const Projector = {
 		this.ctx.restore();
 
 		if (file.showRulers) {
-			this.ctx.translate(20, 18);
 			Rulers.render(this, file);
 		}
 	}

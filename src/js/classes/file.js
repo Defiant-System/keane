@@ -105,6 +105,18 @@ class File {
 				this.oX = _round(Projector.cX - (this.w / 2));
 				this.oY = _round(Projector.cY - (this.h / 2));
 				break;
+			case "toggle-rulers":
+				this.showRulers = event.checked === 1;
+				// trigger re-calculations + re-paint
+				Projector.reset();
+				// update origo
+				this.oX = _round(Projector.cX - (this.w / 2));
+				this.oY = _round(Projector.cY - (this.h / 2));
+				// re-render
+				this.render();
+
+				APP.els.content.toggleClass("show-rulers", !this.showRulers);
+				break;
 			case "set-contents":
 				this.ctx.fillStyle = event.fill === "transparent" ? Projector.checkers : event.fill;
 				this.ctx.fillRect(0, 0, this.oW, this.oH);

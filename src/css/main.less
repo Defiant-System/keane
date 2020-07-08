@@ -58,6 +58,14 @@ content {
 		cursor: none;
 	}
 
+	&.show-rulers {
+		.workspace {
+			.status-bar {
+				left: 18px;
+			}
+		}
+	}
+
 	.tools-bar {
 		background-color: rgba(#233,.75);
 		backdrop-filter: blur(@backgrop-blur);
@@ -707,7 +715,6 @@ content {
 
 		.status-bar {
 			position: absolute;
-			left: 18px;
 			left: 0;
 			right: 0;
 			bottom: 0;
