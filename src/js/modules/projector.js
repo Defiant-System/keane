@@ -34,12 +34,13 @@ const Projector = {
 		// center
 		this.cX = (window.width + this.aX - this.els.sideBar.width()) / 2;
 		this.cY = (window.height + this.aY - this.els.statusBar.height()) / 2;
-		// clears canvas
-		this.cvs.prop({ width: window.width, height: window.height });
 	},
 	render() {
 		// reference to displayed file
 		let file = this.file;
+		
+		// clears canvas
+		this.cvs.prop({ width: window.width, height: window.height });
 
 		this.ctx.save();
 		this.ctx.translate(file.oX, file.oY);

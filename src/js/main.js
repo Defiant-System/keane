@@ -58,7 +58,7 @@ const photoshop = {
 
 		// auto-select initial tool
 		requestAnimationFrame(() =>
-			this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click"));
+			this.els.content.find(".tools-bar .tool[data-content='move']").trigger("click"));
 
 		// temp
 		//this.dispatch({ type: "open-file", name: "Untitled", width: 600, height: 400, fill: "#fff", scale: 1 });

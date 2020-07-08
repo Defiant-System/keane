@@ -66,6 +66,7 @@ class File {
 	}
 	dispatch(event) {
 		let APP = photoshop,
+			Proj = Projector,
 			_round = Math.round,
 			layer = event,
 			el;
@@ -77,7 +78,7 @@ class File {
 		switch (event.type) {
 			case "set-canvas":
 				// reset projector
-				Projector.reset(this);
+				Proj.reset(this);
 
 				// original dimension
 				this.oW = event.w;
@@ -91,12 +92,12 @@ class File {
 					ZOOM.filter(z => z.level <= 100)
 						.map(zoom => {
 							let scale = zoom.level / 100;
-							if (Projector.aW > event.w * scale && Projector.aH > event.h * scale) {
+							if (Proj.aW > event.w * scale && Proj.aH > event.h * scale) {
 								event.scale = scale;
 							}
 						});
 				}
-				this.dispatch({ ...event, type: "set-scale" });
+				this.dispatch({ ...event, type: "set-scale", noRender: true });
 
 				// render canvas
 				this.render();
@@ -107,23 +108,34 @@ class File {
 				this.w = this.oW * this.scale;
 				this.h = this.oH * this.scale;
 				// origo
-				this.oX = _round(Projector.cX - (this.w / 2));
-				this.oY = _round(Projector.cY - (this.h / 2));
+				this.oX = _round(Proj.cX - (this.w / 2));
+				this.oY = _round(Proj.cY - (this.h / 2));
+
+				if (!event.noRender) {
+					// render projector canvas
+					Proj.render();
+				}
+				break;
+			case "pan-canvas":
+				this.oX = Number.isInteger(event.left) ? event.left :Proj.cX - (Self.w / 2) + event.x;
+				this.oY = Number.isInteger(event.top) ? event.top :Proj.cY - (Self.h / 2) + event.y;
+				// render projector canvas
+				Proj.render();
 				break;
 			case "toggle-rulers":
 				this.showRulers = event.checked === 1;
 				// trigger re-calculations + re-paint
-				Projector.reset(this);
+				Proj.reset(this);
 				// update origo
-				this.oX = _round(Projector.cX - (this.w / 2));
-				this.oY = _round(Projector.cY - (this.h / 2));
-				// re-render
-				this.render();
+				this.oX = _round(Proj.cX - (this.w / 2));
+				this.oY = _round(Proj.cY - (this.h / 2));
+				// render projector canvas
+				Proj.render();
 
 				APP.els.content.toggleClass("show-rulers", !this.showRulers);
 				break;
 			case "bg-checkers":
-				this.ctx.fillStyle = Projector.checkers;
+				this.ctx.fillStyle = Proj.checkers;
 				this.ctx.fillRect(0, 0, this.oW, this.oH);
 				break;
 			case "layer":
