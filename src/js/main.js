@@ -61,8 +61,8 @@ const photoshop = {
 			this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click"));
 
 		// temp
-		this.dispatch({ type: "open-file", name: "Untitled", width: 600, height: 400, fill: "#fff", scale: 1 });
-		//this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg", scale: 1 });
+		//this.dispatch({ type: "open-file", name: "Untitled", width: 600, height: 400, fill: "#fff", scale: 1 });
+		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg", scale: 1 });
 		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg", scale: 1 });
 		//this.dispatch({ type: "open-file", path: "~/img/small.jpg", scale: 1 });
 	},
@@ -78,7 +78,7 @@ const photoshop = {
 				Files.open(event);
 				break;
 			case "select-file":
-				Files.select(event.arg);
+				Files.select(+event.arg);
 				break;
 			case "close-file":
 				el = event.el.parent();

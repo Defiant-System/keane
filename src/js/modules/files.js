@@ -8,7 +8,7 @@ const Files = {
 		this.stack = [];
 	},
 	getUniqId() {
-		let ids = this.stack.map(f => file._id);
+		let ids = this.stack.map(f => f._id);
 		return Math.max.apply({}, [0, ...ids]) + 1;
 	},
 	open(opt) {
@@ -31,9 +31,7 @@ const Files = {
 		});
 
 		// select newly added file
-		this.select(file._id);
-
-		return file;
+		this.select(file._id, true);
 	},
 	close(id) {
 		let el = this.statusBar.find(`.file[data-arg="${id}"]`),
@@ -57,8 +55,10 @@ const Files = {
 			this.select(next.data("arg"));
 		}
 	},
-	select(id) {
+	select(id, isOpen) {
 		let el = this.statusBar.find(`.file[data-arg="${id}"]`);
+		if (el.hasClass("active")) return;
+
 		// ui update active element
 		el.parent().find(".active").removeClass("active");
 		el.addClass("active");
@@ -66,9 +66,12 @@ const Files = {
 		// update option in menubar
 		window.menuBar.update(`//MenuBar//Menu[@arg="${id}"]`, {"is-checked": "1"});
 
+		// skip rest if this function is called from "open"
+		if (isOpen) return;
+
 		// reference to active file
 		let file = this.stack.find(f => f._id === id);
-
-		return file;
+		Projector.reset(file);
+		Projector.render();
 	}
 };
