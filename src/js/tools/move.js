@@ -7,7 +7,8 @@
 	},
 	dispatch(event) {
 		let APP = photoshop,
-			CVS = Canvas,
+			Proj = Projector,
+			File = Proj.file,
 			Self = TOOLS.move,
 			Drag = Self.drag,
 			_max = Math.max,
@@ -20,18 +21,18 @@
 				event.preventDefault();
 
 				// dont pan if image fits available area
-				if (CVS.w <= CVS.aW && CVS.h <= CVS.aH) return;
+				if (File.w <= Proj.aW && File.h <= Proj.aH) return;
 
 				Self.drag = {
-					clickX: event.clientX - (CVS.oX - CVS.cX + (CVS.w / 2)),
-					clickY: event.clientY - (CVS.oY - CVS.cY + (CVS.h / 2)),
+					clickX: event.clientX - (File.oX - Proj.cX + (File.w / 2)),
+					clickY: event.clientY - (File.oY - Proj.cY + (File.h / 2)),
 					min: {
-						x: CVS.aX - CVS.cX + (CVS.w / 2),
-						y: CVS.aY - CVS.cY + (CVS.h / 2),
+						x: Proj.aX - Proj.cX + (File.w / 2),
+						y: Proj.aY - Proj.cY + (File.h / 2),
 					},
 					max: {
-						x: (CVS.cX - CVS.aX - (CVS.w / 2)),
-						y: (CVS.cY - CVS.aY - (CVS.h / 2)) + CVS.els.statusBar.height(),
+						x: (Proj.cX - Proj.aX - (File.w / 2)),
+						y: (Proj.cY - Proj.aY - (File.h / 2)) + Proj.els.statusBar.height(),
 					},
 					stop: true,
 				};
@@ -39,31 +40,29 @@
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover");
 				// bind event handlers
-				CVS.doc.on("mousemove mouseup", Self.dispatch);
+				Proj.doc.on("mousemove mouseup", Self.dispatch);
 				break;
 			case "mousemove":
 				Drag.x = _max(_min(event.clientX - Drag.clickX, Drag.min.x), Drag.max.x);
 				Drag.y = _max(_min(event.clientY - Drag.clickY, Drag.min.y), Drag.max.y);
-				// Drag.x = event.clientX - Drag.clickX;
-				// Drag.y = event.clientY - Drag.clickY;
-				CVS.dispatch({ type: "pan-canvas", ...Drag });
+				// forward event to file
+				File.dispatch({ type: "pan-canvas", ...Drag });
 				break;
 			case "mouseup":
-				//CVS.stack.push({ type: "pan-canvas", x: Drag.x, y: Drag.y });
 				// remove class
 				APP.els.content.removeClass("cover");
 				// unbind event handlers
-				CVS.doc.off("mousemove mouseup", Self.dispatch);
+				Proj.doc.off("mousemove mouseup", Self.dispatch);
 				break;
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "move";
 				break;
 			case "enable":
-				CVS.cvs.on("mousedown", Self.dispatch);
+				Proj.cvs.on("mousedown", Self.dispatch);
 				break;
 			case "disable":
-				CVS.cvs.off("mousedown", Self.dispatch);
+				Proj.cvs.off("mousedown", Self.dispatch);
 				break;
 		}
 	}

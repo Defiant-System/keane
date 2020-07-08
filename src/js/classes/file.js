@@ -117,8 +117,8 @@ class File {
 				}
 				break;
 			case "pan-canvas":
-				this.oX = Number.isInteger(event.left) ? event.left :Proj.cX - (Self.w / 2) + event.x;
-				this.oY = Number.isInteger(event.top) ? event.top :Proj.cY - (Self.h / 2) + event.y;
+				this.oX = Number.isInteger(event.left) ? event.left :Proj.cX - (this.w / 2) + event.x;
+				this.oY = Number.isInteger(event.top) ? event.top :Proj.cY - (this.h / 2) + event.y;
 				// render projector canvas
 				Proj.render();
 				break;

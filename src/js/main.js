@@ -62,7 +62,7 @@ const photoshop = {
 
 		// temp
 		//this.dispatch({ type: "open-file", name: "Untitled", width: 600, height: 400, fill: "#fff", scale: 1 });
-		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg", scale: 1 });
+		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg", scale: 4 });
 		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg", scale: 1 });
 		//this.dispatch({ type: "open-file", path: "~/img/small.jpg", scale: 1 });
 	},
@@ -103,12 +103,12 @@ const photoshop = {
 
 				if (TOOLS._active) {
 					// disable active tool
-				//	TOOLS[TOOLS._active].dispatch({ type: "disable" });
+					TOOLS[TOOLS._active].dispatch({ type: "disable" });
 				}
 				if (TOOLS[el.data("content")]) {
 					// enable tool
 					TOOLS._active = el.data("content");
-				//	TOOLS[TOOLS._active].dispatch({ type: "enable", root });
+					TOOLS[TOOLS._active].dispatch({ type: "enable", root });
 				}
 				break;
 			case "box-head-tab":
