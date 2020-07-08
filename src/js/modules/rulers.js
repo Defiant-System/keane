@@ -1,17 +1,17 @@
 
 const Rulers = {
 	t: 18, // ruler thickness
-	render(Canvas) {
+	render(proj, file) {
 		let _abs = Math.abs,
 			_round = Math.round,
 			g,
 			p = .5,
 			t = this.t,
-			ctx = Canvas.ctx,
-			scale = Canvas.scale,
-			aW = Canvas.aW, aH = Canvas.aH,
-			aX = Canvas.aX, aY = Canvas.aY,
-			oX = Canvas.oX, oY = Canvas.oY,
+			ctx = proj.ctx,
+			scale = file.scale,
+			aX = proj.aX, aY = proj.aY,
+			aW = proj.aW, aH = proj.aH,
+			oX = file.oX, oY = file.oY,
 			rG = ZOOM.find(z => z.level === scale * 100).rG,
 			w = aW + p,
 			h = aH + p + t + t,
@@ -25,6 +25,7 @@ const Rulers = {
 				ctx.lineTo(p2x, p2y);
 				ctx.stroke();
 			};
+
 		// handles if image is smaller than canvas
 		while (sX > 0) sX -= rG[0] * scale;
 		while (sY > 0) sY -= rG[0] * scale;

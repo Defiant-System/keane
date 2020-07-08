@@ -1,21 +1,20 @@
 
 class Layer {
-	constructor(name) {
-		this.name = name || "Layer 1";
+	constructor(opt) {
+		this.type = "layer";
+		this.name = opt.name || "Layer 1";
 		this.blendingMode = "normal";
 		this.opacity = 1;
 		this.visible = true;
 		//this.mask = {};
 
-		let width = Canvas.oW,
-			height = Canvas.oH,
-			{ cvs, ctx } = Misc.createCanvas(width, height);
+		let { cvs, ctx } = Misc.createCanvas(opt.width, opt.height);
 		this.cvs = cvs;
 		this.ctx = ctx;
 
-		console.log(width, height);
+		this.image = opt.image;
 	}
 	render() {
-
+		this.ctx.drawImage(this.image, 0, 0);
 	}
 }

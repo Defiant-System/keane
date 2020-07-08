@@ -24,7 +24,7 @@ const Files = {
 			"arg": file.path,
 			"name": file.name,
 		});
-		
+
 		// select newly added file
 		this.select(path);
 
@@ -46,7 +46,7 @@ const Files = {
 		window.menuBar.remove(`//MenuBar/Menu[@name='Window']/*[@arg="${path}"]`);
 
 		if (!next.length) {
-			// todo: show initial start view
+			console.log("show initial start view");
 		} else if (!next.hasClass("active")) {
 			// auto-select next file
 			this.select(next.data("arg"));
@@ -59,7 +59,7 @@ const Files = {
 		el.addClass("active");
 
 		// update option in menubar
-		window.menuBar.update(`//MenuBar//Menu[@arg="${path}"]`, {"is-checked": 1});
+		window.menuBar.update(`//MenuBar//Menu[@arg="${path}"]`, {"is-checked": "1"});
 
 		// reference to active file
 		this._active = this.stack.find(f => f.path === path);

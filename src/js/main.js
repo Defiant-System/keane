@@ -56,11 +56,13 @@ const photoshop = {
 		window.store("tool-options/marquee.htm", '.tool-options-marquee');
 
 		// auto-select initial tool
-		this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click");
+		requestAnimationFrame(() =>
+			this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click"));
 
 		// temp
+		//this.dispatch({ type: "open-file", name: "Untitled", width: 400, height: 300, fill: "#fff" });
 		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg" });
-		this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg" });
+		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg" });
 		//this.dispatch({ type: "open-file", path: "~/img/small.jpg" });
 	},
 	dispatch(event) {
@@ -72,7 +74,7 @@ const photoshop = {
 			el;
 		switch (event.type) {
 			case "open-file":
-				Files.open(event.path);
+				Files.open(event);
 				break;
 			case "select-file":
 				Files.select(event.arg);
