@@ -3,6 +3,7 @@ class File {
 	constructor(options) {
 		let opt = {
 			name: "Untitled",
+			scale: 1,
 			width: 1,
 			height: 1,
 			...options
@@ -14,11 +15,12 @@ class File {
 		// file path + name
 		this.path = opt.path;
 		this.name = opt.name;
+		this._id = opt._id;
 
 		// undo history
 		this.history = new window.History;
 		// layers stack
-		this.layers = [{ type: "set-contents", fill: "transparent" }];
+		this.layers = [{ type: "bg-checkers" }];
 
 		// canvases
 		let { cvs, ctx } = Misc.createCanvas(opt.width, opt.height);
@@ -26,7 +28,7 @@ class File {
 		this.ctx = ctx;
 
 		// defaults
-		this.scale = 1;
+		this.scale = opt.scale;
 		this.showRulers = true;
 		this.bgColor = "#000"
 		this.fgColor = "#fff"
@@ -36,8 +38,11 @@ class File {
 		if (opt.path) {
 			this.loadImage(opt.path);
 		} else {
+			// new layer with image
+			let layer = new Layer({ fill: opt.fill, width: opt.width, height: opt.height });
+			this.layers.push(layer);
 			// initiate canvas
-			this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height });
+			this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale: this.scale });
 		}
 	}
 	loadImage(path) {
@@ -49,7 +54,7 @@ class File {
 			// new layer with image
 			this.layers.push(layer);
 			// initiate canvas
-			this.dispatch({ type: "set-canvas", w: image.width, h: image.height });
+			this.dispatch({ type: "set-canvas", w: image.width, h: image.height, scale: this.scale });
 		};
 		image.src = path;
 	}
@@ -117,8 +122,8 @@ class File {
 
 				APP.els.content.toggleClass("show-rulers", !this.showRulers);
 				break;
-			case "set-contents":
-				this.ctx.fillStyle = event.fill === "transparent" ? Projector.checkers : event.fill;
+			case "bg-checkers":
+				this.ctx.fillStyle = Projector.checkers;
 				this.ctx.fillRect(0, 0, this.oW, this.oH);
 				break;
 			case "layer":

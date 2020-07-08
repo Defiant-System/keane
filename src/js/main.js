@@ -49,7 +49,7 @@ const photoshop = {
 		// init sidebar initial boxes
 		["navigator", "character", "layers"].map(item => {
 			let box = window.store(`boxes/box-${item}.htm`, `div[data-box="${item}"]`);
-		//	this.box[item].toggle(box, "on");
+			this.box[item].toggle(box, "on");
 		});
 
 		// auto store first visible tool-options HTML
@@ -60,10 +60,10 @@ const photoshop = {
 			this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click"));
 
 		// temp
-		//this.dispatch({ type: "open-file", name: "Untitled", width: 400, height: 300, fill: "#fff" });
-		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg" });
-		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg" });
-		//this.dispatch({ type: "open-file", path: "~/img/small.jpg" });
+		this.dispatch({ type: "open-file", name: "Untitled", width: 400, height: 300, fill: "red", scale: 1 });
+		//this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg", scale: 1 });
+		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg", scale: 1 });
+		//this.dispatch({ type: "open-file", path: "~/img/small.jpg", scale: 1 });
 	},
 	dispatch(event) {
 		let Self = photoshop,
@@ -84,7 +84,7 @@ const photoshop = {
 				Files.close(el.data("arg"));
 				break;
 			case "toggle-rulers":
-				Files._active.dispatch(event);
+				Projector.file.dispatch(event);
 				break;
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
@@ -113,7 +113,6 @@ const photoshop = {
 			case "box-head-tab":
 				el = $(event.target);
 				if (el.hasClass("active")) return;
-				//console.log(event);
 				el.parent().find(".active").removeClass("active");
 				el.addClass("active");
 

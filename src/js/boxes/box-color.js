@@ -3,7 +3,7 @@
 
 {
 	els: {},
-	toggle(el, state) {
+	toggle(root, state) {
 		if (state === "on") {
 			// fast references
 			this.els.root = root;

@@ -22,7 +22,7 @@ const Projector = {
 	},
 	reset() {
 		let APP = photoshop,
-			File = Files._active || {};
+			File = this.file || {};
 		
 		this.aX = File.showRulers ? Rulers.t : 0;
 		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (File.showRulers ? Rulers.t : 0);
@@ -35,6 +35,9 @@ const Projector = {
 		this.cvs.prop({ width: window.width, height: window.height });
 	},
 	render(file) {
+		// reference to displayed file
+		this.file = file;
+
 		this.ctx.save();
 		this.ctx.translate(file.oX, file.oY);
 		this.ctx.shadowOffsetX = 0;
@@ -46,7 +49,10 @@ const Projector = {
 		this.ctx.restore();
 
 		if (file.showRulers) {
-			Rulers.render(this, file);
+			Rulers.render(this);
 		}
+
+		// emit event
+		defiant.emit("projector-update");
 	}
 };
