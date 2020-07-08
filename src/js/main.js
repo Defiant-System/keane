@@ -31,7 +31,7 @@ const TOOLS = {
 
 const photoshop = {
 	els: {},
-	init() {
+	async init() {
 		// fast references
 		this.els.content = window.find("content");
 		this.els.statusBar = window.find(".status-bar");
@@ -42,9 +42,10 @@ const photoshop = {
 		// init objects
 		UI.init();
 		Files.init();
-		Projector.init();
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
+		// wating for checkers bg to be created as pattern
+		await Projector.init();
 
 		// init sidebar initial boxes
 		["navigator", "character", "layers"].map(item => {
@@ -60,7 +61,7 @@ const photoshop = {
 			this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click"));
 
 		// temp
-		this.dispatch({ type: "open-file", name: "Untitled", width: 400, height: 300, fill: "red", scale: 1 });
+		this.dispatch({ type: "open-file", name: "Untitled", width: 600, height: 400, fill: "#fff", scale: 1 });
 		//this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg", scale: 1 });
 		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg", scale: 1 });
 		//this.dispatch({ type: "open-file", path: "~/img/small.jpg", scale: 1 });

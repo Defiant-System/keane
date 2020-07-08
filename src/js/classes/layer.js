@@ -19,8 +19,8 @@ class Layer {
 		this.content = [];
 
 		let content = {
-				top: 50,
-				left: 50,
+				top: 100,
+				left: 100,
 				width: opt.width,
 				height: opt.height,
 			};

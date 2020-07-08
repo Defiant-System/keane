@@ -34,11 +34,6 @@ const Misc = {
 		cvs.prop({ width, height });
 		return { cvs, ctx }
 	},
-	createPattern(src, callback) {
-		let image = new Image();
-		image.onload = () => callback(Projector.ctx.createPattern(image, "repeat"));
-		image.src = src;
-	}
 };
 
 const Tween = {

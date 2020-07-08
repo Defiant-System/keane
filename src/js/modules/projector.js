@@ -14,29 +14,32 @@ const Projector = {
 		this.ctx = this.cvs[0].getContext("2d");
 
 		// checkers background
-		let checkers = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
-		Misc.createPattern(checkers, p => { Projector.checkers = p; });
-
-		// reset projector
-		//this.reset();
+		return new Promise(resolve => {
+			let image = new Image;
+			image.onload = () => {
+				Projector.checkers = Projector.ctx.createPattern(image, "repeat");
+				resolve();
+			};
+			image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
+		});
 	},
-	reset() {
-		let APP = photoshop,
-			File = this.file || {};
-		
-		this.aX = File.showRulers ? Rulers.t : 0;
-		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (File.showRulers ? Rulers.t : 0);
-		this.aW = window.width - this.aX - this.els.sideBar.width() + (File.showRulers ? Rulers.t : 0);
-		this.aH = window.height - this.aY - (File.showRulers ? Rulers.t : 0); // - this.els.statusBar.height()
+	reset(file) {
+		// reference to displayed file
+		this.file = file;
+
+		this.aX = file.showRulers ? Rulers.t : 0;
+		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (file.showRulers ? Rulers.t : 0);
+		this.aW = window.width - this.aX - this.els.sideBar.width() + (file.showRulers ? Rulers.t : 0);
+		this.aH = window.height - this.aY - (file.showRulers ? Rulers.t : 0); // - this.els.statusBar.height()
 		// center
 		this.cX = (window.width + this.aX - this.els.sideBar.width()) / 2;
 		this.cY = (window.height + this.aY - this.els.statusBar.height()) / 2;
 		// clears canvas
 		this.cvs.prop({ width: window.width, height: window.height });
 	},
-	render(file) {
+	render() {
 		// reference to displayed file
-		this.file = file;
+		let file = this.file;
 
 		this.ctx.save();
 		this.ctx.translate(file.oX, file.oY);

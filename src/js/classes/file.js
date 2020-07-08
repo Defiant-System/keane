@@ -62,7 +62,7 @@ class File {
 		// re-paints layers stack
 		this.layers.map(layer => this.dispatch(layer));
 
-		Projector.render(this);
+		Projector.render();
 	}
 	dispatch(event) {
 		let APP = photoshop,
@@ -77,7 +77,7 @@ class File {
 		switch (event.type) {
 			case "set-canvas":
 				// reset projector
-				Projector.reset();
+				Projector.reset(this);
 
 				// original dimension
 				this.oW = event.w;
@@ -113,7 +113,7 @@ class File {
 			case "toggle-rulers":
 				this.showRulers = event.checked === 1;
 				// trigger re-calculations + re-paint
-				Projector.reset();
+				Projector.reset(this);
 				// update origo
 				this.oX = _round(Projector.cX - (this.w / 2));
 				this.oY = _round(Projector.cY - (this.h / 2));

@@ -1,17 +1,17 @@
 
 const Rulers = {
 	t: 18, // ruler thickness
-	render(proj) {
+	render(Projector) {
 		let _abs = Math.abs,
 			_round = Math.round,
 			g,
 			p = .5,
 			t = this.t,
-			ctx = proj.ctx,
-			scale = proj.file.scale,
-			aX = proj.aX, aY = proj.aY,
-			aW = proj.aW, aH = proj.aH,
-			oX = proj.file.oX, oY = proj.file.oY,
+			ctx = Projector.ctx,
+			scale = Projector.file.scale,
+			aX = Projector.aX, aY = Projector.aY,
+			aW = Projector.aW, aH = Projector.aH,
+			oX = Projector.file.oX, oY = Projector.file.oY,
 			rG = ZOOM.find(z => z.level === scale * 100).rG,
 			w = aW + p,
 			h = aH + p + t + t,

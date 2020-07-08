@@ -31,7 +31,7 @@ const Files = {
 		});
 
 		// select newly added file
-		this.select(opt._id);
+		this.select(file._id);
 
 		return file;
 	},
@@ -67,8 +67,8 @@ const Files = {
 		window.menuBar.update(`//MenuBar//Menu[@arg="${id}"]`, {"is-checked": "1"});
 
 		// reference to active file
-		Projector.file = this.stack.find(f => f._id === id);
+		let file = this.stack.find(f => f._id === id);
 
-		return Projector.file;
+		return file;
 	}
 };
