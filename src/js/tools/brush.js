@@ -19,11 +19,12 @@
 	},
 	dispatch(event) {
 		let APP = photoshop,
+			Proj = Projector,
+			File = Proj.file,
 			Self = TOOLS.brush,
 			Drag = Self.drag,
 			_floor = Math.floor,
 			_round = Math.round,
-			_canvas = Canvas,
 			name,
 			size,
 			tip,
@@ -42,14 +43,14 @@
 
 				// prepare paint
 				Self.drag = {
-					ctx: _canvas.osCtx,
+					ctx: File.ctx,
 					clickX: event.offsetX,
 					clickY: event.offsetY,
-					mX: _floor((event.offsetX - _canvas.oX) / _canvas.scale),
-					mY: _floor((event.offsetY - _canvas.oY) / _canvas.scale),
-					scale: _canvas.scale,
-					coX: _canvas.oX,
-					coY: _canvas.oY,
+					mX: _floor((event.offsetX - File.oX) / File.scale),
+					mY: _floor((event.offsetY - File.oY) / File.scale),
+					scale: File.scale,
+					coX: File.oX,
+					coY: File.oY,
 					preset: {
 						...Self.preset,
 						oX: _floor(Self.preset.size / 2),
@@ -59,7 +60,7 @@
 					// Bresenham's line algorithm
 					line: (...args) => Misc.bresenhamLine(...args)
 				};
-				//_canvas.osCtx.globalCompositeOperation = "difference";
+				//Self.drag.ctx.globalCompositeOperation = "difference";
 
 				// trigger first paint
 				Self.dispatch({ type: "mousemove" });
@@ -67,7 +68,7 @@
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
 				// bind event handlers
-				_canvas.doc.on("mousemove mouseup", Self.dispatch);
+				Proj.doc.on("mousemove mouseup", Self.dispatch);
 				break;
 			case "mousemove":
 				if (event.offsetX) {
@@ -87,8 +88,8 @@
 					Drag.ctx.drawImage(image, 0, 0, size, size, x, y, size, size));
 
 				// clear and transfer to canvas
-				_canvas.cvs.prop({ width: window.width, height: window.height });
-				_canvas.dispatch({ type: "update-canvas", noZoom: true });
+				// _canvas.cvs.prop({ width: window.width, height: window.height });
+				// _canvas.dispatch({ type: "update-canvas", noZoom: true });
 
 				// same mouse point
 				Drag.oldX = Drag.mX;
@@ -98,7 +99,7 @@
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
-				_canvas.doc.off("mousemove mouseup", Self.dispatch);
+				Proj.doc.off("mousemove mouseup", Self.dispatch);
 				break;
 			// custom events
 			case "select-option":
@@ -145,7 +146,7 @@
 				Self.preset.tip.ctx.translate(-hS, -hS);
 				Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, y, size, height);
 				Self.preset.tip.ctx.globalCompositeOperation = "source-atop"; // difference
-				Self.preset.tip.ctx.fillStyle = _canvas.fgColor;
+				Self.preset.tip.ctx.fillStyle = File.fgColor;
 				Self.preset.tip.ctx.fillRect(0, 0, size, size);
 				break;
 			case "change-blend-mode":
@@ -177,10 +178,10 @@
 				// auto load preset tip
 				Self.dispatch({ type: "select-preset-tip", ...this.preset });
 
-				_canvas.cvs.on("mousedown", Self.dispatch);
+				Proj.cvs.on("mousedown", Self.dispatch);
 				break;
 			case "disable":
-				_canvas.cvs.off("mousedown", Self.dispatch);
+				Proj.cvs.off("mousedown", Self.dispatch);
 				break;
 		}
 	}
