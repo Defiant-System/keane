@@ -3,6 +3,7 @@ class Layer {
 	constructor(opt) {
 		this.type = "layer";
 		this.name = opt.name || "Layer 1";
+		this.file = opt.file;
 		this.blendingMode = "normal";
 		this.opacity = 1;
 		this.visible = true;
@@ -34,6 +35,10 @@ class Layer {
 				break;
 		}
 	}
+	addBuffer(callback) {
+		this.content.push({ type: "buffer", callback });
+		this.file.render();
+	}
 	render() {
 		// reset canvas
 		this.cvs.prop({ width: this.width, height: this.height });
@@ -48,7 +53,14 @@ class Layer {
 				case "image":
 					this.ctx.drawImage(item.image, item.left, item.top);
 					break;
+				case "buffer":
+					item.callback(this.ctx);
+
+					this.content.pop();
+					break;
 			}
 		});
+		// remove buffer from contents
+		//this.content = this.content.filter(item => item.type !== "buffer");
 	}
 }

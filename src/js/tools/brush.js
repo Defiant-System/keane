@@ -43,7 +43,8 @@
 
 				// prepare paint
 				Self.drag = {
-					ctx: File.ctx,
+					layer: File.activeLayer,
+					//ctx: File.ctx,
 					clickX: event.offsetX,
 					clickY: event.offsetY,
 					mX: _floor((event.offsetX - File.oX) / File.scale),
@@ -57,10 +58,10 @@
 						oY: _floor(Self.preset.size / 2),
 						image: Self.preset.tip.cvs[0],
 					},
+					buffer: [],
 					// Bresenham's line algorithm
 					line: (...args) => Misc.bresenhamLine(...args)
 				};
-				//Self.drag.ctx.globalCompositeOperation = "difference";
 
 				// trigger first paint
 				Self.dispatch({ type: "mousemove" });
@@ -85,11 +86,16 @@
 				size = Drag.preset.size;
 				image = Drag.preset.image;
 				Drag.line(Drag.oldX || Drag.mX, Drag.oldY || Drag.mY, Drag.mX, Drag.mY, (x, y) =>
-					Drag.ctx.drawImage(image, 0, 0, size, size, x, y, size, size));
+					Drag.buffer.push({ x, y }));
 
-				// clear and transfer to canvas
-				// _canvas.cvs.prop({ width: window.width, height: window.height });
-				// _canvas.dispatch({ type: "update-canvas", noZoom: true });
+
+				//Drag.layer.ctx.globalCompositeOperation = "difference";
+				Drag.layer.addBuffer(Ctx => {
+					Drag.buffer.map(p => {
+						Ctx.drawImage(image, 0, 0, size, size, p.x, p.y, size, size);
+					})
+				});
+
 
 				// same mouse point
 				Drag.oldX = Drag.mX;

@@ -39,18 +39,21 @@ class File {
 			this.loadImage(opt.path);
 		} else {
 			// new layer with image
-			let layer = new Layer({ fill: opt.fill, width: opt.width, height: opt.height });
+			let layer = new Layer({ file: this, fill: opt.fill, width: opt.width, height: opt.height });
 			this.layers.push(layer);
 			// initiate canvas
 			this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale: this.scale });
 		}
+	}
+	get activeLayer() {
+		return this.layers[this.layers.length-1];
 	}
 	loadImage(path) {
 		let image = new Image;
 		image.onload = () => {
 			let width = image.width,
 				height = image.height,
-				layer = new Layer({ image, width, height });
+				layer = new Layer({ file: this, image, width, height });
 			// new layer with image
 			this.layers.push(layer);
 			// initiate canvas
@@ -72,7 +75,7 @@ class File {
 			el;
 
 		// save paint context
-		this.ctx.save();
+		//this.ctx.save();
 
 		//console.log(event);
 		switch (event.type) {
@@ -146,6 +149,6 @@ class File {
 		}
 
 		// restore paint context
-		this.ctx.restore();
+		//this.ctx.restore();
 	}
 }
