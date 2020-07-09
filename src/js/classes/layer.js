@@ -30,6 +30,9 @@ class Layer {
 			case !!opt.fill:
 				this.content.push({ type: "fill", fill: opt.fill, ...content });
 				break;
+			case !!opt.text:
+				this.content.push({ type: "text", text: opt.text, ...content });
+				break;
 			case !!opt.image:
 				this.content.push({ type: "image", image: opt.image, ...content });
 				break;
@@ -41,7 +44,9 @@ class Layer {
 	}
 	render() {
 		// reset canvas
-		this.cvs.prop({ width: this.width, height: this.height });
+		//this.cvs.prop({ width: this.width, height: this.height });
+		this.ctx.clearRect(0, 0, 1e6, 1e6);
+
 		// loop contents of thi slayer
 		this.content.map(item => {
 			switch (item.type) {
@@ -49,6 +54,12 @@ class Layer {
 					if (item.fill === "transparent") return;
 					this.ctx.fillStyle = item.fill;
 					this.ctx.fillRect(item.left, item.top, item.width, item.height);
+					break;
+				case "text":
+					//this.ctx.translate(.5, .5);
+					this.ctx.font = `30px Arial`;
+					this.ctx.fillStyle = "#0ff";
+					this.ctx.fillText(item.text, 100, 100);
 					break;
 				case "image":
 					this.ctx.drawImage(item.image, item.left, item.top);
@@ -60,7 +71,5 @@ class Layer {
 					break;
 			}
 		});
-		// remove buffer from contents
-		//this.content = this.content.filter(item => item.type !== "buffer");
 	}
 }

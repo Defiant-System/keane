@@ -46,7 +46,7 @@ class File {
 		}
 	}
 	get activeLayer() {
-		return this.layers[this.layers.length-1];
+		return this.layers[1];
 	}
 	loadImage(path) {
 		let image = new Image;
@@ -56,12 +56,17 @@ class File {
 				layer = new Layer({ file: this, image, width, height });
 			// new layer with image
 			this.layers.push(layer);
+			// temp
+			this.layers.push(new Layer({ file: this, text: "Defiant", width, height }));
 			// initiate canvas
 			this.dispatch({ type: "set-canvas", w: image.width, h: image.height, scale: this.scale });
 		};
 		image.src = path;
 	}
 	render() {
+		// clear canvas
+		this.ctx.clearRect(0, 0, 1e6, 1e6);
+
 		// re-paints layers stack
 		this.layers.map(layer => this.dispatch(layer));
 
@@ -73,12 +78,18 @@ class File {
 			_round = Math.round,
 			layer = event,
 			el;
-
-		// save paint context
-		//this.ctx.save();
-
 		//console.log(event);
 		switch (event.type) {
+			case "bg-checkers":
+				this.ctx.fillStyle = Proj.checkers;
+				this.ctx.fillRect(0, 0, this.oW, this.oH);
+				break;
+			case "layer":
+				// event object is layer - render and add to file canvas
+				layer.render();
+				this.ctx.drawImage(layer.cvs[0], 0, 0);
+				break;
+
 			case "set-canvas":
 				// reset projector
 				Proj.reset(this);
@@ -137,18 +148,6 @@ class File {
 
 				APP.els.content.toggleClass("show-rulers", !this.showRulers);
 				break;
-			case "bg-checkers":
-				this.ctx.fillStyle = Proj.checkers;
-				this.ctx.fillRect(0, 0, this.oW, this.oH);
-				break;
-			case "layer":
-				// event object is layer - render and add to file canvas
-				layer.render();
-				this.ctx.drawImage(layer.cvs[0], 0, 0);
-				break;
 		}
-
-		// restore paint context
-		//this.ctx.restore();
 	}
 }

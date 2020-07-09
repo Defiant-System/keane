@@ -26,6 +26,9 @@ const Projector = {
 	reset(file) {
 		// reference to displayed file
 		this.file = file;
+		
+		// clears canvas
+		this.cvs.prop({ width: window.width, height: window.height });
 
 		this.aX = file.showRulers ? Rulers.t : 0;
 		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (file.showRulers ? Rulers.t : 0);
@@ -38,9 +41,8 @@ const Projector = {
 	render() {
 		// reference to displayed file
 		let file = this.file;
-		
-		// clears canvas
-		this.cvs.prop({ width: window.width, height: window.height });
+		// clear canvas
+		this.ctx.clearRect(0, 0, 1e6, 1e6);
 
 		this.ctx.save();
 		this.ctx.translate(file.oX, file.oY);
