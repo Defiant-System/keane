@@ -19,6 +19,7 @@
 			angle     : +xShape.getAttribute("angle"),
 			size      : +xShape.getAttribute("size"),
 			tip       : Misc.createCanvas(1, 1),
+			blend     : "normal",
 		};
 	},
 	dispatch(event) {
@@ -69,6 +70,8 @@
 					// Bresenham's line algorithm
 					line: (...args) => Misc.bresenhamLine(...args)
 				};
+				// set blend mode
+				Self.drag.layer.ctx.globalCompositeOperation = Self.preset.blend;
 
 				// trigger first paint
 				Self.dispatch({ type: "mousemove" });
@@ -96,7 +99,6 @@
 					Drag.ctx.drawImage(image, 0, 0, size, size, x, y, size, size));
 
 
-				//Drag.layer.ctx.globalCompositeOperation = "difference";
 				Drag.layer.addBuffer(Drag.cvs);
 
 				// render file - noEmit = true
@@ -161,7 +163,7 @@
 				Self.preset.tip.ctx.fillRect(0, 0, size, size);
 				break;
 			case "change-blend-mode":
-				console.log(event);
+				Self.preset.blend = event.value.toLowerCase().replace(/ /g, "-");
 				break;
 			case "change-size":
 				width =
