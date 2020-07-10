@@ -267,6 +267,7 @@ const UI = {
 					old: Color.rgbToHex(Self.srcEl.find(".value").css("background-color")),
 					value: Color.rgbToHex(el.css("background-color")),
 				};
+				if (data.old === data.value) return;
 				// dispatch event to be forwarded
 				if (data.type) APP.dispatch(data);
 
@@ -305,6 +306,7 @@ const UI = {
 					old: Self.srcEl.find(".value").html(),
 					value: el.html(),
 				};
+				if (data.old === data.value) return;
 				// dispatch event to be forwarded
 				if (data.type) APP.dispatch(data);
 
@@ -371,6 +373,7 @@ const UI = {
 					old: Drag.value,
 					value: Drag.newValue,
 				};
+				if (data.old === data.value) return;
 				// dispatch event to be forwarded
 				if (data.type) APP.dispatch(data);
 

@@ -58,7 +58,7 @@ class Layer {
 				case "text":
 					//this.ctx.translate(.5, .5);
 					this.ctx.font = `30px Arial`;
-					this.ctx.fillStyle = "#0ff";
+					this.ctx.fillStyle = "#000";
 					this.ctx.fillText(item.text, 100, 100);
 					break;
 				case "image":

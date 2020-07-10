@@ -1,7 +1,7 @@
 
 <File>
 	<Layers>
-		<i type="folder" name="Flower" state="hidden"/>
+		<!--<i type="folder" name="Flower" state="hidden"/>-->
 		<i type="layer" name="Some text" state="visible" />
 		<i type="layer" name="Background" state="visible" fx="1" />
 	</Layers>
