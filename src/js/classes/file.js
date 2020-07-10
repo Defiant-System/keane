@@ -63,14 +63,14 @@ class File {
 		};
 		image.src = path;
 	}
-	render() {
+	render(noEmit) {
 		// clear canvas
 		this.ctx.clearRect(0, 0, 1e6, 1e6);
 
 		// re-paints layers stack
-		this.layers.map(layer => this.dispatch(layer));
+		this.layers.map(layer => this.dispatch(layer, noEmit));
 
-		Projector.render();
+		Projector.render(noEmit);
 	}
 	dispatch(event) {
 		let APP = photoshop,

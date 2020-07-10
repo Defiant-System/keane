@@ -8,6 +8,10 @@
 
 		let xShape = window.bluePrint.selectSingleNode("//TipShapes/*");
 
+		let { cvs, ctx } = Misc.createCanvas(1, 1);
+		this.cvs = cvs;
+		this.ctx = ctx;
+
 		// default preset
 		this.preset = {
 			name      : xShape.getAttribute("name"),
@@ -41,10 +45,14 @@
 				// prevent default behaviour
 				event.preventDefault();
 
+				// clear paint canvas
+				Self.cvs.prop({ width: File.oW, height: File.oH });
+
 				// prepare paint
 				Self.drag = {
 					layer: File.activeLayer,
-					//ctx: File.ctx,
+					ctx: Self.ctx,
+					cvs: Self.cvs[0],
 					clickX: event.offsetX,
 					clickY: event.offsetY,
 					mX: _floor((event.offsetX - File.oX) / File.scale),
@@ -58,7 +66,6 @@
 						oY: _floor(Self.preset.size / 2),
 						image: Self.preset.tip.cvs[0],
 					},
-					buffer: [],
 					// Bresenham's line algorithm
 					line: (...args) => Misc.bresenhamLine(...args)
 				};
@@ -86,16 +93,14 @@
 				size = Drag.preset.size;
 				image = Drag.preset.image;
 				Drag.line(Drag.oldX || Drag.mX, Drag.oldY || Drag.mY, Drag.mX, Drag.mY, (x, y) =>
-					Drag.buffer.push({ x, y }));
+					Drag.ctx.drawImage(image, 0, 0, size, size, x, y, size, size));
 
 
 				//Drag.layer.ctx.globalCompositeOperation = "difference";
-				Drag.layer.addBuffer(Ctx => {
-					Drag.buffer.map(p => {
-						Ctx.drawImage(image, 0, 0, size, size, p.x, p.y, size, size);
-					})
-				});
+				Drag.layer.addBuffer(Drag.cvs);
 
+				// render file - noEmit = true
+				File.render(true);
 
 				// same mouse point
 				Drag.oldX = Drag.mX;

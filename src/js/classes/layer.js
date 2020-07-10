@@ -38,9 +38,9 @@ class Layer {
 				break;
 		}
 	}
-	addBuffer(callback) {
-		this.content.push({ type: "buffer", callback });
-		this.file.render();
+	addBuffer(cvs) {
+		this.content.push({ type: "buffer", cvs });
+		//this.file.render(true);
 	}
 	render() {
 		// reset canvas
@@ -65,8 +65,7 @@ class Layer {
 					this.ctx.drawImage(item.image, item.left, item.top);
 					break;
 				case "buffer":
-					item.callback(this.ctx);
-
+					this.ctx.drawImage(item.cvs, 0, 0);
 					this.content.pop();
 					break;
 			}

@@ -38,7 +38,7 @@ const Projector = {
 		this.cX = (window.width + this.aX - this.els.sideBar.width()) / 2;
 		this.cY = (window.height + this.aY - this.els.statusBar.height()) / 2;
 	},
-	render() {
+	render(noEmit) {
 		// reference to displayed file
 		let file = this.file;
 		// clear canvas
@@ -57,8 +57,9 @@ const Projector = {
 		if (file.showRulers) {
 			Rulers.render(this);
 		}
-
-		// emit event
-		defiant.emit("projector-update");
+		if (!noEmit) {
+			// emit event
+			defiant.emit("projector-update");
+		}
 	}
 };
