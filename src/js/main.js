@@ -9,6 +9,7 @@ defiant.require("modules/color.js")
 defiant.require("modules/ui.js")
 defiant.require("modules/rulers.js")
 defiant.require("modules/thumb.js")
+defiant.require("modules/filters.js")
 
 
 const TOOLS = {
@@ -28,6 +29,8 @@ const TOOLS = {
 	zoom     : defiant.require("tools/zoom.js"),
 };
 
+// import * as ImageProcessing from "./modules/image-processing";
+// console.log( ImageProcessing );
 
 const photoshop = {
 	els: {},
@@ -42,6 +45,7 @@ const photoshop = {
 		// init objects
 		UI.init();
 		Files.init();
+		Filters.init();
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
 		// wating for checkers bg to be created as pattern

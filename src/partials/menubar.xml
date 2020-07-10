@@ -29,7 +29,9 @@
 	<Menu name="Layer"></Menu>
 	<Menu name="Type"></Menu>
 	<Menu name="Select"></Menu>
-	<Menu name="Filter"></Menu>
+	<Menu name="Filter">
+		<Menu name="Blur"/>
+	</Menu>
 	<Menu name="View">
 		<Menu name="Rulers" click="toggle-rulers" check-group="toggle-rulers" is-checked="1" hotkey="alt+r" />
 		<Menu name="Status Bar" click="toggle-statusbar" check-group="toggle-statusbar" />

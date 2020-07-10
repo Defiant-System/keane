@@ -57,7 +57,7 @@ class File {
 			// new layer with image
 			this.layers.push(layer);
 			// temp
-			this.layers.push(new Layer({ file: this, text: "Defiant", width, height }));
+		//	this.layers.push(new Layer({ file: this, text: "Defiant", width, height }));
 			// initiate canvas
 			this.dispatch({ type: "set-canvas", w: image.width, h: image.height, scale: this.scale });
 		};
