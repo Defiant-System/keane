@@ -19,7 +19,7 @@
 			angle     : +xShape.getAttribute("angle"),
 			size      : +xShape.getAttribute("size"),
 			tip       : Misc.createCanvas(1, 1),
-			blend     : "normal",
+			blend     : "difference",
 		};
 	},
 	dispatch(event) {

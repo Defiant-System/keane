@@ -65,7 +65,7 @@ class File {
 	}
 	render(noEmit) {
 		// clear canvas
-		this.ctx.clearRect(0, 0, 1e6, 1e6);
+		this.cvs.prop({ width: this.oW, height: this.oH });
 
 		// re-paints layers stack
 		this.layers.map(layer => this.dispatch(layer, noEmit));

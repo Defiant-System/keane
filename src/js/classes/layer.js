@@ -45,7 +45,7 @@ class Layer {
 	render() {
 		// reset canvas
 		//this.cvs.prop({ width: this.width, height: this.height });
-		this.ctx.clearRect(0, 0, 1e6, 1e6);
+		this.ctx.clearRect(0, 0, this.width, this.height);
 
 		// loop contents of thi slayer
 		this.content.map(item => {
@@ -71,13 +71,13 @@ class Layer {
 			}
 		});
 
-		let pixels = Filters.getPixels(this.cvs[0]),
-			//filtered = Filters.grayscale(pixels);
-			//filtered = Filters.brightness(pixels, 40);
-			//filtered = Filters.threshold(pixels, 50);
-			//filtered = Filters.sharpen(pixels);
-			//filtered = Filters.blur(pixels);
-			filtered = Filters.sobel(pixels);
-		this.ctx.putImageData(filtered, 0, 0);
+		// let pixels = Filters.getPixels(this.cvs[0]),
+		// 	//filtered = Filters.grayscale(pixels);
+		// 	//filtered = Filters.brightness(pixels, 40);
+		// 	//filtered = Filters.threshold(pixels, 50);
+		// 	//filtered = Filters.sharpen(pixels);
+		// 	filtered = Filters.blur(pixels);
+		// 	//filtered = Filters.sobel(pixels);
+		// this.ctx.putImageData(filtered, 0, 0);
 	}
 }
