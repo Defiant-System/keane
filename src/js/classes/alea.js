@@ -25,7 +25,7 @@ class Mash {
 	}
 }
 
-export class Alea {
+class Alea {
 	constructor(args) {
 		// Johannes Baagøe <baagoe@baagoe.com>, 2010
 		if (args.length == 0) {

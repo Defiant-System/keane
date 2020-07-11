@@ -1,8 +1,8 @@
 
 // From https://github.com/jwagner/analog-film-emulator/blob/master/src/image-processing.js
 
-import { Alea } from "./alea";
-import { SimplexNoise } from "./simplex-noise";
+import { Alea } from "../classes/alea";
+import { SimplexNoise } from "../classes/simplex-noise";
 
 // From http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
 function colorTemperatureToRGB(temperature){

@@ -1,6 +1,7 @@
 
 defiant.require("classes/file.js")
 defiant.require("classes/layer.js")
+defiant.require("classes/simplex-noise.js")
 
 defiant.require("modules/files.js")
 defiant.require("modules/projector.js")

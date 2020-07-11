@@ -52,6 +52,32 @@ const Filters = {
 		}
 		return pixels;
 	},
+	clouds(pixels) {
+		let simplex = new SimplexNoise,
+			d = pixels.data,
+			w = pixels.width,
+			h = pixels.height,
+			noise = (x, y) => {
+				let amp = .8,
+					sum = 0,
+					scale = .009;
+				for (let i=0; i<6; ++i) {
+					amp *= .5;
+					sum += amp * (simplex.noise2D(x * scale, y * scale) + 1) * 0.5;
+					scale *= 2;
+				}
+				return sum;
+			};
+		for (let x=0; x<w; x++) {
+			for (let y=0; y<h; y++) {
+				let o = (x + y * w) * 4;
+				d[o + 0] =
+                d[o + 1] =
+                d[o + 2] = noise(x, y) * 255;
+			}
+		}
+		return pixels;
+	},
 	sharpen(pixels) {
 		let mx = [ 0, -1,  0,
 				  -1,  5, -1,
