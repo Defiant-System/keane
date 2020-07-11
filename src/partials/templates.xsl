@@ -17,6 +17,20 @@
 					</div>
 				</div>
 			</xsl:when>
+			<xsl:when test="@type = 'text'">
+				<div class="group">
+					<div class="row">
+						<div class="icon icon-text"></div>
+						<div class="name"><xsl:value-of select="@name"/></div>
+						<div data-click="toggle-visibility">
+							<xsl:attribute name="class">icon
+								<xsl:if test="@state = 'hidden'"> icon-eye-off</xsl:if>
+								<xsl:if test="@state = 'visible'"> icon-eye-on</xsl:if>
+							</xsl:attribute>
+						</div>
+					</div>
+				</div>
+			</xsl:when>
 			<xsl:when test="@type = 'layer'">
 				<div class="row">
 					<div class="thumbnail"><canvas></canvas></div>

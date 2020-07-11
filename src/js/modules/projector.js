@@ -9,9 +9,11 @@ const Projector = {
 			sideBar    : window.find(".sidebar-wrapper"),
 			statusBar  : window.find(".status-bar"),
 		};
-		// canvas
+		// canvases
 		this.cvs = window.find(".cvs-wrapper .canvas");
 		this.ctx = this.cvs[0].getContext("2d");
+		// publicly used swap canvas
+		this.swap = { cvs, ctx } = Misc.createCanvas(1, 1);
 
 		// checkers background
 		return new Promise(resolve => {

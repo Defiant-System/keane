@@ -8,10 +8,6 @@
 
 		let xShape = window.bluePrint.selectSingleNode("//TipShapes/*");
 
-		let { cvs, ctx } = Misc.createCanvas(1, 1);
-		this.cvs = cvs;
-		this.ctx = ctx;
-
 		// default preset
 		this.preset = {
 			name      : xShape.getAttribute("name"),
@@ -19,7 +15,7 @@
 			angle     : +xShape.getAttribute("angle"),
 			size      : +xShape.getAttribute("size"),
 			tip       : Misc.createCanvas(1, 1),
-			blend     : "difference",
+			blend     : "normal",
 		};
 	},
 	dispatch(event) {
@@ -47,13 +43,13 @@
 				event.preventDefault();
 
 				// clear paint canvas
-				Self.cvs.prop({ width: File.oW, height: File.oH });
+				Proj.swap.cvs.prop({ width: File.oW, height: File.oH });
 
 				// prepare paint
 				Self.drag = {
 					layer: File.activeLayer,
-					ctx: Self.ctx,
-					cvs: Self.cvs[0],
+					ctx: Proj.swap.ctx,
+					cvs: Proj.swap.cvs[0],
 					clickX: event.offsetX,
 					clickY: event.offsetY,
 					mX: _floor((event.offsetX - File.oX) / File.scale),
