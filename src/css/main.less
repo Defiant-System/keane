@@ -1369,11 +1369,11 @@ content {
 					&:hover {
 						&:not(.active) {
 							.name {
-								color: #dee;
+								color: rgba(#dee, .8);
 							}
 
 							.icon:after {
-								opacity: 0.75;
+								//opacity: 0.75;
 							}
 						}
 						.icon {
@@ -1398,13 +1398,20 @@ content {
 						}
 					}
 
+					&.active {
+						background-color: #43535370;
+
+						.name {
+							color: rgba(#dee, .9);
+						}
+					}
+
 					> div {
 						display: inline-block;
 						vertical-align: middle;
 						font-size: 12px;
 						color: rgba(#dee, .65);
 						text-shadow: 0 1px 0 rgba(#000, .25);
-						//transition: color 80ms ease-in-out;
 					}
 
 					.name {

@@ -14,6 +14,9 @@
 				match: "//File/Layers",
 				target: this.els.layerList,
 			});
+
+			// temp
+			this.els.layerList.find(".row:nth-child(1)").addClass("active");
 		} else {
 			// clean up
 			this.els = {};
@@ -26,7 +29,11 @@
 
 		switch (event.type) {
 			// custom events
-			case "custom-event":
+			case "select-row":
+				event.el.parent().find(".active").removeClass("active");
+				event.el.addClass("active");
+
+				console.log( event.el.index() );
 				break;
 		}
 	}

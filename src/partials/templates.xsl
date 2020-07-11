@@ -2,7 +2,7 @@
 
 <xsl:template name="layers">
 	<xsl:for-each select="./*">
-		<div class="row">
+		<div class="row" data-click="select-row">
 			<xsl:choose>
 				<xsl:when test="@type = 'folder'">
 					<div class="icon icon-folder"></div>
