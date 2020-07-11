@@ -144,6 +144,7 @@ class File {
 				this.oX = _round(Proj.cX - (this.w / 2));
 				this.oY = _round(Proj.cY - (this.h / 2));
 				// render projector canvas
+				Proj.renderFrame(this);
 				Proj.render();
 
 				APP.els.content.toggleClass("show-rulers", !this.showRulers);

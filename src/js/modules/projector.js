@@ -45,7 +45,6 @@ const Projector = {
 	reset(file) {
 		// reference to displayed file
 		this.file = file;
-		
 		// reset canvases
 		this.cvs.prop({ width: window.width, height: window.height });
 
@@ -66,18 +65,16 @@ const Projector = {
 		// reset canvas
 		this.cvs.prop({ width: window.width, height: window.height });
 
-		// this.ctx.save();
-		this.ctx.imageSmoothingEnabled = false;
+		this.ctx.save();
 		this.ctx.putImageData(this.frame, 0, 0);
 		this.ctx.translate(file.oX, file.oY);
+		this.ctx.imageSmoothingEnabled = false;
 		this.ctx.drawImage(file.cvs[0], 0, 0, file.w, file.h);
-		// this.ctx.restore();
+		this.ctx.restore();
 
 		if (file.showRulers) {
-			this.ctx.translate(-file.oX, -file.oY);
 			Rulers.render(this);
 		}
-
 		if (!noEmit) {
 			// emit event
 			defiant.emit("projector-update");
