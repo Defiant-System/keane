@@ -8,10 +8,6 @@ class File {
 			height: 1,
 			...options
 		};
-		// set name from file path
-		// if (opt.path && !options.name) {
-		// 	opt.name = opt.path.slice(opt.path.lastIndexOf("/") + 1);
-		// }
 		// file path + name
 		this.path = opt.path;
 		this.name = opt.name;
@@ -86,8 +82,7 @@ class File {
 				break;
 			case "layer":
 				// event object is layer - render and add to file canvas
-				layer.render();
-				this.ctx.drawImage(layer.cvs[0], 0, 0);
+				this.ctx.drawImage(layer.render(), 0, 0);
 				break;
 
 			case "set-canvas":
@@ -95,8 +90,11 @@ class File {
 				this.oW = event.w;
 				this.oH = event.h;
 				this.cvs.prop({ width: this.oW, height: this.oH });
+
 				// reset projector
 				Proj.reset(this);
+				// emit event
+				defiant.emit("file-selected");
 
 				if (!event.scale) {
 					// default to first zoom level

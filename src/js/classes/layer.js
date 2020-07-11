@@ -80,5 +80,7 @@ class Layer {
 		// 	//filtered = Filters.blur(pixels);
 		// 	//filtered = Filters.sobel(pixels);
 		// this.ctx.putImageData(filtered, 0, 0);
+
+		return this.cvs[0];
 	}
 }

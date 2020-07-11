@@ -13,7 +13,7 @@ const Files = {
 	},
 	open(xFile) {
 		let path = xFile.getAttribute("path"),
-			name = path.slice(path.lastIndexOf("/") + 1),
+			name = xFile.getAttribute("name") || path.slice(path.lastIndexOf("/") + 1),
 			opt = {
 				_id: this.getUniqId(),
 				path,
@@ -21,21 +21,18 @@ const Files = {
 				scale: +xFile.getAttribute("scale"),
 				width: +xFile.getAttribute("width"),
 				height: +xFile.getAttribute("height"),
-			},
-			file = new File(opt);
+			};
 		
 		// add file name to xml node
+		xFile.setAttribute("_id", opt._id);
 		xFile.setAttribute("name", name);
 
 		// add statusbar tab
 		window.render({
-			template: "statusbar-tab",
 			data: xFile,
+			template: "statusbar-tab",
 			prepend: this.statusBar,
 		});
-
-		// add to stack
-		this.stack.push(file);
 
 		// add option to menubar
 		window.menuBar.add({
@@ -43,12 +40,16 @@ const Files = {
 			"check-group": "selected-file",
 			"is-checked": 1,
 			"click": "select-file",
-			"arg": file._id,
-			"name": file.name,
+			"arg": opt._id,
+			"name": opt.name,
 		});
 
+		// add to stack
+		let file = new File(opt);
+		this.stack.push(file);
+
 		// select newly added file
-		this.select(file._id, true);
+		this.select(opt._id);
 	},
 	close(id) {
 		let el = this.statusBar.find(`.file[data-arg="${id}"]`),
@@ -72,7 +73,7 @@ const Files = {
 			this.select(next.data("arg"));
 		}
 	},
-	select(id, isOpen) {
+	select(id) {
 		let el = this.statusBar.find(`.file[data-arg="${id}"]`);
 		if (el.hasClass("active")) return;
 
@@ -84,11 +85,14 @@ const Files = {
 		window.menuBar.update(`//MenuBar//Menu[@arg="${id}"]`, {"is-checked": "1"});
 
 		// skip rest if this function is called from "open"
-		if (isOpen) return;
+		if (Projector.file && Projector.file._id === id) return;
 
 		// reference to active file
 		let file = this.stack.find(f => f._id === id);
 		Projector.reset(file);
 		Projector.render();
+
+		// emit event
+		defiant.emit("file-selected");
 	}
 };

@@ -9,25 +9,34 @@
 			this.els.layerList = root.find(".box-content-list");
 			this.els.root = root;
 
-			window.render({
-				template: "layers",
-				match: "//File/Layers",
-				target: this.els.layerList,
-			});
-
-			// temp
-			this.els.layerList.find(".row:nth-child(1)").addClass("active");
+			// subscribe to events
+			defiant.on("file-selected", this.dispatch);
 		} else {
 			// clean up
 			this.els = {};
+
+			// unsubscribe to events
+			defiant.off("file-selected", this.dispatch);
 		}
 	},
 	dispatch(event) {
 		let APP = photoshop,
 			Self = APP.box.layers,
+			File = Projector.file,
 			el;
 
 		switch (event.type) {
+			// subscribed events
+			case "file-selected":
+				window.render({
+					template: "layers",
+					match: `//File[@_id="${File._id}"]/Layers`,
+					target: Self.els.layerList,
+				});
+
+				// temp
+				Self.els.layerList.find(".row:nth-child(1)").addClass("active");
+				break;
 			// custom events
 			case "select-row":
 				event.el.parent().find(".active").removeClass("active");

@@ -47,11 +47,11 @@ const photoshop = {
 		UI.init();
 		Files.init();
 		Filters.init();
-		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
-		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
 		// wating for checkers bg to be created as pattern
 		await Projector.init();
-
+		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
+		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
+		
 		// init sidebar initial boxes
 		["navigator", "character", "layers"].map(item => {
 			let box = window.store(`boxes/box-${item}.htm`, `div[data-box="${item}"]`);
@@ -67,7 +67,8 @@ const photoshop = {
 
 		// temp
 		//this.dispatch({ type: "open-file", name: "Untitled", width: 600, height: 400, fill: "#fff", scale: 1 });
-		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg" });
+		this.dispatch({ type: "open-file", name: "Untitled-1.psd" });
+		//this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg" });
 		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg" });
 		//this.dispatch({ type: "open-file", path: "~/img/small.jpg" });
 	},
@@ -80,7 +81,8 @@ const photoshop = {
 			el;
 		switch (event.type) {
 			case "open-file":
-				let xFile = window.bluePrint.selectSingleNode(`//File[@path="${event.path}"]`);
+				let xpath = event.path ? `//File[@path="${event.path}"]` : `//File[@name="${event.name}"]`,
+					xFile = window.bluePrint.selectSingleNode(xpath);
 				Files.open(xFile);
 				break;
 			case "select-file":

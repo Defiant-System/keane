@@ -1,5 +1,5 @@
 
-<File path="~/img/blue-rose.jpg" width="600" height="398" scale="1">
+<File name="Untitled-1.psd" width="600" height="400" scale="1">
 	<Layers>
 		<i type="folder" name="Folder name" state="hidden"/>
 		<i type="text" name="Some text" state="visible">
@@ -10,6 +10,13 @@
 		</i>
 	</Layers>
 </File>
+
+<File path="~/img/blue-rose.jpg" width="600" height="398" scale="1">
+	<Layers>
+		<i type="layer" name="Background" fill="#fff" state="visible" />
+	</Layers>
+</File>
+
 
 <Data>
 	<Swatches>
