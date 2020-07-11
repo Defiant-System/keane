@@ -155,7 +155,7 @@
 				Self.preset.tip.ctx.translate(-hS, -hS);
 				Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, y, size, height);
 				Self.preset.tip.ctx.globalCompositeOperation = "source-atop"; // difference
-				Self.preset.tip.ctx.fillStyle = File.fgColor;
+				Self.preset.tip.ctx.fillStyle = File ? File.fgColor : "#fff";
 				Self.preset.tip.ctx.fillRect(0, 0, size, size);
 				break;
 			case "change-blend-mode":

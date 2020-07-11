@@ -11,12 +11,29 @@ const Files = {
 		let ids = this.stack.map(f => f._id);
 		return Math.max.apply({}, [0, ...ids]) + 1;
 	},
-	open(opt) {
-		let _id = this.getUniqId(),
-			file = new File({ _id, ...opt }),
-			el = this.statusBar
-					.prepend(`<div class="file" data-click="select-file" data-arg="${file._id}">
-						<span>${file.name}</span><div class="close" data-click="close-file"></div></div>`);
+	open(xFile) {
+		let path = xFile.getAttribute("path"),
+			name = path.slice(path.lastIndexOf("/") + 1),
+			opt = {
+				_id: this.getUniqId(),
+				path,
+				name,
+				scale: +xFile.getAttribute("scale"),
+				width: +xFile.getAttribute("width"),
+				height: +xFile.getAttribute("height"),
+			},
+			file = new File(opt);
+		
+		// add file name to xml node
+		xFile.setAttribute("name", name);
+
+		// add statusbar tab
+		window.render({
+			template: "statusbar-tab",
+			data: xFile,
+			prepend: this.statusBar,
+		});
+
 		// add to stack
 		this.stack.push(file);
 

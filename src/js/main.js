@@ -67,9 +67,9 @@ const photoshop = {
 
 		// temp
 		//this.dispatch({ type: "open-file", name: "Untitled", width: 600, height: 400, fill: "#fff", scale: 1 });
-		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg", scale: 1 });
-		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg", scale: 2 });
-		//this.dispatch({ type: "open-file", path: "~/img/small.jpg", scale: 3 });
+		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg" });
+		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg" });
+		//this.dispatch({ type: "open-file", path: "~/img/small.jpg" });
 	},
 	dispatch(event) {
 		let Self = photoshop,
@@ -80,7 +80,8 @@ const photoshop = {
 			el;
 		switch (event.type) {
 			case "open-file":
-				Files.open(event);
+				let xFile = window.bluePrint.selectSingleNode(`//File[@path="${event.path}"]`);
+				Files.open(xFile);
 				break;
 			case "select-file":
 				Files.select(+event.arg);

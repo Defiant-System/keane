@@ -56,6 +56,14 @@
 	</div>
 </xsl:template>
 
+<xsl:template name="statusbar-tab">
+	<div class="file" data-click="select-file">
+		<xsl:attribute name="data-arg"><xsl:value-of select="@_id"/></xsl:attribute>
+		<span><xsl:value-of select="@name"/></span>
+		<div class="close" data-click="close-file"></div>
+	</div>
+</xsl:template>
+
 <xsl:template name="knob">
 	<div class="inline-menubox" data-ui="doKnob">
 		<div class="inline-content">

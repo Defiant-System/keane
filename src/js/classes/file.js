@@ -9,9 +9,9 @@ class File {
 			...options
 		};
 		// set name from file path
-		if (opt.path && !options.name) {
-			opt.name = opt.path.slice(opt.path.lastIndexOf("/") + 1);
-		}
+		// if (opt.path && !options.name) {
+		// 	opt.name = opt.path.slice(opt.path.lastIndexOf("/") + 1);
+		// }
 		// file path + name
 		this.path = opt.path;
 		this.name = opt.name;
