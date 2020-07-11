@@ -25,13 +25,29 @@ const Projector = {
 			image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
 		});
 	},
+	renderFrame(file) {
+		// pre-render frame
+		let w = file.oW * file.scale,
+			h = file.oH * file.scale,
+			oX = file.oX || Math.round(this.cX - (w / 2)),
+			oY = file.oY || Math.round(this.cY - (h / 2));
+		
+		// reset canvases
+		this.swap.cvs.prop({ width: window.width, height: window.height });
+		
+		this.swap.ctx.shadowOffsetX = 0;
+		this.swap.ctx.shadowOffsetY = 1;
+		this.swap.ctx.shadowBlur = 5;
+		this.swap.ctx.shadowColor = "#292929";
+		this.swap.ctx.fillRect(oX, oY, w, h);
+		this.frame = this.swap.ctx.getImageData(0, 0, window.width, window.height);
+	},
 	reset(file) {
 		// reference to displayed file
 		this.file = file;
 		
 		// reset canvases
 		this.cvs.prop({ width: window.width, height: window.height });
-		this.swap.cvs.prop({ width: window.width, height: window.height });
 
 		this.aX = file.showRulers ? Rulers.t : 0;
 		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (file.showRulers ? Rulers.t : 0);
@@ -42,17 +58,7 @@ const Projector = {
 		this.cY = (window.height + this.aY - this.els.statusBar.height()) / 2;
 
 		// pre-render frame
-		let w = file.oW * file.scale,
-			h = file.oH * file.scale,
-			oX = file.oX || Math.round(this.cX - (w / 2)),
-			oY = file.oY || Math.round(this.cY - (h / 2));
-		
-		this.swap.ctx.shadowOffsetX = 0;
-		this.swap.ctx.shadowOffsetY = 1;
-		this.swap.ctx.shadowBlur = 5;
-		this.swap.ctx.shadowColor = "#292929";
-		this.swap.ctx.fillRect(oX, oY, w, h);
-		this.frame = this.swap.ctx.getImageData(0, 0, window.width, window.height);
+		this.renderFrame(file);
 	},
 	render(noEmit) {
 		// reference to displayed file

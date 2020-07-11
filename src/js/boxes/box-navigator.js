@@ -112,7 +112,7 @@
 			case "pan-canvas":
 				top = _round((event.y / event.max.y) * event.max.h) + Proj.aY;
 				left = _round((event.x / event.max.x) * event.max.w) + Proj.aX;
-				if (isNaN(top) || isNaN(left)) return;
+				//if (isNaN(top) || isNaN(left)) return;
 
 				// forward event to canvas
 				File.dispatch({ type: "pan-canvas", top, left, noZoom: true });

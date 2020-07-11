@@ -126,12 +126,13 @@ class File {
 
 				if (!event.noRender) {
 					// render projector canvas
+					Proj.renderFrame(this);
 					Proj.render();
 				}
 				break;
 			case "pan-canvas":
-				this.oX = Number.isInteger(event.left) ? event.left :Proj.cX - (this.w / 2) + event.x;
-				this.oY = Number.isInteger(event.top) ? event.top :Proj.cY - (this.h / 2) + event.y;
+				this.oX = (Number.isInteger(event.left) ? event.left : Proj.cX - (this.w / 2) + event.x) || this.oX;
+				this.oY = (Number.isInteger(event.top) ? event.top : Proj.cY - (this.h / 2) + event.y) || this.oY;
 				// render projector canvas
 				Proj.render();
 				break;

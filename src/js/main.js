@@ -67,9 +67,9 @@ const photoshop = {
 
 		// temp
 		//this.dispatch({ type: "open-file", name: "Untitled", width: 600, height: 400, fill: "#fff", scale: 1 });
-		//this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg", scale: 1 });
-		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg", scale: 1 });
-		this.dispatch({ type: "open-file", path: "~/img/small.jpg", scale: 1 });
+		this.dispatch({ type: "open-file", path: "~/img/blue-rose.jpg", scale: 1 });
+		//this.dispatch({ type: "open-file", path: "~/img/mona-lisa.jpg", scale: 2 });
+		//this.dispatch({ type: "open-file", path: "~/img/small.jpg", scale: 3 });
 	},
 	dispatch(event) {
 		let Self = photoshop,
