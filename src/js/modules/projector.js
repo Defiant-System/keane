@@ -29,13 +29,9 @@ const Projector = {
 		// reference to displayed file
 		this.file = file;
 		
-		// clears canvas
+		// reset canvases
 		this.cvs.prop({ width: window.width, height: window.height });
-		// default state
-		this.ctx.shadowOffsetX = 0;
-		this.ctx.shadowOffsetY = 1;
-		this.ctx.shadowBlur = 5;
-		this.ctx.shadowColor = "#292929";
+		this.swap.cvs.prop({ width: window.width, height: window.height });
 
 		this.aX = file.showRulers ? Rulers.t : 0;
 		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (file.showRulers ? Rulers.t : 0);
@@ -44,6 +40,19 @@ const Projector = {
 		// center
 		this.cX = (window.width + this.aX - this.els.sideBar.width()) / 2;
 		this.cY = (window.height + this.aY - this.els.statusBar.height()) / 2;
+
+		// pre-render frame
+		let w = file.oW * file.scale,
+			h = file.oH * file.scale,
+			oX = file.oX || Math.round(this.cX - (w / 2)),
+			oY = file.oY || Math.round(this.cY - (h / 2));
+		
+		this.swap.ctx.shadowOffsetX = 0;
+		this.swap.ctx.shadowOffsetY = 1;
+		this.swap.ctx.shadowBlur = 5;
+		this.swap.ctx.shadowColor = "#292929";
+		this.swap.ctx.fillRect(oX, oY, w, h);
+		this.frame = this.swap.ctx.getImageData(0, 0, window.width, window.height);
 	},
 	render(noEmit) {
 		// reference to displayed file
@@ -53,6 +62,7 @@ const Projector = {
 
 		// this.ctx.save();
 		this.ctx.imageSmoothingEnabled = false;
+		this.ctx.putImageData(this.frame, 0, 0);
 		this.ctx.translate(file.oX, file.oY);
 		this.ctx.drawImage(file.cvs[0], 0, 0, file.w, file.h);
 		// this.ctx.restore();

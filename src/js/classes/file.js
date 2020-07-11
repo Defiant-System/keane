@@ -91,13 +91,12 @@ class File {
 				break;
 
 			case "set-canvas":
-				// reset projector
-				Proj.reset(this);
-
 				// original dimension
 				this.oW = event.w;
 				this.oH = event.h;
 				this.cvs.prop({ width: this.oW, height: this.oH });
+				// reset projector
+				Proj.reset(this);
 
 				if (!event.scale) {
 					// default to first zoom level

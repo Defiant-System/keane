@@ -71,14 +71,14 @@ class Layer {
 			}
 		});
 
-		let pixels = Filters.getPixels(this.cvs[0]),
-			//filtered = Filters.grayscale(pixels);
-			//filtered = Filters.brightness(pixels, 40);
-			//filtered = Filters.threshold(pixels, 50);
-			//filtered = Filters.sharpen(pixels);
-			filtered = Filters.clouds(pixels);
-			//filtered = Filters.blur(pixels);
-			//filtered = Filters.sobel(pixels);
-		this.ctx.putImageData(filtered, 0, 0);
+		// let pixels = Filters.getPixels(this.cvs[0]),
+		// 	//filtered = Filters.grayscale(pixels);
+		// 	//filtered = Filters.brightness(pixels, 40);
+		// 	//filtered = Filters.threshold(pixels, 50);
+		// 	//filtered = Filters.sharpen(pixels);
+		// 	filtered = Filters.clouds(pixels);
+		// 	//filtered = Filters.blur(pixels);
+		// 	//filtered = Filters.sobel(pixels);
+		// this.ctx.putImageData(filtered, 0, 0);
 	}
 }
