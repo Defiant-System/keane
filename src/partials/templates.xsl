@@ -2,49 +2,27 @@
 
 <xsl:template name="layers">
 	<xsl:for-each select="./*">
-		<xsl:choose>
-			<xsl:when test="@type = 'folder'">
-				<div class="group">
-					<div class="row">
-						<div class="icon icon-folder"></div>
-						<div class="name"><xsl:value-of select="@name"/></div>
-						<div data-click="toggle-visibility">
-							<xsl:attribute name="class">icon
-								<xsl:if test="@state = 'hidden'"> icon-eye-off</xsl:if>
-								<xsl:if test="@state = 'visible'"> icon-eye-on</xsl:if>
-							</xsl:attribute>
-						</div>
-					</div>
-				</div>
-			</xsl:when>
-			<xsl:when test="@type = 'text'">
-				<div class="group">
-					<div class="row">
-						<div class="icon icon-text"></div>
-						<div class="name"><xsl:value-of select="@name"/></div>
-						<div data-click="toggle-visibility">
-							<xsl:attribute name="class">icon
-								<xsl:if test="@state = 'hidden'"> icon-eye-off</xsl:if>
-								<xsl:if test="@state = 'visible'"> icon-eye-on</xsl:if>
-							</xsl:attribute>
-						</div>
-					</div>
-				</div>
-			</xsl:when>
-			<xsl:when test="@type = 'layer'">
-				<div class="row">
+		<div class="row">
+			<xsl:choose>
+				<xsl:when test="@type = 'folder'">
+					<div class="icon icon-folder"></div>
+				</xsl:when>
+				<xsl:when test="@type = 'text'">
+					<div class="icon icon-text"></div>
+				</xsl:when>
+				<xsl:otherwise>
 					<div class="thumbnail"><canvas></canvas></div>
-					<div class="name"><xsl:value-of select="@name"/></div>
-					<div data-click="toggle-visibility">
-						<xsl:attribute name="class">icon
-							<xsl:if test="@state = 'hidden'"> icon-eye-off</xsl:if>
-							<xsl:if test="@state = 'visible'"> icon-eye-on</xsl:if>
-						</xsl:attribute>
-					</div>
-					<xsl:if test="@fx"><div class="fx-applied"></div></xsl:if>
-				</div>
-			</xsl:when>
-		</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+			<div class="name"><xsl:value-of select="@name"/></div>
+			<div data-click="toggle-visibility">
+				<xsl:attribute name="class">icon
+					<xsl:if test="@state = 'hidden'"> icon-eye-off</xsl:if>
+					<xsl:if test="@state = 'visible'"> icon-eye-on</xsl:if>
+				</xsl:attribute>
+			</div>
+			<xsl:if test="./Fx"><div class="fx-applied"></div></xsl:if>
+		</div>
 	</xsl:for-each>
 </xsl:template>
 

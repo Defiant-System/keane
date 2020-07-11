@@ -36,7 +36,6 @@ const Projector = {
 		this.ctx.shadowOffsetY = 1;
 		this.ctx.shadowBlur = 5;
 		this.ctx.shadowColor = "#292929";
-		this.ctx.imageSmoothingEnabled = false;
 
 		this.aX = file.showRulers ? Rulers.t : 0;
 		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (file.showRulers ? Rulers.t : 0);
@@ -49,13 +48,14 @@ const Projector = {
 	render(noEmit) {
 		// reference to displayed file
 		let file = this.file;
-		// clear canvas
+		// reset canvas
 		this.cvs.prop({ width: window.width, height: window.height });
 
-		//this.ctx.save();
+		// this.ctx.save();
+		this.ctx.imageSmoothingEnabled = false;
 		this.ctx.translate(file.oX, file.oY);
 		this.ctx.drawImage(file.cvs[0], 0, 0, file.w, file.h);
-		//this.ctx.restore();
+		// this.ctx.restore();
 
 		if (file.showRulers) {
 			this.ctx.translate(-file.oX, -file.oY);

@@ -1,9 +1,13 @@
 
-<File>
+<File path="~/img/blue-rose.jpg" scale="1">
 	<Layers>
-		<i type="folder" name="Flower" state="hidden"/>
-		<i type="text" name="Some text" state="visible" />
-		<i type="layer" name="Background" state="visible" fx="1" />
+		<i type="folder" name="Folder name" state="hidden"/>
+		<i type="text" name="Some text" state="visible">
+			<Mask />
+		</i>
+		<i type="layer" name="Background" state="visible">
+			<Fx />
+		</i>
 	</Layers>
 </File>
 

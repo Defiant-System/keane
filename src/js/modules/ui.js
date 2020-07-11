@@ -341,6 +341,9 @@ const UI = {
 		switch (event.type) {
 			// native events
 			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+				
 				el = $(event.target);
 				value = +el.data("value");
 
