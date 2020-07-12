@@ -12,6 +12,7 @@ class File {
 		this.path = opt.path;
 		this.name = opt.name;
 		this._id = opt._id;
+		console.log(opt);
 
 		// undo history
 		this.history = new window.History;
@@ -30,6 +31,15 @@ class File {
 		this.fgColor = "#fff"
 		this.lineWidth = 1;
 
+		// initiate canvas
+		this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale: opt.scale });
+
+		opt.xFile.selectNodes("./Layers/i").map(xLayer => {
+			let layer = new Layer(this, xLayer);
+			this.layers.push(layer);
+		});
+
+		/*
 		// this is for "online" images; jpg, png, gif
 		if (opt.path) {
 			this.loadImage(opt.path);
@@ -40,6 +50,7 @@ class File {
 			// initiate canvas
 			this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale: this.scale });
 		}
+		*/
 	}
 	get activeLayer() {
 		return this.layers[1];

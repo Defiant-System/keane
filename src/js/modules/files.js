@@ -12,12 +12,10 @@ const Files = {
 		return Math.max.apply({}, [0, ...ids]) + 1;
 	},
 	open(xFile) {
-		let path = xFile.getAttribute("path"),
-			name = xFile.getAttribute("name") || path.slice(path.lastIndexOf("/") + 1),
-			opt = {
+		let opt = {
+				xFile,
 				_id: this.getUniqId(),
-				path,
-				name,
+				name: xFile.getAttribute("name"),
 				scale: +xFile.getAttribute("scale"),
 				width: +xFile.getAttribute("width"),
 				height: +xFile.getAttribute("height"),
@@ -25,7 +23,6 @@ const Files = {
 		
 		// add file name to xml node
 		xFile.setAttribute("_id", opt._id);
-		xFile.setAttribute("name", name);
 
 		// add statusbar tab
 		window.render({

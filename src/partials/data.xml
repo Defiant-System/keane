@@ -1,19 +1,39 @@
 
 <File name="Untitled-1.psd" width="600" height="400" scale="1">
 	<Layers>
-		<i type="folder" name="Folder name" state="hidden"/>
-		<i type="text" name="Some text" state="visible">
-			<Mask />
+		<i type="text" state="visible" name="Defiant">
+			<i value="Defiant" top="100" left="100" color="#fff" font="Helvetica" size="48"/>
 		</i>
-		<i type="layer" name="Background" fill="#fff" state="visible">
-			<Fx />
+		<i type="layer" state="visible" name="Flower">
+			<i path="~/img/small.jpg" top="50" left="50" width="200" height="125"/>
+		</i>
+		<i type="layer" state="visible" name="Background" fill="#fff" />
+	</Layers>
+</File>
+
+
+<File name="blue-rose.jpg" width="600" height="398" scale="1">
+	<Layers>
+		<!--<i type="folder" name="Folder name" state="hidden"/>-->
+		<i type="layer" state="visible" name="Background" path="~/img/blue-rose.jpg" />
+	</Layers>
+</File>
+
+
+<File name="mona-lisa.jpg" width="358" height="500" scale="1">
+	<Layers>
+		<i type="layer" state="visible" name="Background" path="~/img/mona-lisa.jpg">
+			<Mask />
 		</i>
 	</Layers>
 </File>
 
-<File path="~/img/blue-rose.jpg" width="600" height="398" scale="1">
+
+<File name="small.jpg" width="200" height="125" scale="1">
 	<Layers>
-		<i type="layer" name="Background" fill="#fff" state="visible" />
+		<i type="layer" state="visible" name="Background" path="~/img/small.jpg">
+			<Fx />
+		</i>
 	</Layers>
 </File>
 

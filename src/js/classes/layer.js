@@ -1,42 +1,39 @@
 
 class Layer {
-	constructor(opt) {
+	constructor(file, node) {
+		this.file = file;
 		this.type = "layer";
-		this.name = opt.name || "Layer 1";
-		this.file = opt.file;
 		this.blendingMode = "normal";
 		this.opacity = 1;
 		this.visible = true;
-		//this.mask = {};
 
-		let { cvs, ctx } = Misc.createCanvas(opt.width, opt.height);
+		let { cvs, ctx } = Misc.createCanvas(file.w, file.h);
 		this.cvs = cvs;
 		this.ctx = ctx;
+
 		// set dimensions
-		this.width = opt.width;
-		this.height = opt.height;
+		this.width = file.w;
+		this.height = file.h;
 
 		// layer contents
 		this.content = [];
 
-		let content = {
-				top: 0,
-				left: 0,
-				width: opt.width,
-				height: opt.height,
-			};
-
-		switch (true) {
-			case !!opt.fill:
-				this.content.push({ type: "fill", fill: opt.fill, ...content });
-				break;
-			case !!opt.text:
-				this.content.push({ type: "text", text: opt.text, ...content });
-				break;
-			case !!opt.image:
-				this.content.push({ type: "image", image: opt.image, ...content });
-				break;
-		}
+		let content = { top: 0, left: 0, width: file.w, height: file.h },
+			type = node.getAttribute("type");
+		// switch (type) {
+		// 	case "text":
+				this.content.push({
+					...content, type,
+					text: "Defiant",
+				});
+		// 		break;
+		// 	case "layer":
+		// 		this.content.push({
+		// 			...content, type,
+		// 			fill: node.getAttribute("fill"),
+		// 		});
+		// 		break;
+		// }
 	}
 	addBuffer(cvs) {
 		this.content.push({ type: "buffer", cvs });
