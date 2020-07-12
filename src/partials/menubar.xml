@@ -30,7 +30,7 @@
 	<Menu name="Type"></Menu>
 	<Menu name="Select"></Menu>
 	<Menu name="Filter">
-		<Menu name="Blur"/>
+		<Menu name="Render Clouds" click="filter-render-clouds"/>
 	</Menu>
 	<Menu name="View">
 		<Menu name="Rulers" click="toggle-rulers" check-group="toggle-rulers" is-checked="1" hotkey="alt+r" />

@@ -50,10 +50,9 @@ class File {
 	render(noEmit) {
 		// clear canvas
 		this.cvs.prop({ width: this.oW, height: this.oH });
-
 		// re-paints layers stack
 		this.layers.map(layer => this.dispatch(layer, noEmit));
-
+		// render projector
 		Projector.render(noEmit);
 	}
 	dispatch(event) {

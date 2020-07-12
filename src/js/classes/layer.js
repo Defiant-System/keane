@@ -16,7 +16,7 @@ class Layer {
 		this.height = file.h;
 
 		let child = node.selectSingleNode("./*[@type]"),
-			content = { _cdata: child.textContent, top: 0, left: 0, width: file.w, height: file.h };
+			content = { _cdata: child.textContent, top: 0, left: 0 };
 		
 		[...child.attributes].map(a => {
 			content[a.name] = +a.value || a.value;
@@ -40,7 +40,7 @@ class Layer {
 				case "fill":
 					//if (item.fill === "transparent") return;
 					this.ctx.fillStyle = item.color;
-					this.ctx.fillRect(item.left, item.top, item.width, item.height);
+					this.ctx.fillRect(item.left || 0, item.top || 0, item.width || this.file.w, item.height || this.file.h);
 					break;
 				case "text":
 					this.ctx.font = `${item.size}px ${item.font}`;
@@ -51,8 +51,8 @@ class Layer {
 					if (!item.image) {
 						let image = new Image;
 						image.onload = () => {
-							let width = image.width,
-								height = image.height;
+							if (!item.width) item.width = image.width;
+							if (!item.height) item.height = image.height;
 							item.image = image;
 							// trigger file render
 							this.file.render();
@@ -61,7 +61,7 @@ class Layer {
 						// clear string from memory
 						item._cdata = false;
 					} else {
-						this.ctx.drawImage(item.image, item.left, item.top);
+						this.ctx.drawImage(item.image, item.left, item.top, item.width, item.height);
 					}
 					break;
 				case "buffer":

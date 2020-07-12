@@ -77,6 +77,7 @@ const photoshop = {
 			boxName,
 			pEl,
 			el;
+		//console.log(event);
 		switch (event.type) {
 			case "open-file":
 				let xpath = `//File[@name="${event.name}"]`,
