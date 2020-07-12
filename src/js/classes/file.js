@@ -33,16 +33,19 @@ class File {
 		// initiate canvas
 		this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale: opt.scale });
 
-		opt.xFile.selectNodes("./Layers/i").map(xLayer => {
+		let content = opt.xFile.selectNodes("./Layers/i");
+		content.map(xLayer => {
 			let layer = new Layer(this, xLayer);
 			this.layers.splice(1, 0, layer);
 		});
+		// select top layer as default
+		this.activeLayerIndex = content.length;
 
 		// render file
 		this.render();
 	}
 	get activeLayer() {
-		return this.layers[1];
+		return this.layers[this.activeLayerIndex];
 	}
 	render(noEmit) {
 		// clear canvas
@@ -61,6 +64,7 @@ class File {
 			el;
 		//console.log(event);
 		switch (event.type) {
+			// primary events (hit first in switch-block)
 			case "bg-checkers":
 				this.ctx.fillStyle = Proj.checkers;
 				this.ctx.fillRect(0, 0, this.oW, this.oH);
@@ -69,7 +73,10 @@ class File {
 				// event object is layer - render and add to file canvas
 				this.ctx.drawImage(layer.render(), 0, 0);
 				break;
-
+			// secondary events
+			case "select-layer":
+				this.activeLayerIndex = event.index;
+				break;
 			case "set-canvas":
 				// original dimension
 				this.oW = event.w;

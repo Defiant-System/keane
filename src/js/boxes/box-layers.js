@@ -23,6 +23,7 @@
 		let APP = photoshop,
 			Self = APP.box.layers,
 			File = Projector.file,
+			index,
 			el;
 
 		switch (event.type) {
@@ -42,7 +43,8 @@
 				event.el.parent().find(".active").removeClass("active");
 				event.el.addClass("active");
 
-				console.log( event.el.index() );
+				index = Self.els.layerList.find(".row").length - event.el.index();
+				File.dispatch({ type: "select-layer", index });
 				break;
 		}
 	}
