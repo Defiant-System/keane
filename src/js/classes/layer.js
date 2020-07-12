@@ -15,25 +15,15 @@ class Layer {
 		this.width = file.w;
 		this.height = file.h;
 
-		// layer contents
-		this.content = [];
+		let child = node.selectSingleNode("./*[@type]"),
+			content = { _cdata: child.textContent, top: 0, left: 0, width: file.w, height: file.h };
+		
+		[...child.attributes].map(a => {
+			content[a.name] = +a.value || a.value;
+		});
 
-		let content = { top: 0, left: 0, width: file.w, height: file.h },
-			type = node.getAttribute("type");
-		// switch (type) {
-		// 	case "text":
-				this.content.push({
-					...content, type,
-					text: "Defiant",
-				});
-		// 		break;
-		// 	case "layer":
-		// 		this.content.push({
-		// 			...content, type,
-		// 			fill: node.getAttribute("fill"),
-		// 		});
-		// 		break;
-		// }
+		// layer contents
+		this.content = [content];
 	}
 	addBuffer(cvs) {
 		this.content.push({ type: "buffer", cvs });
@@ -41,25 +31,38 @@ class Layer {
 	}
 	render() {
 		// reset canvas
-		//this.cvs.prop({ width: this.width, height: this.height });
-		this.ctx.clearRect(0, 0, this.width, this.height);
+		this.cvs.prop({ width: this.width, height: this.height });
+		//this.ctx.clearRect(0, 0, this.width, this.height);
 
 		// loop contents of thi slayer
 		this.content.map(item => {
 			switch (item.type) {
 				case "fill":
-					if (item.fill === "transparent") return;
-					this.ctx.fillStyle = item.fill;
+					//if (item.fill === "transparent") return;
+					this.ctx.fillStyle = item.color;
 					this.ctx.fillRect(item.left, item.top, item.width, item.height);
 					break;
 				case "text":
-					//this.ctx.translate(.5, .5);
-					this.ctx.font = `30px Arial`;
-					this.ctx.fillStyle = "#000";
-					this.ctx.fillText(item.text, 100, 100);
+					this.ctx.font = `${item.size}px ${item.font}`;
+					this.ctx.fillStyle = item.color;
+					this.ctx.fillText(item.value, item.left, item.top);
 					break;
 				case "image":
-					this.ctx.drawImage(item.image, item.left, item.top);
+					if (!item.image) {
+						let image = new Image;
+						image.onload = () => {
+							let width = image.width,
+								height = image.height;
+							item.image = image;
+							// trigger file render
+							this.file.render();
+						};
+						image.src = item.path || item._cdata;
+						// clear string from memory
+						item._cdata = false;
+					} else {
+						this.ctx.drawImage(item.image, item.left, item.top);
+					}
 					break;
 				case "buffer":
 					this.ctx.drawImage(item.cvs, 0, 0);

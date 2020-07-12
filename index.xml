@@ -22,5 +22,10 @@
 	</Head>
 
 	@import "src/partials/data.xml"
+	<!-- temp -->
+	@import "src/partials/files/untitled-1.xml"
+	@import "src/partials/files/blue-rose.xml"
+	@import "src/partials/files/mona-lisa.xml"
+	@import "src/partials/files/small.xml"
 
 </Application>

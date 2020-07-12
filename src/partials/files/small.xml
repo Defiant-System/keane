@@ -1,0 +1,8 @@
+
+<File name="small.jpg" width="200" height="125" scale="1">
+	<Layers>
+		<i type="layer" state="visible" name="Background" path="~/img/small.jpg">
+			<Fx />
+		</i>
+	</Layers>
+</File>

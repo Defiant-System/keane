@@ -30,8 +30,6 @@ const TOOLS = {
 	zoom     : defiant.require("tools/zoom.js"),
 };
 
-// import * as ImageProcessing from "./modules/image-processing";
-// console.log( ImageProcessing );
 
 const photoshop = {
 	els: {},

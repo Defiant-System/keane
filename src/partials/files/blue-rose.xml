@@ -1,0 +1,7 @@
+
+<File name="blue-rose.jpg" width="600" height="398" scale="1">
+	<Layers>
+		<!--<i type="folder" name="Folder name" state="hidden"/>-->
+		<i type="layer" state="visible" name="Background" path="~/img/blue-rose.jpg" />
+	</Layers>
+</File>

@@ -12,7 +12,6 @@ class File {
 		this.path = opt.path;
 		this.name = opt.name;
 		this._id = opt._id;
-		console.log(opt);
 
 		// undo history
 		this.history = new window.History;
@@ -36,39 +35,14 @@ class File {
 
 		opt.xFile.selectNodes("./Layers/i").map(xLayer => {
 			let layer = new Layer(this, xLayer);
-			this.layers.push(layer);
+			this.layers.splice(1, 0, layer);
 		});
 
-		/*
-		// this is for "online" images; jpg, png, gif
-		if (opt.path) {
-			this.loadImage(opt.path);
-		} else {
-			// new layer with image
-			let layer = new Layer({ file: this, fill: opt.fill, width: opt.width, height: opt.height });
-			this.layers.push(layer);
-			// initiate canvas
-			this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale: this.scale });
-		}
-		*/
+		// render file
+		this.render();
 	}
 	get activeLayer() {
 		return this.layers[1];
-	}
-	loadImage(path) {
-		let image = new Image;
-		image.onload = () => {
-			let width = image.width,
-				height = image.height,
-				layer = new Layer({ file: this, image, width, height });
-			// new layer with image
-			this.layers.push(layer);
-			// temp
-		//	this.layers.push(new Layer({ file: this, text: "Defiant", width, height }));
-			// initiate canvas
-			this.dispatch({ type: "set-canvas", w: image.width, h: image.height, scale: this.scale });
-		};
-		image.src = path;
 	}
 	render(noEmit) {
 		// clear canvas
