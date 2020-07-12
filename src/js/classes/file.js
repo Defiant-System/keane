@@ -51,7 +51,18 @@ class File {
 		// clear canvas
 		this.cvs.prop({ width: this.oW, height: this.oH });
 		// re-paints layers stack
-		this.layers.map(layer => this.dispatch(layer, noEmit));
+		this.layers.map(layer => {
+			switch (layer.type) {
+				case "bg-checkers":
+					this.ctx.fillStyle = Projector.checkers;
+					this.ctx.fillRect(0, 0, this.oW, this.oH);
+					break;
+				case "layer":
+					// event object is layer - add to file canvas
+					this.ctx.drawImage(layer.cvs[0], 0, 0);
+					break;
+			}
+		});
 		// render projector
 		Projector.render(noEmit);
 	}
@@ -59,20 +70,10 @@ class File {
 		let APP = photoshop,
 			Proj = Projector,
 			_round = Math.round,
-			layer = event,
 			el;
 		//console.log(event);
 		switch (event.type) {
-			// primary events (hit first in switch-block)
-			case "bg-checkers":
-				this.ctx.fillStyle = Proj.checkers;
-				this.ctx.fillRect(0, 0, this.oW, this.oH);
-				break;
-			case "layer":
-				// event object is layer - render and add to file canvas
-				this.ctx.drawImage(layer.render(), 0, 0);
-				break;
-			// secondary events
+			// custom events
 			case "select-layer":
 				this.activeLayerIndex = event.index;
 				break;

@@ -38,9 +38,6 @@ const photoshop = {
 		this.els.content = window.find("content");
 		this.els.statusBar = window.find(".status-bar");
 
-		// file stack
-		this.files = [];
-
 		// init objects
 		UI.init();
 		Files.init();
@@ -72,6 +69,8 @@ const photoshop = {
 	},
 	dispatch(event) {
 		let Self = photoshop,
+			layer,
+			pixels,
 			image,
 			name,
 			boxName,
@@ -133,6 +132,24 @@ const photoshop = {
 				newBox = oldBox.replace(newBox);
 				// notify box state = on
 				this.box[newBox.data("box")].toggle(newBox, "on");
+				break;
+			case "filter-render":
+				layer = Projector.file.activeLayer;
+				pixels = Filters.getPixels(layer.cvs[0]);
+				image = Filters.clouds(pixels);
+				layer.ctx.putImageData(image, 0, 0);
+				// render file
+				Projector.file.render();
+
+				// let pixels = Filters.getPixels(this.cvs[0]),
+				// 	//filtered = Filters.grayscale(pixels);
+				// 	//filtered = Filters.brightness(pixels, 40);
+				// 	//filtered = Filters.threshold(pixels, 50);
+				// 	//filtered = Filters.sharpen(pixels);
+				// 	filtered = Filters.clouds(pixels);
+				// 	//filtered = Filters.blur(pixels);
+				// 	//filtered = Filters.sobel(pixels);
+				// this.ctx.putImageData(filtered, 0, 0);
 				break;
 			default:
 				if (event.el) {

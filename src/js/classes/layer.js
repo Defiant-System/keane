@@ -23,64 +23,41 @@ class Layer {
 		});
 
 		// layer contents
-		this.content = [content];
+		switch (content.type) {
+			case "fill":
+				this.ctx.fillStyle = content.color;
+				this.ctx.fillRect(content.left || 0, content.top || 0, content.width || this.file.w, content.height || this.file.h);
+				break;
+			case "text":
+				this.ctx.font = `${content.size}px ${content.font}`;
+				this.ctx.fillStyle = content.color;
+				this.ctx.fillText(content.value, content.left, content.top);
+				break;
+			case "image":
+				if (!content.image) {
+					let image = new Image;
+					image.onload = () => {
+						if (!content.width) content.width = image.width;
+						if (!content.height) content.height = image.height;
+						content.image = image;
+						// trigger file render
+						this.file.render();
+					};
+					image.src = content.path || content._cdata;
+					// clear string from memory
+					content._cdata = false;
+				} else {
+					this.ctx.drawImage(content.image, content.left, content.top, content.width, content.height);
+				}
+				break;
+		}
 	}
 	addBuffer(cvs) {
-		this.content.push({ type: "buffer", cvs });
-		//this.file.render(true);
-	}
-	render() {
-		// reset canvas
-		this.cvs.prop({ width: this.width, height: this.height });
-		//this.ctx.clearRect(0, 0, this.width, this.height);
-
-		// loop contents of thi slayer
-		this.content.map(item => {
-			switch (item.type) {
-				case "fill":
-					//if (item.fill === "transparent") return;
-					this.ctx.fillStyle = item.color;
-					this.ctx.fillRect(item.left || 0, item.top || 0, item.width || this.file.w, item.height || this.file.h);
-					break;
-				case "text":
-					this.ctx.font = `${item.size}px ${item.font}`;
-					this.ctx.fillStyle = item.color;
-					this.ctx.fillText(item.value, item.left, item.top);
-					break;
-				case "image":
-					if (!item.image) {
-						let image = new Image;
-						image.onload = () => {
-							if (!item.width) item.width = image.width;
-							if (!item.height) item.height = image.height;
-							item.image = image;
-							// trigger file render
-							this.file.render();
-						};
-						image.src = item.path || item._cdata;
-						// clear string from memory
-						item._cdata = false;
-					} else {
-						this.ctx.drawImage(item.image, item.left, item.top, item.width, item.height);
-					}
-					break;
-				case "buffer":
-					this.ctx.drawImage(item.cvs, 0, 0);
-					this.content.pop();
-					break;
-			}
-		});
-
-		// let pixels = Filters.getPixels(this.cvs[0]),
-		// 	//filtered = Filters.grayscale(pixels);
-		// 	//filtered = Filters.brightness(pixels, 40);
-		// 	//filtered = Filters.threshold(pixels, 50);
-		// 	//filtered = Filters.sharpen(pixels);
-		// 	filtered = Filters.clouds(pixels);
-		// 	//filtered = Filters.blur(pixels);
-		// 	//filtered = Filters.sobel(pixels);
-		// this.ctx.putImageData(filtered, 0, 0);
-
-		return this.cvs[0];
+		if (!this._original) {
+			this._original = this.cvs[0];
+		}
+		this.ctx.clearRect(0, 0, this.width, this.height);
+		this.ctx.drawImage(this._original, 0, 0);
+		this.ctx.drawImage(cvs, 0, 0);
 	}
 }
