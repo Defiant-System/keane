@@ -4,10 +4,10 @@
 	<xsl:for-each select="./*">
 		<div class="row" data-click="select-row">
 			<xsl:choose>
-				<xsl:when test="@type = 'folder'">
+				<xsl:when test="./*[@type = 'folder']">
 					<div class="icon icon-folder"></div>
 				</xsl:when>
-				<xsl:when test="@type = 'text'">
+				<xsl:when test="./*[@type = 'text']">
 					<div class="icon icon-text"></div>
 				</xsl:when>
 				<xsl:otherwise>

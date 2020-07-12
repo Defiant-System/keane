@@ -1,13 +1,15 @@
 
 <File name="Untitled-1.psd" width="600" height="400" scale="1">
 	<Layers>
-		<i type="text" state="visible" name="Defiant">
-			<i value="Defiant" top="100" left="100" color="#fff" font="Helvetica" size="48"/>
+		<i state="visible" name="Flower">
+			<i type="image" path="~/img/small.jpg" top="50" left="50" width="200" height="125"/>
 		</i>
-		<i type="layer" state="visible" name="Flower">
-			<i path="~/img/small.jpg" top="50" left="50" width="200" height="125"/>
+		<i state="visible" name="Defiant">
+			<i type="text" value="Defiant" color="#369" top="100" left="100" font="Helvetica" size="48"/>
 		</i>
-		<i type="layer" state="visible" name="Background" fill="#fff" />
+		<i state="visible" name="Background">
+			<i type="fill" color="#fff" top="100" left="100" width="150" height="150" />
+		</i>
 	</Layers>
 </File>
 
