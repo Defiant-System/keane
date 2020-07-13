@@ -25,22 +25,35 @@
 		<Menu name="Paste"/>
 		<Menu name="Clear"/>
 	</Menu>
-	<Menu name="Image"></Menu>
+	<Menu name="Image">
+		<Menu name="Mode">
+			<Menu name="Grayscale" click="filter-render" arg="grayscale"/>
+		</Menu>
+		<Menu name="Adjustments">
+			<Menu name="Brighten" click="filter-render" arg="brightness,50"/>
+			<Menu name="Threshold" click="filter-render" arg="threshold,50"/>
+		</Menu>
+	</Menu>
 	<Menu name="Layer"></Menu>
 	<Menu name="Type"></Menu>
 	<Menu name="Select"></Menu>
 	<Menu name="Filter">
 		<Menu name="Last Filter" disabled="1" />
 		<Menu type="divider"/>
-		<Menu name="Blur" />
+		<Menu name="Sobel" click="filter-render" arg="sobel"/>
+		<Menu type="divider"/>
+		<Menu name="Blur">
+			<Menu name="Blur" click="filter-render" arg="blur"/>
+		</Menu>
 		<Menu name="Disort" />
 		<Menu name="Noise" />
 		<Menu name="Pixelate" />
 		<Menu name="Render">
 			<Menu name="Clouds" click="filter-render" arg="clouds"/>
-			<Menu name="Difference Clouds" click="filter-render" arg="difference-clouds"/>
 		</Menu>
-		<Menu name="Sharpen" />
+		<Menu name="Sharpen">
+			<Menu name="Sharpen" click="filter-render" arg="sharpen"/>
+		</Menu>
 		<Menu name="Stylize" />
 		<Menu name="Other" />
 	</Menu>
