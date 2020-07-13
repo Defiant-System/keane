@@ -82,6 +82,8 @@ const photoshop = {
 				let xpath = `//File[@name="${event.name}"]`,
 					xFile = window.bluePrint.selectSingleNode(xpath);
 				Files.open(xFile);
+
+				//Self.dispatch({ type: "filter-render", arg: "clouds" });
 				break;
 			case "select-file":
 				Files.select(+event.arg);

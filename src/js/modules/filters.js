@@ -74,6 +74,7 @@ const Filters = {
 				d[o + 0] =
                 d[o + 1] =
                 d[o + 2] = noise(x, y) * 255;
+                d[o + 3] = 255;
 			}
 		}
 		return pixels;

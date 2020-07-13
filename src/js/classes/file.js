@@ -16,7 +16,7 @@ class File {
 		// undo history
 		this.history = new window.History;
 		// layers stack
-		this.layers = [{ type: "bg-checkers" }];
+		this.layers = [{ type: "bg-checkers", _ready: true }];
 
 		// canvases
 		let { cvs, ctx } = Misc.createCanvas(opt.width, opt.height);
@@ -42,10 +42,16 @@ class File {
 		this.activeLayerIndex = content.length;
 
 		// render file
-		this.render();
+		this.layersReady();
 	}
 	get activeLayer() {
 		return this.layers[this.activeLayerIndex];
+	}
+	layersReady() {
+		// render file if all layers are ready
+		if (this.layers.filter(layer => !layer._ready).length === 0) {
+			this.render();
+		}
 	}
 	render(noEmit) {
 		// clear canvas
@@ -103,7 +109,7 @@ class File {
 				this.dispatch({ ...event, type: "set-scale", noRender: true });
 
 				// render canvas
-				this.render();
+				//this.layersReady();
 				break;
 			case "set-scale":
 				// scaled dimension

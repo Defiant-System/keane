@@ -1,5 +1,5 @@
 
-<File name="Untitled-1.psd" width="600" height="400" scale="1">
+<File name="Untitled-1.psd" width="600" height="398" scale="1">
 	<Layers>
 		<!--
 		<i state="visible" name="Flower">
@@ -18,6 +18,9 @@
 			<i type="text" value="Defiant" color="#369" top="100" left="100" font="Helvetica" size="48"/>
 		</i>
 		-->
+		<i state="visible" name="Blue rose">
+			<i type="image" path="~/img/blue-rose.jpg"/>
+		</i>
 		<i state="visible" name="Background">
 			<i type="fill" color="#fff" />
 		</i>

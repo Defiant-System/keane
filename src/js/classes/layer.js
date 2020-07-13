@@ -1,6 +1,8 @@
 
 class Layer {
 	constructor(file, node) {
+		this._ready = true;
+
 		this.file = file;
 		this.type = "layer";
 		this.blendingMode = "normal";
@@ -17,10 +19,8 @@ class Layer {
 
 		let child = node.selectSingleNode("./*[@type]"),
 			content = { _cdata: child.textContent, top: 0, left: 0 };
-		
-		[...child.attributes].map(a => {
-			content[a.name] = +a.value || a.value;
-		});
+		// make JSON of node attributes
+		[...child.attributes].map(a => content[a.name] = +a.value || a.value);
 
 		// layer contents
 		switch (content.type) {
@@ -34,21 +34,24 @@ class Layer {
 				this.ctx.fillText(content.value, content.left, content.top);
 				break;
 			case "image":
-				if (!content.image) {
-					let image = new Image;
-					image.onload = () => {
-						if (!content.width) content.width = image.width;
-						if (!content.height) content.height = image.height;
-						content.image = image;
-						// trigger file render
-						this.file.render();
-					};
-					image.src = content.path || content._cdata;
-					// clear string from memory
-					content._cdata = false;
-				} else {
-					this.ctx.drawImage(content.image, content.left, content.top, content.width, content.height);
-				}
+				// prevent file render
+				this._ready = false;
+				
+				let image = new Image;
+				image.onload = () => {
+					let width = content.width || image.width,
+						height = content.height || image.height;
+					this.ctx.drawImage(image, content.left, content.top, width, height);
+
+					// prevent file render
+					this._ready = true;
+					
+					// notify ready state
+					this.file.layersReady();
+				};
+				image.src = content.path || content._cdata;
+				// clear string from memory
+				content._cdata = false;
 				break;
 		}
 	}
