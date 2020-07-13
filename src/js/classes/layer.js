@@ -3,19 +3,19 @@ class Layer {
 	constructor(file, node) {
 		this._ready = true;
 
+		// defaults
 		this.file = file;
 		this.type = "layer";
 		this.blendingMode = "normal";
 		this.opacity = 1;
 		this.visible = true;
+		// dimensions
+		this.width = file.w;
+		this.height = file.h;
 
 		let { cvs, ctx } = Misc.createCanvas(file.w, file.h);
 		this.cvs = cvs;
 		this.ctx = ctx;
-
-		// set dimensions
-		this.width = file.w;
-		this.height = file.h;
 
 		let child = node.selectSingleNode("./*[@type]"),
 			content = { _cdata: child.textContent, top: 0, left: 0 };
