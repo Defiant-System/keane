@@ -96,7 +96,7 @@ class File {
 
 				if (!event.scale) {
 					// default to first zoom level
-					event.scale = .1;
+					event.scale = .125;
 					// iterate available zoom levels
 					ZOOM.filter(z => z.level <= 100)
 						.map(zoom => {
