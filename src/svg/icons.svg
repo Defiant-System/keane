@@ -750,8 +750,11 @@
 	</svg>
 
 	<svg id="knob" viewBox="0 0 34 1734">
+		<filter id="DS_1" x="-40%" y="-40%" width="180%" height="180%">
+			<feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#7af" flood-opacity="1" />
+		</filter>
 		<style type="text/css">
-			.st0{fill:none;stroke:#7af;stroke-width:2.5;stroke-linecap:round;}
+			.st0{fill:none;stroke:#7af;stroke-width:2.5;stroke-linecap:round;filter:url(#DS_1);}
 			.st1{fill:none;stroke:#344;stroke-width:2.5;stroke-linecap:round;}
 		</style>
 		<path class="st0" d="M7.1,60.9c0.4,0.4,0.7,0.7,1.1,1"/>
