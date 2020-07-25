@@ -31,7 +31,7 @@ class File {
 		this.lineWidth = 1;
 
 		// initiate canvas
-		this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale: opt.scale });
+		this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale: 4 });
 
 		let content = opt.xFile.selectNodes("./Layers/i");
 		content.map(xLayer => {
@@ -127,8 +127,8 @@ class File {
 				}
 				break;
 			case "pan-canvas":
-				this.oX = (Number.isInteger(event.left) ? event.left : Proj.cX - (this.w / 2) + event.x) || this.oX;
-				this.oY = (Number.isInteger(event.top) ? event.top : Proj.cY - (this.h / 2) + event.y) || this.oY;
+				this.oX = (Number.isInteger(event.left) ? event.left : this.w > Proj.aW ? Proj.cX - (this.w / 2) + event.x : false) || this.oX;
+				this.oY = (Number.isInteger(event.top) ? event.top : this.h > Proj.aH ? Proj.cY - (this.h / 2) + event.y : false) || this.oY;
 				// render projector canvas
 				Proj.render();
 				break;

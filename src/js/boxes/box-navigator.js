@@ -27,6 +27,11 @@
 
 			// subscribe to events
 			defiant.on("projector-update", this.dispatch);
+
+			if (this.ratio) {
+				// dispatch if ratio is calculated
+				this.dispatch({ type: "projector-update" });
+			}
 		} else {
 			// unbind event handlers
 			if (this.els.zoomRect) this.els.zoomRect.off("mousedown", this.pan);

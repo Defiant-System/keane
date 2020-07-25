@@ -7,8 +7,10 @@
  * Better rank ordering method by Stefan Gustavson in 2012.
  *
  */
- 
-class SimplexNoise {
+
+import { Alea } from "./alea";
+
+export class SimplexNoise {
 	constructor(randomOrSeed) {
 		this.F2 = 0.5 * (Math.sqrt(3.0) - 1.0);
 		this.G2 = (3.0 - Math.sqrt(3.0)) / 6.0;
@@ -18,7 +20,7 @@ class SimplexNoise {
 		if (typeof randomOrSeed == 'function') {
 			random = randomOrSeed;
 		} else if (randomOrSeed) {
-			random = alea(randomOrSeed);
+			random = (new Alea(randomOrSeed)).random;
 		}
 
 		this.p = new Uint8Array(256);

@@ -1,90 +1,102 @@
 
-class Mash {
-	constructor(data) {
-		data = data.toString();
+// copied from https://github.com/coverslide/node-alea/blob/master/alea.js
 
-		let n = 0xefc8249d,
-			i = 0,
-			il = data.length;
-		for (; i<il; i++) {
-			n += data.charCodeAt(i);
-			let h = 0.02519603282416938 * n;
-			n = h >>> 0;
-			h -= n;
-			h *= n;
-			n = h >>> 0;
-			h -= n;
-			n += h * 0x100000000; // 2^32
-		}
+function Mash() {
+	let n = 0xefc8249d;
 
-		return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
-	}
+	let mash = data => {
+			data = data.toString();
+			for (let i=0, il=data.length; i<il; i++) {
+				n += data.charCodeAt(i);
+				let h = 0.02519603282416938 * n;
+				n = h >>> 0;
+				h -= n;
+				h *= n;
+				n = h >>> 0;
+				h -= n;
+				n += h * 0x100000000; // 2^32
+			}
+			return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
+		};
 
-	get version() {
-		return "Mash 0.9";
-	}
+	mash.version = 'Mash 0.9';
+
+	return mash;
 }
 
-class Alea {
-	constructor(args) {
+export function Alea() {
+	return (function(args) {
 		// Johannes Baagøe <baagoe@baagoe.com>, 2010
+		let s0 = 0,
+			s1 = 0,
+			s2 = 0,
+			c = 1;
+
 		if (args.length == 0) {
 			args = [+new Date];
 		}
 
 		let mash = Mash();
-		this.s0 = mash(" ");
-		this.s1 = mash(" ");
-		this.s2 = mash(" ");
-		this.c = 1;
+		s0 = mash(' ');
+		s1 = mash(' ');
+		s2 = mash(' ');
 
 		for (let i=0, il=args.length; i<il; i++) {
-			this.s0 -= mash(args[i]);
-			if (this.s0 < 0) {
-				this.s0 += 1;
+			s0 -= mash(args[i]);
+			if (s0 < 0) {
+				s0 += 1;
 			}
-			this.s1 -= mash(args[i]);
-			if (this.s1 < 0) {
-				this.s1 += 1;
+			s1 -= mash(args[i]);
+			if (s1 < 0) {
+				s1 += 1;
 			}
-			this.s2 -= mash(args[i]);
-			if (this.s2 < 0) {
-				this.s2 += 1;
+			s2 -= mash(args[i]);
+			if (s2 < 0) {
+				s2 += 1;
 			}
 		}
-	}
+		mash = null;
 
-	random() {
-		let t = 2091639 * this.s0 + c * 2.3283064365386963e-10; // 2^-32
-		this.s0 = this.s1;
-		this.s1 = this.s2;
-		return this.s2 = t - (this.c = t | 0);
-	}
+		let random = function() {
+			let t = 2091639 * s0 + c * 2.3283064365386963e-10; // 2^-32
+			s0 = s1;
+			s1 = s2;
+			return s2 = t - (c = t | 0);
+		};
 
-	uint32() {
-		return this.random() * 0x100000000; // 2^32
-	}
+		random.uint32 = function() {
+			return random() * 0x100000000; // 2^32
+		};
 
-	fract53() {
-		return this.random() + (this.random() * 0x200000 | 0) * 1.1102230246251565e-16; // 2^-53
-	}
+		random.fract53 = function() {
+			return random() + 
+				(random() * 0x200000 | 0) * 1.1102230246251565e-16; // 2^-53
+		};
 
-	exportState() {
-		return [this.s0, this.s1, this.s2, this.c];
-	}
+		random.version = 'Alea 0.9';
+		random.args = args;
 
-	static importState(i) {
-		let random = new Alea(i);
+		// my own additions to sync state between two generators
+		random.exportState = function() {
+			return [s0, s1, s2, c];
+		};
 
-		random.s0 = +i[0] || 0;
-		random.s1 = +i[1] || 0;
-		random.s2 = +i[2] || 0;
-		random.c = +i[3] || 0;
+		random.importState = function(i) {
+			s0 = +i[0] || 0;
+			s1 = +i[1] || 0;
+			s2 = +i[2] || 0;
+			c = +i[3] || 0;
+		};
 
 		return random;
-	}
 
-	get version() {
-		return "Alea 0.9";
-	}
+	} (Array.prototype.slice.call(arguments)));
 }
+
+// importState to sync generator states
+Alea.importState = function(i) {
+	let random = new Alea();
+	random.importState(i);
+	return random;
+};
+

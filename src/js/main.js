@@ -119,7 +119,7 @@ const photoshop = {
 				break;
 			case "box-head-tab":
 				el = $(event.target);
-				if (el.hasClass("active")) return;
+				if (el.hasClass("active") || !el.parent().hasClass("box-head")) return;
 				el.parent().find(".active").removeClass("active");
 				el.addClass("active");
 
