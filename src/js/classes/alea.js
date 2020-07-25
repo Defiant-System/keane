@@ -24,7 +24,7 @@ function Mash() {
 	return mash;
 }
 
-export function Alea() {
+function Alea() {
 	return (function(args) {
 		// Johannes Baagøe <baagoe@baagoe.com>, 2010
 		let s0 = 0,
