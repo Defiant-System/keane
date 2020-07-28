@@ -66,6 +66,8 @@ const photoshop = {
 		//this.dispatch({ type: "open-file", name: "blue-rose.jpg" });
 		//this.dispatch({ type: "open-file", name: "mona-lisa.jpg" });
 		//this.dispatch({ type: "open-file", name: "small.jpg" });
+
+		//this.els.content.find(".box-head div[data-content='info']").trigger("click");
 	},
 	dispatch(event) {
 		let Self = photoshop,

@@ -15,6 +15,9 @@ const Projector = {
 		// publicly used swap canvas
 		this.swap = { cvs, ctx } = Misc.createCanvas(1, 1);
 
+		// bind event handlers
+		this.cvs.on("mousemove", this.dispatch);
+
 		// checkers background
 		return new Promise(resolve => {
 			let image = new Image;
@@ -24,6 +27,33 @@ const Projector = {
 			};
 			image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
 		});
+	},
+	dispatch(event) {
+		let APP = photoshop,
+			Self = Projector,
+			File = Self.file,
+			_max = Math.max,
+			_min = Math.min,
+			_round = Math.round,
+			data = {},
+			el;
+
+		switch (event.type) {
+			// native events
+			case "mousemove":
+				data.top = _round(_min(_max(event.offsetY - File.oY, 0), File.h) / File.scale);
+				data.left = _round(_min(_max(event.offsetX - File.oX, 0), File.w) / File.scale);
+				data.offsetY = _min(_max(event.offsetY, File.oY), File.oY + File.h) - Self.aY;
+				data.offsetX = _min(_max(event.offsetX, File.oX), File.oX + File.w) - Self.aX;
+				data.rgba = Self.ctx.getImageData(data.left, data.top, 1, 1).data;
+				data.hsl = Color.rgbToHsv.apply({}, data.rgba);
+				data.isOnCanvas = event.offsetY >= File.oY && event.offsetY <= File.oY + File.h
+								&& event.offsetX >= File.oX && event.offsetX <= File.oX + File.w;
+
+				// broadcast event
+				defiant.emit("mouse-move", data);
+				break;
+		}
 	},
 	renderFrame(file) {
 		// pre-render frame
