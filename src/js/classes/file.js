@@ -31,7 +31,7 @@ class File {
 		this.lineWidth = 1;
 
 		// initiate canvas
-		this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale: 4 });
+		this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale1: 4 });
 
 		let content = opt.xFile.selectNodes("./Layers/i");
 		content.map(xLayer => {

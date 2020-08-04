@@ -1,6 +1,6 @@
 <MenuBar>
 	<Menu name="Photoshop">
-		<Menu name="About Photoshop"/>
+		<Menu name="About Photoshop" shell="win -a"/>
 		<Menu type="divider"/>
 		<Menu name="Hide Photoshop"/>
 		<Menu name="Hide Others"/>
