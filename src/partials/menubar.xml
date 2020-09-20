@@ -2,10 +2,6 @@
 	<Menu name="Photoshop">
 		<Menu name="About Photoshop" shell="win -a"/>
 		<Menu type="divider"/>
-		<Menu name="Hide Photoshop"/>
-		<Menu name="Hide Others"/>
-		<Menu name="Show All" disabled="1"/>
-		<Menu type="divider"/>
 		<Menu name="Quit Photoshop" shell="win -c"/>
 	</Menu>
 	<Menu name="File">
