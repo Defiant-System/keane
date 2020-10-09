@@ -4,7 +4,7 @@ const Rulers = {
 	render(Projector) {
 		let _abs = Math.abs,
 			_round = Math.round,
-			g,
+			g, x, y,
 			p = .5,
 			t = this.t,
 			ctx = Projector.ctx,

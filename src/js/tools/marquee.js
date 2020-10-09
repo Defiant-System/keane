@@ -17,7 +17,7 @@
 	},
 	dispatch(event) {
 		let APP = photoshop,
-			_canvas = Canvas,
+			// _canvas = Canvas,
 			Self = TOOLS.marquee,
 			Drag = Self.drag,
 			_max = Math.max,

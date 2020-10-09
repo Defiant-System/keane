@@ -93,6 +93,7 @@ const UI = {
 			data = {},
 			name,
 			size,
+			value,
 			hardness,
 			roundness,
 			angle,

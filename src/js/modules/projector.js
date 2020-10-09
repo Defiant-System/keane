@@ -13,7 +13,7 @@ const Projector = {
 		this.cvs = window.find(".cvs-wrapper .canvas");
 		this.ctx = this.cvs[0].getContext("2d");
 		// publicly used swap canvas
-		this.swap = { cvs, ctx } = Misc.createCanvas(1, 1);
+		this.swap = Misc.createCanvas(1, 1);
 
 		// bind event handlers
 		this.cvs.on("mousemove", this.dispatch);

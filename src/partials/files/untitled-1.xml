@@ -18,6 +18,7 @@
 			<i type="text" value="Defiant" color="#369" top="100" left="100" font="Helvetica" size="48"/>
 		</i>
 		-->
+		
 		<i state="visible" name="Blue rose">
 			<i type="image" path="~/img/blue-rose.jpg"/>
 		</i>
