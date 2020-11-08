@@ -4,6 +4,7 @@
 		<meta name="title" value="Photoshop" version="1.2"/>
 		<meta name="author" value="Hakan Bilgin" namespace="ant"/>
 		<meta name="license" value="AGPL-3.0"/>
+		<meta name="repository" value="https://github.com/Defiant-System/photoshop"/>
 		<meta name="width" value="1150" min="920"/>
 		<meta name="height" value="800" min="660"/>
 		<meta name="top" value="120"/>
