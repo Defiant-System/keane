@@ -6,6 +6,7 @@ class Layer {
 		// defaults
 		this.file = file;
 		this.type = "layer";
+		this.name = node.getAttribute("name");
 		this.blendingMode = "normal";
 		this.opacity = 1;
 		this.visible = true;
@@ -43,7 +44,9 @@ class Layer {
 						height = content.height || image.height;
 					this.ctx.drawImage(image, content.left, content.top, width, height);
 
-					// prevent file render
+					this._imgData = this.ctx.getImageData(0, 0, width, height);
+
+					// allow file render
 					this._ready = true;
 					
 					// notify ready state
@@ -56,11 +59,11 @@ class Layer {
 		}
 	}
 	addBuffer(cvs) {
-		if (!this._original) {
-			this._original = this.cvs[0];
-		}
-		this.ctx.clearRect(0, 0, this.width, this.height);
-		this.ctx.drawImage(this._original, 0, 0);
+		// if (!this._original) {
+		// 	this._original = this.cvs[0];
+		// }
+		// this.ctx.clearRect(0, 0, this.width, this.height);
+		this.ctx.putImageData(this._imgData, 0, 0);
 		this.ctx.drawImage(cvs, 0, 0);
 	}
 }

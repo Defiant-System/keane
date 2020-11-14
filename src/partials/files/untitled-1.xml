@@ -23,7 +23,7 @@
 			<i type="image" path="~/img/blue-rose.jpg"/>
 		</i>
 		<i state="visible" name="Background">
-			<i type="fill" color="#fff" />
+			<i type="fill" color="#f00" />
 		</i>
 	</Layers>
 </File>
