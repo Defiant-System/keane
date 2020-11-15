@@ -7,6 +7,7 @@ class Layer {
 		this.file = file;
 		this.type = "layer";
 		this.name = node.getAttribute("name");
+		this.id = node.getAttribute("id");
 		this.blendingMode = "normal";
 		this.opacity = 1;
 		this.visible = true;

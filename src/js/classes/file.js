@@ -30,11 +30,16 @@ class File {
 		this.fgColor = "#fff"
 		this.lineWidth = 1;
 
+		let content = opt.xFile.selectNodes("./Layers/i");
+		content.map((xLayer, i) => {
+			// tag layer with rowNum / id
+			xLayer.setAttribute("id", content.length - i);
+		});
+
 		// initiate canvas
 		this.dispatch({ type: "set-canvas", w: opt.width, h: opt.height, scale1: 4 });
 
-		let content = opt.xFile.selectNodes("./Layers/i");
-		content.map(xLayer => {
+		content.map((xLayer, i) => {
 			let layer = new Layer(this, xLayer);
 			this.layers.splice(1, 0, layer);
 		});
