@@ -1,33 +1,33 @@
 
-defiant.require("classes/file.js")
-defiant.require("classes/layer.js")
-defiant.require("classes/simplex-noise.js")
+@import "classes/file.js"
+@import "classes/layer.js"
+@import "classes/simplex-noise.js"
 
-defiant.require("modules/files.js")
-defiant.require("modules/projector.js")
-defiant.require("modules/misc.js")
-defiant.require("modules/color.js")
-defiant.require("modules/ui.js")
-defiant.require("modules/rulers.js")
-defiant.require("modules/thumb.js")
-defiant.require("modules/filters.js")
+@import "modules/files.js"
+@import "modules/projector.js"
+@import "modules/misc.js"
+@import "modules/color.js"
+@import "modules/ui.js"
+@import "modules/rulers.js"
+@import "modules/thumb.js"
+@import "modules/filters.js"
 
 
 const TOOLS = {
 	_active  : false,
-	marquee  : defiant.require("tools/marquee.js"),
-	move     : defiant.require("tools/move.js"),
-	pipette  : defiant.require("tools/pipette.js"),
-	brush    : defiant.require("tools/brush.js"),
-	gradient : defiant.require("tools/gradient.js"),
-	type     : defiant.require("tools/type.js"),
-	crop     : defiant.require("tools/crop.js"),
-	blur     : defiant.require("tools/blur.js"),
-	stamp    : defiant.require("tools/stamp.js"),
-	pen      : defiant.require("tools/pen.js"),
-	shape    : defiant.require("tools/shape.js"),
-	pointer  : defiant.require("tools/pointer.js"),
-	zoom     : defiant.require("tools/zoom.js"),
+	marquee  : @import "tools/marquee.js",
+	move     : @import "tools/move.js",
+	pipette  : @import "tools/pipette.js",
+	brush    : @import "tools/brush.js",
+	gradient : @import "tools/gradient.js",
+	type     : @import "tools/type.js",
+	crop     : @import "tools/crop.js",
+	blur     : @import "tools/blur.js",
+	stamp    : @import "tools/stamp.js",
+	pen      : @import "tools/pen.js",
+	shape    : @import "tools/shape.js",
+	pointer  : @import "tools/pointer.js",
+	zoom     : @import "tools/zoom.js",
 };
 
 
@@ -176,17 +176,17 @@ const photoshop = {
 				}
 		}
 	},
-	statusbar: defiant.require("modules/statusbar.js"),
+	statusbar: @import "modules/statusbar.js",
 	box: {
-		navigator: defiant.require("boxes/box-navigator.js"),
-		color:     defiant.require("boxes/box-color.js"),
-		info:      defiant.require("boxes/box-info.js"),
-		character: defiant.require("boxes/box-character.js"),
-		swatches:  defiant.require("boxes/box-swatches.js"),
-		paragraph: defiant.require("boxes/box-paragraph.js"),
-		layers:    defiant.require("boxes/box-layers.js"),
-		channels:  defiant.require("boxes/box-channels.js"),
-		paths:     defiant.require("boxes/box-paths.js")
+		navigator: @import "boxes/box-navigator.js",
+		color:     @import "boxes/box-color.js",
+		info:      @import "boxes/box-info.js",
+		character: @import "boxes/box-character.js",
+		swatches:  @import "boxes/box-swatches.js",
+		paragraph: @import "boxes/box-paragraph.js",
+		layers:    @import "boxes/box-layers.js",
+		channels:  @import "boxes/box-channels.js",
+		paths:     @import "boxes/box-paths.js"
 	}
 };
 
