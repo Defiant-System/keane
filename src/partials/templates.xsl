@@ -134,9 +134,6 @@
 							<xsl:if test="@type = 'texture'">texture</xsl:if>
 							<xsl:if test="@tip = 'round'"> round</xsl:if>
 						</xsl:attribute>
-						<xsl:attribute name="style">
-							--image: url(~/icons/brush-preset-<xsl:value-of select="@name"/>.png);
-						</xsl:attribute>
 					</div>
 				</xsl:for-each>
 			</div>
