@@ -11,7 +11,10 @@ const Files = {
 		let ids = this.stack.map(f => f._id);
 		return Math.max.apply({}, [0, ...ids]) + 1;
 	},
-	open(xFile) {
+	open(fsFile) {
+		let file = new File(fsFile);
+	},
+	open2(xFile) {
 		let opt = {
 				xFile,
 				_id: this.getUniqId(),

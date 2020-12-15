@@ -62,7 +62,7 @@ const photoshop = {
 
 		// temp
 		//this.dispatch({ type: "open-file", name: "Untitled", width: 600, height: 400, fill: "#fff", scale: 1 });
-		this.dispatch({ type: "open-file", name: "Untitled-1.psd" });
+		// this.dispatch({ type: "open-file", name: "Untitled-1.psd" });
 		//this.dispatch({ type: "open-file", name: "blue-rose.jpg" });
 		//this.dispatch({ type: "open-file", name: "mona-lisa.jpg" });
 		//this.dispatch({ type: "open-file", name: "small.jpg" });
@@ -78,6 +78,12 @@ const photoshop = {
 			el;
 		//console.log(event);
 		switch (event.type) {
+			// system events
+			case "open.file":
+				event.open({ responseType: "blob" })
+					.then(file => Files.open(file));
+				break;
+
 			case "open-file":
 				let xpath = `//File[@name="${event.name}"]`,
 					xFile = window.bluePrint.selectSingleNode(xpath);

@@ -41,14 +41,14 @@ const Projector = {
 		switch (event.type) {
 			// native events
 			case "mousemove":
-				data.top = _round(_min(_max(event.offsetY - File.oY, 0), File.h) / File.scale);
-				data.left = _round(_min(_max(event.offsetX - File.oX, 0), File.w) / File.scale);
-				data.offsetY = _min(_max(event.offsetY, File.oY), File.oY + File.h) - Self.aY;
-				data.offsetX = _min(_max(event.offsetX, File.oX), File.oX + File.w) - Self.aX;
+				data.top = _round(_min(_max(event.offsetY - File.oY, 0), File.height) / File.scale);
+				data.left = _round(_min(_max(event.offsetX - File.oX, 0), File.width) / File.scale);
+				data.offsetY = _min(_max(event.offsetY, File.oY), File.oY + File.height) - Self.aY;
+				data.offsetX = _min(_max(event.offsetX, File.oX), File.oX + File.width) - Self.aX;
 				data.rgba = Self.ctx.getImageData(data.left, data.top, 1, 1).data;
 				data.hsl = Color.rgbToHsv.apply({}, data.rgba);
-				data.isOnCanvas = event.offsetY >= File.oY && event.offsetY <= File.oY + File.h
-								&& event.offsetX >= File.oX && event.offsetX <= File.oX + File.w;
+				data.isOnCanvas = event.offsetY >= File.oY && event.offsetY <= File.oY + File.height
+								&& event.offsetX >= File.oX && event.offsetX <= File.oX + File.width;
 
 				// broadcast event
 				defiant.emit("mouse-move", data);
@@ -99,7 +99,7 @@ const Projector = {
 		this.ctx.putImageData(this.frame, 0, 0);
 		this.ctx.translate(file.oX, file.oY);
 		this.ctx.imageSmoothingEnabled = false;
-		this.ctx.drawImage(file.cvs[0], 0, 0, file.w, file.h);
+		this.ctx.drawImage(file.cvs[0], 0, 0, file.width, file.height);
 		this.ctx.restore();
 
 		if (file.showRulers) {

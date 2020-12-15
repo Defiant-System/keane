@@ -1,39 +1,38 @@
 
 class Layer {
-	constructor(file, node) {
-		this._ready = true;
-
+	constructor(file, content) {
 		// defaults
 		this.file = file;
+		this._ready = true;
+		this.id = 123;
 		this.type = "layer";
-		this.name = node.getAttribute("name");
-		this.id = node.getAttribute("id");
+		this.name = "Untitled Layer";
 		this.blendingMode = "normal";
 		this.opacity = 1;
 		this.visible = true;
-		// dimensions
-		this.width = file.w;
-		this.height = file.h;
 
-		let { cvs, ctx } = Misc.createCanvas(file.w, file.h);
+		// dimensions
+		this.width = file.width;
+		this.height = file.height;
+
+		// layer canvas
+		let { cvs, ctx } = Misc.createCanvas(file.width, file.height);
 		this.cvs = cvs;
 		this.ctx = ctx;
 
-		let child = node.selectSingleNode("./*[@type]"),
-			content = { _cdata: child.textContent, top: 0, left: 0 };
-		// make JSON of node attributes
-		[...child.attributes].map(a => content[a.name] = +a.value || a.value);
+		let top = content.top || 0;
+		let left = content.left || 0;
+		let width = file.width || 0;
+		let height = file.height || 0;
 
 		// layer contents
 		switch (content.type) {
 			case "fill":
 				this.ctx.fillStyle = content.color;
-				this.ctx.fillRect(content.left || 0, content.top || 0, content.width || this.file.w, content.height || this.file.h);
+				console.log( left, top, width, height );
+				this.ctx.fillRect( left, top, width, height );
 				break;
 			case "text":
-				this.ctx.font = `${content.size}px ${content.font}`;
-				this.ctx.fillStyle = content.color;
-				this.ctx.fillText(content.value, content.left, content.top);
 				break;
 			case "image":
 				// prevent file render
@@ -41,29 +40,20 @@ class Layer {
 				
 				let image = new Image;
 				image.onload = () => {
-					let width = content.width || image.width,
-						height = content.height || image.height;
-					this.ctx.drawImage(image, content.left, content.top, width, height);
-
-					this._imgData = this.ctx.getImageData(0, 0, width, height);
-
+					// apply image to canvas
+					this.ctx.drawImage(image, left, top, image.width, image.height);
 					// allow file render
 					this._ready = true;
-					
-					// notify ready state
-					this.file.layersReady();
+					// notify layer ready state
+					this.file.render();
 				};
-				image.src = content.path || content._cdata;
-				// clear string from memory
-				content._cdata = false;
+				// set image source to blob / url
+				image.src = URL.createObjectURL(content.blob);
 				break;
 		}
 	}
+
 	addBuffer(cvs) {
-		// if (!this._original) {
-		// 	this._original = this.cvs[0];
-		// }
-		// this.ctx.clearRect(0, 0, this.width, this.height);
 		this.ctx.putImageData(this._imgData, 0, 0);
 		this.ctx.drawImage(cvs, 0, 0);
 	}
