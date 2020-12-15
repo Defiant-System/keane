@@ -29,7 +29,6 @@ class Layer {
 		switch (content.type) {
 			case "fill":
 				this.ctx.fillStyle = content.color;
-				console.log( left, top, width, height );
 				this.ctx.fillRect( left, top, width, height );
 				break;
 			case "text":
@@ -40,8 +39,12 @@ class Layer {
 				
 				let image = new Image;
 				image.onload = () => {
+					let width = image.width || file.width;
+					let height = image.height || file.height;
 					// apply image to canvas
-					this.ctx.drawImage(image, left, top, image.width, image.height);
+					this.ctx.drawImage(image, left, top, width, height);
+					// save reference image data
+					this._imgData = this.ctx.getImageData(0, 0, width, height);
 					// allow file render
 					this._ready = true;
 					// notify layer ready state

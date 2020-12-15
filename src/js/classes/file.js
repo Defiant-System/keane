@@ -40,11 +40,18 @@ class File {
 				break;
 		}
 
+		// select top layer as default
+		this.activeLayerIndex = 1;
+
 		// initiate canvas
 		this.dispatch({ type: "set-canvas", width: this.width, height: this.height, scale1: 4 });
 
 		// render file
 		this.render();
+	}
+
+	get activeLayer() {
+		return this.layers[this.activeLayerIndex];
 	}
 
 	render(noEmit) {
