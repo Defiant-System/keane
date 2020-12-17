@@ -2,7 +2,7 @@
 class File {
 	constructor(file) {
 		// save reference to original FS file
-		this.file = file;
+		this._file = file;
 
 		// defaults
 		this.scale = 1;

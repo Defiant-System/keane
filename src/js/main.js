@@ -61,12 +61,6 @@ const photoshop = {
 			this.els.content.find(".tools-bar .tool[data-content='brush']").trigger("click"));
 
 		// temp
-		//this.dispatch({ type: "open-file", name: "Untitled", width: 600, height: 400, fill: "#fff", scale: 1 });
-		// this.dispatch({ type: "open-file", name: "Untitled-1.psd" });
-		//this.dispatch({ type: "open-file", name: "blue-rose.jpg" });
-		//this.dispatch({ type: "open-file", name: "mona-lisa.jpg" });
-		//this.dispatch({ type: "open-file", name: "small.jpg" });
-
 		//this.els.content.find(".box-head div[data-content='info']").trigger("click");
 	},
 	dispatch(event) {
