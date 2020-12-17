@@ -1,20 +1,20 @@
 
 class File {
-	constructor(file) {
+	constructor(fsFile) {
 		// save reference to original FS file
-		this._file = file;
+		this._file = fsFile;
 
 		// defaults
 		this.scale = 1;
-		this.width = 600;
-		this.height = 400;
+		this.width = 0;
+		this.height = 0;
 		this.bgColor = "#000";
 		this.fgColor = "#fff";
 		this.lineWidth = 1;
 		this.showRulers = true;
 
 		// file canvas
-		let { cvs, ctx } = Misc.createCanvas(this.width, this.height);
+		let { cvs, ctx } = Misc.createCanvas(1, 1);
 		this.cvs = cvs;
 		this.ctx = ctx;
 
@@ -25,18 +25,17 @@ class File {
 		this.layers = [{ type: "bg-checkers", _ready: true }];
 
 		// handle file types
-		switch (file.kind) {
+		switch (fsFile.kind) {
 			case "jpg":
 			case "jpeg":
+			case "gif":
+			case "png":
 				// let content = { type: "fill", color: "#fff" };
-				let content = { type: "image", blob: file.blob };
+				let content = { type: "image", blob: fsFile.blob };
 				this.layers.push( new Layer(this, content) );
 				break;
-			case "gif":
-				break;
-			case "png":
-				break;
 			case "psd":
+				console.log("Parse PSD file!");
 				break;
 		}
 
@@ -44,10 +43,10 @@ class File {
 		this.activeLayerIndex = 1;
 
 		// initiate canvas
-		this.dispatch({ type: "set-canvas", width: this.width, height: this.height, scale1: 4 });
+		// this.dispatch({ type: "set-canvas", width: 600, height: 400 });
 
 		// render file
-		this.render();
+		// this.render();
 	}
 
 	get activeLayer() {
@@ -86,6 +85,9 @@ class File {
 		//console.log(event);
 		switch (event.type) {
 			case "set-canvas":
+				// set file dimension if not set
+				this.width = this.width || event.width;
+				this.height = this.height || event.height;
 				// original dimension
 				this.oW = event.width;
 				this.oH = event.height;

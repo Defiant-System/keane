@@ -2,9 +2,8 @@
 class Layer {
 	constructor(file, content) {
 		// defaults
-		this.file = file;
+		this._file = file;
 		this._ready = true;
-		this.id = 123;
 		this.type = "layer";
 		this.name = "Untitled Layer";
 		this.blendingMode = "normal";
@@ -36,24 +35,46 @@ class Layer {
 			case "image":
 				// prevent file render
 				this._ready = false;
-				
-				let image = new Image;
-				image.onload = () => {
-					let width = image.width || file.width;
-					let height = image.height || file.height;
-					// apply image to canvas
-					this.ctx.drawImage(image, left, top, width, height);
-					// save reference image data
-					this._imgData = this.ctx.getImageData(0, 0, width, height);
-					// allow file render
-					this._ready = true;
-					// notify layer ready state
-					this.file.render();
-				};
-				// set image source to blob / url
-				image.src = URL.createObjectURL(content.blob);
+				// parse layer image blob
+				this.parseImage(content);
 				break;
 		}
+	}
+
+	async parseImage(content) {
+		let src = URL.createObjectURL(content.blob);
+		let image = await this.loadImage(src);
+		let top = content.top || 0;
+		let left = content.left || 0;
+		let width = image.width || file.width;
+		let height = image.height || file.height;
+
+		// set image dimensions
+		this.width = width;
+		this.height = height;
+
+		// reset canvas
+		this.cvs.prop({ width, height });
+		// apply image to canvas
+		this.ctx.drawImage(image, left, top, width, height);
+		// set file dimensions if not set
+		if (!this._file.width || !this._file.height) {
+			this._file.dispatch({ type: "set-canvas", width, height });
+		}
+		// save reference image data
+		this._imgData = this.ctx.getImageData(0, 0, width, height);
+		// allow file render
+		this._ready = true;
+		// notify layer ready state
+		this._file.render();
+	}
+
+	loadImage(url) {
+		return new Promise(resolve => {
+			let img = new Image;
+			img.src = url;
+			img.onload = () => resolve(img);
+		})
 	}
 
 	addBuffer(cvs) {

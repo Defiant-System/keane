@@ -12,7 +12,10 @@ const Files = {
 		return Math.max.apply({}, [0, ...ids]) + 1;
 	},
 	open(fsFile) {
+		// create file
 		let file = new File(fsFile);
+		// add to stack
+		this.stack.push(file);
 	},
 	open2(xFile) {
 		let opt = {
