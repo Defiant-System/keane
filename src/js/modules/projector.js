@@ -49,7 +49,6 @@ const Projector = {
 				data.hsl = Color.rgbToHsv.apply({}, data.rgba);
 				data.isOnCanvas = event.offsetY >= File.oY && event.offsetY <= File.oY + File.height
 								&& event.offsetX >= File.oX && event.offsetX <= File.oX + File.width;
-
 				// broadcast event
 				defiant.emit("mouse-move", data);
 				break;
