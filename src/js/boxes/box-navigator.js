@@ -67,7 +67,7 @@
 			// subscribed events
 			case "projector-update":
 				// calc ratio
-				Self.ratio = File.h / File.w;
+				Self.ratio = File.height / File.width;
 				if (isNaN(Self.ratio)) return;
 
 				// available width
@@ -78,10 +78,10 @@
 				}
 
 				let rT = File.showRulers ? _rulers.t : 0;
-				data.top = (((Proj.aY - File.oY) / File.h) * Self.navHeight);
-				data.left = (((Proj.aX - File.oX) / File.w) * Self.navWidth);
-				data.height = _min((((Proj.aH + rT) / File.h) * Self.navHeight), Self.navHeight - data.top);
-				data.width = _min((((Proj.aW - rT) / File.w) * Self.navWidth), Self.navWidth - data.left);
+				data.top = (((Proj.aY - File.oY) / File.height) * Self.navHeight);
+				data.left = (((Proj.aX - File.oX) / File.width) * Self.navWidth);
+				data.height = _min((((Proj.aH + rT) / File.height) * Self.navHeight), Self.navHeight - data.top);
+				data.width = _min((((Proj.aW - rT) / File.width) * Self.navWidth), Self.navWidth - data.left);
 				
 				if (data.top < 0) data.height = _min(data.height + data.top, data.height);
 				if (data.left < 0) data.width = _min(data.width + data.left, data.width);
@@ -148,8 +148,8 @@
 					max: {
 						x: +el.parent().prop("offsetWidth") - +el.prop("offsetWidth"),
 						y: +el.parent().prop("offsetHeight") - +el.prop("offsetHeight") - 4,
-						w: Proj.aW - File.w - (File.showRulers ? Rulers.t : 0),
-						h: Proj.aH - File.h + (File.showRulers ? Rulers.t : 0),
+						w: Proj.aW - File.width - (File.showRulers ? Rulers.t : 0),
+						h: Proj.aH - File.height + (File.showRulers ? Rulers.t : 0),
 					}
 				};
 				// prevent mouse from triggering mouseover
