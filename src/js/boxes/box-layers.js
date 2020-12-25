@@ -1,5 +1,5 @@
 
-// photoshop.box.layers
+// keane.box.layers
 
 {
 	els: {},
@@ -20,7 +20,7 @@
 		}
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = APP.box.layers,
 			File = Projector.file,
 			index,

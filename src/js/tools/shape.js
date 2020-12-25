@@ -6,7 +6,7 @@
 		this.option = "shape";
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			CVS = Canvas,
 			Self = TOOLS.shape;
 

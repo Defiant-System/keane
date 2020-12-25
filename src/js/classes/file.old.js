@@ -78,7 +78,7 @@ class File {
 		Projector.render(noEmit);
 	}
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Proj = Projector,
 			_round = Math.round,
 			el;

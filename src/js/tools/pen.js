@@ -6,7 +6,7 @@
 		this.option = "pen";
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			CVS = Canvas,
 			Self = TOOLS.pen;
 

@@ -29,7 +29,7 @@ const Projector = {
 		});
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = Projector,
 			File = Self.file,
 			_max = Math.max,

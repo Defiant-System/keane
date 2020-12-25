@@ -31,7 +31,7 @@ const TOOLS = {
 };
 
 
-const photoshop = {
+const keane = {
 	els: {},
 	async init() {
 		// fast references
@@ -64,7 +64,7 @@ const photoshop = {
 		//this.els.content.find(".box-head div[data-content='info']").trigger("click");
 	},
 	dispatch(event) {
-		let Self = photoshop,
+		let Self = keane,
 			image,
 			name,
 			boxName,
@@ -190,4 +190,4 @@ const photoshop = {
 	}
 };
 
-window.exports = photoshop;
+window.exports = keane;

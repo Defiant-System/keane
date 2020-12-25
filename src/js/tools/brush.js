@@ -19,7 +19,7 @@
 		};
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Proj = Projector,
 			File = Proj.file,
 			Self = TOOLS.brush,

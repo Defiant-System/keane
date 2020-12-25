@@ -1,5 +1,5 @@
 
-// photoshop.box.navigator
+// keane.box.navigator
 
 {
 	els: {},
@@ -45,7 +45,7 @@
 		}
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = APP.box.navigator,
 			Proj = Projector,
 			File = Proj.file,
@@ -125,7 +125,7 @@
 		}
 	},
 	pan(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = APP.box.navigator,
 			Drag = Self.drag,
 			Proj = Projector,

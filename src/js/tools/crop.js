@@ -6,7 +6,7 @@
 		this.option = "crop";
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			CVS = Canvas,
 			Self = TOOLS.crop;
 

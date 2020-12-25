@@ -1,5 +1,5 @@
 
-// photoshop.box.info
+// keane.box.info
 
 {
 	els: {},
@@ -30,7 +30,7 @@
 		}
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = APP.box.info,
 			Detail = event.detail,
 			isOn,

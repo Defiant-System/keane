@@ -1,5 +1,5 @@
 
-// photoshop.box.paragraph
+// keane.box.paragraph
 
 {
 	els: {},
@@ -13,7 +13,7 @@
 		}
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = APP.box.paragraph,
 			el;
 

@@ -79,7 +79,7 @@ class File {
 	}
 
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Proj = Projector,
 			el;
 		//console.log(event);

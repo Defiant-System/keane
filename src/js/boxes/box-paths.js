@@ -1,5 +1,5 @@
 
-// photoshop.box.paths
+// keane.box.paths
 
 {
 	els: {},
@@ -19,7 +19,7 @@
 		}
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = APP.box.paths,
 			el;
 

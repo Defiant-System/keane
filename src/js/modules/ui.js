@@ -14,7 +14,7 @@ const UI = {
 		// 	this.content.find(".option[data-options='brush-tips'] .value").trigger("click"), 200);
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = UI,
 			data,
 			value,
@@ -82,7 +82,7 @@ const UI = {
 		}
 	},
 	doBrushTips(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = UI,
 			Drag = Self.drag,
 			Tool = TOOLS[TOOLS._active],
@@ -250,7 +250,7 @@ const UI = {
 
 	},
 	doSwatches(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = UI,
 			value,
 			el;
@@ -287,7 +287,7 @@ const UI = {
 		}
 	},
 	doSelectbox(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = UI,
 			data,
 			value,
@@ -330,7 +330,7 @@ const UI = {
 		}
 	},
 	doKnob(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = UI,
 			Drag = Self.drag,
 			_round = Math.round,

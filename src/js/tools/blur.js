@@ -6,7 +6,7 @@
 		this.option = "blur";
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			CVS = Canvas,
 			Self = TOOLS.blur;
 

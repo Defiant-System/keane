@@ -1,8 +1,8 @@
 <MenuBar>
-	<Menu name="Photoshop">
-		<Menu name="About Photoshop" shell="win -a"/>
+	<Menu name="Keane">
+		<Menu name="About Keane" shell="win -a"/>
 		<Menu type="divider"/>
-		<Menu name="Quit Photoshop" shell="win -c"/>
+		<Menu name="Quit Keane" shell="win -c"/>
 	</Menu>
 	<Menu name="File">
 		<Menu name="New"/>

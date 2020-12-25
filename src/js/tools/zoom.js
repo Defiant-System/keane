@@ -6,7 +6,7 @@
 		this.option = "zoom";
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			CVS = Canvas,
 			Self = TOOLS.zoom;
 

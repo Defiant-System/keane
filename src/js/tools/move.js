@@ -6,7 +6,7 @@
 		this.option = "move";
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Proj = Projector,
 			File = Proj.file,
 			Self = TOOLS.move,

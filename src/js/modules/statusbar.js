@@ -1,12 +1,12 @@
 
-// photoshop.statusbar
+// keane.statusbar
 
 {
 	init() {
 		
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			Self = APP.statusbar,
 			Detail = event.detail;
 

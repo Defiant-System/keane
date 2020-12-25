@@ -16,7 +16,7 @@
 		defiant.on("load-canvas", this.dispatch);
 	},
 	dispatch(event) {
-		let APP = photoshop,
+		let APP = keane,
 			// _canvas = Canvas,
 			Self = TOOLS.marquee,
 			Drag = Self.drag,
