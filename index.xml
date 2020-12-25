@@ -1,10 +1,10 @@
 <Application>
 	<Head>
-		<meta name="id" value="photoshop"/>
-		<meta name="title" value="Photoshop" version="1.2"/>
+		<meta name="id" value="keane"/>
+		<meta name="title" value="Keane" version="1.2"/>
 		<meta name="author" value="Hakan Bilgin" namespace="ant"/>
 		<meta name="license" value="AGPL-3.0"/>
-		<meta name="repository" value="https://github.com/Defiant-System/photoshop"/>
+		<meta name="repository" value="https://github.com/Defiant-System/keane"/>
 		<meta name="width" value="1150" min="920"/>
 		<meta name="height" value="800" min="660"/>
 		<meta name="top" value="120"/>
@@ -23,10 +23,5 @@
 	</Head>
 
 	@import "src/partials/data.xml"
-	<!-- temp -->
-	@import "src/partials/files/untitled-1.xml"
-	@import "src/partials/files/blue-rose.xml"
-	@import "src/partials/files/mona-lisa.xml"
-	@import "src/partials/files/small.xml"
-
+	
 </Application>
