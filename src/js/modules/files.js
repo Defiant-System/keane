@@ -14,25 +14,15 @@ const Files = {
 	open(fsFile) {
 		// create file
 		let file = new File(fsFile);
+		let xNode = file._file.xNode;
+		let fileId = file._file.id;
+
 		// add to stack
 		this.stack.push(file);
-	},
-	open2(xFile) {
-		let opt = {
-				xFile,
-				_id: this.getUniqId(),
-				name: xFile.getAttribute("name"),
-				scale: +xFile.getAttribute("scale"),
-				width: +xFile.getAttribute("width"),
-				height: +xFile.getAttribute("height"),
-			};
-		
-		// add file name to xml node
-		xFile.setAttribute("_id", opt._id);
 
 		// add statusbar tab
 		window.render({
-			data: xFile,
+			data: xNode,
 			template: "statusbar-tab",
 			prepend: this.statusBar,
 		});
@@ -43,17 +33,50 @@ const Files = {
 			"check-group": "selected-file",
 			"is-checked": 1,
 			"click": "select-file",
-			"arg": opt._id,
-			"name": opt.name,
+			"arg": fileId,
+			"name": xNode.getAttribute("name"),
 		});
 
-		// add to stack
-		let file = new File(opt);
-		this.stack.push(file);
-
 		// select newly added file
-		this.select(opt._id);
+		this.select(fileId);
 	},
+	// open2(xFile) {
+	// 	let opt = {
+	// 			xFile,
+	// 			_id: this.getUniqId(),
+	// 			name: xFile.getAttribute("name"),
+	// 			scale: +xFile.getAttribute("scale"),
+	// 			width: +xFile.getAttribute("width"),
+	// 			height: +xFile.getAttribute("height"),
+	// 		};
+		
+	// 	// add file name to xml node
+	// 	xFile.setAttribute("_id", opt._id);
+
+	// 	// add statusbar tab
+	// 	window.render({
+	// 		data: xFile,
+	// 		template: "statusbar-tab",
+	// 		prepend: this.statusBar,
+	// 	});
+
+	// 	// add option to menubar
+	// 	window.menuBar.add({
+	// 		"parent": "//MenuBar/Menu[@name='Window']",
+	// 		"check-group": "selected-file",
+	// 		"is-checked": 1,
+	// 		"click": "select-file",
+	// 		"arg": opt._id,
+	// 		"name": opt.name,
+	// 	});
+
+	// 	// add to stack
+	// 	let file = new File(opt);
+	// 	this.stack.push(file);
+
+	// 	// select newly added file
+	// 	this.select(opt._id);
+	// },
 	close(id) {
 		let el = this.statusBar.find(`.file[data-arg="${id}"]`),
 			next = this.statusBar.find(".active");
@@ -88,14 +111,12 @@ const Files = {
 		window.menuBar.update(`//MenuBar//Menu[@arg="${id}"]`, {"is-checked": "1"});
 
 		// skip rest if this function is called from "open"
-		if (Projector.file && Projector.file._id === id) return;
+		if (Projector.file && Projector.file._file.id === id) return;
 
 		// reference to active file
-		let file = this.stack.find(f => f._id === id);
+		let file = this.stack.find(f => f._file.id === id);
+
 		Projector.reset(file);
 		Projector.render();
-
-		// emit event
-		defiant.emit("file-selected");
 	}
 };

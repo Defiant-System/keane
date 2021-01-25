@@ -30,8 +30,9 @@
 			// subscribed events
 			case "file-selected":
 				window.render({
+					data: File.xData,
 					template: "layers",
-					match: `//File[@_id="${File._id}"]/Layers`,
+					match: `//File/Layers`,
 					target: Self.els.layerList,
 				});
 

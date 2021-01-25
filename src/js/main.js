@@ -86,7 +86,7 @@ const keane = {
 				//Self.dispatch({ type: "filter-render", arg: "clouds" });
 				break;
 			case "select-file":
-				Files.select(+event.arg);
+				Files.select(event.arg);
 				break;
 			case "close-file":
 				el = event.el.parent();

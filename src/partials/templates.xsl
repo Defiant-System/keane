@@ -59,7 +59,7 @@
 
 <xsl:template name="statusbar-tab">
 	<div class="file" data-click="select-file">
-		<xsl:attribute name="data-arg"><xsl:value-of select="@_id"/></xsl:attribute>
+		<xsl:attribute name="data-arg"><xsl:value-of select="@id"/></xsl:attribute>
 		<span><xsl:value-of select="@name"/></span>
 		<div class="close" data-click="close-file"></div>
 	</div>

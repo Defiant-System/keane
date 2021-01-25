@@ -72,8 +72,6 @@ const Projector = {
 		this.frame = this.swap.ctx.getImageData(0, 0, window.width, window.height);
 	},
 	reset(file) {
-		// reference to displayed file
-		this.file = file;
 		// reset canvases
 		this.cvs.prop({ width: window.width, height: window.height });
 
@@ -87,6 +85,13 @@ const Projector = {
 
 		// pre-render frame
 		this.renderFrame(file);
+
+		if (this.file !== file) {
+			// reference to displayed file
+			this.file = file;
+			// emit event
+			defiant.emit("file-selected");
+		}
 	},
 	render(noEmit) {
 		// reference to displayed file

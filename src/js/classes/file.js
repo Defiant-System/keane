@@ -24,6 +24,16 @@ class File {
 		// layers stack
 		this.layers = [{ type: "bg-checkers", _ready: true }];
 
+		this.xData = $.xmlFromString(`<File name="mona-lisa.jpg" width="358" height="500" scale="1">
+	<Layers>
+		<i type="layer" state="visible" name="Background" path="~/img/mona-lisa.jpg">
+			<Mask />
+		</i>
+	</Layers>
+</File>
+`);
+		console.log(this.xData);
+
 		// handle file types
 		switch (fsFile.kind) {
 			case "jpg":
