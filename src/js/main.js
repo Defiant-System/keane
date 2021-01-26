@@ -162,7 +162,9 @@ const keane = {
 							pEl.css({ "background-image": image });
 						}
 						// dispatch event to tool object
-						return TOOLS[pEl.data("content")].dispatch(event);
+						if (pEl.length) {
+							return TOOLS[pEl.data("content")].dispatch(event);
+						}
 					}
 					pEl = event.el.parents(".inline-menubox");
 					if (pEl.length) {
