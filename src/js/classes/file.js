@@ -6,8 +6,8 @@ class File {
 
 		// defaults
 		this.scale = 1;
-		this.width = 0;
-		this.height = 0;
+		this.width = 600;
+		this.height = 400;
 		this.bgColor = "#000";
 		this.fgColor = "#fff";
 		this.lineWidth = 1;
@@ -24,15 +24,9 @@ class File {
 		// layers stack
 		this.layers = [{ type: "bg-checkers", _ready: true }];
 
-		this.xData = $.xmlFromString(`<File name="mona-lisa.jpg" width="358" height="500" scale="1">
-	<Layers>
-		<i type="layer" state="visible" name="Background" path="~/img/mona-lisa.jpg">
-			<Mask />
-		</i>
-	</Layers>
-</File>
-`);
-		console.log(this.xData);
+		let xStr = `<File name="${fsFile.base}" width="${this.width}" height="${this.height}" scale="${this.scale}">
+					<Layers/></File>`;
+		this.xData = $.xmlFromString(xStr).documentElement;
 
 		// handle file types
 		switch (fsFile.kind) {
@@ -43,6 +37,9 @@ class File {
 				// let content = { type: "fill", color: "#fff" };
 				let content = { type: "image", blob: fsFile.blob };
 				this.layers.push( new Layer(this, content) );
+				// add layer data to xml
+				let xLayer = $.nodeFromString(`<i type="layer" state="visible" name="${fsFile.name}"/>`);
+				this.xData.selectSingleNode("Layers").appendChild(xLayer);
 				break;
 			case "psd":
 				console.log("Parse PSD file!");
@@ -53,7 +50,7 @@ class File {
 		this.activeLayerIndex = 1;
 
 		// initiate canvas
-		this.dispatch({ type: "set-canvas", width: 600, height: 400 });
+		this.dispatch({ type: "set-canvas", width: this.width, height: this.height });
 
 		// render file
 		this.render();
