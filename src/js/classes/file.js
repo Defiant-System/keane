@@ -83,7 +83,7 @@ class File {
 		});
 
 		// render projector
-		Projector.render(noEmit);
+		Projector.render({ noEmit });
 	}
 
 	dispatch(event) {

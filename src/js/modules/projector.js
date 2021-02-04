@@ -93,9 +93,10 @@ const Projector = {
 			defiant.emit("file-selected");
 		}
 	},
-	render(noEmit) {
+	render(opt={}) {
 		// reference to displayed file
 		let file = this.file;
+		opt.imgCvs = opt.imgCvs || file.cvs[0];
 		// reset canvas
 		this.cvs.prop({ width: window.width, height: window.height });
 
@@ -103,13 +104,13 @@ const Projector = {
 		this.ctx.putImageData(this.frame, 0, 0);
 		this.ctx.translate(file.oX, file.oY);
 		this.ctx.imageSmoothingEnabled = false;
-		this.ctx.drawImage(file.cvs[0], 0, 0, file.width, file.height);
+		this.ctx.drawImage(opt.imgCvs, 0, 0, file.width, file.height);
 		this.ctx.restore();
 
 		if (file.showRulers) {
 			Rulers.render(this);
 		}
-		if (!noEmit) {
+		if (!opt.noEmit) {
 			// emit event
 			defiant.emit("projector-update");
 		}

@@ -7,10 +7,10 @@
 		let { cvs, ctx } = Misc.createCanvas(1, 1);
 		this.cvs = cvs;
 		this.ctx = ctx;
-		
+
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
-		this.option = "rectangle";
+		this.option = "elliptic";
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -19,7 +19,8 @@
 			Self = TOOLS.marquee,
 			Drag = Self.drag,
 			_max = Math.max,
-			_min = Math.min;
+			_min = Math.min,
+			data;
 
 		switch (event.type) {
 			// native events
@@ -29,6 +30,8 @@
 
 				// reset selection canvas
 				Self.cvs.prop({ width: File.width, height: File.height });
+				Proj.swap.cvs.prop({ width: File.width, height: File.height });
+
 				// stop marching ants, if marching
 				Self.ants();
 
@@ -56,9 +59,21 @@
 						Drag.ctx.fillRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
 						break;
 					case "elliptic":
-						let hW = Drag.oW / 2,
-							hH = Drag.oH / 2;
-						Drag.ctx.ellipse(Drag.oX + hW, Drag.oY + hH, hW, hH, 0, 0, Math.PI*2);
+						let eW = Drag.oW / 2,
+							eH = Drag.oH / 2,
+							eX = Drag.oX + eW,
+							eY = Drag.oY + eH;
+
+						if (eW < 0) {
+							eX = Drag.oX;
+							eW = 10;
+						}
+						if (eH < 0) {
+							eY = Drag.oY;
+							eH = 10;
+						}
+
+						Drag.ctx.ellipse(eX, eY, eW, eH, 0, 0, Math.PI*2);
 						break;
 				}
 		    	Drag.ctx.fill();
@@ -90,8 +105,8 @@
 	ants(march) {
 		this.projector = Projector;
 		this.file = Projector.file;
-		this.w = this.file .width;
-		this.h = this.file .height;
+		this.w = this.file.width;
+		this.h = this.file.height;
 		this.cvsImg = this.file.ctx.getImageData(0, 0, this.file.width, this.file.height);
 
 		this.mask = this.getOutlineMask().data;
@@ -145,7 +160,8 @@
 			cvsImg = this.cvsImg,
 			data = this.cvsImg.data,
 			ant = (x, y, o) => ((5 + y + o % 10) + x) % 10 >= 5 ? 0x00 : 0xFF,
-			aO = this.aO;
+			aO = this.aO,
+			fn;
 
 		for (let y=0; y<this.h; y++) {
 			for (let x=0; x<this.w; x++) {
@@ -161,7 +177,9 @@
 				data[o + 3] = 0xFF;
 			}
 		}
-		Proj.ctx.putImageData(cvsImg, this.file.oX, this.file.oY);
+		// update projector
+		Proj.swap.ctx.putImageData(cvsImg, 0, 0);
+		Proj.render({ imgCvs: Proj.swap.cvs[0], noEmit: true });
 		
 		// march tiny ants!
 		this.aO -= .2;
