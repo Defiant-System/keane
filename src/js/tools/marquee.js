@@ -10,7 +10,7 @@
 
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
-		this.option = "elliptic";
+		this.option = "rectangle";
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -64,14 +64,8 @@
 							eX = Drag.oX + eW,
 							eY = Drag.oY + eH;
 
-						if (eW < 0) {
-							eX = Drag.oX + Drag.oW/2;
-							eW *= -1;
-						}
-						if (eH < 0) {
-							eY = Drag.oY + Drag.oH/2;
-							eH *= -1;
-						}
+						if (eW < 0) eW *= -1;
+						if (eH < 0) eH *= -1;
 
 						Drag.ctx.ellipse(eX, eY, eW, eH, 0, 0, Math.PI*2);
 						break;
