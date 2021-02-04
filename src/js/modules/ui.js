@@ -35,8 +35,14 @@ const UI = {
 					event.preventDefault();
 				}
 
+				if (el.hasClass("opened")) {
+					el.removeClass("opened");
+					Self.content.trigger("mousedown");
+					return;
+				}
+
 				// save reference to source element
-				Self.srcEl = el;
+				Self.srcEl = el.addClass("opened");
 
 				data = {
 					template: value,
@@ -69,8 +75,8 @@ const UI = {
 					if (this.dataset.ui === "doBrushTips") return;
 				} else {
 					// clean up
-					Self.srcEl = false;
 					Self.menu.remove();
+					Self.srcEl = false;
 				}
 				// unbind event handler
 				Self.doc.off("mousedown", Self.dispatch);
