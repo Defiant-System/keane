@@ -65,12 +65,12 @@
 							eY = Drag.oY + eH;
 
 						if (eW < 0) {
-							eX = Drag.oX;
-							eW = 10;
+							eX = Drag.oX + Drag.oW/2;
+							eW *= -1;
 						}
 						if (eH < 0) {
-							eY = Drag.oY;
-							eH = 10;
+							eY = Drag.oY + Drag.oH/2;
+							eH *= -1;
 						}
 
 						Drag.ctx.ellipse(eX, eY, eW, eH, 0, 0, Math.PI*2);
@@ -119,7 +119,9 @@
 	},
 	getOutlineMask() {
 		let srcImg = this.ctx.getImageData(0, 0, this.w, this.h),
-			dstImg = this.ctx.getImageData(0, 0, this.w, this.h),
+			// dstImg = this.ctx.getImageData(0, 0, this.w, this.h),
+			clone = new Uint8ClampedArray(srcImg.data),
+			dstImg = new ImageData(clone, this.w, this.h),
 			srcData = srcImg.data,
 			dstData = dstImg.data,
 			match = (x, y) => {
