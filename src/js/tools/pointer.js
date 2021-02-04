@@ -7,7 +7,6 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			CVS = Canvas,
 			Self = TOOLS.pointer;
 
 		switch (event.pointer) {

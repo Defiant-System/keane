@@ -68,6 +68,9 @@
 				};
 				// set blend mode
 				Self.drag.layer.ctx.globalCompositeOperation = Self.preset.blend;
+				
+				// buffer layer image data before edit
+				File.activeLayer.bufferImageData();
 
 				// trigger first paint
 				Self.dispatch({ type: "mousemove" });
@@ -109,6 +112,8 @@
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
 				Proj.doc.off("mousemove mouseup", Self.dispatch);
+				// commit changes to layer
+				Drag.layer.updateThumbnail();
 				break;
 			// custom events
 			case "select-option":

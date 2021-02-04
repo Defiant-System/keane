@@ -7,7 +7,6 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			CVS = Canvas,
 			Self = TOOLS.type;
 
 		switch (event.type) {

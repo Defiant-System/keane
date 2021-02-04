@@ -59,6 +59,7 @@ const keane = {
 		// auto-select initial tool
 		requestAnimationFrame(() =>
 			this.els.content.find(".tools-bar .tool[data-content='brush']").trigger("click"));
+			// this.els.content.find(".tools-bar .tool[data-content='move']").trigger("click"));
 
 		// temp
 		//this.els.content.find(".box-head div[data-content='info']").trigger("click");
@@ -76,13 +77,7 @@ const keane = {
 			case "open.file":
 				event.open({ responseType: "blob" })
 					.then(file => Files.open(file));
-				break;
-
-			case "open-file":
-				let xpath = `//File[@name="${event.name}"]`,
-					xFile = window.bluePrint.selectSingleNode(xpath);
-				Files.open(xFile);
-
+				
 				//Self.dispatch({ type: "filter-render", arg: "clouds" });
 				break;
 			case "select-file":

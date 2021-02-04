@@ -41,6 +41,24 @@ class Layer {
 		}
 	}
 
+	updateThumbnail() {
+		let index = this._file.activeLayerIndex;
+		let thumbCvsEl = keane.box.layers.els.layerList.find(".row:nth-child(1) canvas");
+		let tCtx = thumbCvsEl[0].getContext("2d"),
+			width = thumbCvsEl.prop("offsetWidth"),
+			height = thumbCvsEl.prop("offsetHeight"),
+			ratio = this.width / this.height;
+		// set height & width of thumbnail canvas
+		thumbCvsEl.prop({ width, height });
+		// calculate dimensions
+		let tW = ratio < 1 ? height * ratio : width,
+			tH = ratio < 1 ? height : width / ratio,
+			tX = (width - tW) / 2,
+			tY = (height - tH) / 2;
+		// transfer layer image resized to thumbnail canvas
+		tCtx.drawImage(this.cvs[0], tX, tY, tW, tH);
+	}
+
 	async parseImage(content) {
 		let src = URL.createObjectURL(content.blob);
 		let image = await this.loadImage(src);
@@ -61,8 +79,8 @@ class Layer {
 		if (!this._file.width || !this._file.height) {
 			this._file.dispatch({ type: "set-canvas", width, height });
 		}
-		// save reference image data
-		this._imgData = this.ctx.getImageData(0, 0, width, height);
+		this.bufferImageData();
+		this.updateThumbnail();
 		// allow file render
 		this._ready = true;
 		// notify layer ready state
@@ -75,6 +93,11 @@ class Layer {
 			img.src = url;
 			img.onload = () => resolve(img);
 		})
+	}
+
+	bufferImageData() {
+		// save reference image data
+		this._imgData = this.ctx.getImageData(0, 0, this.width, this.height);
 	}
 
 	addBuffer(cvs) {

@@ -36,9 +36,10 @@ class File {
 			case "png":
 				// let content = { type: "fill", color: "#fff" };
 				let content = { type: "image", blob: fsFile.blob };
-				this.layers.push( new Layer(this, content) );
+				let layer = new Layer(this, content);
+				this.layers.push(layer);
 				// add layer data to xml
-				let xLayer = $.nodeFromString(`<i type="layer" state="visible" name="${fsFile.name}"/>`);
+				let xLayer = $.nodeFromString(`<i type="layer" state="visible" name="${layer.name}"/>`);
 				this.xData.selectSingleNode("Layers").appendChild(xLayer);
 				break;
 			case "psd":

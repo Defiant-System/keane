@@ -252,6 +252,7 @@ const UI = {
 	doSwatches(event) {
 		let APP = keane,
 			Self = UI,
+			data,
 			value,
 			el;
 		switch (event.type) {
