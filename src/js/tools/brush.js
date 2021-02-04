@@ -16,6 +16,7 @@
 			size      : +xShape.getAttribute("size"),
 			tip       : Misc.createCanvas(1, 1),
 			blend     : "normal",
+			opacity   : 1,
 		};
 	},
 	dispatch(event) {
@@ -66,6 +67,7 @@
 					// Bresenham's line algorithm
 					line: (...args) => Misc.bresenhamLine(...args)
 				};
+
 				// set blend mode
 				Self.drag.layer.ctx.globalCompositeOperation = Self.preset.blend;
 				
@@ -97,8 +99,8 @@
 				Drag.line(Drag.oldX || Drag.mX, Drag.oldY || Drag.mY, Drag.mX, Drag.mY, (x, y) =>
 					Drag.ctx.drawImage(image, 0, 0, size, size, x, y, size, size));
 
-
-				Drag.layer.addBuffer(Drag.cvs);
+				// pass paint buffer to layer
+				Drag.layer.addBuffer(Drag.cvs, Self.preset.opacity);
 
 				// render file - noEmit = true
 				File.render(true);
@@ -185,7 +187,7 @@
 				console.log(event);
 				break;
 			case "change-opacity":
-				console.log(event);
+				Self.preset.opacity = event.value / 100;
 				break;
 			case "change-flow":
 				console.log(event);

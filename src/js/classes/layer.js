@@ -100,8 +100,9 @@ class Layer {
 		this._imgData = this.ctx.getImageData(0, 0, this.width, this.height);
 	}
 
-	addBuffer(cvs) {
+	addBuffer(cvs, globalAlpha=1) {
 		this.ctx.putImageData(this._imgData, 0, 0);
+		this.ctx.globalAlpha = globalAlpha;
 		this.ctx.drawImage(cvs, 0, 0);
 	}
 }
