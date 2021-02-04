@@ -10,6 +10,7 @@
 
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
+		// this.option = "magic-wand";
 		this.option = "rectangle";
 	},
 	dispatch(event) {
@@ -27,6 +28,10 @@
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
+
+				if (Self.option === "magic-wand") {
+					return;
+				}
 
 				// reset selection canvas
 				Self.cvs.prop({ width: File.width, height: File.height });
@@ -52,6 +57,7 @@
 				Drag.oW = event.clientX - Drag.clickX;
 				Drag.oH = event.clientY - Drag.clickY;
 				
+				// clear marquee canvas
 				Self.cvs.prop({ width: Self.w, height: Self.h });
 
 				switch (Self.option) {
@@ -63,13 +69,12 @@
 							eH = Drag.oH / 2,
 							eX = Drag.oX + eW,
 							eY = Drag.oY + eH;
-
 						if (eW < 0) eW *= -1;
 						if (eH < 0) eH *= -1;
-
 						Drag.ctx.ellipse(eX, eY, eW, eH, 0, 0, Math.PI*2);
 						break;
 				}
+				// paint selected area
 		    	Drag.ctx.fill();
 
 				// paint ants but no marching
@@ -111,41 +116,41 @@
 
 		this.render(march);
 	},
+	match(srcData, x, y) {
+		let alpha = this.getPixel(srcData, x, y);
+		return alpha === null || alpha >= this.threshold;
+	},
+	isEdge(srcData, x, y) {
+		let x1 = x - 1, x2 = x + 1,
+			y1 = y - 1, y2 = y + 1;
+		return  !this.match(srcData, x1, y1) || !this.match(srcData, x, y1) || !this.match(srcData, x2, y1) ||
+				!this.match(srcData, x1, y)  ||            false            || !this.match(srcData, x2, y)  ||
+				!this.match(srcData, x1, y2) || !this.match(srcData, x, y2) || !this.match(srcData, x2, y2);
+	},
+	setPixel(dstData, x, y, v) {
+		let o = ((y * this.w) + x) * 4;
+			dstData[o+0] = v;
+			dstData[o+1] = v;
+			dstData[o+2] = v;
+			dstData[o+3] = 0xFF;
+	},
+	getPixel(srcData, x, y) {
+		if (x < 0 || x >= this.w || y < 0 || y >= this.h) return;
+		let o = ((y * this.w) + x) * 4;
+		return srcData[o+3];
+	},
 	getOutlineMask() {
 		let srcImg = this.ctx.getImageData(0, 0, this.w, this.h),
 			// dstImg = this.ctx.getImageData(0, 0, this.w, this.h),
 			clone = new Uint8ClampedArray(srcImg.data),
 			dstImg = new ImageData(clone, this.w, this.h),
 			srcData = srcImg.data,
-			dstData = dstImg.data,
-			match = (x, y) => {
-				let alpha = get(x, y);
-				return alpha === null || alpha >= this.threshold;
-			},
-			isEdge = (x, y) => {
-				let x1 = x - 1, x2 = x + 1,
-					y1 = y - 1, y2 = y + 1;
-				return  !match(x1, y1) || !match(x, y1) || !match(x2, y1) ||
-						!match(x1, y)  ||     false     || !match(x2, y)  ||
-						!match(x1, y2) || !match(x, y2) || !match(x2, y2);
-			},
-			set = (x, y, v) => {
-				let o = ((y * this.w) + x) * 4;
-				dstData[o+0] = v;
-				dstData[o+1] = v;
-				dstData[o+2] = v;
-				dstData[o+3] = 0xFF;
-			},
-			get = (x, y) => {
-				if (x < 0 || x >= this.w || y < 0 || y >= this.h) return;
-				let o = ((y * this.w) + x) * 4;
-				return srcData[o+3];
-			};
+			dstData = dstImg.data;
 		// iterate image data and find outline
 		for (let y=0; y<this.h; y++) {
 			for (let x=0; x<this.w; x++) {
-				let v = match(x, y) && isEdge(x, y) ? 0x00 : 0xFF;
-				set(x, y, v);
+				let v = this.match(srcData, x, y) && this.isEdge(srcData, x, y) ? 0x00 : 0xFF;
+				this.setPixel(dstData, x, y, v);
 			}
 		}
 		return dstImg;
