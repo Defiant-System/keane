@@ -7,6 +7,10 @@
 		let { cvs, ctx } = Misc.createCanvas(1, 1);
 		this.cvs = cvs;
 		this.ctx = ctx;
+		
+		this.ctx.fillStyle = "#000";
+		this.threshold = 0xC0;
+		this.option = "rectangle";
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -29,6 +33,7 @@
 				Self.ants();
 
 				Self.drag = {
+					ctx: Self.ctx,
 					clickX: event.clientX,
 					clickY: event.clientY,
 					oX: event.offsetX - File.oX,
@@ -48,15 +53,15 @@
 
 				switch (Self.option) {
 					case "rectangle":
-						Self.ctx.fillRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
+						Drag.ctx.fillRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
 						break;
 					case "elliptic":
 						let hW = Drag.oW / 2,
 							hH = Drag.oH / 2;
-						Self.ctx.ellipse(Drag.oX + hW, Drag.oY + hH, hW, hH, 0, 0, Math.PI*2);
+						Drag.ctx.ellipse(Drag.oX + hW, Drag.oY + hH, hW, hH, 0, 0, Math.PI*2);
 						break;
 				}
-		    	Self.ctx.fill();
+		    	Drag.ctx.fill();
 
 				// paint ants but no marching
 				Self.ants();
@@ -71,6 +76,9 @@
 				Proj.doc.off("mousemove mouseup", Self.dispatch);
 				break;
 			// custom events
+			case "select-option":
+				Self.option = event.arg || "rectangle";
+				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.dispatch);
 				break;
@@ -155,14 +163,11 @@
 		}
 		Proj.ctx.putImageData(cvsImg, this.file.oX, this.file.oY);
 		
-		// _canvas.swapCtx.putImageData(cvsImg, 0, 0);
-		// _canvas.ctx.drawImage(_canvas.swapCvs[0], _canvas.oX, _canvas.oY, _canvas.w, _canvas.h);
-
 		// march tiny ants!
 		this.aO -= .2;
 
 		if (!this.halt) {
-			// requestAnimationFrame(() => this.render());
+			requestAnimationFrame(() => this.render());
 		}
 	}
 }
