@@ -112,6 +112,8 @@
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
 				Proj.doc.off("mousemove mouseup", Self.dispatch);
+				// emit event
+				defiant.emit("projector-update");
 				// commit changes to layer
 				Drag.layer.updateThumbnail();
 				break;
