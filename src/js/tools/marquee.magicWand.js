@@ -10,49 +10,6 @@
 	init() {
 
 	},
-	getMask(cvs, x, y, maskCtx) {
-		let ctx = cvs.getContext("2d"),
-			image = {
-				data: ctx.getImageData(0, 0, cvs.width, cvs.height),
-				width: cvs.width,
-				height: cvs.height,
-				maskCtx,
-				ctx,
-			},
-			threshold = 15;
-		
-		image.mask = this.floodFill(image, x, y, threshold, null, true);
-		// let cacheIndices = this.getBorderIndices(mask);
-
-		this.paintMask(image);
-	},
-	paintMask(image) {
-		// paint mask
-		let Proj = Projector;
-		let imgData = image.ctx.createImageData(image.width, image.height);
-		let res = imgData.data;
-		let data = image.mask.data;
-		let bounds = image.mask.bounds;
-		let maskW = image.mask.width;
-		let w = image.w;
-		let h = image.h;
-		let rgba = [255, 0, 0, 89];
-
-		for (let y=bounds.minY; y<=bounds.maxY; y++) {
-			for (let x=bounds.minX; x<=bounds.maxX; x++) {
-				if (data[y * maskW + x] == 0) continue;
-				let k = (y * w + x) * 4; 
-				res[k] = rgba[0];
-				res[k + 1] = rgba[1];
-				res[k + 2] = rgba[2];
-				res[k + 3] = rgba[3];
-			}
-		}
-		// image.maskCtx.putImageData(imgData, 0, 0);
-
-		Proj.swap.ctx.putImageData(imgData, 0, 0);
-		Proj.render({ imgCvs: Proj.swap.cvs[0], noEmit: true });
-	},
 	/** Create a binary mask on the image by color threshold
 	  * Algorithm: Scanline flood fill (http://en.wikipedia.org/wiki/Flood_fill)
 	  * @param {Object} image: {Uint8Array} data, {int} width, {int} height, {int} bytes
@@ -63,7 +20,8 @@
 	  * @param {boolean} [includeBorders=false] indicate whether to include borders pixels
 	  * @return {Object} mask: {Uint8Array} data, {int} width, {int} height, {Object} bounds
 	  */
-	floodFill(image, px, py, colorThreshold, mask, includeBorders) {
+	floodFill(image, px, py, mask, includeBorders) {
+		let colorThreshold = image.threshold;
 		return includeBorders
 			? this.floodFillWithBorders(image, px, py, colorThreshold, mask)
 			: this.floodFillWithoutBorders(image, px, py, colorThreshold, mask);
