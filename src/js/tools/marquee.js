@@ -109,51 +109,54 @@
 		this.file = Projector.file;
 		this.w = this.file.width;
 		this.h = this.file.height;
-		this.cvsImg = this.file.ctx.getImageData(0, 0, this.file.width, this.file.height);
-
+		this.cvsImg = this.file.ctx.getImageData(0, 0, this.w, this.h);
 		this.mask = this.getOutlineMask().data;
 		this.aO = 0;
-
 		// let marching start
 		this.halt = !march;
 
 		this.render(march);
 	},
 	match(srcData, x, y) {
-		let alpha = this.getPixel(srcData, x, y);
+		let w = this.w,
+			h = this.h,
+			alpha = this.getPixel(srcData, w, h, x, y);
 		return alpha === null || alpha >= this.threshold;
 	},
 	isEdge(srcData, x, y) {
-		let x1 = x - 1, x2 = x + 1,
-			y1 = y - 1, y2 = y + 1;
+		let x1 = x - 1,
+			x2 = x + 1,
+			y1 = y - 1,
+			y2 = y + 1;
 		return  !this.match(srcData, x1, y1) || !this.match(srcData, x, y1) || !this.match(srcData, x2, y1) ||
 				!this.match(srcData, x1, y)  ||            false            || !this.match(srcData, x2, y)  ||
 				!this.match(srcData, x1, y2) || !this.match(srcData, x, y2) || !this.match(srcData, x2, y2);
 	},
-	setPixel(dstData, x, y, v) {
-		let o = ((y * this.w) + x) * 4;
-			dstData[o+0] = v;
-			dstData[o+1] = v;
-			dstData[o+2] = v;
-			dstData[o+3] = 0xFF;
+	setPixel(dstData, w, x, y, v) {
+		let o = ((y * w) + x) * 4;
+		dstData[o + 0] =
+		dstData[o + 1] =
+		dstData[o + 2] = v;
+		dstData[o + 3] = 0xFF;
 	},
-	getPixel(srcData, x, y) {
-		if (x < 0 || x >= this.w || y < 0 || y >= this.h) return;
-		let o = ((y * this.w) + x) * 4;
-		return srcData[o+3];
+	getPixel(srcData, w, h, x, y) {
+		if (x < 0 || x >= w || y < 0 || y >= h) return;
+		return srcData[(((y * w) + x) * 4) + 3];
 	},
 	getOutlineMask() {
-		let srcImg = this.ctx.getImageData(0, 0, this.w, this.h),
-			// dstImg = this.ctx.getImageData(0, 0, this.w, this.h),
+		let w = this.w,
+			h = this.h,
+			srcImg = this.ctx.getImageData(0, 0, w, h),
 			clone = new Uint8ClampedArray(srcImg.data),
-			dstImg = new ImageData(clone, this.w, this.h),
+			dstImg = new ImageData(clone, w, h),
 			srcData = srcImg.data,
-			dstData = dstImg.data;
+			dstData = dstImg.data,
+			y, x, v;
 		// iterate image data and find outline
-		for (let y=0; y<this.h; y++) {
-			for (let x=0; x<this.w; x++) {
-				let v = this.match(srcData, x, y) && this.isEdge(srcData, x, y) ? 0x00 : 0xFF;
-				this.setPixel(dstData, x, y, v);
+		for (y=0; y<h; y++) {
+			for (x=0; x<w; x++) {
+				v = this.match(srcData, x, y) && this.isEdge(srcData, x, y) ? 0x00 : 0xFF;
+				this.setPixel(dstData, w, x, y, v);
 			}
 		}
 		return dstImg;
@@ -168,12 +171,14 @@
 			data = this.cvsImg.data,
 			aO = this.aO,
 			ant = this.ant,
+			w = this.w,
+			h = this.h,
 			isEdge,
-			o, v;
+			y, x, o, v;
 
-		for (let y=0; y<this.h; y++) {
-			for (let x=0; x<this.w; x++) {
-				o = ((y * this.w) + x) * 4;
+		for (y=0; y<h; y++) {
+			for (x=0; x<w; x++) {
+				o = ((y * w) + x) * 4;
 				isEdge = mask[o] === 0x00;
 				// continue if it is not mask outline edge
 				if (!isEdge) continue;
