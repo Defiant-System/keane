@@ -58,8 +58,11 @@
 				Drag.oW = event.clientX - Drag.clickX;
 				Drag.oH = event.clientY - Drag.clickY;
 				
-				// clear marquee canvas
-				Self.cvs.prop({ width: Self.w, height: Self.h });
+				// clear marquee canvas (fastest way)
+				Drag.ctx.save();
+				Drag.ctx.setTransform(1, 0, 0, 1, 0, 0);
+				Drag.ctx.clearRect(0, 0, Self.w, Self.h);
+				Drag.ctx.restore();
 
 				switch (Self.option) {
 					case "rectangle":
@@ -83,9 +86,7 @@
 				break;
 			case "mouseup":
 				// start marching if there is any box
-				if (Drag.oW && Drag.oH) {
-					Self.ants(true);
-				}
+				if (Drag.oW && Drag.oH) Self.ants(true);
 
 				// remove class
 				APP.els.content.removeClass("cover");
