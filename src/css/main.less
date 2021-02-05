@@ -147,6 +147,7 @@ content {
 		.color-sample:hover {
 			opacity: 1;
 		}
+
 		.tool:hover {
 			opacity: 0.85;
 		}
@@ -159,9 +160,18 @@ content {
 			margin: 6px 7px;
 		}
 
+		.tool-group > div,
 		> div > div {
 			display: inline-block;
 			vertical-align: middle;
+
+			&.hidden {
+				display: none;
+			}
+		}
+
+		.tool-group {
+			display: inline-block;
 
 			&.hidden {
 				display: none;
