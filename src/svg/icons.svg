@@ -465,8 +465,12 @@
 	</svg>
 
 	<svg id="icon-quick-mask" viewBox="0 0 500 500">
-		<path fill="#00000020" stroke="#000" stroke-width="15" d="M19.5,84.905v330.19h461V84.905H19.5z"/>
-		<circle fill="none" stroke="#000" stroke-width="25" stroke-linecap="round" stroke-dasharray="30,30" cx="250" cy="250" r="100"/>
+		<style type="text/css">
+			.st0{fill:#00000020;stroke:#000;stroke-width:15;}
+			.st1{fill:none;stroke:#000;stroke-width:20;stroke-linecap:round;stroke-dasharray:20,20;}
+		</style>
+		<path class="st0" d="M19.5,61.3v377.5h461V61.3H19.5z"/>
+		<circle class="st1" cx="250" cy="250" r="132.4"/>
 	</svg>
 
 	<svg id="icon-arrow" viewBox="0 0 500 500">
