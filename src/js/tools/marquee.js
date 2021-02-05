@@ -42,6 +42,7 @@
 
 				Self.drag = {
 					ctx: Self.ctx,
+					threshold: Self.threshold,
 					clickX: event.clientX,
 					clickY: event.clientY,
 					oX: event.offsetX - File.oX,
@@ -82,7 +83,9 @@
 				break;
 			case "mouseup":
 				// start marching if there is any box
-				if (Drag.oW && Drag.oH) Self.ants(true);
+				if (Drag.oW && Drag.oH) {
+					Self.ants(true);
+				}
 
 				// remove class
 				APP.els.content.removeClass("cover");
@@ -155,23 +158,27 @@
 		}
 		return dstImg;
 	},
+	ant(x, y, o) {
+		return ((5 + y + o % 10) + x) % 10 >= 5 ? 0x00 : 0xFF;
+	},
 	render(march) {
 		let Proj = this.projector,
 			mask = this.mask,
 			cvsImg = this.cvsImg,
 			data = this.cvsImg.data,
-			ant = (x, y, o) => ((5 + y + o % 10) + x) % 10 >= 5 ? 0x00 : 0xFF,
 			aO = this.aO,
-			fn;
+			ant = this.ant,
+			isEdge,
+			o, v;
 
 		for (let y=0; y<this.h; y++) {
 			for (let x=0; x<this.w; x++) {
-				let o = ((y * this.w) + x) * 4,
-					isEdge = mask[o] === 0x00;
+				o = ((y * this.w) + x) * 4;
+				isEdge = mask[o] === 0x00;
 				// continue if it is not mask outline edge
 				if (!isEdge) continue;
 
-				let v = ant(x, y, aO);
+				v = ant(x, y, aO);
 				data[o + 0] = v;
 				data[o + 1] = v;
 				data[o + 2] = v;
@@ -186,7 +193,7 @@
 		this.aO -= .2;
 
 		if (!this.halt) {
-			requestAnimationFrame(() => this.render());
+			requestAnimationFrame(this.render.bind(this));
 		}
 	}
 }
