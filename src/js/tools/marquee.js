@@ -12,7 +12,6 @@
 
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
-		// this.option = "magic-wand";
 		this.option = "rectangle";
 	},
 	dispatch(event) {
@@ -33,8 +32,8 @@
 				event.preventDefault();
 
 				// reset selection canvas
-				Self.ctx.clear();
-				Proj.swap.ctx.clear();
+				Self.cvs.prop({ width: File.width, height: File.height });
+				Proj.swap.cvs.prop({ width: File.width, height: File.height });
 
 				// mouse position
 				oX = event.offsetX - File.oX;
@@ -131,6 +130,8 @@
 				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.dispatch);
+				// temp
+				APP.els.content.find(".tool[data-arg='magic-wand']").trigger("click");
 				break;
 			case "disable":
 				Proj.cvs.off("mousedown", Self.dispatch);
