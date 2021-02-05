@@ -11,8 +11,8 @@
 
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
-		// this.option = "magic-wand";
-		this.option = "rectangle";
+		this.option = "magic-wand";
+		// this.option = "rectangle";
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -22,7 +22,8 @@
 			Drag = Self.drag,
 			_max = Math.max,
 			_min = Math.min,
-			data;
+			data,
+			oX, oY;
 
 		switch (event.type) {
 			// native events
@@ -30,7 +31,12 @@
 				// prevent default behaviour
 				event.preventDefault();
 
+				// mouse position
+				oX = event.offsetX - File.oX;
+				oY = event.offsetY - File.oY;
+
 				if (Self.option === "magic-wand") {
+					Self.magicWand.getMask(File.cvs[0], oX, oY, Proj.swap.ctx);
 					return;
 				}
 
@@ -46,8 +52,8 @@
 					threshold: Self.threshold,
 					clickX: event.clientX,
 					clickY: event.clientY,
-					oX: event.offsetX - File.oX,
-					oY: event.offsetY - File.oY,
+					oX,
+					oY,
 				};
 
 				// prevent mouse from triggering mouseover
