@@ -2,8 +2,8 @@
 // TOOLS.marquee
 
 {
-	ants: @import "./marquee.ants.js",
-	magicWand: @import "./marquee.magicWand.js",
+	ants: @import "./marquee-ants.js",
+	magicWand: @import "./marquee-magicWand.js",
 	init() {
 		// layer canvas
 		let { cvs, ctx } = Misc.createCanvas(1, 1);
@@ -23,8 +23,6 @@
 			Drag = Self.drag,
 			_max = Math.max,
 			_min = Math.min,
-			cvs,
-			ctx,
 			image,
 			oX, oY;
 
@@ -35,15 +33,18 @@
 				event.preventDefault();
 
 				// reset selection canvas
-				Self.cvs.prop({ width: File.width, height: File.height });
-				Proj.swap.cvs.prop({ width: File.width, height: File.height });
+				Self.ctx.clear();
+				Proj.swap.ctx.clear();
 
 				// mouse position
 				oX = event.offsetX - File.oX;
 				oY = event.offsetY - File.oY;
 
-				if (Self.option === "magic-wand") {
-					return Self.dispatch({ type: "select-magic-wand", oX, oY });
+				switch (Self.option) {
+					case "magic-wand":
+						return Self.dispatch({ type: "select-magic-wand", oX, oY });
+					case "lasso":
+						return Self.ants.stop();
 				}
 
 				// stop marching ants, if marching
@@ -91,7 +92,7 @@
 				Self.ants.init(Self);
 				break;
 			case "mouseup":
-				// start marching if there is any box
+				// start marching if there is selection
 				if (Drag.oW && Drag.oH) Self.ants.init(Self, true);
 
 				// remove class
@@ -101,21 +102,29 @@
 				break;
 			// custom events
 			case "select-magic-wand":
-				cvs = File.cvs[0];
-				ctx = File.ctx;
+				Self.ctx.drawImage(File.cvs[0], 0, 0);
+				let data = Self.ctx.getImageData(0, 0, File.width, File.height).data;
+				// clear marquee canvas (fastest way)
+				Self.ctx.clear();
+
 				image = {
-					data: ctx.getImageData(0, 0, cvs.width, cvs.height),
-					width: cvs.width,
-					height: cvs.height,
+					data,
+					ctx: Self.ctx,
+					width: File.width,
+					height: File.height,
 					threshold: 15,
-					ctx: Projector.file.ctx,
+					blurRadius: 5,
+					bytes: 4,
 				};
 				// get mask
 				image.mask = Self.magicWand.floodFill(image, event.oX, event.oY, null, true);
+				if (image.mask) Self.magicWand.gaussBlurOnlyBorder(image, null);
+
 				// apply mask to mask canvas
 				Self.paintMask(image);
 
-				Self.ants();
+				// start marching ants
+				Self.ants.init(Self, true);
 				break;
 			case "select-option":
 				Self.option = event.arg || "rectangle";
@@ -130,28 +139,27 @@
 	},
 	paintMask(image) {
 		// paint mask
-		let imgData = this.ctx.createImageData(image.width, image.height);
+		let w = image.width;
+		let h = image.height;
+		let imgData = image.ctx.createImageData(w, h);
 		let res = imgData.data;
 
 		let data = image.mask.data;
 		let bounds = image.mask.bounds;
 		let maskW = image.mask.width;
-		let w = image.w;
-		let h = image.h;
 		let rgba = [0, 0, 0, 255];
 
 		for (let y=bounds.minY; y<=bounds.maxY; y++) {
 			for (let x=bounds.minX; x<=bounds.maxX; x++) {
 				if (data[y * maskW + x] == 0) continue;
-				let k = (y * w + x) * 4; 
+				let k = (y * w + x) * 4;
 				res[k] = rgba[0];
 				res[k + 1] = rgba[1];
 				res[k + 2] = rgba[2];
 				res[k + 3] = rgba[3];
 			}
 		}
-		// this.ctx.putImageData(imgData, 0, 0);
 
-		this.ants();
+		image.ctx.putImageData(imgData, 0, 0);
 	}
 }

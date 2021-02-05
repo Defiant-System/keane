@@ -441,8 +441,10 @@
 	  * @param {Uint8Array} visited: mask of visited points (optional) 
 	  * @return {Object} mask: {Uint8Array} data, {int} width, {int} height, {Object} bounds
 	  */
-	gaussBlurOnlyBorder(mask, radius, visited) {
-		var border = this.createBorderForBlur(mask, radius, visited), // get border points with radius-neighbors
+	gaussBlurOnlyBorder(image, visited) {
+		var mask = image.mask,
+			radius = image.blurRadius,
+			border = this.createBorderForBlur(mask, radius, visited), // get border points with radius-neighbors
 			ww, dsq, i, j, k, k1, x, y, val, start, end,
 			n = radius * 2 + 1, // size of the pattern for radius-neighbors (from -r to +r with center point)
 			s2 = 2 * radius * radius,

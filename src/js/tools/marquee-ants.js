@@ -17,6 +17,11 @@
 
 		this.render(march);
 	},
+	stop() {
+		this.halt = true;
+
+		cancelAnimationFrame(this.render.bind(this));
+	},
 	match(srcData, w, h, x, y) {
 		let alpha = this.getPixel(srcData, w, h, x, y);
 		return alpha === null || alpha >= this.threshold;
