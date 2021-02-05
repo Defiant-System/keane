@@ -2,6 +2,7 @@
 // TOOLS.marquee
 
 {
+	magicWand: @import "../ext/magicWand.js",
 	init() {
 		// layer canvas
 		let { cvs, ctx } = Misc.createCanvas(1, 1);
