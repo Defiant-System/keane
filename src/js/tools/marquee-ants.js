@@ -17,11 +17,6 @@
 
 		this.render(march);
 	},
-	stop() {
-		this.halt = true;
-
-		cancelAnimationFrame(this.render.bind(this));
-	},
 	match(srcData, w, h, x, y) {
 		let alpha = this.getPixel(srcData, w, h, x, y);
 		return alpha === null || alpha >= this.threshold;
@@ -98,10 +93,11 @@
 		Proj.render({ imgCvs: Proj.swap.cvs[0], noEmit: true });
 		
 		// march tiny ants!
-		this.aO -= .2;
+		this.aO -= .175;
 
 		if (!this.halt) {
-			requestAnimationFrame(this.render.bind(this));
+			cancelAnimationFrame(this.raf);
+			this.raf = requestAnimationFrame(this.render.bind(this));
 		}
 	}
 }

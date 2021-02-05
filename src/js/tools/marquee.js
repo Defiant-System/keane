@@ -40,28 +40,32 @@
 				oY = event.offsetY - File.oY;
 
 				switch (Self.option) {
-					case "magic-wand":
-						return Self.dispatch({ type: "select-magic-wand", oX, oY });
 					case "lasso":
-						return Self.ants.stop();
+					case "polygon":
+					case "magnetic":
+						break;
+					case "magic-wand":
+						Self.dispatch({ type: "select-magic-wand", oX, oY });
+						break;
+					case "rectangle":
+					case "elliptic":
+						// stop marching ants, if marching
+						Self.ants.init(Self);
+
+						Self.drag = {
+							ctx: Self.ctx,
+							clickX: event.clientX,
+							clickY: event.clientY,
+							oX,
+							oY,
+						};
+
+						// prevent mouse from triggering mouseover
+						APP.els.content.addClass("cover");
+						// bind event handlers
+						Proj.doc.on("mousemove mouseup", Self.dispatch);
+						break;
 				}
-
-				// stop marching ants, if marching
-				Self.ants.init(Self);
-
-				Self.drag = {
-					ctx: Self.ctx,
-					threshold: Self.threshold,
-					clickX: event.clientX,
-					clickY: event.clientY,
-					oX,
-					oY,
-				};
-
-				// prevent mouse from triggering mouseover
-				APP.els.content.addClass("cover");
-				// bind event handlers
-				Proj.doc.on("mousemove mouseup", Self.dispatch);
 				break;
 			case "mousemove":
 				Drag.oW = event.clientX - Drag.clickX;
@@ -144,7 +148,6 @@
 		let h = image.height;
 		let imgData = image.ctx.createImageData(w, h);
 		let res = imgData.data;
-
 		let data = image.mask.data;
 		let bounds = image.mask.bounds;
 		let maskW = image.mask.width;
