@@ -35,6 +35,9 @@
 				Self.cvs.prop({ width: File.width, height: File.height });
 				Proj.swap.cvs.prop({ width: File.width, height: File.height });
 
+				// stop marching ants, if marching
+				Self.ants.init(Self);
+
 				// mouse position
 				oX = event.offsetX - File.oX;
 				oY = event.offsetY - File.oY;
@@ -49,9 +52,6 @@
 						break;
 					case "rectangle":
 					case "elliptic":
-						// stop marching ants, if marching
-						Self.ants.init(Self);
-
 						Self.drag = {
 							ctx: Self.ctx,
 							clickX: event.clientX,
