@@ -28,31 +28,6 @@
 			oX, oY;
 
 		switch (event.type) {
-			// system events
-			case "window.keystroke":
-				switch (event.char) {
-					case "backspace":
-						if (event.altKey) color = File.fgColor;
-						if (event.metaKey) color = File.bgColor;
-						// colorize mask
-						Self.ctx.save();
-						Self.ctx.globalCompositeOperation = "source-in";
-						Self.ctx.fillStyle = color;
-						Self.ctx.fillRect(0, 0, 1e9, 1e9);
-						Self.ctx.fill();
-						Self.ctx.restore();
-
-						if (color) {
-							Self.applyCompositeMask({ operation: "source-over" });
-						} else {
-							Self.applyCompositeMask({ operation: "xor" });
-						}
-						break;
-					case "del":
-						Self.applyCompositeMask({ operation: "xor" });
-						break;
-				}
-				break;
 			// native events
 			case "mousedown":
 				// prevent default behaviour
@@ -130,6 +105,32 @@
 				// unbind event handlers
 				Proj.doc.off("mousemove mouseup", Self.dispatch);
 				break;
+			
+			// system events
+			case "window.keystroke":
+				switch (event.char) {
+					case "backspace":
+						if (event.altKey) color = File.fgColor;
+						if (event.metaKey) color = File.bgColor;
+						// colorize mask
+						Self.ctx.save();
+						Self.ctx.globalCompositeOperation = "source-in";
+						Self.ctx.fillStyle = color;
+						Self.ctx.fillRect(0, 0, 1e9, 1e9);
+						Self.ctx.fill();
+						Self.ctx.restore();
+
+						if (color) {
+							Self.applyCompositeMask({ operation: "source-over" });
+						} else {
+							Self.applyCompositeMask({ operation: "xor" });
+						}
+						break;
+					case "del":
+						Self.applyCompositeMask({ operation: "xor" });
+						break;
+				}
+				break;
 			// custom events
 			case "select-with-magic-wand":
 				Self.ctx.drawImage(File.cvs[0], 0, 0);
@@ -152,7 +153,6 @@
 
 				// apply mask to mask canvas
 				Self.paintMask(image);
-
 				// start marching ants
 				Self.ants.init(Self, true);
 				break;
@@ -167,8 +167,17 @@
 				Self.ants.init(Self, true);
 				break;
 			case "deselect":
-			case "select-inverse":
+				Self.ctx.clear();
+				// halt ants
+				Self.ants.init(Self);
+				break;
+			case "inverse-selection":
 				console.log(event);
+				Self.ctx.globalCompositeOperation = "source-out";
+				Self.ctx.fillRect(0, 0, 1e9, 1e9);
+				Self.ctx.fill();
+				// start marching ants
+				Self.ants.init(Self, true);
 				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.dispatch);

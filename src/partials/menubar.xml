@@ -35,7 +35,7 @@
 	<Menu name="Select">
 		<Menu name="All" click="tool:marquee:select-all" hotkey="alt+a"/>
 		<Menu name="Deselect" click="tool:marquee:deselect" hotkey="alt+d"/>
-		<Menu name="Inverse" click="tool:marquee:select-inverse" hotkey="shift+alt+i"/>
+		<Menu name="Inverse" click="tool:marquee:inverse-selection" hotkey="alt+shift+i"/>
 		<Menu type="divider"/>
 		<Menu name="Edit in Quick Mask Mode"/>
 	</Menu>
