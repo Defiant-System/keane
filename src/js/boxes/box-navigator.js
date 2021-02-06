@@ -54,6 +54,7 @@
 			_max = Math.max,
 			_min = Math.min,
 			data = {},
+			opt,
 			zoom,
 			value,
 			width,
@@ -93,8 +94,10 @@
 
 				Self.els.wrapper.css({ width: Self.navWidth +"px" });
 				Self.cvs.prop({ width: Self.navWidth, height: Self.navHeight });
-				Self.ctx.drawImage(File.cvs[0], 0, 0, Self.navWidth, Self.navHeight);
 				Self.els.wrapper.removeClass("hidden");
+				// paint resized image
+				opt = { resizeWidth: Self.navWidth, resizeHeight: Self.navHeight, resizeQuality: "medium" };
+				createImageBitmap(File.cvs[0], opt).then(img => Self.ctx.drawImage(img, 0, 0));
 				break;
 			// custom events
 			case "input":

@@ -47,7 +47,9 @@ class Layer {
 		let tCtx = thumbCvsEl[0].getContext("2d"),
 			width = thumbCvsEl.prop("offsetWidth"),
 			height = thumbCvsEl.prop("offsetHeight"),
-			ratio = this.width / this.height;
+			ratio = this.width / this.height,
+			_floor = Math.floor,
+			opt;
 		// set height & width of thumbnail canvas
 		thumbCvsEl.prop({ width, height });
 		// calculate dimensions
@@ -59,11 +61,11 @@ class Layer {
 		tCtx.save();
 		tCtx.scale(.5, .5);
 		tCtx.fillStyle = Projector.checkers;
-		tCtx.fillRect(0, 0, 64, 64);
+		tCtx.fillRect(_floor(tX*2), _floor(tY*2), _floor(tW*2), _floor(tH*2));
 		tCtx.restore();
 		// transfer layer image resized to thumbnail canvas
-		tCtx.imageSmoothingEnabled = false;
-		tCtx.drawImage(this.cvs[0], tX, tY, tW, tH);
+		opt = { resizeWidth: tW, resizeHeight: tH, resizeQuality: "medium" };
+		createImageBitmap(this.cvs[0], opt).then(img => tCtx.drawImage(img, tX, tY));
 	}
 
 	async parseImage(content) {
