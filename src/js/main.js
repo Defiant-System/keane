@@ -149,6 +149,10 @@ const keane = {
 								pEl.find(`.down[data-group="${name}"]`).removeClass("down");
 							}
 							event.el.addClass("down");
+							// tool sub-options
+							pEl.find(".tool-group.active").removeClass("active");
+							name = event.el.data("subOptions");
+							pEl.find(`.tool-group[data-subName="${name}"]`).addClass("active");
 						}
 						pEl = pEl.prevAll(".tools-bar").find(".active");
 						if (event.el.data("option") === "main") {

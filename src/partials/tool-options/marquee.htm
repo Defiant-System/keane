@@ -1,7 +1,7 @@
 <div class="tool-options-marquee">
-	<div class="tool tool-marquee-rect down" title="Rectangular Marquee Tool" data-click="select-option" data-arg="rectangle" data-group="options" data-option="main"></div>
-	<div class="tool tool-marquee-circle" title="Elliptical Marquee Tool" data-click="select-option" data-arg="elliptic" data-group="options" data-option="main"></div>
-	<div class="tool tool-wand" title="Magic Wand Tool" data-click="select-option" data-arg="magic-wand" data-group="options" data-option="main"></div>
+	<div class="tool tool-marquee-rect down" title="Rectangular Marquee Tool" data-click="select-option" data-arg="rectangle" data-group="options" data-option="main" data-subOptions="basic"></div>
+	<div class="tool tool-marquee-circle" title="Elliptical Marquee Tool" data-click="select-option" data-arg="elliptic" data-group="options" data-option="main" data-subOptions="basic"></div>
+	<div class="tool tool-wand" title="Magic Wand Tool" data-click="select-option" data-arg="magic-wand" data-group="options" data-option="main" data-subOptions="wand"></div>
 	
 	<div class="divider"></div>
 
@@ -18,7 +18,7 @@
 	
 	<div class="divider"></div>
 	
-	<span class="tool-group">
+	<span class="tool-group active" data-subName="basic">
 		<div class="option">
 			<span class="label">Feather</span>
 			<span class="value">0px</span>
@@ -53,4 +53,33 @@
 
 		<div class="button">Refine Edge&#8230;</div>
 	</span>
+
+	<span class="tool-group" data-subName="wand">
+		<div class="option">
+			<span class="label">Feather</span>
+			<span class="value">5px</span>
+		</div>
+
+		<div class="option">
+			<span class="label">Tolerance</span>
+			<span class="value">15px</span>
+		</div>
+
+		<div class="option check">
+			<span class="value">
+				<input type="checkbox" id="marquee-wand-anti-alias">
+				<i></i>
+			</span>
+			<label class="label" for="marquee-wand-anti-alias">Anti-alias</label>
+		</div>
+
+		<div class="option check">
+			<span class="value">
+				<input type="checkbox" id="marquee-wand-contigous">
+				<i></i>
+			</span>
+			<label class="label" for="marquee-wand-contigous">Contigious</label>
+		</div>
+	</span>
+
 </div>
