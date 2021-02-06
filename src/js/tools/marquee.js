@@ -28,7 +28,18 @@
 		switch (event.type) {
 			// system events
 			case "window.keystroke":
-				console.log(event);
+				if (event.char === "del") {
+					// File.activeLayer.cvs.globalCompositeOperation = "xor";
+					// Self.ants.mask
+					// console.log(Self.ants.mask);
+
+					// stop marching ants, if marching
+					Self.ants.init(Self);
+
+					File.activeLayer.ctx.fillRect(100, 100, 100, 100);
+					File.activeLayer.ctx.fill();
+					File.render();
+				}
 				break;
 			// native events
 			case "mousedown":

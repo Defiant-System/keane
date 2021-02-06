@@ -54,42 +54,46 @@ const Projector = {
 				break;
 		}
 	},
-	renderFrame(file) {
+	renderFrame(File) {
 		// pre-render frame
-		let w = file.oW * file.scale,
-			h = file.oH * file.scale,
-			oX = file.oX || Math.round(this.cX - (w / 2)),
-			oY = file.oY || Math.round(this.cY - (h / 2));
-		
+		let w = File.oW * File.scale,
+			h = File.oH * File.scale,
+			oX = File.oX || Math.round(this.cX - (w / 2)),
+			oY = File.oY || Math.round(this.cY - (h / 2));
+		if (isNaN(w) || isNaN(h)) return;
+
 		// reset canvases
-		this.swap.ctx.clear();
-		// this.swap.cvs.prop({ width: window.width, height: window.height });
+		// this.swap.ctx.clear();
+		this.swap.cvs.prop({ width: w, height: h });
 		
 		this.swap.ctx.shadowOffsetX = 0;
 		this.swap.ctx.shadowOffsetY = 1;
 		this.swap.ctx.shadowBlur = 5;
 		this.swap.ctx.shadowColor = "#292929";
-		this.swap.ctx.fillRect(oX, oY, w, h);
-		this.frame = this.swap.ctx.getImageData(0, 0, window.width, window.height);
+		this.swap.ctx.fillRect(0, 0, w, h);
+		// checkes background
+		this.swap.ctx.fillStyle = this.checkers;
+		this.swap.ctx.fillRect(0, 0, w, h);
+		this.frame = this.swap.ctx.getImageData(0, 0, w, h);
 	},
-	reset(file) {
+	reset(File) {
 		// reset canvases
 		this.cvs.prop({ width: window.width, height: window.height });
 
-		this.aX = file.showRulers ? Rulers.t : 0;
-		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (file.showRulers ? Rulers.t : 0);
-		this.aW = window.width - this.aX - this.els.sideBar.width() + (file.showRulers ? Rulers.t : 0);
-		this.aH = window.height - this.aY - (file.showRulers ? Rulers.t : 0); // - this.els.statusBar.height()
+		this.aX = File.showRulers ? Rulers.t : 0;
+		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (File.showRulers ? Rulers.t : 0);
+		this.aW = window.width - this.aX - this.els.sideBar.width() + (File.showRulers ? Rulers.t : 0);
+		this.aH = window.height - this.aY - (File.showRulers ? Rulers.t : 0); // - this.els.statusBar.height()
 		// center
 		this.cX = (window.width + this.aX - this.els.sideBar.width()) / 2;
 		this.cY = (window.height + this.aY - this.els.statusBar.height()) / 2;
 
 		// pre-render frame
-		this.renderFrame(file);
+		this.renderFrame(File);
 
-		if (this.file !== file) {
+		if (this.file !== File) {
 			// reference to displayed file
-			this.file = file;
+			this.file = File;
 			// emit event
 			defiant.emit("file-selected");
 		}
@@ -104,12 +108,9 @@ const Projector = {
 		this.ctx.clear();
 		// this.cvs.prop({ width: window.width, height: window.height });
 
+		this.ctx.putImageData(this.frame, File.oX, File.oY);
 		this.ctx.save();
-		this.ctx.putImageData(this.frame, 0, 0);
 		this.ctx.translate(File.oX, File.oY);
-		// checkes background
-		this.ctx.fillStyle = this.checkers;
-		this.ctx.fillRect(0, 0, w, h);
 		// file canvas
 		this.ctx.imageSmoothingEnabled = false;
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);

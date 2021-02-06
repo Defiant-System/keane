@@ -48,7 +48,7 @@ class File {
 		}
 
 		// select top layer as default
-		this.activeLayerIndex = 1;
+		this.activeLayerIndex = 0;
 
 		// initiate canvas
 		this.dispatch({ type: "set-canvas", width: this.width, height: this.height });
@@ -124,10 +124,10 @@ class File {
 						});
 				}
 				// auto set scale for file; fixes framing if image is larger than available dimensions
-				this.dispatch({ ...event, type: "set-scale", noRender: true });
+				this.dispatch({ ...event, type: "set-scale" });
 
 				// render canvas
-				this.render();
+				// this.render();
 				break;
 			case "set-scale":
 				// scaled dimension
@@ -141,7 +141,9 @@ class File {
 				if (!event.noRender) {
 					// render projector canvas
 					Proj.renderFrame(this);
-					Proj.render();
+					// render file
+					this.render();
+					// Proj.render();
 				}
 				break;
 			case "pan-canvas":

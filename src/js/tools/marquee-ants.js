@@ -14,6 +14,8 @@
 		this.aO = 0;
 		// let marching start
 		this.halt = !march;
+		// prevents choking frame
+		cancelAnimationFrame(this.raf);
 
 		this.render(march);
 	},
@@ -96,7 +98,6 @@
 		this.aO -= .175;
 
 		if (!this.halt) {
-			cancelAnimationFrame(this.raf);
 			this.raf = requestAnimationFrame(this.render.bind(this));
 		}
 	}
