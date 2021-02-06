@@ -22,6 +22,7 @@
 			Drag = Self.drag,
 			_max = Math.max,
 			_min = Math.min,
+			color,
 			mask,
 			image,
 			oX, oY;
@@ -29,16 +30,24 @@
 		switch (event.type) {
 			// system events
 			case "window.keystroke":
-				if (event.char === "del") {
-					// stop marching ants, if marching
-					Self.ants.init(Self);
-
-					// deletes selection from "active layer"
-					File.activeLayer.ctx.globalCompositeOperation = "xor";
-					File.activeLayer.ctx.drawImage(Self.cvs[0], 0, 0);
-
-					// Render file
-					File.render();
+				switch (event.char) {
+					case "backspace":
+						if (event.altKey) color = File.fgColor;
+						if (event.metaKey) color = File.bgColor;
+						// colorize mask
+						Self.ctx.globalCompositeOperation = "source-in";
+						Self.ctx.fillStyle = color;
+						Self.ctx.fillRect(0, 0, 1e9, 1e9);
+						Self.ctx.fill();
+						if (color) {
+							Self.applyCompositeMask({ operation: "source-over" });
+						} else {
+							Self.applyCompositeMask({ operation: "xor" });
+						}
+						break;
+					case "del":
+						Self.applyCompositeMask({ operation: "xor" });
+						break;
 				}
 				break;
 			// native events
@@ -156,6 +165,17 @@
 				Proj.cvs.off("mousedown", Self.dispatch);
 				break;
 		}
+	},
+	applyCompositeMask(opt) {
+		let Self = this,
+			File = Projector.file;
+		// stop marching ants, if marching
+		Self.ants.init(Self);
+		// deletes selection from "active layer"
+		File.activeLayer.ctx.globalCompositeOperation = opt.operation;
+		File.activeLayer.ctx.drawImage(Self.cvs[0], 0, 0);
+		// Render file
+		File.render();
 	},
 	paintMask(image) {
 		// paint mask
