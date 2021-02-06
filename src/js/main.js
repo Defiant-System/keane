@@ -182,6 +182,10 @@ const keane = {
 						Self.box[boxName].dispatch(event);
 					}
 				}
+				let [obj, prop, type] = event.type.split(":");
+				if (obj === "tool") {
+					TOOLS[prop].dispatch({ ...event, type });
+				}
 		}
 	},
 	statusbar: @import "modules/statusbar.js",

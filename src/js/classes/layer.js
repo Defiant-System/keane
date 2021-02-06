@@ -116,4 +116,10 @@ class Layer {
 		this.ctx.globalAlpha = globalAlpha;
 		this.ctx.drawImage(cvs, 0, 0);
 	}
+
+	applyCompositeImage(opt) {
+		this.ctx.globalCompositeOperation = opt.operation;
+		this.ctx.drawImage(opt.image, 0, 0);
+		this.updateThumbnail();
+	}
 }

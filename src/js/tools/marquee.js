@@ -35,10 +35,13 @@
 						if (event.altKey) color = File.fgColor;
 						if (event.metaKey) color = File.bgColor;
 						// colorize mask
+						Self.ctx.save();
 						Self.ctx.globalCompositeOperation = "source-in";
 						Self.ctx.fillStyle = color;
 						Self.ctx.fillRect(0, 0, 1e9, 1e9);
 						Self.ctx.fill();
+						Self.ctx.restore();
+
 						if (color) {
 							Self.applyCompositeMask({ operation: "source-over" });
 						} else {
@@ -72,7 +75,7 @@
 					case "magnetic":
 						break;
 					case "magic-wand":
-						Self.dispatch({ type: "select-magic-wand", oX, oY });
+						Self.dispatch({ type: "select-with-magic-wand", oX, oY });
 						break;
 					case "rectangle":
 					case "elliptic":
@@ -128,7 +131,7 @@
 				Proj.doc.off("mousemove mouseup", Self.dispatch);
 				break;
 			// custom events
-			case "select-magic-wand":
+			case "select-with-magic-wand":
 				Self.ctx.drawImage(File.cvs[0], 0, 0);
 				let data = Self.ctx.getImageData(0, 0, File.width, File.height).data;
 				// clear marquee canvas (fastest way)
@@ -156,6 +159,17 @@
 			case "select-option":
 				Self.option = event.arg || "rectangle";
 				break;
+			case "select-all":
+				// colorize mask
+				Self.ctx.fillRect(0, 0, 1e9, 1e9);
+				Self.ctx.fill();
+				// march little ants!
+				Self.ants.init(Self, true);
+				break;
+			case "deselect":
+			case "select-inverse":
+				console.log(event);
+				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.dispatch);
 				// temp
@@ -171,9 +185,8 @@
 			File = Projector.file;
 		// stop marching ants, if marching
 		Self.ants.init(Self);
-		// deletes selection from "active layer"
-		File.activeLayer.ctx.globalCompositeOperation = opt.operation;
-		File.activeLayer.ctx.drawImage(Self.cvs[0], 0, 0);
+		// applies selection to "active layer"
+		File.activeLayer.applyCompositeImage({ ...opt, image: Self.cvs[0] });
 		// Render file
 		File.render();
 	},
