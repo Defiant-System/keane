@@ -172,7 +172,6 @@
 				Self.ants.init(Self);
 				break;
 			case "inverse-selection":
-				console.log(event);
 				Self.ctx.globalCompositeOperation = "source-out";
 				Self.ctx.fillRect(0, 0, 1e9, 1e9);
 				Self.ctx.fill();
