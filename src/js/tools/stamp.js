@@ -9,7 +9,7 @@
 		let APP = keane,
 			Self = TOOLS.stamp;
 
-		switch (event.stamp) {
+		switch (event.type) {
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "stamp";

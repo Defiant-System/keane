@@ -9,7 +9,7 @@
 		let APP = keane,
 			Self = TOOLS.pointer;
 
-		switch (event.pointer) {
+		switch (event.type) {
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "pointer";

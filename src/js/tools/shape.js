@@ -9,7 +9,7 @@
 		let APP = keane,
 			Self = TOOLS.shape;
 
-		switch (event.shape) {
+		switch (event.type) {
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "shape";

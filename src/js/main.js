@@ -14,20 +14,21 @@
 
 
 const TOOLS = {
-	_active  : false,
-	marquee  : @import "tools/marquee.js",
-	move     : @import "tools/move.js",
-	pipette  : @import "tools/pipette.js",
-	brush    : @import "tools/brush.js",
-	gradient : @import "tools/gradient.js",
-	type     : @import "tools/type.js",
-	crop     : @import "tools/crop.js",
-	blur     : @import "tools/blur.js",
-	stamp    : @import "tools/stamp.js",
-	pen      : @import "tools/pen.js",
-	shape    : @import "tools/shape.js",
-	pointer  : @import "tools/pointer.js",
-	zoom     : @import "tools/zoom.js",
+	_active   : false,
+	marquee   : @import "tools/marquee.js",
+	move      : @import "tools/move.js",
+	pipette   : @import "tools/pipette.js",
+	brush     : @import "tools/brush.js",
+	gradient  : @import "tools/gradient.js",
+	type      : @import "tools/type.js",
+	crop      : @import "tools/crop.js",
+	blur      : @import "tools/blur.js",
+	stamp     : @import "tools/stamp.js",
+	pen       : @import "tools/pen.js",
+	shape     : @import "tools/shape.js",
+	pointer   : @import "tools/pointer.js",
+	zoom      : @import "tools/zoom.js",
+	quickMask : @import "tools/quickMask.js",
 };
 
 
@@ -77,6 +78,13 @@ const keane = {
 		switch (event.type) {
 			// system events
 			case "window.keystroke":
+				if (!event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+					let menu = window.bluePrint.selectSingleNode(`//Menu[@hotkey="${event.char}"]`);
+					if (menu) {
+						return Self.dispatch({ type: menu.getAttribute("click") });
+					}
+				}
+
 				name = Self.els.toolsBar.find(".active").data("content");
 				// dispatch event to tool object
 				TOOLS[name].dispatch(event);
@@ -184,7 +192,7 @@ const keane = {
 				}
 				let [obj, prop, type] = event.type.split(":");
 				if (obj === "tool") {
-					TOOLS[prop].dispatch({ ...event, type });
+					return TOOLS[prop].dispatch({ ...event, type });
 				}
 		}
 	},

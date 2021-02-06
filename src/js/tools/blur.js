@@ -9,7 +9,7 @@
 		let APP = keane,
 			Self = TOOLS.blur;
 
-		switch (event.blur) {
+		switch (event.type) {
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "blur";

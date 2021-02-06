@@ -137,7 +137,7 @@
 				let data = Self.ctx.getImageData(0, 0, File.width, File.height).data;
 				// clear marquee canvas (fastest way)
 				Self.ctx.clear();
-
+				// prepare image data for algorithm
 				image = {
 					data,
 					ctx: Self.ctx,

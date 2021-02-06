@@ -37,7 +37,8 @@
 		<Menu name="Deselect" click="tool:marquee:deselect" hotkey="alt+d"/>
 		<Menu name="Inverse" click="tool:marquee:inverse-selection" hotkey="alt+shift+i"/>
 		<Menu type="divider"/>
-		<Menu name="Edit in Quick Mask Mode"/>
+		<Menu name="Edit in Quick Mask Mode" click="tool:quickMask:enable" hotkey="q" show-if-group="quick-mask-mode" is="on" check-group="quick-mask-mode" arg="on"/>
+		<Menu name="Exit Quick Mask Mode" click="tool:quickMask:disable" hotkey="q" show-if-group="quick-mask-mode" is="off" check-group="quick-mask-mode" arg="off" is-checked="1"/>
 	</Menu>
 	<Menu name="Filter">
 		<Menu name="Last Filter" disabled="1" />

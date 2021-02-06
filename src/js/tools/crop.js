@@ -9,7 +9,7 @@
 		let APP = keane,
 			Self = TOOLS.crop;
 
-		switch (event.crop) {
+		switch (event.type) {
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "crop";
