@@ -62,7 +62,8 @@ const Projector = {
 			oY = file.oY || Math.round(this.cY - (h / 2));
 		
 		// reset canvases
-		this.swap.cvs.prop({ width: window.width, height: window.height });
+		this.swap.ctx.clear();
+		// this.swap.cvs.prop({ width: window.width, height: window.height });
 		
 		this.swap.ctx.shadowOffsetX = 0;
 		this.swap.ctx.shadowOffsetY = 1;
@@ -95,19 +96,26 @@ const Projector = {
 	},
 	render(opt={}) {
 		// reference to displayed file
-		let file = this.file;
-		opt.imgCvs = opt.imgCvs || file.cvs[0];
+		let File = this.file,
+			w = File.width,
+			h = File.height;
+		opt.imgCvs = opt.imgCvs || File.cvs[0];
 		// reset canvas
-		this.cvs.prop({ width: window.width, height: window.height });
+		this.ctx.clear();
+		// this.cvs.prop({ width: window.width, height: window.height });
 
 		this.ctx.save();
 		this.ctx.putImageData(this.frame, 0, 0);
-		this.ctx.translate(file.oX, file.oY);
+		this.ctx.translate(File.oX, File.oY);
+		// checkes background
+		this.ctx.fillStyle = this.checkers;
+		this.ctx.fillRect(0, 0, w, h);
+		// file canvas
 		this.ctx.imageSmoothingEnabled = false;
-		this.ctx.drawImage(opt.imgCvs, 0, 0, file.width, file.height);
+		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
 
-		if (file.showRulers) {
+		if (File.showRulers) {
 			Rulers.render(this);
 		}
 		if (!opt.noEmit) {

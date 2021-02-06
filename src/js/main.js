@@ -36,6 +36,7 @@ const keane = {
 	async init() {
 		// fast references
 		this.els.content = window.find("content");
+		this.els.toolsBar = window.find(".tools-bar");
 		this.els.statusBar = window.find(".status-bar");
 
 		// init objects
@@ -58,9 +59,9 @@ const keane = {
 
 		// auto-select initial tool
 		requestAnimationFrame(() =>
-			// this.els.content.find(".tools-bar .tool[data-content='brush']").trigger("click"));
-			this.els.content.find(".tools-bar .tool[data-content='marquee']").trigger("click"));
-			// this.els.content.find(".tools-bar .tool[data-content='move']").trigger("click"));
+			// this.els.toolsBar.find(".tool[data-content='brush']").trigger("click"));
+			this.els.toolsBar.find(".tool[data-content='marquee']").trigger("click"));
+			// this.els.toolsBar.find(".tool[data-content='move']").trigger("click"));
 
 		// temp
 		//this.els.content.find(".box-head div[data-content='info']").trigger("click");
@@ -75,6 +76,11 @@ const keane = {
 		//console.log(event);
 		switch (event.type) {
 			// system events
+			case "window.keystroke":
+				name = Self.els.toolsBar.find(".active").data("content");
+				// dispatch event to tool object
+				TOOLS[name].dispatch(event);
+				break;
 			case "open.file":
 				event.open({ responseType: "blob" })
 					.then(file => Files.open(file));

@@ -91,13 +91,19 @@
 
 				for (let key in data) data[key] = _round(data[key]) +"px";
 				Self.els.zoomRect.css(data);
-
 				Self.els.wrapper.css({ width: Self.navWidth +"px" });
 				Self.cvs.prop({ width: Self.navWidth, height: Self.navHeight });
-				Self.els.wrapper.removeClass("hidden");
+				// background checker for semi transparency
+				Self.ctx.save();
+				Self.ctx.scale(.5, .5);
+				Self.ctx.fillStyle = Proj.checkers;
+				Self.ctx.fillRect(0, 0, Self.navWidth * 2, Self.navHeight * 2);
+				Self.ctx.restore();
 				// paint resized image
 				opt = { resizeWidth: Self.navWidth, resizeHeight: Self.navHeight, resizeQuality: "medium" };
 				createImageBitmap(File.cvs[0], opt).then(img => Self.ctx.drawImage(img, 0, 0));
+				// show wrapper when ready
+				Self.els.wrapper.removeClass("hidden");
 				break;
 			// custom events
 			case "input":

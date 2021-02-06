@@ -26,6 +26,10 @@
 			oX, oY;
 
 		switch (event.type) {
+			// system events
+			case "window.keystroke":
+				console.log(event);
+				break;
 			// native events
 			case "mousedown":
 				// prevent default behaviour
@@ -135,7 +139,7 @@
 			case "enable":
 				Proj.cvs.on("mousedown", Self.dispatch);
 				// temp
-				APP.els.content.find(".tool[data-arg='magic-wand']").trigger("click");
+				// APP.els.content.find(".tool[data-arg='magic-wand']").trigger("click");
 				break;
 			case "disable":
 				Proj.cvs.off("mousedown", Self.dispatch);

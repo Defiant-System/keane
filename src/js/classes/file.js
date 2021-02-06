@@ -22,7 +22,7 @@ class File {
 		this.history = new window.History;
 
 		// layers stack
-		this.layers = [{ type: "bg-checkers", _ready: true }];
+		this.layers = [];
 
 		let xStr = `<File name="${fsFile.base}" width="${this.width}" height="${this.height}" scale="${this.scale}">
 					<Layers/></File>`;
@@ -75,10 +75,6 @@ class File {
 		// re-paints layers stack
 		this.layers.map(layer => {
 			switch (layer.type) {
-				case "bg-checkers":
-					this.ctx.fillStyle = Projector.checkers;
-					this.ctx.fillRect(0, 0, this.oW, this.oH);
-					break;
 				case "layer":
 					// event object is layer - add to file canvas
 					this.ctx.drawImage(layer.cvs[0], 0, 0);
