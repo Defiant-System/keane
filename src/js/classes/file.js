@@ -65,7 +65,7 @@ class File {
 		return this.layers.filter(layer => !layer._ready).length === 0;
 	}
 
-	render(noEmit) {
+	render(opt={}) {
 		// don't render if layers are not ready
 		if (!this.isReady) return;
 
@@ -83,7 +83,7 @@ class File {
 		});
 
 		// render projector
-		Projector.render({ noEmit });
+		Projector.render(opt);
 	}
 
 	dispatch(event) {

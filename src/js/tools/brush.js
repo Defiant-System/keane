@@ -103,7 +103,7 @@
 				Drag.layer.addBuffer(Drag.cvs, Self.preset.opacity);
 
 				// render file - noEmit = true
-				File.render(true);
+				File.render({ noEmit: true });
 
 				// same mouse point
 				Drag.oldX = Drag.mX;

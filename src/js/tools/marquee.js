@@ -22,6 +22,7 @@
 			Drag = Self.drag,
 			_max = Math.max,
 			_min = Math.min,
+			mask,
 			image,
 			oX, oY;
 
@@ -29,15 +30,14 @@
 			// system events
 			case "window.keystroke":
 				if (event.char === "del") {
-					// File.activeLayer.cvs.globalCompositeOperation = "xor";
-					// Self.ants.mask
-					// console.log(Self.ants.mask);
-
 					// stop marching ants, if marching
 					Self.ants.init(Self);
 
-					File.activeLayer.ctx.fillRect(100, 100, 100, 100);
-					File.activeLayer.ctx.fill();
+					// deletes selection from "active layer"
+					File.activeLayer.ctx.globalCompositeOperation = "xor";
+					File.activeLayer.ctx.drawImage(Self.cvs[0], 0, 0);
+
+					// Render file
 					File.render();
 				}
 				break;
