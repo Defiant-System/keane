@@ -6,8 +6,8 @@ class File {
 
 		// defaults
 		this.scale = 1;
-		this.width = 600;
-		this.height = 400;
+		this.width = 1;
+		this.height = 1;
 		this.bgColor = "#000";
 		this.fgColor = "#fff";
 		this.lineWidth = 1;
@@ -61,9 +61,13 @@ class File {
 		return this.layers[this.activeLayerIndex];
 	}
 
+	get isReady() {
+		return this.layers.filter(layer => !layer._ready).length === 0;
+	}
+
 	render(noEmit) {
 		// don't render if layers are not ready
-		if (this.layers.filter(layer => !layer._ready).length > 0) return;
+		if (!this.isReady) return;
 
 		// clear canvas
 		this.cvs.prop({ width: this.oW, height: this.oH });
@@ -92,6 +96,13 @@ class File {
 			el;
 		//console.log(event);
 		switch (event.type) {
+			case "resize-file":
+				// set file dimension if not set
+				this.width = event.width || this.width;
+				this.height = event.height || this.height;
+
+				this.dispatch({ type: "set-canvas" });
+				break;
 			case "set-canvas":
 				// set file dimension if not set
 				this.width = this.width || event.width;

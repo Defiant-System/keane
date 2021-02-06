@@ -55,7 +55,14 @@ class Layer {
 			tH = ratio < 1 ? height : width / ratio,
 			tX = (width - tW) / 2,
 			tY = (height - tH) / 2;
+		// background checker for semi transparency
+		tCtx.save();
+		tCtx.scale(.5, .5);
+		tCtx.fillStyle = Projector.checkers;
+		tCtx.fillRect(0, 0, 64, 64);
+		tCtx.restore();
 		// transfer layer image resized to thumbnail canvas
+		tCtx.imageSmoothingEnabled = false;
 		tCtx.drawImage(this.cvs[0], tX, tY, tW, tH);
 	}
 
@@ -71,6 +78,8 @@ class Layer {
 		this.width = width;
 		this.height = height;
 
+		// dispatch event to resize file canvas
+		this._file.dispatch({ type: "resize-file", width, height });
 		// reset canvas
 		this.cvs.prop({ width, height });
 		// apply image to canvas
