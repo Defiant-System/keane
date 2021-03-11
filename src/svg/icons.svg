@@ -514,84 +514,113 @@
 		<line fill="none" stroke="#000" stroke-width="2" stroke-dasharray="2.5,2.5" x1="0" y1="8" x2="45" y2="8"/>
 	</svg>
 
-
-	<svg id="icon-marquee-new" viewBox="0 0 500 500">
-		<rect x="70.833" y="70.833" fill="#00000070" stroke="#000000b0" stroke-width="25" width="358.334" height="358.334"/>
+	<svg id="icon-marquee-new" viewBox="0 0 17 17">
+		<rect x="1.5" y="1.5" fill="#333" opacity="0.4" width="14" height="14"/>
+		<path fill="#333" d="M16,16H1V1h15V16z M2,15h13V2H2V15z"/>
 	</svg>
 
-	<svg id="icon-marquee-union" viewBox="0 0 500 500">
-		<polygon fill="#00000070" stroke="#000000b0" stroke-width="30" points="359.417,179.916 359.417,51.749 51.083,51.749 51.083,340.083 150.583,340.083 150.583,448.25 448.917,448.25 448.917,179.916"/>
+	<svg id="icon-marquee-union" viewBox="0 0 17 17">
+		<polygon fill="#333" opacity="0.4" points="12.3,6 12.3,1.5 1.5,1.5 1.5,11.7 5,11.7 5,15.5 15.5,15.5 15.5,6 	"/>
+		<path fill="#333" d="M16,16H4.5v-3.8H1V1h11.9v4.5H16V16z M5.5,14.9h9.4V6.6h-3.1V2.1H2.1v9.1h3.5V14.9z"/>
 	</svg>
 
-	<svg id="icon-marquee-subtract" viewBox="0 0 500 500">
-		<rect x="50.833" y="50.833" fill="none" stroke="#00000080" stroke-width="25" width="308.334" height="288.334"/>
-		<rect x="150.333" y="179" fill="none" stroke="#00000080" stroke-width="25" width="298.334" height="268.334"/>
-		<polygon display="inline" fill="#00000070" stroke="#000000b0" stroke-width="25" points="150.333,179 359.167,179 359.167,50.833 50.833,50.833 50.833,339.167 150.333,339.167"/>
+	<svg id="icon-marquee-subtract" viewBox="0 0 17 17">
+		<polygon fill="#333" opacity="0.4" points="5,6 12.4,6 12.4,1.5 1.4,1.5 1.4,11.7 5,11.7 	"/>
+		<path fill="#333" d="M12.8,5.6V1H1v11.1h3.5V16H16V5.6H12.8z M1.9,11.3V1.9h10.1v3.7H4.5v5.7H1.9z M11.9,6.5v4.8H5.4V6.5H11.9z
+			 M15.1,15.1H5.4v-3h7.4V6.5h2.3V15.1z"/>
 	</svg>
 
-	<svg id="icon-marquee-intersection" viewBox="0 0 500 500">
-		<rect x="50.833" y="50.833" fill="none" stroke="#00000080" stroke-width="25" width="308.334" height="288.334"/>
-		<rect x="150.333" y="179" fill="none" stroke="#00000080" stroke-width="25" width="298.334" height="268.334"/>
-		<rect x="150.333" y="179" display="inline" fill="#00000070" stroke="#000000b0" stroke-width="25" width="208.834" height="160.167"/>
+	<svg id="icon-marquee-intersection" viewBox="0 0 17 17">
+		<rect x="5" y="6" fill="#333" opacity="0.4" width="7.4" height="5.7"/>
+		<path fill="#333" d="M12.8,5.6V1H1v11.1h3.5V16H16V5.6H12.8z M1.9,11.3V1.9h10.1v3.7H4.5v5.7H1.9z M11.9,6.5v4.8H5.4V6.5H11.9z
+			 M15.1,15.1H5.4v-3h7.4V6.5h2.3V15.1z"/>
 	</svg>
 
-	<svg id="icon-align-top" viewBox="0 0 500 500">
-		<rect x="89" y="136.75" fill="#555" stroke="#000" stroke-width="25" width="127.5" height="280.5"/>
-		<rect x="283.5" y="136.75" stroke="#000" stroke-width="25" width="127.5" height="200.5"/>
-		<line fill="none" stroke="#000" stroke-width="25" x1="47.5" y1="82" x2="451" y2="82"/>
+	<svg id="icon-align-top" viewBox="0 0 17 17">
+		<rect x="1" y="2" fill="#333" width="15" height="1"/>
+		<rect x="2" y="4" fill="#333" width="6" height="11"/>
+		<rect x="10" y="4" fill="#333" width="5" height="8"/>
+		<rect x="3" y="5" fill="#777" width="4" height="9"/>
 	</svg>
 
-	<svg id="icon-align-middle" viewBox="0 0 500 500">
-		<line fill="none" stroke="#000" stroke-width="25" x1="455.999" y1="256" x2="42.499" y2="256"/>
-		<rect x="281.999" y="116.75" fill="#555" stroke="#000" stroke-width="25" width="127.5" height="280.5"/>
-		<rect x="87.499" y="156.75" stroke="#000" stroke-width="25" width="127.5" height="200.5"/>
+	<svg id="icon-align-middle" viewBox="0 0 17 17">
+		<rect x="1" y="8" fill="#333" width="15" height="1"/>
+		<rect x="9" y="3" fill="#333" width="6" height="11"/>
+		<rect x="2" y="5" fill="#333" width="5" height="7"/>
+		<rect x="10" y="4" fill="#777" width="4" height="9"/>
 	</svg>
 
-	<svg id="icon-align-bottom" viewBox="0 0 500 500">
-		<rect x="89" y="86.75" fill="#555" stroke="#000" stroke-width="25" width="127.5" height="280.5"/>
-		<rect x="283.5" y="166.75" stroke="#000" stroke-width="25" width="127.5" height="200.5"/>
-		<line fill="none" stroke="#000" stroke-width="25" x1="47.5" y1="418" x2="451" y2="418"/>
+	<svg id="icon-align-bottom" viewBox="0 0 17 17">
+		<rect x="1" y="15" fill="#333" width="15" height="1"/>
+		<rect x="2" y="3" fill="#333" width="6" height="11"/>
+		<rect x="10" y="6" fill="#333" width="5" height="8"/>
+		<rect x="3" y="4" fill="#777" width="4" height="9"/>
 	</svg>
 
-	<svg id="icon-vertical-centers" viewBox="0 0 500 500">
-		<line fill="none" stroke="#000" stroke-width="25" x1="345.25" y1="462.752" x2="345.25" y2="49.251"/>
-		<rect x="281.999" y="116.75" fill="#555" stroke="#000" stroke-width="25" width="127.5" height="280.5"/>
-		<rect x="87.499" y="156.75" stroke="#000" stroke-width="25" width="127.5" height="200.5"/>
-		<line fill="none" stroke="#000" stroke-width="25" x1="151.249" y1="462.752" x2="151.249" y2="49.251"/>
+	<svg id="icon-vertical-centers" viewBox="0 0 17 17">
+		<polygon fill="#333" points="15,3 13,3 13,1 12,1 12,3 10,3 10,14 12,14 12,16 13,16 13,14 15,14 	"/>
+		<polygon fill="#333" points="5,1 4,1 4,5 2,5 2,13 4,13 4,16 5,16 5,13 7,13 7,5 5,5 	"/>
+		<rect x="11" y="4" fill="#777" width="3" height="9"/>
 	</svg>
 
-	<svg id="icon-align-left" viewBox="0 0 500 500">
-		<rect x="134.375" y="92.125" fill="#555" stroke="#000" stroke-width="25" width="280.5" height="127.5"/>
-		<rect x="134.375" y="286.625" stroke="#000" stroke-width="25" width="200.5" height="127.5"/>
-		<line fill="none" stroke="#000" stroke-width="25" x1="83.625" y1="50.625" x2="83.625" y2="454.125"/>
+	<svg id="icon-align-left" viewBox="0 0 17 17">
+		<rect x="1" y="1" fill="#333" width="1" height="15"/>
+		<rect x="3" y="10" fill="#333" width="8" height="5"/>
+		<rect x="3" y="2" fill="#333" width="11" height="6"/>
+		<rect x="4" y="3" fill="#777" width="9" height="4"/>
 	</svg>
 
-	<svg id="icon-align-center" viewBox="0 0 500 500">
-		<line fill="none" stroke="#000" stroke-width="25" x1="252" y1="48.25" x2="252" y2="451.75"/>
-		<rect x="109.75" y="89.75" fill="#555" stroke="#000" stroke-width="25" width="280.5" height="127.5"/>
-		<rect x="149.75" y="284.25" stroke="#000" stroke-width="25" width="200.5" height="127.5"/>
+	<svg id="icon-align-center" viewBox="0 0 17 17">
+		<polygon fill="#333" points="15,8 15,2 9,2 9,1 8,1 8,2 2,2 2,8 8,8 8,10 5,10 5,15 8,15 8,16 9,16 9,15 12,15 12,10 9,10 9,8 	"/>
+		<rect x="3" y="3" fill="#777" width="11" height="4"/>
 	</svg>
 
-	<svg id="icon-align-right" viewBox="0 0 500 500">
-		<line fill="none" stroke="#000" stroke-width="25" x1="415.625" y1="50.625" x2="415.625" y2="454.125"/>
-		<rect x="84.375" y="92.125" fill="#555" stroke="#000" stroke-width="25" width="280.5" height="127.5"/>
-		<rect x="164.375" y="286.625" stroke="#000" stroke-width="25" width="200.5" height="127.5"/>
+	<svg id="icon-align-right" viewBox="0 0 17 17">
+		<rect x="15" y="1" fill="#333" width="1" height="15"/>
+		<rect x="6" y="10" fill="#333" width="8" height="5"/>
+		<rect x="3" y="2" fill="#333" width="11" height="6"/>
+		<rect x="4" y="3" fill="#777" width="9" height="4"/>
 	</svg>
 
-	<svg id="icon-horizontal-centers" viewBox="0 0 500 500">
-		<line fill="none" stroke="#000" stroke-width="25" x1="455.249" y1="159.251" x2="41.749" y2="159.251"/>
-		<rect x="109.247" y="95.002" fill="#555" stroke="#000" stroke-width="25" width="280.5" height="127.5"/>
-		<rect x="149.247" y="289.502" stroke="#000" stroke-width="25" width="200.5" height="127.5"/>
-		<line fill="none" stroke="#000" stroke-width="25" x1="455.249" y1="353.252" x2="41.749" y2="353.252"/>
+	<svg id="icon-horizontal-centers" viewBox="0 0 17 17">
+		<polygon fill="#333" points="15,4 15,2 2,2 2,4 1,4 1,5 2,5 2,7 15,7 15,5 16,5 16,4 	"/>
+		<polygon fill="#333" points="13,10 4,10 4,12 1,12 1,13 4,13 4,15 13,15 13,13 16,13 16,12 13,12 	"/>
+		<rect x="3" y="3" fill="#777" width="11" height="3"/>
 	</svg>
 
-	<svg id="icon-rectangle" viewBox="0 0 500 500">
-		<rect stroke="#000" stroke-width="30" fill="#00000050" x="66.5" y="66.5" width="367" height="367"/>
+	<svg id="icon-rectangle" viewBox="0 0 17 17">
+		<rect x="1.6" y="1.6" fill="#333" opacity="0.4" width="13.8" height="13.8"/>
+		<path fill="#333" d="M16,16H1V1h15V16z M2.1,14.9h12.7V2.1H2.1V14.9z"/>
 	</svg>
 
-	<svg id="icon-triangle" viewBox="0 0 500 500">
-		<polygon stroke="#000" stroke-width="30" fill="#00000050" points="58.08,418.735 202.314,81.266 441.92,383.23"/>
+	<svg id="icon-triangle" viewBox="0 0 17 17">
+		<polygon fill="#333" opacity="0.4" points="1.8,14.5 6.8,2.9 15,13.3 	"/>
+		<path fill="#333" d="M1,15.1L6.6,1.9L16,13.7L1,15.1z M6.9,3.9l-4.3,10L14,12.8L6.9,3.9z"/>
 	</svg>
+
+	<svg id="icon-quick-mask" viewBox="0 0 17 17">
+		<path fill="#333" opacity="0.4" d="M1.3,2.2v12.5h14.5V2.2H1.3z"/>
+		<path fill="#333" d="M16,15H1V2h15V15z M1.5,14.5h14v-12h-14V14.5z"/>
+		<path fill="#333" d="M8.5,13.5c-0.2,0-0.4,0-0.6,0L8,12.9c0.3,0,0.7,0,1.1,0l0.1,0.6C8.9,13.5,8.7,13.5,8.5,13.5z M6.8,13.2
+			c-0.4-0.1-0.7-0.3-1.1-0.5l0.4-0.5c0.3,0.2,0.6,0.4,0.9,0.5L6.8,13.2z M10.3,13.2l-0.2-0.6c0.3-0.1,0.6-0.3,0.9-0.5l0.4,0.5
+			C11.1,12.8,10.7,13,10.3,13.2z M4.8,11.9c-0.3-0.3-0.5-0.6-0.7-1l0.6-0.3c0.2,0.3,0.4,0.6,0.6,0.9L4.8,11.9z M12.3,11.8l-0.5-0.4
+			c0.2-0.3,0.4-0.6,0.6-0.9l0.6,0.3C12.8,11.2,12.5,11.5,12.3,11.8z M3.6,9.8C3.5,9.4,3.5,9,3.5,8.6l0.6,0c0,0.4,0.1,0.7,0.1,1
+			L3.6,9.8z M13.4,9.7l-0.6-0.1c0.1-0.3,0.1-0.7,0.1-1c0-0.1,0-0.1,0-0.2l0.6,0c0,0.1,0,0.1,0,0.2C13.5,8.9,13.5,9.3,13.4,9.7z
+			 M4.2,7.5L3.6,7.4C3.7,7,3.8,6.6,4,6.3l0.6,0.3C4.4,6.9,4.3,7.2,4.2,7.5z M12.7,7.3c-0.1-0.3-0.2-0.7-0.4-1L12.9,6
+			c0.2,0.3,0.4,0.7,0.5,1.1L12.7,7.3z M5.1,5.7L4.7,5.3c0.3-0.3,0.6-0.6,0.9-0.8l0.4,0.5C5.6,5.2,5.4,5.4,5.1,5.7z M11.7,5.5
+			c-0.2-0.3-0.5-0.5-0.8-0.7l0.3-0.5c0.3,0.2,0.7,0.5,0.9,0.8L11.7,5.5z M6.8,4.4L6.6,3.8C7,3.7,7.4,3.6,7.8,3.5l0.1,0.6
+			C7.5,4.2,7.2,4.3,6.8,4.4z M9.9,4.3c-0.3-0.1-0.7-0.2-1-0.2L9,3.5c0.4,0,0.8,0.1,1.2,0.3L9.9,4.3z"/>
+	</svg>
+
+	<svg id="icon-arrow" viewBox="0 0 17 17">
+		<path fill="#abb" d="M8.2,13.9L1.1,3.5C0.9,3.2,1,2.9,1.4,2.9h14.2c0.3,0,0.5,0.2,0.3,0.5L8.8,13.9C8.6,14.2,8.4,14.2,8.2,13.9z"/>
+	</svg>
+
+	<svg id="icon-cancel" viewBox="0 0 17 17">
+		<polygon fill="#333" points="16,13.9 10.6,8.5 16,3.1 13.9,1 8.5,6.4 3.1,1 1,3.1 6.4,8.5 1,13.9 3.1,16 8.5,10.6 13.9,16 	"/>
+	</svg>
+
+	
 
 	<svg id="icon-cursor-pos" viewBox="0 0 15 15">
 		<polygon fill="#333" points="14,7 8,7 8,1 7,1 7,7 1,7 1,8 7,8 7,14 8,14 8,8 14,8 "/>
@@ -609,23 +638,6 @@
 		<rect fill="#333" x="8" y="12" width="2" height="1"/>
 		<rect fill="#333" x="12" y="5" width="1" height="2"/>
 		<rect fill="#333" x="5" y="12" width="2" height="1"/>
-	</svg>
-
-	<svg id="icon-quick-mask" viewBox="0 0 500 500">
-		<style type="text/css">
-			.st0{fill:#00000020;stroke:#000;stroke-width:15;}
-			.st1{fill:none;stroke:#000;stroke-width:20;stroke-linecap:round;stroke-dasharray:20,20;}
-		</style>
-		<path class="st0" d="M19.5,61.3v377.5h461V61.3H19.5z"/>
-		<circle class="st1" cx="250" cy="250" r="132.4"/>
-	</svg>
-
-	<svg id="icon-arrow" viewBox="0 0 500 500">
-		<path fill="#abb" d="M241.494,401.686L38.997,107.301c-4.664-8.506-0.549-15.365,9.055-15.365h403.896c9.604,0,13.721,6.859,9.056,15.365 L258.506,401.686C253.842,410.191,246.159,410.191,241.494,401.686z"/>
-	</svg>
-
-	<svg id="icon-cancel" viewBox="0 0 500 500">
-		<polygon points="445.196,390.297 304.899,250 445.195,109.704 390.297,54.804 250,195.101 109.704,54.804 54.804,109.702 195.102,250 54.804,390.298 109.703,445.196 250,304.898 390.298,445.196 "/>
 	</svg>
 
 	<svg id="icon-mountain" viewBox="0 0 17 17">
