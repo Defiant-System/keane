@@ -65,7 +65,8 @@ const keane = {
 			// this.els.toolsBar.find(".tool[data-content='move']").trigger("click"));
 
 		// temp
-		//this.els.content.find(".box-head div[data-content='info']").trigger("click");
+		setTimeout(() =>
+			this.els.content.find(".box-head div[data-content='paths']").trigger("click"), 800);
 	},
 	dispatch(event) {
 		let Self = keane,
