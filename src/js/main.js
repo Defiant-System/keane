@@ -60,8 +60,8 @@ const keane = {
 
 		// auto-select initial tool
 		requestAnimationFrame(() =>
-			// this.els.toolsBar.find(".tool[data-content='brush']").trigger("click"));
-			this.els.toolsBar.find(".tool[data-content='marquee']").trigger("click"));
+			this.els.toolsBar.find(".tool[data-content='brush']").trigger("click"));
+			// this.els.toolsBar.find(".tool[data-content='marquee']").trigger("click"));
 			// this.els.toolsBar.find(".tool[data-content='move']").trigger("click"));
 
 		// temp
