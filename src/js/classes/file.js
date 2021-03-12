@@ -1,20 +1,20 @@
 
 class File {
-	constructor(fsFile) {
+	constructor(fsFile, opt={}) {
 		// save reference to original FS file
 		this._file = fsFile;
 
 		// defaults
 		this.scale = 1;
-		this.width = 1;
-		this.height = 1;
+		this.width = opt.width || 1;
+		this.height = opt.height || 1;
 		this.bgColor = "#000";
 		this.fgColor = "#fff";
 		this.lineWidth = 1;
 		this.showRulers = true;
 
 		// file canvas
-		let { cvs, ctx } = Misc.createCanvas(1, 1);
+		let { cvs, ctx } = Misc.createCanvas(this.width, this.height);
 		this.cvs = cvs;
 		this.ctx = ctx;
 
@@ -28,22 +28,30 @@ class File {
 					<Layers/></File>`;
 		this.xData = $.xmlFromString(xStr).documentElement;
 
+		let content,
+			layer,
+			xLayer;
+
 		// handle file types
 		switch (fsFile.kind) {
 			case "jpg":
 			case "jpeg":
 			case "gif":
 			case "png":
-				// let content = { type: "fill", color: "#fff" };
-				let content = { type: "image", blob: fsFile.blob };
-				let layer = new Layer(this, content);
+				content = { type: "image", blob: fsFile.blob };
+				layer = new Layer(this, content);
 				this.layers.push(layer);
 				// add layer data to xml
-				let xLayer = $.nodeFromString(`<i type="layer" state="visible" name="${layer.name}"/>`);
+				xLayer = $.nodeFromString(`<i type="layer" state="visible" name="${layer.name}"/>`);
 				this.xData.selectSingleNode("Layers").appendChild(xLayer);
 				break;
 			case "psd":
-				console.log("Parse PSD file!");
+				content = { type: "fill", color: opt.fill || "#fff" };
+				layer = new Layer(this, content);
+				this.layers.push(layer);
+				// add layer data to xml
+				xLayer = $.nodeFromString(`<i type="layer" state="visible" name="${layer.name}"/>`);
+				this.xData.selectSingleNode("Layers").appendChild(xLayer);
 				break;
 		}
 

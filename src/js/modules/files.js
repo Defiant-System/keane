@@ -11,9 +11,9 @@ const Files = {
 		let ids = this.stack.map(f => f._id);
 		return Math.max.apply({}, [0, ...ids]) + 1;
 	},
-	open(fsFile) {
+	open(fsFile, opt) {
 		// create file
-		let file = new File(fsFile);
+		let file = new File(fsFile, opt);
 		let xNode = file._file.xNode;
 		let fileId = file._file.id;
 
@@ -34,7 +34,7 @@ const Files = {
 			"is-checked": 1,
 			"click": "select-file",
 			"arg": fileId,
-			"name": xNode.getAttribute("name"),
+			"name": fsFile.base,
 		});
 
 		// select newly added file

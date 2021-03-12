@@ -67,6 +67,10 @@ const keane = {
 		// temp
 		// setTimeout(() =>
 		// 	this.els.content.find(".box-head div[data-content='paths']").trigger("click"), 800);
+
+		// temp empty file
+		let file = new defiant.File({ kind: "psd" });
+		Files.open(file, { width: 600, height: 400, fill: "#ddd" });
 	},
 	dispatch(event) {
 		let Self = keane,
