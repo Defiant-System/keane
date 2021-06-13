@@ -6,8 +6,8 @@ class File {
 
 		// defaults
 		this.scale = 1;
-		this.width = opt.width || 1;
-		this.height = opt.height || 1;
+		this.width = opt.width || 1;
+		this.height = opt.height || 1;
 		this.bgColor = "#000";
 		this.fgColor = "#fff";
 		this.lineWidth = 1;
@@ -46,7 +46,7 @@ class File {
 				this.xData.selectSingleNode("Layers").appendChild(xLayer);
 				break;
 			case "psd":
-				content = { type: "fill", color: opt.fill || "#fff" };
+				content = { type: "fill", color: opt.fill || "#fff" };
 				layer = new Layer(this, content);
 				this.layers.push(layer);
 				// add layer data to xml
@@ -109,8 +109,8 @@ class File {
 				break;
 			case "set-canvas":
 				// set file dimension if not set
-				this.width = this.width || event.width;
-				this.height = this.height || event.height;
+				this.width = this.width || event.width;
+				this.height = this.height || event.height;
 				// original dimension
 				this.oW = event.width;
 				this.oH = event.height;

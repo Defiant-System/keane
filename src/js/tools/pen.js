@@ -12,7 +12,7 @@
 		switch (event.type) {
 			// custom events
 			case "select-option":
-				Self.option = event.arg || "pen";
+				Self.option = event.arg || "pen";
 				break;
 			case "enable":
 				break;

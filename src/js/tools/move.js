@@ -56,7 +56,7 @@
 				break;
 			// custom events
 			case "select-option":
-				Self.option = event.arg || "move";
+				Self.option = event.arg || "move";
 				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.dispatch);

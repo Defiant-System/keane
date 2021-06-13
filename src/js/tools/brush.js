@@ -121,15 +121,15 @@
 				break;
 			// custom events
 			case "select-option":
-				Self.option = event.arg || "brush";
+				Self.option = event.arg || "brush";
 				break;
 			case "select-preset-tip":
 				el = APP.els.content.find(".option[data-change='select-preset-tip']");
 				// get brush tip details
-				name      = event.arg       ||  el.data("name")      || Self.preset.name;
-				size      = event.size      || +el.data("size")      || Self.preset.size;
-				roundness = event.roundness || +el.data("roundness") || Self.preset.roundness;
-				angle     = event.angle     || +el.data("angle")     || Self.preset.angle;
+				name      = event.arg       ||  el.data("name")      || Self.preset.name;
+				size      = event.size      || +el.data("size")      || Self.preset.size;
+				roundness = event.roundness || +el.data("roundness") || Self.preset.roundness;
+				angle     = event.angle     || +el.data("angle")     || Self.preset.angle;
 
 				// prepare to load image into tip-canvas
 				Self.preset.tipImage = new Image(size, size);

@@ -157,7 +157,7 @@
 				Self.ants.init(Self, true);
 				break;
 			case "select-option":
-				Self.option = event.arg || "rectangle";
+				Self.option = event.arg || "rectangle";
 				break;
 			case "select-all":
 				// colorize mask

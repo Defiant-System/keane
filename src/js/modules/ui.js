@@ -47,7 +47,7 @@ const UI = {
 				data = {
 					template: value,
 					append: Self.content,
-					match: el.data("match") || false,
+					match: el.data("match") || false,
 				};
 				// render menubox
 				Self.menu = window.render(data);
@@ -359,7 +359,7 @@ const UI = {
 					el,
 					value,
 					src: Self.srcEl.find(".value"),
-					suffix: Self.srcEl.data("suffix") || "",
+					suffix: Self.srcEl.data("suffix") || "",
 					min: +Self.srcEl.data("min"),
 					max: +Self.srcEl.data("max"),
 					clientY: event.clientY,
