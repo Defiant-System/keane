@@ -22,6 +22,8 @@ const UI = {
 			min,
 			max,
 			rect,
+			top,
+			left,
 			el;
 		//console.log(event);
 		switch (event.type) {
@@ -54,10 +56,9 @@ const UI = {
 
 				// position menubox
 				rect = this.getBoundingClientRect();
-				Self.menu.css({
-					top: (rect.top - window.top + rect.height + 9) +"px",
-					left: (rect.left - window.left + (rect.width / 2) - (Self.menu[0].offsetWidth / 2)) +"px",
-				});
+				top = rect.top - window.top + rect.height + 9;
+				left = rect.left - window.left + (rect.width / 2) - (Self.menu[0].offsetWidth / 2);
+				Self.menu.css({ top, left });
 
 				// set inital value - by associated event handler
 				Self[Self.menu.data("ui")]({ type: "set-initial-value", el });
@@ -74,6 +75,8 @@ const UI = {
 					// handles event differently for brush menu box
 					if (this.dataset.ui === "doBrushTips") return;
 				} else {
+					//reset origin element
+					Self.srcEl.removeClass("opened");
 					// clean up
 					Self.menu.remove();
 					Self.srcEl = false;

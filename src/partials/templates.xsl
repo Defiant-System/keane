@@ -100,7 +100,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template name="brush-tips">
+<xsl:template name="pop-brush-tips">
 	<div class="inline-menubox" data-ui="doBrushTips">
 		<div class="inline-content brush-tips">
 			<div class="tip-presets">
