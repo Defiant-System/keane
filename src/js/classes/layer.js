@@ -55,8 +55,8 @@ class Layer {
 		// calculate dimensions
 		let tW = ratio < 1 ? height * ratio : width,
 			tH = ratio < 1 ? height : width / ratio,
-			tX = (width - tW) / 2,
-			tY = (height - tH) / 2;
+			tX = (width - tW) >> 1,
+			tY = (height - tH) >> 1;
 		// background checker for semi transparency
 		tCtx.save();
 		tCtx.scale(.5, .5);
@@ -103,7 +103,7 @@ class Layer {
 			let img = new Image;
 			img.src = url;
 			img.onload = () => resolve(img);
-		})
+		});
 	}
 
 	bufferImageData() {

@@ -57,7 +57,7 @@ const UI = {
 				// position menubox
 				rect = this.getBoundingClientRect();
 				top = rect.top - window.top + rect.height + 9;
-				left = rect.left - window.left + (rect.width / 2) - (Self.menu[0].offsetWidth / 2);
+				left = rect.left - window.left + (rect.width >> 1) - (Self.menu[0].offsetWidth >> 1);
 				Self.menu.css({ top, left });
 
 				// set inital value - by associated event handler

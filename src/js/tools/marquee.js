@@ -81,8 +81,8 @@
 						Drag.ctx.fillRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
 						break;
 					case "elliptic":
-						let eW = Drag.oW / 2,
-							eH = Drag.oH / 2,
+						let eW = Drag.oW >> 1,
+							eH = Drag.oH >> 1,
 							eX = Drag.oX + eW,
 							eY = Drag.oY + eH;
 						if (eW < 0) eW *= -1;

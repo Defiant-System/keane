@@ -1,5 +1,4 @@
 
-
 // Keane
 @backgrop-blur: 21px;
 
@@ -40,6 +39,17 @@ content {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+
+	
+	// imports
+	@import "blank-view";
+
+
+	&.show-blank-view {
+		.blank-view { display: block; }
+		.workspace,
+		.cvs-wrapper { display: none; }
+	}
 
 	// prevent mouse from triggering mouseover when panning for instance
 	&.cover:after,

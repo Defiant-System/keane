@@ -19,8 +19,8 @@ const Thumb = {
 			h = height - 2;
 			w = _round(width * ratio);
 		}
-		l = _round((width - w) / 2);
-		t = _round((height - h) / 2);
+		l = _round((width - w) >> 1);
+		t = _round((height - h) >> 1);
 
 		// original canvas image
 		Ctx.drawImage(_canvas.osCvs[0], l, t, w, h);

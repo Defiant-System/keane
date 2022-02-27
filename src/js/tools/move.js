@@ -24,15 +24,15 @@
 				if (File.width <= Proj.aW && File.height <= Proj.aH) return;
 
 				Self.drag = {
-					clickX: event.clientX - (File.oX - Proj.cX + (File.width / 2)),
-					clickY: event.clientY - (File.oY - Proj.cY + (File.height / 2)),
+					clickX: event.clientX - (File.oX - Proj.cX + (File.width >> 1)),
+					clickY: event.clientY - (File.oY - Proj.cY + (File.height >> 1)),
 					min: {
-						x: Proj.aX - Proj.cX + (File.width / 2),
-						y: Proj.aY - Proj.cY + (File.height / 2),
+						x: Proj.aX - Proj.cX + (File.width >> 1),
+						y: Proj.aY - Proj.cY + (File.height >> 1),
 					},
 					max: {
-						x: (Proj.cX - Proj.aX - (File.width / 2)),
-						y: (Proj.cY - Proj.aY - (File.height / 2)) + Proj.els.statusBar.height(),
+						x: (Proj.cX - Proj.aX - (File.width >> 1)),
+						y: (Proj.cY - Proj.aY - (File.height >> 1)) + Proj.els.statusBar.height(),
 					},
 					stop: true,
 				};

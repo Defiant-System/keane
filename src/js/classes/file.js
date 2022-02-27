@@ -143,8 +143,8 @@ class File {
 				this.width = this.oW * this.scale;
 				this.height = this.oH * this.scale;
 				// origo
-				this.oX = Math.round(Proj.cX - (this.width / 2));
-				this.oY = Math.round(Proj.cY - (this.height / 2));
+				this.oX = Math.round(Proj.cX - (this.width >> 1));
+				this.oY = Math.round(Proj.cY - (this.height >> 1));
 
 				if (!event.noRender) {
 					// render projector canvas
@@ -157,10 +157,10 @@ class File {
 			case "pan-canvas":
 				this.oX = (Number.isInteger(event.left)
 						? event.left
-						: this.width > Proj.aW ? Proj.cX - (this.width / 2) + event.x : false) || this.oX;
+						: this.width > Proj.aW ? Proj.cX - (this.width >> 1) + event.x : false) || this.oX;
 				this.oY = (Number.isInteger(event.top)
 						? event.top
-						: this.height > Proj.aH ? Proj.cY - (this.height / 2) + event.y : false) || this.oY;
+						: this.height > Proj.aH ? Proj.cY - (this.height >> 1) + event.y : false) || this.oY;
 				// render projector canvas
 				Proj.render();
 				break;
@@ -169,8 +169,8 @@ class File {
 				// trigger re-calculations + re-paint
 				Proj.reset(this);
 				// update origo
-				this.oX = Math.round(Proj.cX - (this.width / 2));
-				this.oY = Math.round(Proj.cY - (this.height / 2));
+				this.oX = Math.round(Proj.cX - (this.width >> 1));
+				this.oY = Math.round(Proj.cY - (this.height >> 1));
 				// render projector canvas
 				Proj.renderFrame(this);
 				Proj.render();

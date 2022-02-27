@@ -60,8 +60,8 @@
 					coY: File.oY,
 					preset: {
 						...Self.preset,
-						oX: _floor(Self.preset.size / 2),
-						oY: _floor(Self.preset.size / 2),
+						oX: _floor(Self.preset.size >> 1),
+						oY: _floor(Self.preset.size >> 1),
 						image: Self.preset.tip.cvs[0],
 					},
 					// Bresenham's line algorithm
@@ -156,8 +156,8 @@
 				roundness = event.roundness || Self.preset.roundness;
 				height = _round(size * (roundness / 100));
 
-				let y = (size - height) * .5,
-					hS = size / 2;
+				let y = (size - height) >> 1,
+					hS = size >> 1;
 				Self.preset.tip.cvs.prop({ width: size, height: size });
 				Self.preset.tip.ctx.translate(hS, hS);
 				Self.preset.tip.ctx.rotate(angle * Math.PI / 180);

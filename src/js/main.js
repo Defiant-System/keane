@@ -33,12 +33,14 @@ const TOOLS = {
 
 
 const keane = {
-	els: {},
 	async init() {
 		// fast references
-		this.els.content = window.find("content");
-		this.els.toolsBar = window.find(".tools-bar");
-		this.els.statusBar = window.find(".status-bar");
+		this.els = {
+			content: window.find("content"),
+			toolsBar: window.find(".tools-bar"),
+			blankView: window.find(".blank-view"),
+			statusBar: window.find(".status-bar"),
+		};
 
 		// init objects
 		UI.init();
@@ -48,6 +50,11 @@ const keane = {
 		await Projector.init();
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
+
+		// init all sub-objects
+		Object.keys(this)
+			.filter(i => typeof this[i].init === "function")
+			.map(i => this[i].init(this));
 		
 		// init sidebar initial boxes
 		["navigator", "character", "layers"].map(item => {
@@ -67,10 +74,6 @@ const keane = {
 		// temp
 		// setTimeout(() =>
 		// 	this.els.content.find(".box-head div[data-content='paths']").trigger("click"), 800);
-
-		// temp empty file
-		let file = new defiant.File({ kind: "psd" });
-		Files.open(file, { width: 600, height: 400, fill: "#ddd" });
 	},
 	dispatch(event) {
 		let Self = keane,
@@ -82,6 +85,10 @@ const keane = {
 		//console.log(event);
 		switch (event.type) {
 			// system events
+			case "window.init":
+				// reset app by default - show initial view
+				Self.dispatch({ type: "reset-app" });
+				break;
 			case "window.keystroke":
 				if (!event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
 					let menu = window.bluePrint.selectSingleNode(`//Menu[@hotkey="${event.char}"]`);
@@ -112,6 +119,21 @@ const keane = {
 				break;
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
+				break;
+			case "reset-app":
+				// render blank view
+				window.render({
+					template: "blank-view",
+					match: `//Data`,
+					target: Self.els.blankView
+				});
+				// show blank view
+				Self.els.content.addClass("show-blank-view");
+				// enable / disable toolbar
+				Self.dispatch({ type: "toggle-toolbars", state: false });
+				break;
+			case "toggle-toolbars":
+				console.log(event);
 				break;
 			case "select-tool":
 				el = $(event.target);
@@ -201,6 +223,7 @@ const keane = {
 				}
 		}
 	},
+	blankView: @import "modules/blankView.js",
 	statusbar: @import "modules/statusbar.js",
 	box: {
 		navigator: @import "boxes/box-navigator.js",

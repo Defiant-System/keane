@@ -58,8 +58,8 @@ const Projector = {
 		// pre-render frame
 		let w = File.oW * File.scale,
 			h = File.oH * File.scale,
-			oX = File.oX || Math.round(this.cX - (w / 2)),
-			oY = File.oY || Math.round(this.cY - (h / 2));
+			oX = File.oX || Math.round(this.cX - (w >> 1)),
+			oY = File.oY || Math.round(this.cY - (h >> 1));
 		if (isNaN(w) || isNaN(h)) return;
 
 		// reset canvases
@@ -85,8 +85,8 @@ const Projector = {
 		this.aW = window.width - this.aX - this.els.sideBar.width() + (File.showRulers ? Rulers.t : 0);
 		this.aH = window.height - this.aY - (File.showRulers ? Rulers.t : 0); // - this.els.statusBar.height()
 		// center
-		this.cX = (window.width + this.aX - this.els.sideBar.width()) / 2;
-		this.cY = (window.height + this.aY - this.els.statusBar.height()) / 2;
+		this.cX = (window.width + this.aX - this.els.sideBar.width()) >> 1;
+		this.cY = (window.height + this.aY - this.els.statusBar.height()) >> 1;
 
 		// pre-render frame
 		this.renderFrame(File);
