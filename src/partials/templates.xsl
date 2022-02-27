@@ -15,6 +15,11 @@
 		</div>
 	</div>
 
+	<div class="block-presets" data-click="select-preset">
+		<h3>Presets</h3>
+		<xsl:call-template name="preset-list" />
+	</div>
+
 	<div class="block-samples" data-click="select-sample">
 		<h3>Example</h3>
 		<xsl:call-template name="sample-list" />
@@ -26,6 +31,27 @@
 			<xsl:call-template name="recent-list" />
 		</div>
 	</xsl:if>
+</xsl:template>
+
+
+<xsl:template name="preset-list">
+	<xsl:for-each select="./Presets/*">
+		<div class="preset">
+			<xsl:attribute name="data-width"><xsl:value-of select="@width"/></xsl:attribute>
+			<xsl:attribute name="data-height"><xsl:value-of select="@height"/></xsl:attribute>
+			<xsl:attribute name="data-bg"><xsl:value-of select="@bg"/></xsl:attribute>
+			<xsl:if test="@icon = 'folder-open'">
+				<xsl:attribute name="class">preset fs-open</xsl:attribute>
+			</xsl:if>
+			<i>
+				<xsl:attribute name="class">icon-<xsl:value-of select="@icon"/></xsl:attribute>
+			</i>
+			<h4><xsl:value-of select="@name"/></h4>
+			<xsl:if test="@bg-name">
+				<h5><xsl:value-of select="@bg-name"/>, <xsl:value-of select="@width"/>x<xsl:value-of select="@height"/> pixels</h5>
+			</xsl:if>
+		</div>
+	</xsl:for-each>
 </xsl:template>
 
 
