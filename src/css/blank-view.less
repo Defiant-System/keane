@@ -74,23 +74,38 @@
 
 		.sample {
 			display: inline-block;
-			// background-color: rgba(255,255,255,.25);
 			background-size: 0 0;
 			position: relative;
 			width: 113px;
 			height: 113px;
 			margin: 0 21px 13px 0;
-			border-radius: 5px;
 			cursor: pointer;
-			box-shadow: 0 0 0 1px rgba(255,255,255,.25);
+			// box-shadow: 0 0 0 1px rgba(255,255,255,.25);
 
 			&:hover {
-				box-shadow: 0 0 0 1px #489bf770;
+				// box-shadow: 0 0 0 1px #489bf770;
+			}
+
+			&:before {
+				content: "";
+				background: linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), white;
+				background-repeat: repeat, repeat;
+				background-position: 0px 0, 6px 6px;
+				background-origin: padding-box, padding-box;
+				background-clip: border-box, border-box;
+				background-size: 12px 12px, 12px 12px;
+				transform: scaleX(1) scaleY(1) scaleZ(1);
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				border-radius: 5px;
 			}
 
 			&:after {
 				content: "";
-				background: inherit;
+				background-image: inherit;
 				background-position: 50% 50%;
 				background-repeat: no-repeat;
 				background-size: contain;
