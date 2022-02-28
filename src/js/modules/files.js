@@ -77,6 +77,24 @@ const Files = {
 	// 	// select newly added file
 	// 	this.select(opt._id);
 	// },
+	openLocal(url) {
+		let parts = url.slice(url.lastIndexOf("/") + 1),
+			[ name, kind ] = parts.split("."),
+			file = new defiant.File({ name, kind });
+		// return promise
+		return new Promise((resolve, reject) => {
+			// fetch image and transform it to a "fake" file
+			fetch(url)
+				.then(resp => resp.blob())
+				.then(blob => {
+					// here the image is a blob
+					file.blob = blob;
+					file.size = blob.size;
+					resolve(file);
+				})
+				.catch(err => reject(err));
+		});
+	},
 	close(id) {
 		let el = this.statusBar.find(`.file[data-arg="${id}"]`),
 			next = this.statusBar.find(".active");

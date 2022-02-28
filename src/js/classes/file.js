@@ -28,12 +28,13 @@ class File {
 					<Layers/></File>`;
 		this.xData = $.xmlFromString(xStr).documentElement;
 
-		let content,
+		let kind = fsFile.kind.startsWith("image/") ? fsFile.kind.split("/")[1] : fsFile.kind,
+			content,
 			layer,
 			xLayer;
 
 		// handle file types
-		switch (fsFile.kind) {
+		switch (kind) {
 			case "jpg":
 			case "jpeg":
 			case "gif":

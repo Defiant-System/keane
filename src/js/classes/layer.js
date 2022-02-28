@@ -65,7 +65,9 @@ class Layer {
 		tCtx.restore();
 		// transfer layer image resized to thumbnail canvas
 		opt = { resizeWidth: tW, resizeHeight: tH, resizeQuality: "medium" };
-		createImageBitmap(this.cvs[0], opt).then(img => tCtx.drawImage(img, tX, tY));
+		createImageBitmap(this.cvs[0], opt)
+			.then(img => tCtx.drawImage(img, tX, tY))
+			.catch(e => null);
 	}
 
 	async parseImage(content) {

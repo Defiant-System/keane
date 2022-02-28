@@ -101,7 +101,9 @@
 				Self.ctx.restore();
 				// paint resized image
 				opt = { resizeWidth: Self.navWidth, resizeHeight: Self.navHeight, resizeQuality: "medium" };
-				createImageBitmap(File.cvs[0], opt).then(img => Self.ctx.drawImage(img, 0, 0));
+				createImageBitmap(File.cvs[0], opt)
+					.then(img => Self.ctx.drawImage(img, 0, 0))
+					.catch(e => null);
 				// show wrapper when ready
 				Self.els.wrapper.removeClass("hidden");
 				break;

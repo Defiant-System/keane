@@ -10,8 +10,6 @@
 			el: window.find(".blank-view"),
 		};
 
-		return;
-
 		// window.settings.clear();
 		
 		// get settings, if any
@@ -24,7 +22,8 @@
 
 		// setTimeout(() => {
 		// 	window.find(".preset:nth(0)").trigger("click");
-		// }, 500);
+		// 	// window.find(".sample:nth(0)").trigger("click");
+		// }, 700);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -52,8 +51,14 @@
 					});
 				break;
 			case "select-preset":
-				let file = new defiant.File({ kind: "psd" });
-				Files.open(file, { width: 600, height: 400, fill: "#ddd" });
+				el = $(event.target);
+
+				let width = +el.data("width"),
+					height = +el.data("height"),
+					fill = "#ddd",
+					file = new defiant.File({ kind: "psd" });
+				// set up workspace
+				APP.dispatch({ type: "setup-workspace", width, height, fill, file });
 				break;
 			case "select-recent-file":
 				el = $(event.target);

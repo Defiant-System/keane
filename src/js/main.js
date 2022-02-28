@@ -51,11 +51,6 @@ const keane = {
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 		Object.keys(TOOLS).filter(t => TOOLS[t].init).map(t => TOOLS[t].init());
 
-		// init all sub-objects
-		Object.keys(this)
-			.filter(i => typeof this[i].init === "function")
-			.map(i => this[i].init(this));
-		
 		// init sidebar initial boxes
 		["navigator", "character", "layers"].map(item => {
 			let box = window.store(`boxes/box-${item}.htm`, `div[data-box="${item}"]`);
@@ -103,9 +98,34 @@ const keane = {
 				break;
 			case "open.file":
 				event.open({ responseType: "blob" })
-					.then(file => Files.open(file));
+					.then(file => Self.dispatch({ type: "prepare-file", file }));
+					// .then(file => Files.open(file));
 				
 				//Self.dispatch({ type: "filter-render", arg: "clouds" });
+				break;
+			// custom events
+			case "prepare-file":
+				// add file to "recent" list
+				Self.blankView.dispatch({ ...event, type: "add-recent-file" });
+				// set up workspace
+				Self.dispatch({ type: "setup-workspace" });
+				// open file with Files
+				Files.open(event.file);
+				break;
+			case "setup-workspace":
+				// show blank view
+				Self.els.content.removeClass("show-blank-view");
+				// open file + prepare workspace
+				Files.open(event.file, event);
+				// enable & click on show sidebar
+				// TODO....
+				break;
+			case "open-file":
+				window.dialog.open({
+					jpg: item => Self.dispatch(item),
+					jpeg: item => Self.dispatch(item),
+					png: item => Self.dispatch(item),
+				});
 				break;
 			case "select-file":
 				Files.select(event.arg);
@@ -133,7 +153,7 @@ const keane = {
 				Self.dispatch({ type: "toggle-toolbars", state: false });
 				break;
 			case "toggle-toolbars":
-				console.log(event);
+				// console.log(event);
 				break;
 			case "select-tool":
 				el = $(event.target);
@@ -182,24 +202,29 @@ const keane = {
 				Projector.file.render();
 				break;
 			default:
-				if (event.el) {
-					pEl = event.el.parents(".tools-options-bar");
+				el = event.el;
+				if (el) {
+					pEl = el.parents("[data-area]");
+					if (pEl.length && Self[pEl.data("area")]) {
+						return Self[pEl.data("area")].dispatch(event);
+					}
+					pEl = el.parents(".tools-options-bar");
 					if (pEl.length) {
-						name = event.el.data("group");
-						if (event.el.hasClass("tool")) {
+						name = el.data("group");
+						if (el.hasClass("tool")) {
 							if (name) {
 								pEl.find(`.down[data-group="${name}"]`).removeClass("down");
 							}
-							event.el.addClass("down");
+							el.addClass("down");
 							// tool sub-options
 							pEl.find(".tool-group.active").removeClass("active");
-							name = event.el.data("subOptions");
+							name = el.data("subOptions");
 							pEl.find(`.tool-group[data-subName="${name}"]`).addClass("active");
 						}
 						pEl = pEl.prevAll(".tools-bar").find(".active");
-						if (event.el.data("option") === "main") {
+						if (el.data("option") === "main") {
 							// change root tool icon
-							image = event.el.css("background-image").replace(/http(s?):\/\/.*?\//, "/");
+							image = el.css("background-image").replace(/http(s?):\/\/.*?\//, "/");
 							pEl.css({ "background-image": image });
 						}
 						// dispatch event to tool object
@@ -207,11 +232,11 @@ const keane = {
 							return TOOLS[pEl.data("content")].dispatch(event);
 						}
 					}
-					pEl = event.el.parents(".inline-menubox");
+					pEl = el.parents(".inline-menubox");
 					if (pEl.length) {
 						return UI.dispatch(event);
 					}
-					pEl = event.el.parents("div[data-box]");
+					pEl = el.parents("div[data-box]");
 					boxName = pEl.attr("data-box");
 					if (pEl.length && Self.box[boxName].dispatch) {
 						Self.box[boxName].dispatch(event);
