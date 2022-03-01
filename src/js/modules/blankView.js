@@ -21,8 +21,8 @@
 		xSamples.parentNode.append(this.xRecent);
 
 		// setTimeout(() => {
-		// 	window.find(".preset:nth(0)").trigger("click");
-		// 	// window.find(".sample:nth(0)").trigger("click");
+		// 	// window.find(".preset:nth(0)").trigger("click");
+		// 	window.find(".sample:nth(4)").trigger("click");
 		// }, 700);
 	},
 	dispatch(event) {

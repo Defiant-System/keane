@@ -65,10 +65,6 @@ const keane = {
 			this.els.toolsBar.find(".tool[data-content='brush']").trigger("click"));
 			// this.els.toolsBar.find(".tool[data-content='marquee']").trigger("click"));
 			// this.els.toolsBar.find(".tool[data-content='move']").trigger("click"));
-
-		// temp
-		// setTimeout(() =>
-		// 	this.els.content.find(".box-head div[data-content='paths']").trigger("click"), 800);
 	},
 	dispatch(event) {
 		let Self = keane,
@@ -94,7 +90,7 @@ const keane = {
 
 				name = Self.els.toolsBar.find(".active").data("content");
 				// dispatch event to tool object
-				TOOLS[name].dispatch(event);
+				if (TOOLS[name]) TOOLS[name].dispatch(event);
 				break;
 			case "open.file":
 				event.open({ responseType: "blob" })
@@ -108,7 +104,7 @@ const keane = {
 				// add file to "recent" list
 				Self.blankView.dispatch({ ...event, type: "add-recent-file" });
 				// set up workspace
-				Self.dispatch({ type: "setup-workspace" });
+				Self.dispatch({ ...event, type: "setup-workspace" });
 				// open file with Files
 				Files.open(event.file);
 				break;
