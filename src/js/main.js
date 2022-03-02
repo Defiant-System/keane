@@ -105,8 +105,6 @@ const keane = {
 				Self.blankView.dispatch({ ...event, type: "add-recent-file" });
 				// set up workspace
 				Self.dispatch({ ...event, type: "setup-workspace" });
-				// open file with Files
-				Files.open(event.file);
 				break;
 			case "setup-workspace":
 				// show blank view
