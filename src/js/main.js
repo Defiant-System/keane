@@ -80,6 +80,10 @@ const keane = {
 				// reset app by default - show initial view
 				Self.dispatch({ type: "reset-app" });
 				break;
+			case "window.close":
+				// save recents list to settings
+				window.settings.setItem("recents", Self.blankView.xRecent);
+				break;
 			case "window.keystroke":
 				if (!event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
 					let menu = window.bluePrint.selectSingleNode(`//Menu[@hotkey="${event.char}"]`);
@@ -101,8 +105,10 @@ const keane = {
 				break;
 			// custom events
 			case "prepare-file":
-				// add file to "recent" list
-				Self.blankView.dispatch({ ...event, type: "add-recent-file" });
+				if (!event.isSample) {
+					// add file to "recent" list
+					Self.blankView.dispatch({ ...event, type: "add-recent-file" });
+				}
 				// set up workspace
 				Self.dispatch({ ...event, type: "setup-workspace" });
 				break;
@@ -135,12 +141,6 @@ const keane = {
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
 				break;
 			case "reset-app":
-				// render blank view
-				window.render({
-					template: "blank-view",
-					match: `//Data`,
-					target: Self.els.blankView
-				});
 				// show blank view
 				Self.els.content.addClass("show-blank-view");
 				// enable / disable toolbar
