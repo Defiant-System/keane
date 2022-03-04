@@ -138,10 +138,6 @@ content {
 			opacity: 1;
 		}
 
-		.tool:hover {
-			opacity: 0.85;
-		}
-
 		.divider {
 			background: rgba(#011, .3);
 			position: relative;
@@ -172,8 +168,13 @@ content {
 			margin-right: 0;
 			transition: opacity 80ms ease-in-out;
 
+			&:hover:not(.disabled) {
+				opacity: 0.85;
+			}
+
 			&.down {
 				opacity: .85;
+				cursor: default;
 
 				&:before {
 					content: "";
@@ -187,6 +188,7 @@ content {
 					border-radius: 2px;
 					transform: translateY(-50%) translateX(-50%);
 				}
+
 				&:after {
 					margin-top: -1px;
 				}
@@ -307,6 +309,7 @@ content {
 		width: 34px;
 		height: 35px;
 		opacity: 0.5;
+		cursor: pointer;
 		margin-right: 3px;
 		transition: opacity 80ms ease-in-out;
 
@@ -325,11 +328,17 @@ content {
 			height: 17px;
 		}
 
-		&.active {
-			opacity: 0.85;
+		&.disabled {
+			opacity: .25;
+			cursor: default;
 		}
 
-		&:hover:not(.active) {
+		&.active:not(.disabled) {
+			opacity: 0.85;
+			cursor: default;
+		}
+
+		&:hover:not(.disabled):not(.active):not(.down) {
 			opacity: 0.75;
 		}
 
