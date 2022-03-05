@@ -14,8 +14,12 @@ const Files = {
 	open(fsFile, opt) {
 		// create file
 		let file = new File(fsFile, opt);
-		let xNode = file._file.xNode;
 		let fileId = file._file.id;
+		let xNode = file._file.xNode;
+
+		if (!xNode) {
+			xNode = $.nodeFromString(`<i id="${file._file.id}" name="${file._file.base}" />`);
+		}
 
 		// add to stack
 		this.stack.push(file);
@@ -40,43 +44,6 @@ const Files = {
 		// select newly added file
 		this.select(fileId);
 	},
-	// open2(xFile) {
-	// 	let opt = {
-	// 			xFile,
-	// 			_id: this.getUniqId(),
-	// 			name: xFile.getAttribute("name"),
-	// 			scale: +xFile.getAttribute("scale"),
-	// 			width: +xFile.getAttribute("width"),
-	// 			height: +xFile.getAttribute("height"),
-	// 		};
-		
-	// 	// add file name to xml node
-	// 	xFile.setAttribute("_id", opt._id);
-
-	// 	// add statusbar tab
-	// 	window.render({
-	// 		data: xFile,
-	// 		template: "statusbar-tab",
-	// 		prepend: this.statusBar,
-	// 	});
-
-	// 	// add option to menubar
-	// 	window.menuBar.add({
-	// 		"parent": "//MenuBar/Menu[@name='Window']",
-	// 		"check-group": "selected-file",
-	// 		"is-checked": 1,
-	// 		"click": "select-file",
-	// 		"arg": opt._id,
-	// 		"name": opt.name,
-	// 	});
-
-	// 	// add to stack
-	// 	let file = new File(opt);
-	// 	this.stack.push(file);
-
-	// 	// select newly added file
-	// 	this.select(opt._id);
-	// },
 	openLocal(url) {
 		let parts = url.slice(url.lastIndexOf("/") + 1),
 			[ name, kind ] = parts.split("."),
@@ -96,7 +63,8 @@ const Files = {
 		});
 	},
 	close(id) {
-		let el = this.statusBar.find(`.file[data-arg="${id}"]`),
+		let APP = keane,
+			el = this.statusBar.find(`.file[data-arg="${id}"]`),
 			next = this.statusBar.find(".active");
 
 		// search for previous tab / file
@@ -111,7 +79,8 @@ const Files = {
 		window.menuBar.remove(`//MenuBar/Menu[@name='Window']/*[@arg="${id}"]`);
 
 		if (!next.length) {
-			console.log("show initial start view");
+			// reset app by default - show initial view
+			APP.dispatch({ type: "reset-app" });
 		} else if (!next.hasClass("active")) {
 			// auto-select next file
 			this.select(next.data("arg"));

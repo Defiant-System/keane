@@ -8,7 +8,7 @@
 		<Menu name="New"/>
 		<Menu name="Open&#8230;"/>
 		<Menu type="divider"/>
-		<Menu name="Close"/>
+		<Menu name="Close" click="close-file"/>
 		<Menu name="Close All"/>
 		<Menu name="Save"/>
 		<Menu name="Save As&#8230;"/>
