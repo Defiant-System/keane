@@ -71,6 +71,7 @@ const keane = {
 		let Self = keane,
 			image,
 			name,
+			value,
 			boxName,
 			pEl,
 			el;
@@ -132,8 +133,13 @@ const keane = {
 				Files.select(event.arg);
 				break;
 			case "close-file":
-				el = event.el.parent();
-				Files.close(el.data("arg"));
+				if (event.el) {
+					el = event.el.parent();
+					value = el.data("arg");
+				} else {
+					value = Projector.file._file.id;
+				}
+				Files.close(value);
 				break;
 			case "toggle-rulers":
 				Projector.file.dispatch(event);
