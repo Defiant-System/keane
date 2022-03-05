@@ -270,6 +270,13 @@ content {
 			border-radius: 25px;
 			opacity: 0.75;
 			height: 20px;
+
+			&.disabled {
+				background: rgba(#fff, .175);
+				color: rgba(#fff, .5);
+				text-shadow: 0 0 0;
+				opacity: 0.5;
+			}
 		}
 	}
 
@@ -361,7 +368,7 @@ content {
 		}
 
 		&[data-content="marquee"] 	{ background-image: url(~/icons/tool-marquee-rect.png); }
-		&[data-content="move"] 		{ background-image: url(~/icons/tool-move.png); }
+		&[data-content="move"] 		{ background-image: url(~/icons/tool-hand.png); }
 		&[data-content="pipette"] 	{ background-image: url(~/icons/tool-pipette.png); }
 		&[data-content="brush"] 	{ background-image: url(~/icons/tool-brush.png); }
 		&[data-content="gradient"] 	{ background-image: url(~/icons/tool-gradient.png); }
@@ -568,6 +575,17 @@ content {
 		&.check {
 			display: inline-block;
 
+			&.disabled {
+				.value {
+					input {
+						&:checked + i {
+							opacity: .25;
+							box-shadow: 0 0 0;
+						}
+					}
+				}
+			}
+
 			.value {
 				position: relative;
 				width: 17px;
@@ -606,6 +624,7 @@ content {
 					display: none;
 				}
 			}
+
 			.label {
 				padding-top: 2px;
 				padding-bottom: 2px;
@@ -656,9 +675,13 @@ content {
 				color: rgba(#fff, .25);
 				text-shadow: 0 0 0;
 
+				&:before {
+					background: rgba(#fff, .25);
+				}
+
 				&:after {
 					filter: none;
-					opacity: .35;
+					opacity: .4;
 				}
 			}
 		}
