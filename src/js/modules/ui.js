@@ -7,7 +7,7 @@ const UI = {
 
 		// bind event handlers
 		this.content.on("click", ".option .value", this.dispatch);
-		this.content.on("mousedown", "[data-ui]", this.dispatch);
+		this.content.on("mousedown mouseup", "[data-ui]", this.dispatch);
 
 		// temp
 		// setTimeout(() =>
@@ -75,16 +75,18 @@ const UI = {
 					// handles event differently for brush menu box
 					if (this.dataset.ui === "doBrushTips") return;
 				} else {
-					//reset origin element
-					setTimeout(() => {
-						Self.srcEl.removeClass("opened");
-						Self.srcEl = false;
-					}, 150);
 					// clean up
 					Self.menu.remove();
 				}
 				// unbind event handler
 				Self.doc.off("mousedown", Self.dispatch);
+				break;
+			case "mouseup":
+				if (Self.srcEl) {
+					//reset origin element
+					Self.srcEl.removeClass("opened");
+					Self.srcEl = false;
+				}
 				break;
 			default:
 				// forward route events
