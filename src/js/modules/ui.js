@@ -30,7 +30,7 @@ const UI = {
 			case "click":
 				el = $(this.parentNode);
 				value = el.data("options");
-				if (!value) return;
+				if (!value || el.hasClass("disabled")) return;
 
 				if (value !== "brush-tips") {
 					// prevent default behaviour
@@ -76,10 +76,12 @@ const UI = {
 					if (this.dataset.ui === "doBrushTips") return;
 				} else {
 					//reset origin element
-					Self.srcEl.removeClass("opened");
+					setTimeout(() => {
+						Self.srcEl.removeClass("opened");
+						Self.srcEl = false;
+					}, 150);
 					// clean up
 					Self.menu.remove();
-					Self.srcEl = false;
 				}
 				// unbind event handler
 				Self.doc.off("mousedown", Self.dispatch);

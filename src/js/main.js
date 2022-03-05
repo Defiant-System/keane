@@ -15,6 +15,7 @@
 
 const TOOLS = {
 	_active   : false,
+	index     : @import "tools/index.js",
 	marquee   : @import "tools/marquee.js",
 	move      : @import "tools/move.js",
 	pipette   : @import "tools/pipette.js",

@@ -1,5 +1,5 @@
 <div class="tool-options-brush">
-	<div class="color-sample">
+	<div class="color-sample" data-arg="colors">
 		<div class="fg-color" style="background: #000;"></div>
 		<div class="bg-color" style="background: #fff;"></div>
 		<div class="color-switch"></div>
@@ -20,31 +20,31 @@
 
 	<div class="divider"></div>
 
-	<div class="option opt-medium" data-change="select-preset-tip" data-options="pop-brush-tips" data-match="//TipShapes" data-suffix="px">
+	<div class="option opt-medium" data-arg="tip-presets" data-change="select-preset-tip" data-options="pop-brush-tips" data-match="//TipShapes" data-suffix="px">
 		<span class="value prefix-icon">
 			<i class="tip-icon"></i>
 			<span><!-- 15px --></span>
 		</span>
 	</div>
 
-	<div class="option" data-change="change-blend-mode" data-options="blend-modes" data-match="//BlendModes">
+	<div class="option" data-arg="blend" data-change="change-blend-mode" data-options="blend-modes" data-match="//BlendModes">
 		<span class="label">Blend</span>
 		<span class="value">Normal</span>
 	</div>
 
 	<div class="divider"></div>
 
-	<div class="option opt-tiny" data-change="change-opacity" data-options="knob" data-min="0" data-max="100" data-suffix="%">
+	<div class="option opt-tiny" data-arg="opacity" data-change="change-opacity" data-options="knob" data-min="0" data-max="100" data-suffix="%">
 		<span class="label">Opacity</span>
 		<span class="value">100%</span>
 	</div>
 
-	<div class="option opt-tiny" data-change="change-flow" data-options="knob" data-min="0" data-max="100" data-suffix="%">
+	<div class="option opt-tiny" data-arg="flow" data-change="change-flow" data-options="knob" data-min="0" data-max="100" data-suffix="%">
 		<span class="label">Flow</span>
 		<span class="value">100%</span>
 	</div>
 
 	<div class="divider"></div>
 
-	<div class="tool tool-pressure"></div>
+	<div class="tool tool-pressure disabled" data-arg="pressure"></div>
 </div>
