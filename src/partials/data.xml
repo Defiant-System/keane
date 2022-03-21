@@ -9,6 +9,7 @@
 	</Presets>
 	<Samples>
 		<i width="600" height="400" path="~/samples/robert-collins.jpg"/>
+		<!-- <i width="600" height="400" path="~/samples/robert-collins.psd"/> -->
 		<i width="600" height="400" path="~/samples/matthew-brodeur.jpg"/>
 		<i width="600" height="400" path="~/samples/johannes-andersson.jpg"/>
 		<i width="600" height="400" path="~/samples/brigitte-tohm.jpg"/>
