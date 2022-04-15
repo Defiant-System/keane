@@ -5,8 +5,6 @@
 	init() {
 		// fast references
 		this.els = {
-			doc: $(document),
-			content: window.find("content"),
 			el: window.find(".blank-view"),
 		};
 		// window.settings.clear();

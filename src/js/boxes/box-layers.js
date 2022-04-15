@@ -32,10 +32,9 @@
 				window.render({
 					data: File.xData,
 					template: "layers",
-					match: `//File/Layers`,
+					// match: `//File/Layers`,
 					target: Self.els.layerList,
 				});
-
 				// temp
 				Self.els.layerList.find(".row:nth-child(1)").addClass("active");
 				break;
