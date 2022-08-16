@@ -50,7 +50,7 @@ const Projector = {
 				data.isOnCanvas = event.offsetY >= File.oY && event.offsetY <= File.oY + File.height
 								&& event.offsetX >= File.oX && event.offsetX <= File.oX + File.width;
 				// broadcast event
-				defiant.emit("mouse-move", data);
+				karaqu.emit("mouse-move", data);
 				break;
 		}
 	},
@@ -95,7 +95,7 @@ const Projector = {
 			// reference to displayed file
 			this.file = File;
 			// emit event
-			defiant.emit("file-selected");
+			karaqu.emit("file-selected");
 		}
 	},
 	render(opt={}) {
@@ -121,7 +121,7 @@ const Projector = {
 		}
 		if (!opt.noEmit) {
 			// emit event
-			defiant.emit("projector-update");
+			karaqu.emit("projector-update");
 		}
 	}
 };

@@ -10,13 +10,13 @@
 			this.els.root = root;
 
 			// subscribe to events
-			defiant.on("file-selected", this.dispatch);
+			karaqu.on("file-selected", this.dispatch);
 		} else {
 			// clean up
 			this.els = {};
 
 			// unsubscribe to events
-			defiant.off("file-selected", this.dispatch);
+			karaqu.off("file-selected", this.dispatch);
 		}
 	},
 	dispatch(event) {

@@ -16,7 +16,7 @@
 
 		Promise.all(this.xRecent.selectNodes("./*").map(async xItem => {
 				let filepath = xItem.getAttribute("filepath"),
-					check = await defiant.shell(`fs -f '${filepath}'`);
+					check = await karaqu.shell(`fs -f '${filepath}'`);
 				if (!check.result) {
 					xItem.parentNode.removeChild(xItem)
 				}
@@ -67,7 +67,7 @@
 				let width = +el.data("width"),
 					height = +el.data("height"),
 					fill = "#ddd",
-					file = new defiant.File({ kind: "psd" });
+					file = new karaqu.File({ kind: "psd" });
 				// set up workspace
 				APP.dispatch({ type: "setup-workspace", width, height, fill, file });
 				break;
@@ -75,7 +75,7 @@
 				el = $(event.target);
 				if (!el.hasClass("recent-file")) return;
 				
-				defiant.shell(`fs -o '${el.data("file")}' null`)
+				karaqu.shell(`fs -o '${el.data("file")}' null`)
 					.then(exec => APP.dispatch(exec.result));
 				break;
 			case "add-recent-file":
