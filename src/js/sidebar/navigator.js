@@ -1,19 +1,18 @@
 
-// keane.sidebar.color
+// keane.sidebar.navigator
 
 {
-	els: {},
+	init() {
+
+	},
 	dispatch(event) {
 		let APP = keane,
-			Self = APP.sidebar.color,
+			Self = APP.sidebar.navigator,
 			el;
 		// console.log(event);
 		switch (event.type) {
 			// custom events
 			case "show-color-values":
-				console.log(event);
-				break;
-			case "color-wheel-shape":
 				break;
 		}
 	}

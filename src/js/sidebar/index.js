@@ -41,5 +41,13 @@
 				}
 		}
 	},
-	color: @import "box-color.js",
+	channels:   @import "channels.js",
+	characters: @import "characters.js",
+	color:      @import "color.js",
+	info:       @import "info.js",
+	layers:     @import "layers.js",
+	navigator:  @import "navigator.js",
+	paragraph:  @import "paragraph.js",
+	paths:      @import "paths.js",
+	swatches:   @import "swatches.js",
 }
