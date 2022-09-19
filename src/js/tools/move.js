@@ -1,5 +1,5 @@
 
-// TOOLS.move
+// keane.tools.move
 
 {
 	init() {
@@ -9,7 +9,7 @@
 		let APP = keane,
 			Proj = Projector,
 			File = Proj.file,
-			Self = TOOLS.move,
+			Self = APP.tools.move,
 			Drag = Self.drag,
 			_max = Math.max,
 			_min = Math.min;

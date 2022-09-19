@@ -52,6 +52,12 @@ content {
 
 	&.show-blank-view {
 		.blank-view { display: block; }
+
+		.tools-bar,
+		.tools-options-bar {
+			display: none;
+		}
+
 		.workspace,
 		.cvs-wrapper {
 			visibility: hidden;
@@ -162,6 +168,10 @@ content {
 			width: 1px;
 			height: 23px;
 			margin: 6px 7px;
+		}
+
+		> div.hidden {
+			display: none;
 		}
 
 		.tool-group > div,
@@ -357,7 +367,7 @@ content {
 		}
 
 		&.disabled {
-			opacity: .25;
+			opacity: .125;
 			cursor: default;
 		}
 
@@ -918,7 +928,7 @@ content {
 			input[type="text"] {
 				background: transparent;
 				border: 0;
-				padding: 2px 1px 1px;
+				padding: 3px 1px 0px;
 				height: 19px;
 				color: inherit;
 				font-size: 11px;
@@ -993,6 +1003,10 @@ content {
 					flex-direction: column;
 					height: 100%;
 					border-top: 1px solid rgba(#011, .55);
+
+					&.hidden {
+						display: none;
+					}
 
 					&[data-box="layers"] {
 						border-top: 0;
@@ -1150,10 +1164,11 @@ content {
 							}
 						}
 
-						.color-dot {
+						.box-cursor {
+							display: none;
 							position: absolute;
-							top: 23px; // 7, 172
-							left: 43px; // 38, 185
+							top: 32px; // 7, 172
+							left: 32px; // 38, 185
 							width: 13px;
 							height: 13px;
 							z-index: 2;
@@ -1170,6 +1185,38 @@ content {
 								bottom: -1px;
 								border-radius: inherit;
 								border: 2px solid rgba(#fff, .75);
+							}
+						}
+
+						.circle-cursor {
+							position: relative;
+							top: 0px;
+							left: 83px;
+							width: 83px;
+							height: 83px;
+							z-index: 3;
+							transform: rotate(45deg);
+							transform-origin: 0 100%;
+							// background-color: rgba(255,255,255,.15);
+
+							&:before,
+							&:after {
+								content: "";
+								position: absolute;
+								top: -2px;
+								left: -4px;
+								width: 7px;
+								height: 19px;
+								border-radius: 5px;
+								border: 1px solid rgba(#000, .75);
+							}
+
+							&:after {
+								border: 2px solid rgba(#fff, .75);
+								top: -1px;
+								left: -3px;
+								width: 3px;
+								height: 17px;
 							}
 						}
 					}
@@ -1525,7 +1572,7 @@ content {
 						max-height: 32px;
 
 						canvas {
-							// background: #ffffff10;
+							background: #ffffff05;
 							width: 100%;
 							height: 100%;
 						}

@@ -1,5 +1,5 @@
 
-// TOOLS.brush
+// keane.tools.brush
 
 {
 	init() {
@@ -23,7 +23,7 @@
 		let APP = keane,
 			Proj = Projector,
 			File = Proj.file,
-			Self = TOOLS.brush,
+			Self = APP.tools.brush,
 			Drag = Self.drag,
 			_floor = Math.floor,
 			_round = Math.round,

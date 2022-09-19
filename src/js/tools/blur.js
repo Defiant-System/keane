@@ -1,5 +1,5 @@
 
-// TOOLS.blur
+// keane.tools.blur
 
 {
 	init() {
@@ -7,7 +7,7 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = TOOLS.blur;
+			Self = APP.tools.blur;
 
 		switch (event.type) {
 			// custom events

@@ -1,4 +1,4 @@
-<content class="show-rulers">
+<content class="show-rulers show-blank-view1">
 	<!-- shown if no file is opened -->
 	<div class="blank-view" data-area="blankView">
 		<!-- blank view HTML goes here -->
@@ -31,24 +31,24 @@
 		<div class="tool disabled" data-content="others"></div>
 		<div class="divider"></div>
 	</div>
-	<div class="tools-options-bar">
+	<div class="tools-options-bar" data-section="tools">
 		@import "tool-options/marquee.htm"
-		@store "tool-options/move.htm"
-		@store "tool-options/brush.htm"
-		@store "tool-options/pipette.htm"
-		@store "tool-options/pen.htm"
-		@store "tool-options/zoom.htm"
-		@store "tool-options/gradient.htm"
-		@store "tool-options/blur.htm"
-		@store "tool-options/type.htm"
-		@store "tool-options/crop.htm"
-		@store "tool-options/stamp.htm"
-		@store "tool-options/shape.htm"
-		@store "tool-options/pointer.htm"
+		@import "tool-options/move.htm"
+		@import "tool-options/brush.htm"
+		@import "tool-options/pipette.htm"
+		@import "tool-options/pen.htm"
+		@import "tool-options/zoom.htm"
+		@import "tool-options/gradient.htm"
+		@import "tool-options/blur.htm"
+		@import "tool-options/type.htm"
+		@import "tool-options/crop.htm"
+		@import "tool-options/stamp.htm"
+		@import "tool-options/shape.htm"
+		@import "tool-options/pointer.htm"
 	</div>
 
 	<div class="workspace" data-context="workspace">
-		<div class="status-bar">
+		<div class="status-bar" data-section="status">
 			<!-- file tabs foes here -->
 			<div class="option opt-small" data-options="knob" data-min="0" data-max="100" data-suffix="%">
 				<span class="label">Zoom</span>
@@ -56,7 +56,7 @@
 			</div>
 		</div>
 		
-		<div class="sidebar-wrapper">
+		<div class="sidebar-wrapper" data-section="sidebar">
 			<div class="sidebar-box">
 				<div class="box-head" data-click="box-head-tab">
 					<div data-content="navigator" class="active">Navigator</div>
@@ -65,9 +65,9 @@
 				</div>
 				<div class="box-body">
 					<!-- content goes here -->
-					@import "boxes/box-navigator.htm"
-					@store "boxes/box-color.htm"
-					@store "boxes/box-info.htm"
+					@import "sidebar/box-navigator.htm"
+					@import "sidebar/box-color.htm"
+					@import "sidebar/box-info.htm"
 				</div>
 			</div>
 
@@ -79,9 +79,9 @@
 				</div>
 				<div class="box-body">
 					<!-- content goes here -->
-					@import "boxes/box-character.htm"
-					@store "boxes/box-paragraph.htm"
-					@store "boxes/box-swatches.htm"
+					@import "sidebar/box-character.htm"
+					@import "sidebar/box-paragraph.htm"
+					@import "sidebar/box-swatches.htm"
 				</div>
 			</div>
 
@@ -93,9 +93,9 @@
 				</div>
 				<div class="box-body">
 					<!-- content goes here -->
-					@import "boxes/box-layers.htm"
-					@store "boxes/box-channels.htm"
-					@store "boxes/box-paths.htm"
+					@import "sidebar/box-layers.htm"
+					@import "sidebar/box-channels.htm"
+					@import "sidebar/box-paths.htm"
 				</div>
 			</div>
 		</div>

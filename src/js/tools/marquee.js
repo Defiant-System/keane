@@ -1,5 +1,5 @@
 
-// TOOLS.marquee
+// keane.tools.marquee
 
 {
 	ants: @import "./marquee-ants.js",
@@ -18,7 +18,7 @@
 		let APP = keane,
 			Proj = Projector,
 			File = Proj.file,
-			Self = TOOLS.marquee,
+			Self = APP.tools.marquee,
 			Drag = Self.drag,
 			_max = Math.max,
 			_min = Math.min,

@@ -1,5 +1,5 @@
 
-// TOOLS.marquee.ants
+// keane.tools.marquee.ants
 
 {
 	init(parent, march) {

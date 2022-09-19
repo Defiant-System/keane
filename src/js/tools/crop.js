@@ -1,5 +1,5 @@
 
-// TOOLS.crop
+// keane.tools.crop
 
 {
 	init() {
@@ -7,7 +7,7 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = TOOLS.crop;
+			Self = APP.tools.crop;
 
 		switch (event.type) {
 			// custom events

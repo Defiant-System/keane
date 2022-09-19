@@ -1,5 +1,5 @@
 
-// TOOLS.gradient
+// keane.tools.gradient
 
 {
 	init() {
@@ -7,7 +7,7 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = TOOLS.gradient;
+			Self = APP.tools.gradient;
 
 		switch (event.type) {
 			// custom events

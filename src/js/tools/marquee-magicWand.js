@@ -4,7 +4,7 @@
  * Original: https://github.com/Tamersoul/magic-wand-js/blob/master/src/MagicWand.js
  */
 
-// TOOLS.marquee.magicWand
+// keane.tools.marquee.magicWand
 
 {
 	init() {
