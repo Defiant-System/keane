@@ -1165,16 +1165,17 @@ content {
 						}
 
 						.box-cursor {
-							display: none;
+							// display: none;
 							position: absolute;
-							top: 32px; // 7, 172
-							left: 32px; // 38, 185
-							width: 13px;
-							height: 13px;
+							top: 0px; // 7, 172
+							left: 0px; // 38, 185
+							width: 12px;
+							height: 12px;
 							z-index: 2;
 							border-radius: 50%;
 							border: 2px solid #000;
 							pointer-events: none;
+							transform: translateX(-6px) translateY(-6px);
 
 							&:before {
 								content: "";

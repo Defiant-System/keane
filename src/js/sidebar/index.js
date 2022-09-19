@@ -9,7 +9,7 @@
 		};
 
 		// temp
-		this.els.root.find(`div[data-content="color"]`).trigger("click");
+		// this.els.root.find(`div[data-content="color"]`).trigger("click");
 	},
 	dispatch(event) {
 		let APP = keane,

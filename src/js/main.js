@@ -40,6 +40,8 @@ const keane = {
 				}
 		}
 	},
+	blankView: @import "modules/blankView.js",
+	statusbar: @import "modules/statusbar.js",
 	sidebar: @import "sidebar/index.js",
 	tools: @import "tools/index.js",
 };
