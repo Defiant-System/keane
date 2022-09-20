@@ -39,10 +39,10 @@ const keane = {
 			// custom events
 			case "load-samples":
 				// opening image file from application package
-				event.names.map(name => {
+				event.names.map(async name => {
 					// forward event to app
-					Tabs.openLocal(`~/samples/${name}`)
-						.then(file => Self.dispatch({ type: "prepare-file", isSample: true, file }));
+					let file = await Tabs.openLocal(`~/samples/${name}`);
+					Self.dispatch({ type: "prepare-file", isSample: true, file });
 				});
 				break;
 			case "prepare-file":

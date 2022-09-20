@@ -14,6 +14,9 @@
 			case "select-file":
 				Tabs.select(event.arg);
 				break;
+			case "close-file":
+				Tabs.close(event.el.parent().data("arg"));
+				break;
 		}
 	}
 }

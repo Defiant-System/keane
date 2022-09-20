@@ -54,7 +54,9 @@
 			case "select-sample":
 				el = $(event.target);
 				if (!el.hasClass("sample")) return;
-				APP.dispatch({ type: "load-samples", names: [el.data("url")] });
+
+				name = el.data("url");
+				APP.dispatch({ type: "load-samples", names: [name.slice(name.lastIndexOf("/")+1)] });
 				break;
 			case "select-preset":
 				el = $(event.target);
