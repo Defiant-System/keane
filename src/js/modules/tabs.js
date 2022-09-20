@@ -1,17 +1,20 @@
 
-const Files = {
+const Tabs = {
 	init() {
 		// fast references
 		this.statusBar = window.find(".status-bar");
 
 		// file stack
-		this.stack = [];
+		this._stack = [];
 	},
 	getUniqId() {
-		let ids = this.stack.map(f => f._id);
+		let ids = this._stack.map(f => f._id);
 		return Math.max.apply({}, [0, ...ids]) + 1;
 	},
-	open(fsFile, opt) {
+	open(fsFile, opt={}) {
+		if (!opt.fill) opt.fill = "#ddd";
+		if (!fsFile) fsFile = new karaqu.File({ kind: "psd" });
+		
 		// create file
 		let file = new File(fsFile, opt);
 		let fileId = file._file.id;
@@ -22,7 +25,7 @@ const Files = {
 		}
 
 		// add to stack
-		this.stack.push(file);
+		this._stack.push(file);
 
 		// add statusbar tab
 		window.render({
@@ -101,7 +104,7 @@ const Files = {
 		if (Projector.file && Projector.file._file.id === id) return;
 
 		// reference to active file
-		let file = this.stack.find(f => f._file.id === id);
+		let file = this._stack.find(f => f._file.id === id);
 
 		Projector.reset(file);
 		Projector.render();

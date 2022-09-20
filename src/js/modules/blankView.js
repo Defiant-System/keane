@@ -54,22 +54,15 @@
 			case "select-sample":
 				el = $(event.target);
 				if (!el.hasClass("sample")) return;
-				// opening image file from application package
-				Files.openLocal(el.data("url"))
-					.then(file => {
-						// forward event to app
-						APP.dispatch({ type: "prepare-file", isSample: true, file })
-					});
+				APP.dispatch({ type: "load-samples", names: [el.data("url")] });
 				break;
 			case "select-preset":
 				el = $(event.target);
 
 				let width = +el.data("width"),
-					height = +el.data("height"),
-					fill = "#ddd",
-					file = new karaqu.File({ kind: "psd" });
+					height = +el.data("height");
 				// set up workspace
-				APP.dispatch({ type: "setup-workspace", width, height, fill, file });
+				APP.dispatch({ type: "setup-workspace", width, height });
 				break;
 			case "select-recent-file":
 				el = $(event.target);
