@@ -59,7 +59,7 @@ const keane = {
 				// open file + prepare workspace
 				Tabs.open(event.file, event);
 				break;
-			case "reset-app":
+			case "show-blank-view":
 				// show blank view
 				Self.els.content.addClass("show-blank-view");
 				break;

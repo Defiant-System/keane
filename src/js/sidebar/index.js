@@ -8,6 +8,9 @@
 			root: window.find(".sidebar-wrapper"),
 		};
 
+		// init sub objects
+		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
+
 		// temp
 		// this.els.root.find(`div[data-content="color"]`).trigger("click");
 	},
