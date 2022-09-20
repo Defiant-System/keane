@@ -9,11 +9,10 @@
 		let APP = keane,
 			Self = APP.statusbar,
 			Detail = event.detail;
-
+		// console.log( event );
 		switch (event.type) {
-			case "mouse-move":
-				Self.els.mouseY.html(Detail.isCanvasY ? Detail.top : "");
-				Self.els.mouseX.html(Detail.isCanvasX ? Detail.left : "");
+			case "select-file":
+				Tabs.select(event.arg);
 				break;
 		}
 	}

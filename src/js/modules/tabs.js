@@ -91,11 +91,13 @@ const Tabs = {
 	},
 	select(id) {
 		let el = this.statusBar.find(`.file[data-arg="${id}"]`);
-		if (el.hasClass("active")) return;
-
+		if (this._active === id) return;
+		if (this._active) {
+			this.statusBar.find(`.file[data-arg="${this._active}"]`).removeClass("active");
+		}
 		// ui update active element
-		el.parent().find(".active").removeClass("active");
 		el.addClass("active");
+		this._active = id;
 
 		// update option in menubar
 		window.menuBar.update(`//MenuBar//Menu[@arg="${id}"]`, {"is-checked": "1"});
