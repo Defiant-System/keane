@@ -32,7 +32,7 @@
 					target: this.els.el
 				});
 
-				// setTimeout(() => window.find(".sample:nth(0)").trigger("click"), 100);
+				// setTimeout(() => window.find(".sample:nth(0)").trigger("click"), 300);
 				// setTimeout(() => vermeer.dispatch({ type: "close-file" }), 500);
 			});
 	},

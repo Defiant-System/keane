@@ -14,12 +14,8 @@
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
-		// select first tool
-		this.els.toolBar.find(".tool:nth(0)").trigger("click");
-
-		// temp
-		// setTimeout(() => this.dispatch({ type: "disable-tools", list: "marquee move".split(" ") }), 200);
-		// setTimeout(() => this.dispatch({ type: "disable-options", list: "blend opacity".split(" ") }), 200);
+		// select a tool
+		this.els.toolBar.find(".tool:nth(2)").trigger("click");
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -64,7 +60,18 @@
 				list = event.list || Self.els.optionBar.find("[data-arg]").map(el => el.getAttribute("data-arg"));
 				list.map(name => Self.els.optionBar.find(`[data-arg="${name}"]`).addClass("disabled"));
 				break;
+			default:
+				el = event.el;
+				if (el) {
+					let pEl = el.parents("[data-area]"),
+						area = pEl.data("area");
+					if (area) {
+						Self[area].dispatch(event);
+					}
+				}
 		}
 	},
 	marquee: @import "marquee.js",
+	move: @import "move.js",
+	brush: @import "brush.js",
 }

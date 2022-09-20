@@ -123,6 +123,12 @@
 			case "select-option":
 				Self.option = event.arg || "brush";
 				break;
+			case "select-color":
+			case "select-color":
+			case "switch-color":
+			case "reset-color":
+				console.log(event);
+				break;
 			case "select-preset-tip":
 				el = APP.els.content.find(".option[data-change='select-preset-tip']");
 				// get brush tip details
