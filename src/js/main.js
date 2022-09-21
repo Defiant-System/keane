@@ -5,6 +5,7 @@
 
 @import "modules/misc.js"
 @import "modules/color.js"
+@import "modules/ui.js"
 @import "modules/tabs.js"
 @import "modules/projector.js"
 @import "modules/rulers.js"
@@ -20,6 +21,7 @@ const keane = {
 			statusBar: window.find(".status-bar"),
 		};
 		// init objects
+		UI.init();
 		Tabs.init();
 		// wating for checkers bg to be created as pattern
 		Projector.init();
@@ -34,6 +36,12 @@ const keane = {
 		switch (event.type) {
 			// system events
 			case "window.init":
+				break;
+			case "open.file":
+				event.open({ responseType: "blob" })
+					.then(file => Self.dispatch({ type: "prepare-file", file }));
+				
+				//Self.dispatch({ type: "filter-render", arg: "clouds" });
 				break;
 			
 			// custom events
@@ -75,7 +83,11 @@ const keane = {
 					let rEl = el.parents("[data-section]"),
 						section = rEl.data("section");
 					if (section) {
-						Self[section].dispatch(event);
+						return Self[section].dispatch(event);
+					}
+					rEl = el.parents(".inline-menubox");
+					if (rEl.length) {
+						return UI.dispatch(event);
 					}
 				}
 		}

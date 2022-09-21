@@ -98,7 +98,7 @@ const UI = {
 		let APP = keane,
 			Self = UI,
 			Drag = Self.drag,
-			Tool = TOOLS[TOOLS._active],
+			Tool = APP.tools[APP.tools._active],
 			_round = Math.round,
 			_min = Math.min,
 			_max = Math.max,
@@ -199,6 +199,7 @@ const UI = {
 				}
 				break;
 			case "tip-menu-set-tip":
+				console.log(event);
 				el = event.el;
 				el.parent().find(".selected").removeClass("selected");
 				el.addClass("selected");

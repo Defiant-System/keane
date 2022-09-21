@@ -16,6 +16,11 @@
 
 		// select a tool
 		this.els.toolBar.find(".tool:nth(2)").trigger("click");
+
+		// temp
+		setTimeout(() => {
+			window.find(`.option .tip-icon`).trigger("click");
+		}, 500);
 	},
 	dispatch(event) {
 		let APP = keane,
