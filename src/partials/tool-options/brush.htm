@@ -8,43 +8,56 @@
 	
 	<div class="divider"></div>
 	
-	<div class="tool tool-brush down" title="Brush Tool" data-click="select-option" data-arg="brush" data-group="options" data-option="main"></div>
-	<div class="tool tool-pencil disabled" title="Pencil Tool" data-click="select-option" data-arg="pencil" data-group="options" data-option="main"></div>
-	<div class="tool tool-feather disabled" title="Feather Tool" data-click="select-option" data-arg="feather" data-group="options" data-option="main"></div>
+	<div class="tool tool-brush down" title="Brush Tool" data-click="select-option" data-arg="brush" data-group="options" data-option="main" data-subOptions="brush"></div>
+	<div class="tool tool-pencil disabled" title="Pencil Tool" data-click="select-option" data-arg="pencil" data-group="options" data-option="main" data-subOptions="brush"></div>
+	<div class="tool tool-feather" title="Feather Tool" data-click="select-option" data-arg="feather" data-group="options" data-option="main" data-subOptions="feather"></div>
 	
 	<div class="divider"></div>
 
-	<div class="tool tool-eraser disabled" data-click="select-option" data-arg="eraser" data-group="options" data-option="main"></div>
+	<div class="tool tool-eraser disabled1" data-click="select-option" data-arg="eraser" data-group="options" data-option="main" data-subOptions="eraser"></div>
 	<div class="tool tool-eraser-bg disabled" data-click="select-option" data-arg="eraser-bg" data-group="options" data-option="main"></div>
 	<div class="tool tool-eraser-magic disabled" data-click="select-option" data-arg="eraser-magic" data-group="options" data-option="main"></div>
 
 	<div class="divider"></div>
 
-	<div class="option opt-medium" data-arg="tip-presets" data-change="select-preset-tip" data-options="pop-brush-tips" data-match="//TipShapes" data-suffix="px">
-		<span class="value prefix-icon">
-			<i class="tip-icon"></i>
-			<span><!-- 15px --></span>
-		</span>
-	</div>
+	<span class="tool-group active" data-subName="brush">
+		<div class="option opt-medium" data-arg="tip-presets" data-change="select-preset-tip" data-options="pop-brush-tips" data-match="//TipShapes" data-suffix="px">
+			<span class="value prefix-icon">
+				<i class="tip-icon"></i>
+				<span><!-- 15px --></span>
+			</span>
+		</div>
 
-	<div class="option disabled" data-arg="blend" data-change="change-blend-mode" data-options="blend-modes" data-match="//BlendModes">
-		<span class="label">Blend</span>
-		<span class="value">Normal</span>
-	</div>
+		<div class="option disabled" data-arg="blend" data-change="change-blend-mode" data-options="blend-modes" data-match="//BlendModes">
+			<span class="label">Blend</span>
+			<span class="value">Normal</span>
+		</div>
 
-	<div class="divider"></div>
+		<div class="divider"></div>
 
-	<div class="option opt-tiny disabled" data-arg="opacity" data-change="change-opacity" data-options="knob" data-min="0" data-max="100" data-suffix="%">
-		<span class="label">Opacity</span>
-		<span class="value">100%</span>
-	</div>
+		<div class="option opt-tiny disabled" data-arg="opacity" data-change="change-opacity" data-options="knob" data-min="0" data-max="100" data-suffix="%">
+			<span class="label">Opacity</span>
+			<span class="value">100%</span>
+		</div>
 
-	<div class="option opt-tiny disabled" data-arg="flow" data-change="change-flow" data-options="knob" data-min="0" data-max="100" data-suffix="%">
-		<span class="label">Flow</span>
-		<span class="value">100%</span>
-	</div>
+		<div class="option opt-tiny disabled" data-arg="flow" data-change="change-flow" data-options="knob" data-min="0" data-max="100" data-suffix="%">
+			<span class="label">Flow</span>
+			<span class="value">100%</span>
+		</div>
 
-	<div class="divider"></div>
+		<div class="divider"></div>
 
-	<div class="tool tool-pressure disabled" data-arg="pressure"></div>
+		<div class="tool tool-pressure disabled" data-arg="pressure"></div>
+	</span>
+
+	<span class="tool-group" data-subName="feather">
+		<div class="option disabled" data-arg="blend" data-change="change-blend-mode" data-options="blend-modes" data-match="//BlendModes">
+			<span class="label">Blend</span>
+			<span class="value">Normal</span>
+		</div>
+	</span>
+
+	<span class="tool-group" data-subName="eraser">
+		
+	</span>
 </div>

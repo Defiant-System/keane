@@ -18,14 +18,15 @@
 		this.els.toolBar.find(".tool:nth(2)").trigger("click");
 
 		// temp
-		setTimeout(() => {
-			window.find(`.option .tip-icon`).trigger("click");
-		}, 500);
+		// setTimeout(() => window.find(`.option .tip-icon`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-options-brush .tool-feather`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
 			Self = APP.tools,
 			root,
+			name,
+			value,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -46,6 +47,16 @@
 				root = Self.els.optionBar.find(`> .tool-options-${Self._active}`).removeClass("hidden");
 				// enable tool
 				Self[Self._active].dispatch({ type: "enable", root });
+				break;
+			case "select-option":
+				root = event.el.parents("div[data-area]:first");
+				root.find(`.tool.down[data-group="options"]`).removeClass("down");
+				event.el.addClass("down");
+				// tool sub-options
+				name = event.el.data("subOptions");
+				root.find(`.tool-group.active`).removeClass("active");
+				root.find(`.tool-group[data-subName="${name}"]`).addClass("active");
+
 				break;
 
 			// custom events
