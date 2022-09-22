@@ -87,7 +87,18 @@
 				}
 		}
 	},
-	marquee: @import "marquee.js",
-	move: @import "move.js",
-	brush: @import "brush.js",
+	marquee   : @import "marquee.js",
+	move      : @import "move.js",
+	pipette   : @import "pipette.js",
+	brush     : @import "brush.js",
+	gradient  : @import "gradient.js",
+	type      : @import "type.js",
+	crop      : @import "crop.js",
+	blur      : @import "blur.js",
+	stamp     : @import "stamp.js",
+	pen       : @import "pen.js",
+	shape     : @import "shape.js",
+	pointer   : @import "pointer.js",
+	zoom      : @import "zoom.js",
+	quickMask : @import "quickMask.js",
 }
