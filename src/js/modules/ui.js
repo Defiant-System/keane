@@ -82,7 +82,8 @@ const UI = {
 				Self.doc.off("mousedown", Self.dispatch);
 				break;
 			case "mouseup":
-				if (Self.srcEl) {
+				el = $(event.target);
+				if (Self.srcEl && !el.parents(".inline-menubox").length) {
 					//reset origin element
 					Self.srcEl.removeClass("opened");
 					Self.srcEl = false;
@@ -199,7 +200,7 @@ const UI = {
 				}
 				break;
 			case "tip-menu-set-tip":
-				console.log(event);
+				console.log(Self);
 				el = event.el;
 				el.parent().find(".selected").removeClass("selected");
 				el.addClass("selected");
