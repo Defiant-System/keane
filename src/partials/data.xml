@@ -90,6 +90,21 @@
 		<i type="option" name="Luminosity"/>
 	</BlendModes>
 
+	<FeatherModes>
+		<i type="option" name="Sketchy"/>
+		<i type="option" name="Shaded"/>
+		<i type="option" name="Chrome"/>
+		<i type="option" name="Fur"/>
+		<i type="option" name="Longfur"/>
+		<i type="option" name="Web"/>
+		<i type="option" name="Simple"/>
+		<i type="divider"/>
+		<i type="option" name="Squares"/>
+		<i type="option" name="Ribbon"/>
+		<i type="option" name="Circles"/>
+		<i type="option" name="Grid"/>
+	</FeatherModes>
+
 	<TipShapes>
 		<i name="hard-round" size="20" hardness="100" roundness="100" angle="0" />
 		<i name="soft-round" size="37" hardness="0" roundness="50" angle="78" />

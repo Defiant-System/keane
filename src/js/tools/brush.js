@@ -142,7 +142,58 @@
 		}
 	},
 	featherTool(event) {
-		return console.log("feather", event);
+		let APP = keane,
+			Proj = Projector,
+			File = Proj.file,
+			Self = APP.tools.brush,
+			Drag = Self.drag,
+			_floor = Math.floor,
+			_round = Math.round,
+			size,
+			image;
+		switch (event.type) {
+			// native events
+			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+
+				// prepare paint
+				Self.drag = {
+					layer: File.activeLayer,
+					ctx: Proj.swap.ctx,
+					cvs: Proj.swap.cvs[0],
+					mX: _floor((event.offsetX - File.oX) / File.scale),
+					mY: _floor((event.offsetY - File.oY) / File.scale),
+					scale: File.scale,
+					coX: File.oX,
+					coY: File.oY,
+				};
+
+				// trigger first paint
+				Self.featherTool({ type: "mousemove" });
+				// prevent mouse from triggering mouseover
+				APP.els.content.addClass("no-cursor");
+				// bind event handlers
+				Proj.doc.on("mousemove mouseup", Self.featherTool);
+				break;
+			case "mousemove":
+				if (event.offsetX) {
+					Drag.mX = _floor((event.offsetX - Drag.coX) / Drag.scale);
+					Drag.mY = _floor((event.offsetY - Drag.coY) / Drag.scale);
+				}
+
+				console.log( Drag.mX, Drag.mY );
+
+				break;
+			case "mouseup":
+				// remove class
+				APP.els.content.removeClass("no-cursor");
+				// unbind event handlers
+				Proj.doc.off("mousemove mouseup", Self.featherTool);
+				// commit changes to layer
+				Drag.layer.updateThumbnail();
+				break;
+		}
 	},
 	pencilTool(event) {
 		return console.log("pencil", event);
@@ -167,15 +218,11 @@
 				// clear paint canvas
 				Proj.swap.cvs.prop({ width: File.oW, height: File.oH });
 
-				Self.preset.tip.ctx.fillStyle = "#fff";
-
 				// prepare paint
 				Self.drag = {
 					layer: File.activeLayer,
 					ctx: Proj.swap.ctx,
 					cvs: Proj.swap.cvs[0],
-					// clickX: event.offsetX,
-					// clickY: event.offsetY,
 					mX: _floor((event.offsetX - File.oX) / File.scale),
 					mY: _floor((event.offsetY - File.oY) / File.scale),
 					scale: File.scale,
@@ -199,7 +246,6 @@
 
 				// trigger first paint
 				Self.brushTool({ type: "mousemove" });
-
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
 				// bind event handlers

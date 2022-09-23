@@ -1,0 +1,6 @@
+
+class Ribbon {
+	constructor() {
+		
+	}
+}

@@ -2,8 +2,8 @@
 // keane.tools.marquee
 
 {
-	ants: @import "./marquee-ants.js",
-	magicWand: @import "./marquee-magicWand.js",
+	ants: @import "./marquee/ants.js",
+	magicWand: @import "./marquee/magicWand.js",
 	init() {
 		// layer canvas
 		let { cvs, ctx } = Misc.createCanvas(1, 1);

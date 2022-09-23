@@ -204,6 +204,22 @@
 </xsl:template>
 
 
+<xsl:template name="feather-modes">
+	<div class="inline-menubox" data-ui="doSelectbox">
+		<div class="inline-content">
+			<xsl:for-each select="./*">
+				<xsl:choose>
+					<xsl:when test="@type = 'divider'"><hr/></xsl:when>
+					<xsl:when test="@type = 'option'">
+						<div class="option"><xsl:value-of select="@name"/></div>
+					</xsl:when>
+				</xsl:choose>
+			</xsl:for-each>
+		</div>
+	</div>
+</xsl:template>
+
+
 <xsl:template name="pop-brush-tips">
 	<div class="inline-menubox" data-ui="doBrushTips">
 		<div class="inline-content brush-tips">
