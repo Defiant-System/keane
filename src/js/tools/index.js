@@ -22,7 +22,7 @@
 
 		// temp
 		// setTimeout(() => window.find(`.option .tip-icon`).trigger("click"), 500);
-		setTimeout(() => window.find(`.tool-options-brush .tool-feather`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-options-brush .tool-feather`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -61,6 +61,9 @@
 				root.find(`.tool-group[data-subName="${name}"]`).addClass("active");
 				// change "parent" icon
 				Self.els.toolBar.find(".tool.active").data({ opt: event.el.data("arg") });
+
+				// select tool option
+				Self[Self._active].dispatch({ type: "select-option", arg: event.el.data("arg") });
 				break;
 
 			// subscribed events

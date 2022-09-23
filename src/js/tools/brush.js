@@ -24,7 +24,6 @@
 			Proj = Projector,
 			File = Proj.file,
 			Self = APP.tools.brush,
-			Drag = Self.drag,
 			_floor = Math.floor,
 			_round = Math.round,
 			name,
@@ -43,9 +42,6 @@
 				Self[`${Self.option}Tool`](event);
 				break;
 			// custom events
-			case "select-option":
-				Self.option = event.arg || "brush";
-				break;
 			case "select-color":
 			case "switch-color":
 			case "reset-color":
@@ -120,8 +116,10 @@
 			case "change-flow":
 				console.log(event);
 				break;
+			case "select-option":
+				Self.option = event.arg || Self.option || "brush";
+				break;
 			case "enable":
-				console.log(event);
 				// auto load preset tip
 				Self.dispatch({ type: "select-preset-tip", ...this.preset });
 
@@ -133,12 +131,22 @@
 		}
 	},
 	featherTool(event) {
-		return console.log(event);
+		return console.log("feather", event);
 	},
 	pencilTool(event) {
-		return console.log(event);
+		return console.log("pencil", event);
 	},
 	brushTool(event) {
+		let APP = keane,
+			Proj = Projector,
+			File = Proj.file,
+			Self = APP.tools.brush,
+			Drag = Self.drag,
+			_floor = Math.floor,
+			_round = Math.round,
+			size,
+			image;
+
 		switch (event.type) {
 			// native events
 			case "mousedown":
@@ -177,12 +185,12 @@
 				File.activeLayer.bufferImageData();
 
 				// trigger first paint
-				Self.dispatch({ type: "mousemove" });
+				Self.brushTool({ type: "mousemove" });
 
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
 				// bind event handlers
-				Proj.doc.on("mousemove mouseup", Self.dispatch);
+				Proj.doc.on("mousemove mouseup", Self.brushTool);
 				break;
 			case "mousemove":
 				if (event.offsetX) {
@@ -215,7 +223,7 @@
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
-				Proj.doc.off("mousemove mouseup", Self.dispatch);
+				Proj.doc.off("mousemove mouseup", Self.brushTool);
 				// commit changes to layer
 				Drag.layer.updateThumbnail();
 				// render file

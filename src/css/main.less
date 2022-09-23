@@ -396,8 +396,12 @@ content {
 		&[data-content="others"] 	{ background-image: url(~/icons/tool-other-tools.png); }
 
 		&.icon-quick-mask           { background-image: url(~/icons/icon-quick-mask.png); }
+		
+		&[data-content="move"][data-opt="move"],
 		&.tool-move                 { background-image: url(~/icons/tool-move.png); }
+		&[data-content="move"][data-opt="hand"],
 		&.tool-hand                 { background-image: url(~/icons/tool-hand.png); }
+		
 		&.icon-align-top            { background-image: url(~/icons/icon-align-top.png); }
 		&.icon-align-middle         { background-image: url(~/icons/icon-align-middle.png); }
 		&.icon-align-bottom         { background-image: url(~/icons/icon-align-bottom.png); }
@@ -424,7 +428,7 @@ content {
 		&.tool-eraser               { background-image: url(~/icons/tool-eraser.png); }
 		&.tool-eraser-bg            { background-image: url(~/icons/tool-eraser-bg.png); }
 		&.tool-eraser-magic         { background-image: url(~/icons/tool-eraser-magic.png); }
-		
+
 		&.tool-pressure             { background-image: url(~/icons/tool-pressure.png); }
 		&.tool-crop                 { background-image: url(~/icons/tool-crop.png); }
 		&.tool-perspective          { background-image: url(~/icons/tool-perspective.png); }
@@ -432,12 +436,22 @@ content {
 		&.tool-slice-select         { background-image: url(~/icons/tool-slice-select.png); }
 		&.tool-gradient             { background-image: url(~/icons/tool-gradient.png); }
 		&.tool-fill                 { background-image: url(~/icons/tool-fill.png); }
+
+
+		&[data-content="marquee"][data-opt="rectangle"],
 		&.tool-marquee-rect         { background-image: url(~/icons/tool-marquee-rect.png); }
+		&[data-content="marquee"][data-opt="elliptic"],
 		&.tool-marquee-circle       { background-image: url(~/icons/tool-marquee-circle.png); }
+		&[data-content="marquee"][data-opt="magic-wand"],
 		&.tool-wand                 { background-image: url(~/icons/tool-wand.png); }
+
+		&[data-content="marquee"][data-opt="lasso"],
 		&.tool-lasso                { background-image: url(~/icons/tool-lasso.png); }
+		&[data-content="marquee"][data-opt="polygon"],
 		&.tool-lasso-polygon        { background-image: url(~/icons/tool-lasso-polygon.png); }
+		&[data-content="marquee"][data-opt="magnetic"],
 		&.tool-lasso-magnetic       { background-image: url(~/icons/tool-lasso-magnetic.png); }
+
 		&.icon-marquee-new          { background-image: url(~/icons/icon-marquee-new.png); }
 		&.icon-marquee-union        { background-image: url(~/icons/icon-marquee-union.png); }
 		&.icon-marquee-subtract     { background-image: url(~/icons/icon-marquee-subtract.png); }
