@@ -14,6 +14,9 @@
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
+		// subscribe to events
+		karaqu.on("set-fg-color", this.dispatch);
+
 		// select a tool
 		this.els.toolBar.find(".tool:nth(2)").trigger("click");
 
@@ -56,7 +59,13 @@
 				name = event.el.data("subOptions");
 				root.find(`.tool-group.active`).removeClass("active");
 				root.find(`.tool-group[data-subName="${name}"]`).addClass("active");
+				// change "parent" icon
+				Self.els.toolBar.find(".tool.active").data({ opt: event.el.data("arg") });
+				break;
 
+			// subscribed events
+			case "set-fg-color":
+				Self.els.optionBar.find(".color-sample .fg-color").css({ background: event.detail.hex });
 				break;
 
 			// custom events

@@ -40,6 +40,108 @@
 		switch (event.type) {
 			// native events
 			case "mousedown":
+				Self[`${Self.option}Tool`](event);
+				break;
+			// custom events
+			case "select-option":
+				Self.option = event.arg || "brush";
+				break;
+			case "select-color":
+			case "switch-color":
+			case "reset-color":
+				console.log(event);
+				break;
+			case "select-preset-tip":
+				el = APP.els.content.find(".option[data-change='select-preset-tip']");
+				// get brush tip details
+				name      = event.arg       ||  el.data("name")      || Self.preset.name;
+				size      = event.size      || +el.data("size")      || Self.preset.size;
+				roundness = event.roundness || +el.data("roundness") || Self.preset.roundness;
+				angle     = event.angle     || +el.data("angle")     || Self.preset.angle;
+
+				// prepare to load image into tip-canvas
+				Self.preset.tipImage = new Image(size, size);
+				Self.preset.name = name;
+				Self.preset.tipImage.onload = () => {
+					// resize / rotate tip
+					Self.dispatch({ type: "resize-rotate-tip" });
+					// callback if any
+					if (event.callback) event.callback();
+				};
+				
+				// load tip image
+				Self.preset.tipImage.src = "~/icons/brush-preset-"+ Self.preset.name +".png";
+				// update toolbar
+				el.find(".tip-icon").css({"background-image": `url(${Self.preset.tipImage.src})`});
+				el.find(".value span").html(size + el.data("suffix"));
+				// update toolbar option
+				el.data({ name, size, roundness, angle });
+				break;
+			case "resize-rotate-tip":
+				// resize tip canvas
+				size = Self.preset.size;
+				angle = event.angle || Self.preset.angle;
+				roundness = event.roundness || Self.preset.roundness;
+				height = _round(size * (roundness / 100));
+
+				let y = (size - height) >> 1,
+					hS = size >> 1;
+				Self.preset.tip.cvs.prop({ width: size, height: size });
+				Self.preset.tip.ctx.translate(hS, hS);
+				Self.preset.tip.ctx.rotate(angle * Math.PI / 180);
+				Self.preset.tip.ctx.translate(-hS, -hS);
+				Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, y, size, height);
+				Self.preset.tip.ctx.globalCompositeOperation = "source-atop"; // difference
+				Self.preset.tip.ctx.fillStyle = File ? File.fgColor : "#fff";
+				Self.preset.tip.ctx.fillRect(0, 0, size, size);
+				break;
+			case "change-blend-mode":
+				Self.preset.blend = event.value.toLowerCase().replace(/ /g, "-");
+				break;
+			case "change-size":
+				width =
+				height =
+				Self.preset.size = event.value;
+
+				// resize tip canvas
+				Self.preset.tip.cvs.prop({ width, height });
+				Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, 0, width, height);
+
+				// update toolbar
+				el = APP.els.content.find(".option[data-change='select-preset-tip']");
+				el.find(".value span").html(event.value + el.data("suffix"));
+				break;
+			case "change-hardness":
+				console.log(event);
+				break;
+			case "change-opacity":
+				Self.preset.opacity = event.value / 100;
+				break;
+			case "change-flow":
+				console.log(event);
+				break;
+			case "enable":
+				console.log(event);
+				// auto load preset tip
+				Self.dispatch({ type: "select-preset-tip", ...this.preset });
+
+				Proj.cvs.on("mousedown", Self.dispatch);
+				break;
+			case "disable":
+				Proj.cvs.off("mousedown", Self.dispatch);
+				break;
+		}
+	},
+	featherTool(event) {
+		return console.log(event);
+	},
+	pencilTool(event) {
+		return console.log(event);
+	},
+	brushTool(event) {
+		switch (event.type) {
+			// native events
+			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
 
@@ -118,94 +220,6 @@
 				Drag.layer.updateThumbnail();
 				// render file
 				File.render();
-				break;
-			// custom events
-			case "select-option":
-				Self.option = event.arg || "brush";
-				break;
-			case "select-color":
-			case "select-color":
-			case "switch-color":
-			case "reset-color":
-				console.log(event);
-				break;
-			case "select-preset-tip":
-				el = APP.els.content.find(".option[data-change='select-preset-tip']");
-				// get brush tip details
-				name      = event.arg       ||  el.data("name")      || Self.preset.name;
-				size      = event.size      || +el.data("size")      || Self.preset.size;
-				roundness = event.roundness || +el.data("roundness") || Self.preset.roundness;
-				angle     = event.angle     || +el.data("angle")     || Self.preset.angle;
-
-				// prepare to load image into tip-canvas
-				Self.preset.tipImage = new Image(size, size);
-				Self.preset.name = name;
-				Self.preset.tipImage.onload = () => {
-					// resize / rotate tip
-					Self.dispatch({ type: "resize-rotate-tip" });
-					// callback if any
-					if (event.callback) event.callback();
-				};
-				
-				// load tip image
-				Self.preset.tipImage.src = "~/icons/brush-preset-"+ Self.preset.name +".png";
-				// update toolbar
-				el.find(".tip-icon").css({"background-image": `url(${Self.preset.tipImage.src})`});
-				el.find(".value span").html(size + el.data("suffix"));
-				// update toolbar option
-				el.data({ name, size, roundness, angle });
-				break;
-			case "resize-rotate-tip":
-				// resize tip canvas
-				size = Self.preset.size;
-				angle = event.angle || Self.preset.angle;
-				roundness = event.roundness || Self.preset.roundness;
-				height = _round(size * (roundness / 100));
-
-				let y = (size - height) >> 1,
-					hS = size >> 1;
-				Self.preset.tip.cvs.prop({ width: size, height: size });
-				Self.preset.tip.ctx.translate(hS, hS);
-				Self.preset.tip.ctx.rotate(angle * Math.PI / 180);
-				Self.preset.tip.ctx.translate(-hS, -hS);
-				Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, y, size, height);
-				Self.preset.tip.ctx.globalCompositeOperation = "source-atop"; // difference
-				Self.preset.tip.ctx.fillStyle = File ? File.fgColor : "#fff";
-				Self.preset.tip.ctx.fillRect(0, 0, size, size);
-				break;
-			case "change-blend-mode":
-				Self.preset.blend = event.value.toLowerCase().replace(/ /g, "-");
-				break;
-			case "change-size":
-				width =
-				height =
-				Self.preset.size = event.value;
-
-				// resize tip canvas
-				Self.preset.tip.cvs.prop({ width, height });
-				Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, 0, width, height);
-
-				// update toolbar
-				el = APP.els.content.find(".option[data-change='select-preset-tip']");
-				el.find(".value span").html(event.value + el.data("suffix"));
-				break;
-			case "change-hardness":
-				console.log(event);
-				break;
-			case "change-opacity":
-				Self.preset.opacity = event.value / 100;
-				break;
-			case "change-flow":
-				console.log(event);
-				break;
-			case "enable":
-				// auto load preset tip
-				Self.dispatch({ type: "select-preset-tip", ...this.preset });
-
-				Proj.cvs.on("mousedown", Self.dispatch);
-				break;
-			case "disable":
-				Proj.cvs.off("mousedown", Self.dispatch);
 				break;
 		}
 	}

@@ -12,7 +12,7 @@
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
 		// temp
-		// this.els.root.find(`div[data-content="color"]`).trigger("click");
+		this.els.root.find(`div[data-content="swatches"]`).trigger("click");
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -44,13 +44,13 @@
 				}
 		}
 	},
-	channels:   @import "channels.js",
-	characters: @import "characters.js",
-	color:      @import "color.js",
-	info:       @import "info.js",
-	layers:     @import "layers.js",
-	navigator:  @import "navigator.js",
-	paragraph:  @import "paragraph.js",
-	paths:      @import "paths.js",
-	swatches:   @import "swatches.js",
+	channels:  @import "channels.js",
+	character: @import "character.js",
+	color:     @import "color.js",
+	info:      @import "info.js",
+	layers:    @import "layers.js",
+	navigator: @import "navigator.js",
+	paragraph: @import "paragraph.js",
+	paths:     @import "paths.js",
+	swatches:  @import "swatches.js",
 }
