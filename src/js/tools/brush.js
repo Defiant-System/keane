@@ -5,7 +5,7 @@
 	init() {
 		// default option
 		this.option = "brush";
-		this.feather = "chrome";
+		this.feather = "circles";
 
 		let xShape = window.bluePrint.selectSingleNode("//TipShapes/*");
 

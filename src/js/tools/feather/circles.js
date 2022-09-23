@@ -9,13 +9,10 @@ class Circles {
 		this.size = opt.size || 1;
 		this.pressure = opt.pressure || 1;
 
-		this.fgColor = Color.hexToRgb(opt.bgColor);
-		this.fgColor[3] = this.pressure;
-		this.bgColor = Color.hexToRgb(opt.fgColor);
-		this.bgColor[3] = this.pressure;
+		this.fgColor = Color.hexToRgb(opt.fgColor);
+		this.fgColor[3] = this.pressure * .1;
 
 		this.ctx.lineWidth = this.size;
-		this.ctx.fillStyle = `rgba(${this.bgColor.join(",")})`;
 		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
 		this.ctx.globalCompositeOperation = opt.globalCompositeOperation || "source-over";
 	}
