@@ -42,10 +42,31 @@ const Color = {
 	},
 	rgbToHex(rgb) {
 		let d = "0123456789abcdef".split(""),
-			hex = x => isNaN(x) ? "00" : d[(x-x%16)/16] + d[x%16];
-
-		rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-		
-		return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+			hex = x => isNaN(x) ? "00" : d[( x - x % 16) / 16] + d[x % 16];
+		rgb = rgb.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\.\d]+)\)$/);
+		if (!rgb) rgb = arguments[0].match(/^rgb?\((\d+),\s*(\d+),\s*(\d+)\)$/);
+		let a = Math.round((rgb[4] || 1) * 255);
+		return "#"+ hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]) + hex(a);
+	},
+	hexToRgb(hex) {
+		let r = parseInt(hex.substr(1,2), 16),
+			g = parseInt(hex.substr(3,2), 16),
+			b = parseInt(hex.substr(5,2), 16),
+			a = parseInt(hex.substr(7,2) || "ff", 16) / 255;
+		return [r, g, b, a];
+	},
+	mixColors(hex1, hex2, p) {
+		let rgb1 = this.hexToRgb(hex1),
+			rgb2 = this.hexToRgb(hex2),
+			w = p * 2 - 1,
+			w1 = (w + 1) / 2.0,
+			w2 = 1 - w1,
+			rgb = [
+				parseInt(rgb1[0] * w1 + rgb2[0] * w2, 10),
+				parseInt(rgb1[1] * w1 + rgb2[1] * w2, 10),
+				parseInt(rgb1[2] * w1 + rgb2[2] * w2, 10),
+				rgb1[3] * w1 + rgb2[3] * w2
+			];
+		return this.rgbToHex(`rgba(${rgb.join(",")})`);
 	}
 };

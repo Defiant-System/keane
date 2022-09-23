@@ -8,8 +8,8 @@ class File {
 		this.scale = 1;
 		this.width = opt.width || 1;
 		this.height = opt.height || 1;
-		this.bgColor = "#000";
-		this.fgColor = "#fff";
+		this.bgColor = "#000000";
+		this.fgColor = "#ffffff";
 		this.lineWidth = 1;
 		this.showRulers = true;
 
@@ -47,7 +47,7 @@ class File {
 				this.xData.selectSingleNode("Layers").appendChild(xLayer);
 				break;
 			case "psd":
-				content = { type: "fill", color: opt.fill || "#fff" };
+				content = { type: "fill", color: opt.fill || "#ffffff" };
 				layer = new Layer(this, content);
 				this.layers.push(layer);
 				// add layer data to xml

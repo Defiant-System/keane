@@ -11,8 +11,18 @@
 @import "modules/rulers.js"
 
 
-@import "tools/feather/ribbon.js"
+const FeatherTool = (type, opt) => {
 
+	@import "tools/feather/ribbon.js"
+	@import "tools/feather/squares.js"
+
+	let record = {
+		ribbon: Ribbon,
+		squares: Squares,
+	}
+
+	return new record[type](opt);
+};
 
 
 const keane = {

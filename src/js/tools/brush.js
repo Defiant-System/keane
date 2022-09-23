@@ -5,6 +5,7 @@
 	init() {
 		// default option
 		this.option = "brush";
+		this.feather = "squares";
 
 		let xShape = window.bluePrint.selectSingleNode("//TipShapes/*");
 
@@ -141,79 +142,6 @@
 				break;
 		}
 	},
-	featherTool(event) {
-		let APP = keane,
-			Proj = Projector,
-			File = Proj.file,
-			Self = APP.tools.brush,
-			Drag = Self.drag,
-			_floor = Math.floor,
-			_round = Math.round,
-			size,
-			image;
-		switch (event.type) {
-			// native events
-			case "mousedown":
-				// prevent default behaviour
-				event.preventDefault();
-
-				// clear paint canvas
-				Proj.swap.cvs.prop({ width: File.oW, height: File.oH });
-
-				let opt = {
-						width: File.oW,
-						height: File.oH,
-						ctx: Proj.swap.ctx,
-						cvs: Proj.swap.cvs[0],
-					};
-
-				// prepare paint
-				Self.drag = {
-					brush: new Ribbon(opt),
-					layer: File.activeLayer,
-					mX: _floor((event.offsetX - File.oX) / File.scale),
-					mY: _floor((event.offsetY - File.oY) / File.scale),
-					scale: File.scale,
-					coX: File.oX,
-					coY: File.oY,
-				};
-
-				// buffer layer image data before edit
-				File.activeLayer.bufferImageData();
-
-				// trigger first paint
-				Self.drag.brush.strokeStart(Self.drag.mX, Self.drag.mY);
-				// prevent mouse from triggering mouseover
-				APP.els.content.addClass("no-cursor");
-				// bind event handlers
-				Proj.doc.on("mousemove mouseup", Self.featherTool);
-				break;
-			case "mousemove":
-				if (event.offsetX) {
-					Drag.mX = _floor((event.offsetX - Drag.coX) / Drag.scale);
-					Drag.mY = _floor((event.offsetY - Drag.coY) / Drag.scale);
-				}
-				// paint with brush
-				Drag.brush.stroke(Self.drag.mX, Self.drag.mY);
-
-				// pass paint buffer to layer
-				Drag.layer.addBuffer(Drag.brush.cvs);
-
-				// render file - noEmit = true
-				File.render({ noEmit: true });
-				break;
-			case "mouseup":
-				// signal mouseup
-				Drag.brush.strokeEnd();
-				// remove class
-				APP.els.content.removeClass("no-cursor");
-				// unbind event handlers
-				Proj.doc.off("mousemove mouseup", Self.featherTool);
-				// commit changes to layer
-				Drag.layer.updateThumbnail();
-				break;
-		}
-	},
 	pencilTool(event) {
 		return console.log("pencil", event);
 	},
@@ -233,7 +161,6 @@
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
-
 				// clear paint canvas
 				Proj.swap.cvs.prop({ width: File.oW, height: File.oH });
 
@@ -259,10 +186,8 @@
 
 				// set blend mode
 				Self.drag.layer.ctx.globalCompositeOperation = Self.preset.blend;
-
 				// buffer layer image data before edit
 				File.activeLayer.bufferImageData();
-
 				// trigger first paint
 				Self.brushTool({ type: "mousemove" });
 				// prevent mouse from triggering mouseover
@@ -302,6 +227,77 @@
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
 				Proj.doc.off("mousemove mouseup", Self.brushTool);
+				// commit changes to layer
+				Drag.layer.updateThumbnail();
+				// render file
+				File.render();
+				break;
+		}
+	},
+	featherTool(event) {
+		let APP = keane,
+			Proj = Projector,
+			File = Proj.file,
+			Self = APP.tools.brush,
+			Drag = Self.drag,
+			_floor = Math.floor,
+			_round = Math.round,
+			size,
+			image;
+		switch (event.type) {
+			// native events
+			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+				// clear paint canvas
+				Proj.swap.cvs.prop({ width: File.oW, height: File.oH });
+
+				let opt = {
+						width: File.oW,
+						height: File.oH,
+						ctx: Proj.swap.ctx,
+						cvs: Proj.swap.cvs[0],
+						fgColor: File.fgColor,
+						bgColor: File.bgColor,
+					};
+				// prepare paint
+				Self.drag = {
+					layer: File.activeLayer,
+					brush: FeatherTool(Self.feather, opt),
+					mX: _floor((event.offsetX - File.oX) / File.scale),
+					mY: _floor((event.offsetY - File.oY) / File.scale),
+					scale: File.scale,
+					coX: File.oX,
+					coY: File.oY,
+				};
+				// buffer layer image data before edit
+				File.activeLayer.bufferImageData();
+				// trigger first paint
+				Self.drag.brush.strokeStart(Self.drag.mX, Self.drag.mY);
+				// prevent mouse from triggering mouseover
+				APP.els.content.addClass("no-cursor");
+				// bind event handlers
+				Proj.doc.on("mousemove mouseup", Self.featherTool);
+				break;
+			case "mousemove":
+				if (event.offsetX) {
+					Drag.mX = _floor((event.offsetX - Drag.coX) / Drag.scale);
+					Drag.mY = _floor((event.offsetY - Drag.coY) / Drag.scale);
+				}
+				// paint with brush
+				Drag.brush.stroke(Self.drag.mX, Self.drag.mY);
+				// pass paint buffer to layer
+				Drag.layer.addBuffer(Drag.brush.cvs);
+				// render file - noEmit = true
+				File.render({ noEmit: true });
+				break;
+			case "mouseup":
+				// signal mouseup
+				Drag.brush.strokeEnd();
+				// remove class
+				APP.els.content.removeClass("no-cursor");
+				// unbind event handlers
+				Proj.doc.off("mousemove mouseup", Self.featherTool);
 				// commit changes to layer
 				Drag.layer.updateThumbnail();
 				// render file
