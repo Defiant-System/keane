@@ -13,10 +13,12 @@
 
 const FeatherTool = (type, opt) => {
 
+	@import "tools/feather/chrome.js"
 	@import "tools/feather/ribbon.js"
 	@import "tools/feather/squares.js"
 
 	let record = {
+		chrome: Chrome,
 		ribbon: Ribbon,
 		squares: Squares,
 	}
