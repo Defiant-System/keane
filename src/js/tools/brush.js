@@ -157,11 +157,20 @@
 				// prevent default behaviour
 				event.preventDefault();
 
+				// clear paint canvas
+				Proj.swap.cvs.prop({ width: File.oW, height: File.oH });
+
+				let opt = {
+						width: File.oW,
+						height: File.oH,
+						ctx: Proj.swap.ctx,
+						cvs: Proj.swap.cvs[0],
+					};
+
 				// prepare paint
 				Self.drag = {
+					brush: new Ribbon(opt),
 					layer: File.activeLayer,
-					ctx: Proj.swap.ctx,
-					cvs: Proj.swap.cvs[0],
 					mX: _floor((event.offsetX - File.oX) / File.scale),
 					mY: _floor((event.offsetY - File.oY) / File.scale),
 					scale: File.scale,
@@ -169,8 +178,11 @@
 					coY: File.oY,
 				};
 
+				// buffer layer image data before edit
+				File.activeLayer.bufferImageData();
+
 				// trigger first paint
-				Self.featherTool({ type: "mousemove" });
+				Self.drag.brush.strokeStart(Self.drag.mX, Self.drag.mY);
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
 				// bind event handlers
@@ -181,11 +193,18 @@
 					Drag.mX = _floor((event.offsetX - Drag.coX) / Drag.scale);
 					Drag.mY = _floor((event.offsetY - Drag.coY) / Drag.scale);
 				}
+				// paint with brush
+				Drag.brush.stroke(Self.drag.mX, Self.drag.mY);
 
-				console.log( Drag.mX, Drag.mY );
+				// pass paint buffer to layer
+				Drag.layer.addBuffer(Drag.brush.cvs);
 
+				// render file - noEmit = true
+				File.render({ noEmit: true });
 				break;
 			case "mouseup":
+				// signal mouseup
+				Drag.brush.strokeEnd();
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
