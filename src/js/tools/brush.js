@@ -18,6 +18,9 @@
 			blend     : "normal",
 			opacity   : 1,
 		};
+
+		// subscribe to events
+		karaqu.on("set-fg-color", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -41,6 +44,14 @@
 			case "mousedown":
 				Self[`${Self.option}Tool`](event);
 				break;
+
+			// subscribed events
+			case "set-fg-color":
+				File.fgColor = event.detail.hex;
+				// resize / rotate tip
+				Self.dispatch({ type: "resize-rotate-tip" });
+				break;
+
 			// custom events
 			case "select-color":
 			case "switch-color":
@@ -156,6 +167,8 @@
 				// clear paint canvas
 				Proj.swap.cvs.prop({ width: File.oW, height: File.oH });
 
+				Self.preset.tip.ctx.fillStyle = "#fff";
+
 				// prepare paint
 				Self.drag = {
 					layer: File.activeLayer,
@@ -180,7 +193,7 @@
 
 				// set blend mode
 				Self.drag.layer.ctx.globalCompositeOperation = Self.preset.blend;
-				
+
 				// buffer layer image data before edit
 				File.activeLayer.bufferImageData();
 

@@ -1388,11 +1388,22 @@ content {
 					padding: 0 0 13px;
 
 					> div {
+						position: relative;
 						display: inline-block;
 						width: 17px;
 						height: 15px;
 						border-right: 1px solid rgba(#011, .85);
 						border-bottom: 1px solid rgba(#011, .85);
+
+						&.active:after {
+							content: "";
+							position: absolute;
+							top: 0;
+							left: 0;
+							right: 0;
+							bottom: 0;
+							border: 1px solid #fff;
+						}
 					}
 				}
 
