@@ -5,7 +5,7 @@
 	init() {
 		// default option
 		this.option = "brush";
-		this.feather = "web";
+		this.featherBrush = "sketchy";
 
 		let xShape = window.bluePrint.selectSingleNode("//TipShapes/*");
 
@@ -127,6 +127,9 @@
 				break;
 			case "change-flow":
 				console.log(event);
+				break;
+			case "change-feather-mode":
+				Self.featherBrush = event.value.toLowerCase();
 				break;
 			case "select-option":
 				Self.option = event.arg || Self.option || "brush";
@@ -263,7 +266,7 @@
 				// prepare paint
 				Self.drag = {
 					layer: File.activeLayer,
-					brush: FeatherTool(Self.feather, opt),
+					brush: Self.featherTip(Self.featherBrush, opt),
 					mX: _floor((event.offsetX - File.oX) / File.scale),
 					mY: _floor((event.offsetY - File.oY) / File.scale),
 					scale: File.scale,
@@ -304,5 +307,34 @@
 				File.render();
 				break;
 		}
+	},
+	featherTip(type, opt) {
+		@import "feather/chrome.js"
+		@import "feather/circles.js"
+		@import "feather/fur.js"
+		@import "feather/grid.js"
+		@import "feather/longfur.js"
+		@import "feather/ribbon.js"
+		@import "feather/shaded.js"
+		@import "feather/simple.js"
+		@import "feather/sketchy.js"
+		@import "feather/squares.js"
+		@import "feather/web.js"
+
+		let tips = {
+				chrome: Chrome,
+				circles: Circles,
+				fur: Fur,
+				grid: Grid,
+				longfur: Longfur,
+				ribbon: Ribbon,
+				shaded: Shaded,
+				simple: Simple,
+				sketchy: Sketchy,
+				squares: Squares,
+				web: Web,
+			};
+
+		return new tips[type](opt);
 	}
 }

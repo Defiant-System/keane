@@ -11,38 +11,6 @@
 @import "modules/rulers.js"
 
 
-const FeatherTool = (type, opt) => {
-
-	@import "tools/feather/chrome.js"
-	@import "tools/feather/circles.js"
-	@import "tools/feather/fur.js"
-	@import "tools/feather/grid.js"
-	@import "tools/feather/longfur.js"
-	@import "tools/feather/ribbon.js"
-	@import "tools/feather/shaded.js"
-	@import "tools/feather/simple.js"
-	@import "tools/feather/sketchy.js"
-	@import "tools/feather/squares.js"
-	@import "tools/feather/web.js"
-
-	let record = {
-		chrome: Chrome,
-		circles: Circles,
-		fur: Fur,
-		grid: Grid,
-		longfur: Longfur,
-		ribbon: Ribbon,
-		shaded: Shaded,
-		simple: Simple,
-		sketchy: Sketchy,
-		squares: Squares,
-		web: Web,
-	}
-
-	return new record[type](opt);
-};
-
-
 const keane = {
 	init() {
 		// fast references
