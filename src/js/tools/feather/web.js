@@ -4,7 +4,7 @@ class Web {
 		this.cvs = opt.cvs;
 		this.ctx = opt.ctx;
 		this.size = opt.size || 1;
-		this.pressure = opt.pressure || 1;
+		this.pressure = opt.pressure || 1e2;
 		this.fgColor = Color.hexToRgb(opt.fgColor);
 		
 		this.ctx.lineWidth = this.size;
@@ -22,14 +22,14 @@ class Web {
 	stroke(mX, mY) {
 		this.points.push([mX, mY]);
 
-		this.fgColor[3] = this.pressure * .5;
+		this.fgColor[3] = this.pressure / 5e3;
 		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
 		this.ctx.beginPath();
 		this.ctx.moveTo(this.mX, this.mY);
 		this.ctx.lineTo(mX, mY);
 		this.ctx.stroke();
 
-		this.fgColor[3] = this.pressure * .1;
+		this.fgColor[3] = this.pressure / 1e3;
 		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
 		this.points.map(p => {
 			let dx = p[0] - this.points[this.count][0],

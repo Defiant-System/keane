@@ -5,7 +5,12 @@
 	init() {
 		// default option
 		this.option = "brush";
-		this.featherBrush = "sketchy";
+		// default feather options
+		this.feather = {
+			brush: "squares",
+			pressure: 50,
+			size: 1,
+		};
 
 		let xShape = window.bluePrint.selectSingleNode("//TipShapes/*");
 
@@ -128,9 +133,17 @@
 			case "change-flow":
 				console.log(event);
 				break;
+			// FEATHER
 			case "change-feather-mode":
-				Self.featherBrush = event.value.toLowerCase();
+				Self.feather.brush = event.value.toLowerCase();
 				break;
+			case "change-feather-size":
+				Self.feather.size = event.value;
+				break;
+			case "change-feather-pressure":
+				Self.feather.pressure = event.value;
+				break;
+
 			case "select-option":
 				Self.option = event.arg || Self.option || "brush";
 				break;
@@ -262,11 +275,13 @@
 						cvs: Proj.swap.cvs[0],
 						fgColor: File.fgColor,
 						bgColor: File.bgColor,
+						size: Self.feather.size,
+						pressure: Self.feather.pressure,
 					};
 				// prepare paint
 				Self.drag = {
 					layer: File.activeLayer,
-					brush: Self.featherTip(Self.featherBrush, opt),
+					brush: Self.featherTip(Self.feather.brush, opt),
 					mX: _floor((event.offsetX - File.oX) / File.scale),
 					mY: _floor((event.offsetY - File.oY) / File.scale),
 					scale: File.scale,

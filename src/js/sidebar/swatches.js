@@ -25,7 +25,7 @@
 			// subscribed events
 			case "set-fg-color":
 				Self.els.root.find(".active").removeClass("active");
-				Self.els.root.find(`div[style="background: ${event.detail.hex};"]`).addClass("active");
+				Self.els.root.find(`div[style*="background: ${event.detail.hex.slice(0,7)};"]`).addClass("active");
 				break;
 
 			// custom events

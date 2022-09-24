@@ -5,10 +5,10 @@ class Squares {
 		this.ctx = opt.ctx;
 
 		this.size = opt.size || 1;
-		this.pressure = opt.pressure || 1;
+		this.pressure = opt.pressure || 1e2
 
 		this.fgColor = Color.hexToRgb(opt.bgColor);
-		this.fgColor[3] = this.pressure * .5;
+		this.fgColor[3] = this.pressure / 5e2;
 		this.bgColor = Color.hexToRgb(opt.fgColor);
 		this.bgColor[3] = this.pressure;
 

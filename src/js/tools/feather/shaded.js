@@ -5,10 +5,10 @@ class Shaded {
 		this.ctx = opt.ctx;
 
 		this.size = opt.size || 1;
-		this.pressure = opt.pressure || .1;
+		this.pressure = opt.pressure || 1e2;
 
 		this.fgColor = Color.hexToRgb(opt.fgColor);
-		this.fgColor[3] = this.pressure * 10;
+		this.fgColor[3] = this.pressure / 1e5;
 		
 		this.ctx.lineWidth = this.size;
 		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
@@ -32,8 +32,8 @@ class Shaded {
 				d = dx * dx + dy * dy,
 				color = this.fgColor;
 
-			if (d < 1000) {
-				this.fgColor[3] = (1 - (d / 1000)) * 0.1 * this.pressure;
+			if (d < 1e3) {
+				this.fgColor[3] = (1 - (d / 1e3)) * 0.001 * this.pressure;
 				this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
 
 				this.ctx.beginPath();

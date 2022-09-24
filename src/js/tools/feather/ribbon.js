@@ -5,10 +5,10 @@ class Ribbon {
 		this.ctx = opt.ctx;
 
 		this.size = opt.size || 1;
-		this.pressure = opt.pressure || .1;
+		this.pressure = opt.pressure || 1e2;
 		
 		this.fgColor = Color.hexToRgb(opt.fgColor);
-		this.fgColor[3] = this.pressure * .25;
+		this.fgColor[3] = this.pressure / 25e2;
 
 		this.ctx.lineWidth = this.size;
 		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;

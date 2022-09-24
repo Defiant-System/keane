@@ -5,10 +5,10 @@ class Fur {
 		this.ctx = opt.ctx;
 
 		this.size = opt.size || 1;
-		this.pressure = opt.pressure || .1;
+		this.pressure = opt.pressure || 1e2;
 
 		this.fgColor = Color.hexToRgb(opt.fgColor);
-		this.fgColor[3] = this.pressure;
+		this.fgColor[3] = this.pressure / 1e3;
 		
 		this.ctx.lineWidth = this.size;
 		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
@@ -36,7 +36,7 @@ class Fur {
 				dy = p[1] - this.points[this.count][1],
 				d = dx * dx + dy * dy;
 
-			if (d < 4000 && Math.random() > d / 2000) {
+			if (d < 4e3 && Math.random() > d / 2e3) {
 				this.ctx.beginPath();
 				this.ctx.moveTo(mX + (dx * .5), mY + (dy * .5));
 				this.ctx.lineTo(mX - (dx * .5), mY - (dy * .5));

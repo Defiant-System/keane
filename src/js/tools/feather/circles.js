@@ -5,10 +5,10 @@ class Circles {
 		this.ctx = opt.ctx;
 
 		this.size = opt.size || 1;
-		this.pressure = opt.pressure || 1;
+		this.pressure = opt.pressure || 1e2;
 
 		this.fgColor = Color.hexToRgb(opt.fgColor);
-		this.fgColor[3] = this.pressure * .1;
+		this.fgColor[3] = this.pressure / 1e3;
 
 		this.ctx.lineWidth = this.size;
 		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
@@ -24,8 +24,8 @@ class Circles {
 		let dx = mX - this.mX,
 			dy = mY - this.mY,
 			d = Math.sqrt(dx * dx + dy * dy) * 2,
-			cx = Math.floor(mX / 100) * 100 + 50,
-			cy = Math.floor(mY / 100) * 100 + 50,
+			cx = Math.floor(mX / 1e2) * 1e2 + 50,
+			cy = Math.floor(mY / 1e2) * 1e2 + 50,
 			steps = Math.floor(Math.random() * 10),
 			step_delta = d / steps,
 			pi2 = Math.PI * 2,
