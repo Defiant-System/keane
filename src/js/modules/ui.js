@@ -321,14 +321,15 @@ const UI = {
 					type: Self.srcEl.data("change"),
 					el: Self.srcEl,
 					old: Self.srcEl.find(".value").html(),
-					value: el.html(),
+					text: el.html(),
+					value: el.data("value"),
 				};
-				if (data.old === data.value) return;
+				if (data.old === data.value || !data.value) return;
 				// dispatch event to be forwarded
 				if (data.type) APP.dispatch(data);
 
 				// update source element
-				Self.srcEl.find(".value").html(data.value);
+				Self.srcEl.find(".value").html(data.text);
 				// clean up
 				Self.srcEl = false;
 				Self.menu.remove();

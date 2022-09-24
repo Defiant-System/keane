@@ -12,7 +12,7 @@ class Simple {
 		
 		this.ctx.lineWidth = this.size;
 		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
-		this.ctx.globalCompositeOperation = opt.globalCompositeOperation || "source-over";
+		this.ctx.globalCompositeOperation = opt.blend || "source-over";
 	}
 
 	strokeStart(mX, mY) {

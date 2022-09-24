@@ -7,7 +7,8 @@
 		this.option = "brush";
 		// default feather options
 		this.feather = {
-			brush: "squares",
+			brush: "sketchy",
+			blend: "source-over",
 			pressure: 50,
 			size: 1,
 		};
@@ -136,6 +137,9 @@
 			// FEATHER
 			case "change-feather-mode":
 				Self.feather.brush = event.value.toLowerCase();
+				break;
+			case "change-feather-blend-mode":
+				Self.feather.blend = event.value;
 				break;
 			case "change-feather-size":
 				Self.feather.size = event.value;
@@ -277,6 +281,7 @@
 						bgColor: File.bgColor,
 						size: Self.feather.size,
 						pressure: Self.feather.pressure,
+						blend: Self.feather.blend,
 					};
 				// prepare paint
 				Self.drag = {

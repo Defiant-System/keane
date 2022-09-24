@@ -8,7 +8,7 @@ class Web {
 		this.fgColor = Color.hexToRgb(opt.fgColor);
 		
 		this.ctx.lineWidth = this.size;
-		this.ctx.globalCompositeOperation = opt.globalCompositeOperation || "source-over";
+		this.ctx.globalCompositeOperation = opt.blend || "source-over";
 
 		this.points = [];
 		this.count = 0;

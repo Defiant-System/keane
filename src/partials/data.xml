@@ -56,8 +56,8 @@
 	</Swatches>
 
 	<BlendModes>
-		<i type="option" name="Normal"/>
-		<i type="option" name="Dissolve"/>
+		<i type="option" name="Normal" value="source-over"/>
+		<i type="option" name="Dissolve" value="dissolve"/>
 		<i type="divider"/>
 		<i type="option" name="Darken"/>
 		<i type="option" name="Multiply"/>

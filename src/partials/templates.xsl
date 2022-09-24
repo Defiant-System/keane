@@ -195,7 +195,13 @@
 				<xsl:choose>
 					<xsl:when test="@type = 'divider'"><hr/></xsl:when>
 					<xsl:when test="@type = 'option'">
-						<div class="option"><xsl:value-of select="@name"/></div>
+						<div class="option">
+							<xsl:attribute name="data-value"><xsl:choose>
+								<xsl:when test="@value"><xsl:value-of select="@value"/></xsl:when>
+								<xsl:otherwise><xsl:value-of select="@name"/></xsl:otherwise>
+							</xsl:choose></xsl:attribute>
+							<xsl:value-of select="@name"/>
+						</div>
 					</xsl:when>
 				</xsl:choose>
 			</xsl:for-each>
@@ -211,7 +217,13 @@
 				<xsl:choose>
 					<xsl:when test="@type = 'divider'"><hr/></xsl:when>
 					<xsl:when test="@type = 'option'">
-						<div class="option"><xsl:value-of select="@name"/></div>
+						<div class="option">
+							<xsl:attribute name="data-value"><xsl:choose>
+								<xsl:when test="@value"><xsl:value-of select="@value"/></xsl:when>
+								<xsl:otherwise><xsl:value-of select="@name"/></xsl:otherwise>
+							</xsl:choose></xsl:attribute>
+							<xsl:value-of select="@name"/>
+						</div>
 					</xsl:when>
 				</xsl:choose>
 			</xsl:for-each>
