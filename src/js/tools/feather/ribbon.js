@@ -1,22 +1,20 @@
 
 class Ribbon {
 	constructor(opt={}) {
-		this.mX = opt.width >> 1;
-		this.mY = opt.height >> 1;
 		this.cvs = opt.cvs;
 		this.ctx = opt.ctx;
 
 		this.size = opt.size || 1;
-		this.pressure = opt.pressure || .125;
+		this.pressure = opt.pressure || .1;
 		
 		this.fgColor = Color.hexToRgb(opt.fgColor);
-		this.fgColor[3] = this.pressure;
+		this.fgColor[3] = this.pressure * .25;
 
 		this.ctx.lineWidth = this.size;
 		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
 		this.ctx.globalCompositeOperation = opt.globalCompositeOperation || "source-over";
 
-		this.painters = [...Array(30)].map((e, i) => ({
+		this.painters = [...Array(50)].map((e, i) => ({
 			dx: this.mX,
 			dy: this.mY,
 			ax: 0,

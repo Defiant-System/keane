@@ -1,8 +1,6 @@
 
 class Squares {
 	constructor(opt={}) {
-		this.mX = opt.width >> 1;
-		this.mY = opt.height >> 1;
 		this.cvs = opt.cvs;
 		this.ctx = opt.ctx;
 
@@ -10,7 +8,7 @@ class Squares {
 		this.pressure = opt.pressure || 1;
 
 		this.fgColor = Color.hexToRgb(opt.bgColor);
-		this.fgColor[3] = this.pressure;
+		this.fgColor[3] = this.pressure * .5;
 		this.bgColor = Color.hexToRgb(opt.fgColor);
 		this.bgColor[3] = this.pressure;
 

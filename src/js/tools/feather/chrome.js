@@ -1,8 +1,6 @@
 
 class Chrome {
 	constructor(opt={}) {
-		this.mX = opt.width >> 1;
-		this.mY = opt.height >> 1;
 		this.cvs = opt.cvs;
 		this.ctx = opt.ctx;
 

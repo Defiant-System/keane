@@ -1,8 +1,6 @@
 
 class Circles {
 	constructor(opt={}) {
-		this.mX = opt.width >> 1;
-		this.mY = opt.height >> 1;
 		this.cvs = opt.cvs;
 		this.ctx = opt.ctx;
 
@@ -23,19 +21,19 @@ class Circles {
 	}
 
 	stroke(mX, mY) {
-		let dx = mX - this.mX;
-		let dy = mY - this.mY;
-		let d = Math.sqrt(dx * dx + dy * dy) * 2;
-		
-		let cx = Math.floor(mX / 100) * 100 + 50;
-		let cy = Math.floor(mY / 100) * 100 + 50;
-		
-		let steps = Math.floor( Math.random() * 10 );
-		let step_delta = d / steps;
+		let dx = mX - this.mX,
+			dy = mY - this.mY,
+			d = Math.sqrt(dx * dx + dy * dy) * 2,
+			cx = Math.floor(mX / 100) * 100 + 50,
+			cy = Math.floor(mY / 100) * 100 + 50,
+			steps = Math.floor(Math.random() * 10),
+			step_delta = d / steps,
+			pi2 = Math.PI * 2,
+			i = 0;
 
-		for (let i = 0; i < steps; i++) {
+		for (; i<steps; i++) {
 			this.ctx.beginPath();
-			this.ctx.arc( cx, cy, (steps - i) * step_delta, 0, Math.PI*2, true);
+			this.ctx.arc( cx, cy, (steps - i) * step_delta, 0, pi2, true);
 			this.ctx.stroke();
 		}
 

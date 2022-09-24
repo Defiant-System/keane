@@ -28,10 +28,15 @@ const FeatherTool = (type, opt) => {
 	let record = {
 		chrome: Chrome,
 		circles: Circles,
+		fur: Fur,
+		grid: Grid,
+		longfur: Longfur,
 		ribbon: Ribbon,
 		shaded: Shaded,
+		simple: Simple,
 		sketchy: Sketchy,
 		squares: Squares,
+		web: Web,
 	}
 
 	return new record[type](opt);
