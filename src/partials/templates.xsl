@@ -99,29 +99,34 @@
 
 <xsl:template name="layers">
 	<xsl:for-each select="//File/Layers/*">
-		<div class="row" data-click="select-row">
-			<xsl:attribute name="data-id"><xsl:value-of select="@id"/></xsl:attribute>
-			<xsl:choose>
-				<xsl:when test="./*[@type = 'folder']">
-					<div class="icon icon-folder"></div>
-				</xsl:when>
-				<xsl:when test="./*[@type = 'text']">
-					<div class="icon icon-text"></div>
-				</xsl:when>
-				<xsl:otherwise>
-					<div class="thumbnail"><canvas></canvas></div>
-				</xsl:otherwise>
-			</xsl:choose>
-			<div class="name"><xsl:value-of select="@name"/></div>
-			<div data-click="toggle-visibility">
-				<xsl:attribute name="class">icon
-					<xsl:if test="@state = 'hidden'"> icon-eye-off</xsl:if>
-					<xsl:if test="@state = 'visible'"> icon-eye-on</xsl:if>
-				</xsl:attribute>
-			</div>
-			<xsl:if test="./Fx"><div class="fx-applied"></div></xsl:if>
-		</div>
+		<xsl:call-template name="single-layer" />
 	</xsl:for-each>
+</xsl:template>
+
+
+<xsl:template name="single-layer">
+	<div class="row" data-click="select-row">
+		<xsl:attribute name="data-id"><xsl:value-of select="@id"/></xsl:attribute>
+		<xsl:choose>
+			<xsl:when test="./*[@type = 'folder']">
+				<div class="icon icon-folder"></div>
+			</xsl:when>
+			<xsl:when test="./*[@type = 'text']">
+				<div class="icon icon-text"></div>
+			</xsl:when>
+			<xsl:otherwise>
+				<div class="thumbnail"><canvas></canvas></div>
+			</xsl:otherwise>
+		</xsl:choose>
+		<div class="name"><xsl:value-of select="@name"/></div>
+		<div data-click="toggle-visibility">
+			<xsl:attribute name="class">icon
+				<xsl:if test="@state = 'hidden'"> icon-eye-off</xsl:if>
+				<xsl:if test="@state = 'visible'"> icon-eye-on</xsl:if>
+			</xsl:attribute>
+		</div>
+		<xsl:if test="./Fx"><div class="fx-applied"></div></xsl:if>
+	</div>
 </xsl:template>
 
 

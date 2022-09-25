@@ -4,8 +4,9 @@ class Layer {
 		// defaults
 		this._file = file;
 		this._ready = true;
+		this._id = content.id || `l${Date.now()}`;
+		this.name = content.name || "Untitled Layer";
 		this.type = "layer";
-		this.name = "Untitled Layer";
 		this.blendingMode = "normal";
 		this.opacity = 1;
 		this.visible = true;
@@ -14,15 +15,15 @@ class Layer {
 		this.width = file.width;
 		this.height = file.height;
 
-		// layer canvas
-		let { cvs, ctx } = Misc.createCanvas(file.width, file.height);
-		this.cvs = cvs;
-		this.ctx = ctx;
-
 		let top = content.top || 0;
 		let left = content.left || 0;
-		let width = file.width || 0;
-		let height = file.height || 0;
+		let width = file.oW || file.width || 0;
+		let height = file.oH || file.height || 0;
+
+		// layer canvas
+		let { cvs, ctx } = Misc.createCanvas(width, height);
+		this.cvs = cvs;
+		this.ctx = ctx;
 
 		// layer contents
 		switch (content.type) {
@@ -40,6 +41,14 @@ class Layer {
 				this.parseImage(content);
 				break;
 		}
+	}
+
+	get id() {
+		return this._id;
+	}
+
+	set id(value) {
+		this._id = value;
 	}
 
 	updateThumbnail() {

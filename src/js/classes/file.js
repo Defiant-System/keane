@@ -40,19 +40,11 @@ class File {
 			case "gif":
 			case "png":
 				content = { type: "image", blob: fsFile.blob };
-				layer = new Layer(this, content);
-				this.layers.push(layer);
-				// add layer data to xml
-				xLayer = $.nodeFromString(`<i type="layer" state="visible" name="${layer.name}"/>`);
-				this.xData.selectSingleNode("Layers").appendChild(xLayer);
+				this.dispatch({ content, type: "add-layer" });
 				break;
 			case "psd":
 				content = { type: "fill", color: opt.fill || "#ffffff" };
-				layer = new Layer(this, content);
-				this.layers.push(layer);
-				// add layer data to xml
-				xLayer = $.nodeFromString(`<i type="layer" state="visible" name="${layer.name}"/>`);
-				this.xData.selectSingleNode("Layers").appendChild(xLayer);
+				this.dispatch({ content, type: "add-layer" });
 				break;
 		}
 
@@ -178,6 +170,20 @@ class File {
 
 				APP.els.content.toggleClass("show-rulers", !this.showRulers);
 				break;
+			case "select-layer":
+				console.log(event);
+				break;
+
+			case "add-layer":
+				let uniqId = `l${Date.now()}`,
+					content = { uniqId, ...event.content },
+					layer = new Layer(this, content);
+				this.layers.push(layer);
+				// add layer data to xml
+				let xLayer = $.nodeFromString(`<i type="layer" state="visible" id="${uniqId}" name="${layer.name}"/>`);
+				this.xData.selectSingleNode("Layers").appendChild(xLayer);
+				// return layer
+				return layer;
 		}
 	}
 }
