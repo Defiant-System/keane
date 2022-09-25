@@ -8,7 +8,6 @@
 		this.doc = $(document);
 		this.els = {
 			root,
-			statusZoom: window.find(".status-bar .option .value"),
 			wrapper: root.find(".navigator-wrapper"),
 			zoomRect: root.find(".view-rect"),
 			zoomValue: root.find(".box-foot .value"),
@@ -80,7 +79,12 @@
 				data.top = _max(data.top, 0);
 				data.left = _max(data.left, 0);
 
-				// Self.els.zoomSlider.val(3);
+				// adjust zoom fields
+				ZOOM.map((z, i) => {
+					if (z.level === File.scale * 100) {
+						Self.dispatch({ type: "file-initial-scale", value: i });
+					}
+				});
 
 				for (let key in data) data[key] = _round(data[key]) +"px";
 				Self.els.zoomRect.css(data);
@@ -103,9 +107,12 @@
 
 			// custom events
 			case "input":
-				Self.zoomValue = ZOOM[Self.els.zoomSlider.val()].level;
+			case "file-initial-scale":
+				value = event.value || Self.els.zoomSlider.val();
+				value = _max(_min(+value, ZOOM.length - 1), 0);
+
+				Self.zoomValue = ZOOM[value].level;
 				Self.els.zoomValue.html(Self.zoomValue + "%");
-				Self.els.statusZoom.html(Self.zoomValue + "%");
 
 				if (event.type === "input") {
 					File.dispatch({ type: "set-scale", scale: Self.zoomValue / 100 });
