@@ -62,7 +62,7 @@ class Layer {
 	}
 
 	updateThumbnail() {
-		let index = this._file.activeLayerIndex;
+		// let index = this._file.activeLayerIndex;
 		let thumbCvsEl = keane.sidebar.layers.els.layerList.find(".row:nth-child(1) canvas");
 		let tCtx = thumbCvsEl[0].getContext("2d"),
 			width = thumbCvsEl.prop("offsetWidth"),

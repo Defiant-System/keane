@@ -49,7 +49,8 @@ class File {
 		}
 
 		// select top layer as default
-		this.activeLayerIndex = 0;
+		this._activeLayer = this.layers[0];
+		// this.activeLayerIndex = 0;
 
 		// initiate canvas
 		this.dispatch({ type: "set-canvas", width: this.width, height: this.height });
@@ -59,7 +60,11 @@ class File {
 	}
 
 	get activeLayer() {
-		return this.layers[this.activeLayerIndex];
+		return this._activeLayer;
+	}
+
+	setActiveLayer(id) {
+		this._activeLayer = this.layers.find(layer => layer.id === id);
 	}
 
 	get isReady() {
@@ -177,7 +182,7 @@ class File {
 				break;
 
 			case "select-layer":
-				console.log(event);
+				this.setActiveLayer(event.id);
 				break;
 			case "add-layer":
 				uniqId = `l${Date.now()}`;

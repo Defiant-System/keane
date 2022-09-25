@@ -43,8 +43,8 @@
 				event.el.parent().find(".active").removeClass("active");
 				event.el.addClass("active");
 
-				index = Self.els.layerList.find(".row").length - event.el.index();
-				File.dispatch({ type: "select-layer", index });
+				id = event.el.data("id");
+				File.dispatch({ type: "select-layer", id });
 				break;
 			case "toggle-visibility":
 				value = event.el.hasClass("icon-eye-off");
@@ -58,18 +58,19 @@
 				console.log(event.type);
 				break;
 			case "add-layer":
-				el = File.dispatch({ type: "add-layer", content: { name: "test", type: "fill", color: "#ffffff90" } });
+				el = File.dispatch({ type: "add-layer", content: { name: "test", type: "fill", color: "#ffffff00" } });
 				// console.log( el );
 
+				// add new row and auto focus (make active)
 				window.render({
 					data: File.xData,
 					match: `Layers/*[@id="${el.id}"]`,
 					template: "single-layer",
 					prepend: Self.els.layerList,
-				});
+				}).trigger("click");
 
+				// render file
 				File.render();
-
 				break;
 		}
 	}
