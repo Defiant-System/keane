@@ -29,6 +29,7 @@ class Layer {
 			case "fill":
 				this.ctx.fillStyle = content.color;
 				this.ctx.fillRect( left, top, width, height );
+				requestAnimationFrame(() => this.updateThumbnail());
 				break;
 			case "text":
 				break;

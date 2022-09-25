@@ -885,11 +885,11 @@ content {
 				}
 
 				span {
-					text-align: center;
+					// text-align: center;
 					display: inline-block;
 					width: 150px;
 					//height: 13px;
-					padding: 4px 7px 3px;
+					padding: 5px 21px 2px 7px;
 					text-overflow: ellipsis;
 					white-space: nowrap;
 					overflow: hidden;
@@ -921,12 +921,27 @@ content {
 				}
 			}
 
-			.option {
+			.new-file {
 				background: rgba(#344,.8);
-				padding: 2px 2px 0 11px;
+				padding: 2px 5px 0 11px;
 				border-radius: 0 11px 11px 0;
 				backdrop-filter: blur(@backgrop-blur);
 				font-size: 11px;
+				cursor: pointer;
+
+				&:hover {
+					color: #eee;
+
+					i:after {
+						opacity: 1;
+					}
+				}
+
+				i {
+					display: inline-block;
+					vertical-align: bottom;
+					top: 1px;
+				}
 			}
 		}
 

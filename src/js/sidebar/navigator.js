@@ -80,6 +80,8 @@
 				data.top = _max(data.top, 0);
 				data.left = _max(data.left, 0);
 
+				// Self.els.zoomSlider.val(3);
+
 				for (let key in data) data[key] = _round(data[key]) +"px";
 				Self.els.zoomRect.css(data);
 				Self.els.wrapper.css({ width: Self.navWidth +"px" });
