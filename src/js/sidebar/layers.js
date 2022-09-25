@@ -21,6 +21,8 @@
 			Self = APP.sidebar.layers,
 			File = Projector.file,
 			index,
+			value,
+			id,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -43,6 +45,13 @@
 
 				index = Self.els.layerList.find(".row").length - event.el.index();
 				File.dispatch({ type: "select-layer", index });
+				break;
+			case "toggle-visibility":
+				value = event.el.hasClass("icon-eye-off");
+				event.el.toggleClass("icon-eye-off", value);
+
+				id = event.el.parents(".row:first").data("id");
+				File.dispatch({ type: "toggle-layer-visibility", id, value });
 				break;
 			case "add-layer-folder":
 			case "remove-layer":

@@ -5,11 +5,12 @@ class Layer {
 		this._file = file;
 		this._ready = true;
 		this._id = content.id || `l${Date.now()}`;
+		this._blendingMode = "normal";
+		this._opacity = 1;
+		this._visible = true;
+
 		this.name = content.name || "Untitled Layer";
 		this.type = "layer";
-		this.blendingMode = "normal";
-		this.opacity = 1;
-		this.visible = true;
 
 		// dimensions
 		this.width = file.width;
@@ -49,6 +50,15 @@ class Layer {
 
 	set id(value) {
 		this._id = value;
+	}
+
+	get visible() {
+		return this._visible;
+	}
+
+	set visible(value) {
+		if (this._visible === !!value) return;
+		this._visible = !!value;
 	}
 
 	updateThumbnail() {

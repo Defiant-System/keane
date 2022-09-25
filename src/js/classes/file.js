@@ -75,6 +75,7 @@ class File {
 
 		// re-paints layers stack
 		this.layers.map(layer => {
+			if (!layer.visible) return;
 			switch (layer.type) {
 				case "layer":
 					// event object is layer - add to file canvas
@@ -90,6 +91,10 @@ class File {
 	dispatch(event) {
 		let APP = keane,
 			Proj = Projector,
+			uniqId,
+			content,
+			layer,
+			xLayer,
 			el;
 		//console.log(event);
 		switch (event.type) {
@@ -170,20 +175,27 @@ class File {
 
 				APP.els.content.toggleClass("show-rulers", !this.showRulers);
 				break;
+
 			case "select-layer":
 				console.log(event);
 				break;
-
 			case "add-layer":
-				let uniqId = `l${Date.now()}`,
-					content = { uniqId, ...event.content },
-					layer = new Layer(this, content);
+				uniqId = `l${Date.now()}`;
+				content = { uniqId, ...event.content };
+				layer = new Layer(this, content);
 				this.layers.push(layer);
 				// add layer data to xml
-				let xLayer = $.nodeFromString(`<i type="layer" state="visible" id="${uniqId}" name="${layer.name}"/>`);
+				xLayer = $.nodeFromString(`<i type="layer" state="visible" id="${uniqId}" name="${layer.name}"/>`);
 				this.xData.selectSingleNode("Layers").appendChild(xLayer);
 				// return layer
 				return layer;
+			case "toggle-layer-visibility":
+				layer = this.layers.find(layer => layer.id === event.id);
+				layer.visible = event.value;
+
+				// render file
+				this.render();
+				break;
 		}
 	}
 }
