@@ -89,6 +89,7 @@
 					shape,
 					_PI: Math.PI,
 					_atan2: Math.atan2,
+					_round: Math.round,
 				};
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
@@ -103,7 +104,16 @@
 				Drag.cursor.css({ transform: `rotate(${Drag.hue}deg)` });
 
 				Drag.boxHex = Color.hslToHex(Drag.hue, 1, .5);
+				Drag.rgb = Color.hexToRgb(Drag.boxHex);
 				Drag.shape.css({ "background-color": Drag.boxHex });
+
+				// rgb values
+				Self.els.iRed.val(Drag.rgb[0]);
+				Self.els.iGreen.val(Drag.rgb[1]);
+				Self.els.iBlue.val(Drag.rgb[2]);
+
+				// hue field
+				Self.els.iHue.val(Drag._round(Drag.hue) +"°");
 				break;
 			case "mouseup":
 				// remove class
