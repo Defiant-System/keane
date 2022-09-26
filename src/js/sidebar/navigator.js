@@ -116,6 +116,8 @@
 
 				if (event.type === "input") {
 					File.dispatch({ type: "set-scale", scale: Self.zoomValue / 100 });
+				} else {
+					Self.els.zoomSlider.val(event.value);
 				}
 				break;
 			case "zoom-out":
