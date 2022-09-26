@@ -87,6 +87,9 @@
 					cursor,
 					center,
 					shape,
+					alpha: 1,
+					sat: parseInt(Self.els.iSaturation.val(), 10) / 100,
+					lgh: parseInt(Self.els.iLightness.val(), 10) / 100,
 					_PI: Math.PI,
 					_atan2: Math.atan2,
 					_round: Math.round,
@@ -104,8 +107,10 @@
 				Drag.cursor.css({ transform: `rotate(${Drag.hue}deg)` });
 
 				Drag.boxHex = Color.hslToHex(Drag.hue, 1, .5);
-				Drag.rgb = Color.hexToRgb(Drag.boxHex);
 				Drag.shape.css({ "background-color": Drag.boxHex });
+
+				Drag.hex = Color.hslToHex(Drag.hue, Drag.sat, Drag.lgh, Drag.alpha);
+				Drag.rgb = Color.hexToRgb(Drag.hex);
 
 				// rgb values
 				Self.els.iRed.val(Drag.rgb[0]);
@@ -114,6 +119,9 @@
 
 				// hue field
 				Self.els.iHue.val(Drag._round(Drag.hue) +"°");
+
+				// broadcast event
+				karaqu.emit("set-fg-color", { hex: Drag.hex });
 				break;
 			case "mouseup":
 				// remove class
@@ -144,7 +152,7 @@
 						x: +el.prop("offsetWidth"),
 						y: +el.prop("offsetHeight"),
 					},
-					hue: 0,
+					hue: parseInt(Self.els.iHue.val(), 10),
 					alpha: 1,
 					_max: Math.max,
 					_min: Math.min,
@@ -181,6 +189,9 @@
 
 				// hex value
 				Self.els.iHex.val(Drag.hex.slice(1,7));
+
+				// broadcast event
+				karaqu.emit("set-fg-color", { hex: Drag.hex });
 				break;
 			case "mouseup":
 				// remove class
