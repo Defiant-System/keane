@@ -12,6 +12,7 @@
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
 		// temp
+		this.els.root.find(`div[data-content="info"]`).trigger("click");
 		this.els.root.find(`div[data-content="swatches"]`).trigger("click");
 	},
 	dispatch(event) {
@@ -29,7 +30,10 @@
 
 				let newBox = Self.els.root.find(`div[data-box="${el.data("content")}"]`),
 					oldBox = newBox.parent().find("> div[data-box]:not(.hidden)");
-
+				// signal events of change
+				Self[oldBox.data("box")].dispatch({ type: "disable" });
+				Self[newBox.data("box")].dispatch({ type: "enable" });
+				// UI update
 				oldBox.addClass("hidden");
 				newBox.removeClass("hidden");
 				break;
