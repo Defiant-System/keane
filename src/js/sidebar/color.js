@@ -44,6 +44,14 @@
 				// hsl = Color.rgbToHsl(rgb);
 				// console.log( hsl );
 
+				// Self.els.iHue.val();
+				// Self.els.iSaturation.val();
+				// Self.els.iLightness.val();
+
+				Self.els.iRed.val(rgb[0]);
+				Self.els.iGreen.val(rgb[1]);
+				Self.els.iBlue.val(rgb[2]);
+
 				Self.els.iHex.val(event.detail.hex.slice(1,7));
 				break;
 
