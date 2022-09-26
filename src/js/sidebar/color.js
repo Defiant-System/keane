@@ -76,7 +76,8 @@
 				if (el.hasClass("color-shape")) return Self.doColorBox(event);
 
 				// prepare drag object
-				let cursor = el.find(".circle-cursor"),
+				let shape = el.find(".color-shape"),
+					cursor = el.find(".circle-cursor"),
 					rect = el[0].getBoundingClientRect(),
 					center = {
 						x: rect.x + (+el.prop("offsetWidth") >> 1),
@@ -85,6 +86,7 @@
 				Self.drag = {
 					cursor,
 					center,
+					shape,
 					_PI: Math.PI,
 					_atan2: Math.atan2,
 				};
@@ -96,9 +98,12 @@
 				Self.doc.on("mousemove mouseup", Self.doColorWheel);
 				break;
 			case "mousemove":
-				let hue = Drag._atan2(event.clientY - Drag.center.y, event.clientX - Drag.center.x) * (180 / Drag._PI);
-				if (hue < 0) hue += 360;
-				Drag.cursor.css({ transform: `rotate(${hue}deg)` });
+				Drag.hue = Drag._atan2(event.clientY - Drag.center.y, event.clientX - Drag.center.x) * (180 / Drag._PI);
+				if (Drag.hue < 0) Drag.hue += 360;
+				Drag.cursor.css({ transform: `rotate(${Drag.hue}deg)` });
+
+				Drag.hex = Color.hslToHex(Drag.hue, 1, .5);
+				Drag.shape.css({ "background-color": Drag.hex });
 				break;
 			case "mouseup":
 				// remove class
