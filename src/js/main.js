@@ -11,6 +11,10 @@
 @import "modules/rulers.js"
 
 
+// wating for checkers bg to be created as pattern
+await Projector.init();
+
+
 const keane = {
 	init() {
 		// fast references
@@ -23,8 +27,6 @@ const keane = {
 		// init objects
 		UI.init();
 		Tabs.init();
-		// wating for checkers bg to be created as pattern
-		Projector.init();
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 	},

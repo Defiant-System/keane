@@ -104,6 +104,7 @@ const Projector = {
 			w = File.width,
 			h = File.height;
 		opt.imgCvs = opt.imgCvs || File.cvs[0];
+
 		// reset canvas
 		this.ctx.clear();
 		// this.cvs.prop({ width: window.width, height: window.height });

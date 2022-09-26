@@ -14,7 +14,7 @@
 		karaqu.on("file-selected", this.dispatch);
 
 		// temp
-		setTimeout(() => root.find(`.icon[data-click="add-layer"]`).trigger("click"), 500);
+		// setTimeout(() => root.find(`.icon[data-click="add-layer"]`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
