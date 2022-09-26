@@ -102,8 +102,8 @@
 				if (Drag.hue < 0) Drag.hue += 360;
 				Drag.cursor.css({ transform: `rotate(${Drag.hue}deg)` });
 
-				Drag.hex = Color.hslToHex(Drag.hue, 1, .5);
-				Drag.shape.css({ "background-color": Drag.hex });
+				Drag.boxHex = Color.hslToHex(Drag.hue, 1, .5);
+				Drag.shape.css({ "background-color": Drag.boxHex });
 				break;
 			case "mouseup":
 				// remove class
@@ -134,8 +134,12 @@
 						x: +el.prop("offsetWidth"),
 						y: +el.prop("offsetHeight"),
 					},
+					hue: 0,
+					alpha: 1,
 					_max: Math.max,
 					_min: Math.min,
+					_abs: Math.abs,
+					_round: Math.round,
 				};
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
@@ -146,6 +150,27 @@
 				let left = Drag._min(Drag._max(event.clientX + Drag.clickX, Drag.min.x), Drag.max.x),
 					top = Drag._min(Drag._max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y);
 				Drag.cursor.css({ top, left });
+
+				// calculate color from pos
+				let hsvValue = 1 - (((top + .01) / Drag.max.y * 100) / 100),
+					hsvSaturation = (left / Drag.max.x * 100) / 100;
+				Drag.lgh = (hsvValue / 2) * (2 - hsvSaturation);
+				Drag.sat = (hsvValue * hsvSaturation) / (1 - Drag._abs(2 * Drag.lgh - 1));
+
+				Drag.hex = Color.hslToHex(Drag.hue, Drag.sat, Drag.lgh, Drag.alpha);
+				Drag.rgb = Color.hexToRgb(Drag.hex);
+
+				// saturation & lightness
+				Self.els.iSaturation.val(Drag._round(Drag.sat * 100) +"%");
+				Self.els.iLightness.val(Drag._round(Drag.lgh * 100) +"%");
+
+				// rgb values
+				Self.els.iRed.val(Drag.rgb[0]);
+				Self.els.iGreen.val(Drag.rgb[1]);
+				Self.els.iBlue.val(Drag.rgb[2]);
+
+				// hex value
+				Self.els.iHex.val(Drag.hex.slice(1,7));
 				break;
 			case "mouseup":
 				// remove class
