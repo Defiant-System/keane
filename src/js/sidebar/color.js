@@ -64,26 +64,41 @@
 	doColorWheel(event) {
 		let APP = keane,
 			Self = APP.sidebar.color,
-			Drag = Self.drag,
-			el;
+			Drag = Self.drag;
 		switch (event.type) {
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
-				// prepare drag object
-				el = $(event.target);
+				// origin element
+				let el = $(event.target);
 				// handle areas
 				if (el.hasClass("negative-space")) return;
 				if (el.hasClass("color-shape")) return Self.doColorBox(event);
 
-				return console.log( 1 );
-
+				// prepare drag object
+				let cursor = el.find(".circle-cursor"),
+					rect = el[0].getBoundingClientRect(),
+					center = {
+						x: rect.x + (+el.prop("offsetWidth") >> 1),
+						y: rect.y + (+el.prop("offsetHeight") >> 1),
+					};
+				Self.drag = {
+					cursor,
+					center,
+					_PI: Math.PI,
+					_atan2: Math.atan2,
+				};
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
+				// force cursor to position to mouse
+				Self.doColorWheel({ type: "mousemove", clientX: event.clientX, clientY: event.clientY });
 				// bind event handlers
 				Self.doc.on("mousemove mouseup", Self.doColorWheel);
 				break;
 			case "mousemove":
+				let hue = Drag._atan2(event.clientY - Drag.center.y, event.clientX - Drag.center.x) * (180 / Drag._PI);
+				if (hue < 0) hue += 360;
+				Drag.cursor.css({ transform: `rotate(${hue}deg)` });
 				break;
 			case "mouseup":
 				// remove class
@@ -96,9 +111,7 @@
 	doColorBox(event) {
 		let APP = keane,
 			Self = APP.sidebar.color,
-			Drag = Self.drag,
-			_max = Math.max,
-			_min = Math.min;
+			Drag = Self.drag;
 		switch (event.type) {
 			case "mousedown":
 				// prevent default behaviour
@@ -115,7 +128,9 @@
 					max: {
 						x: +el.prop("offsetWidth"),
 						y: +el.prop("offsetHeight"),
-					}
+					},
+					_max: Math.max,
+					_min: Math.min,
 				};
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
@@ -123,8 +138,8 @@
 				Self.doc.on("mousemove mouseup", Self.doColorBox);
 				break;
 			case "mousemove":
-				let left = _min(_max(event.clientX + Drag.clickX, Drag.min.x), Drag.max.x),
-					top = _min(_max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y);
+				let left = Drag._min(Drag._max(event.clientX + Drag.clickX, Drag.min.x), Drag.max.x),
+					top = Drag._min(Drag._max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y);
 				Drag.cursor.css({ top, left });
 				break;
 			case "mouseup":
