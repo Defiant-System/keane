@@ -1210,7 +1210,6 @@ content {
 						}
 
 						.box-cursor {
-							// display: none;
 							position: absolute;
 							top: 0px; // 7, 172
 							left: 0px; // 38, 185
@@ -1218,9 +1217,9 @@ content {
 							height: 12px;
 							z-index: 2;
 							border-radius: 50%;
-							border: 2px solid #000;
-							pointer-events: none;
+							border: 2px solid rgba(0,0,0,.75);
 							transform: translateX(-6px) translateY(-6px);
+							pointer-events: none;
 
 							&:before {
 								content: "";
@@ -1243,7 +1242,7 @@ content {
 							z-index: 3;
 							transform: rotate(45deg);
 							transform-origin: 0 100%;
-							// background-color: rgba(255,255,255,.15);
+							pointer-events: none;
 
 							&:before,
 							&:after {
@@ -1267,6 +1266,16 @@ content {
 						}
 					}
 
+					.negative-space {
+						position: absolute;
+						top: 19px;
+						left: 19px;
+						right: 19px;
+						bottom: 19px;
+						border-radius: inherit;
+						background: transparent;
+					}
+
 					.color-wheel {
 						position: relative;
 						display: block;
@@ -1274,7 +1283,6 @@ content {
 						width: 166px;
 						height: 166px;
 						border-radius: 50%;
-						// background: url(~/img/sprite.png) 0px 0px no-repeat;
 						filter: drop-shadow(0 1px 1px rgba(#000, .3));
 						transform-origin: 0% 50%;
 
@@ -1296,10 +1304,9 @@ content {
 						}
 
 						.color-shape {
-							//background-color: rgba(#fff, .5);
-							//overflow: hidden;
 							position: absolute;
-							pointer-events: none;
+							z-index: 4;
+							// pointer-events: none;
 
 							&.rectangle {
 								background: var(--color);

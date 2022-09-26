@@ -129,8 +129,8 @@
 				Self.els.zoomSlider.val(value).trigger("input");
 				break;
 			case "pan-canvas":
-				top = _round((event.y / event.max.y) * event.max.h) + Proj.aY;
-				left = _round((event.x / event.max.x) * event.max.w) + Proj.aX;
+				top = _round((event.top / event.max.y) * event.max.h) + Proj.aY;
+				left = _round((event.left / event.max.x) * event.max.w) + Proj.aX;
 				//if (isNaN(top) || isNaN(left)) return;
 
 				// forward event to canvas
@@ -145,15 +145,13 @@
 			Proj = Projector,
 			File = Proj.file,
 			_max = Math.max,
-			_min = Math.min,
-			x, y,
-			el;
+			_min = Math.min;
 		switch (event.type) {
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
 				// prepare drag object
-				el = $(event.target);
+				let el = $(event.target);
 				Self.drag = {
 					el,
 					clickX: +el.prop("offsetLeft") - event.clientX,
@@ -172,12 +170,12 @@
 				Self.doc.on("mousemove mouseup", Self.pan);
 				break;
 			case "mousemove":
-				x = _min(_max(event.clientX + Drag.clickX, Drag.min.x), Drag.max.x);
-				y = _min(_max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y);
+				let left = _min(_max(event.clientX + Drag.clickX, Drag.min.x), Drag.max.x),
+					top = _min(_max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y);
 				// moves navigator view rectangle
-				Drag.el.css({ top: y +"px", left: x +"px" });
+				Drag.el.css({ top, left });
 				// emit pan-event
-				Self.dispatch({ type: "pan-canvas", ...Drag, x, y });
+				Self.dispatch({ type: "pan-canvas", ...Drag, top, left });
 				break;
 			case "mouseup":
 				// remove class
