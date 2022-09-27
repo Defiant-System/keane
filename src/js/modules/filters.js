@@ -55,9 +55,10 @@ const Filters = {
 	clouds(pixels) {
 		let File = Projector.file,
 			bg = ColorLib.hexToRgb(File.bgColor),
-			fg = ColorLib.hexToRgb(File.fgColor);
-		// console.log( bg, fg );
-		let simplex = new SimplexNoise,
+			fg = ColorLib.hexToRgb(File.fgColor),
+			lerp = (v0, v1, t) => (1 - t) * v0 + t * v1,
+		
+			simplex = new SimplexNoise,
 			d = pixels.data,
 			w = pixels.width,
 			h = pixels.height,
@@ -74,10 +75,11 @@ const Filters = {
 			};
 		for (let x=0; x<w; x++) {
 			for (let y=0; y<h; y++) {
-				let o = (x + y * w) * 4;
-				d[o + 0] =
-                d[o + 1] =
-                d[o + 2] = noise(x, y) * 255;
+				let o = (x + y * w) * 4,
+					n = noise(x, y);
+				d[o + 0] = lerp(bg.r, fg.r, n);
+                d[o + 1] = lerp(bg.g, fg.g, n);
+                d[o + 2] = lerp(bg.b, fg.b, n);
                 d[o + 3] = 255;
 			}
 		}

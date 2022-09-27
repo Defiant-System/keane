@@ -14,11 +14,11 @@
 		karaqu.on("file-selected", this.dispatch);
 
 		// temp
-		// setTimeout(() => {
-		// 	root.find(`.icon[data-click="add-layer"]`).trigger("click");
+		setTimeout(() => {
+			root.find(`.icon[data-click="add-layer"]`).trigger("click");
 			
-		// 	setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
-		// }, 500);
+			setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
+		}, 500);
 	},
 	dispatch(event) {
 		let APP = keane,

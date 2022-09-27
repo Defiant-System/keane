@@ -27,11 +27,6 @@ const Projector = {
 			};
 			image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
 		});
-
-		setTimeout(() => {
-			this.ctx.fillStyle = "#ff00ff";
-			this.ctx.fillRect(20, 20, 70, 70);
-		}, 1500);
 	},
 	dispatch(event) {
 		let APP = keane,
