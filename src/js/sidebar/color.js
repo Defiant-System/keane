@@ -40,6 +40,9 @@
 		switch (event.type) {
 			// subscribed events
 			case "set-fg-color":
+				// exit if event originated from "doColorWheel" or "doColorBox"
+				if (event.detail.uiDone) return;
+
 				rgb = ColorLib.hexToRgb(event.detail.hex);
 				hsl = ColorLib.rgbToHsl(rgb);
 				hsv = ColorLib.hexToHsv(event.detail.hex);
@@ -138,9 +141,8 @@
 
 				// hue field
 				Self.els.iHue.val(Drag._round(Drag.hue) +"°");
-
 				// broadcast event
-				// karaqu.emit("set-fg-color", { hex: Drag.hex });
+				karaqu.emit("set-fg-color", { hex: Drag.hex, uiDone: true });
 				break;
 			case "mouseup":
 				// remove class
@@ -209,9 +211,8 @@
 
 				// hex value
 				Self.els.iHex.val(Drag.hex.slice(1,7));
-
 				// broadcast event
-				// karaqu.emit("set-fg-color", { hex: Drag.hex });
+				karaqu.emit("set-fg-color", { hex: Drag.hex, uiDone: true });
 				break;
 			case "mouseup":
 				// remove class
