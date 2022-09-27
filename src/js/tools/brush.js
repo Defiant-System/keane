@@ -336,7 +336,6 @@
 		@import "feather/longfur.js"
 		@import "feather/ribbon.js"
 		@import "feather/shaded.js"
-		@import "feather/simple.js"
 		@import "feather/sketchy.js"
 		@import "feather/squares.js"
 		@import "feather/web.js"
@@ -349,7 +348,6 @@
 				longfur: Longfur,
 				ribbon: Ribbon,
 				shaded: Shaded,
-				simple: Simple,
 				sketchy: Sketchy,
 				squares: Squares,
 				web: Web,

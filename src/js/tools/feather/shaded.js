@@ -7,11 +7,12 @@ class Shaded {
 		this.size = opt.size || 1;
 		this.pressure = opt.pressure || 1e2;
 
-		this.fgColor = Color.hexToRgb(opt.fgColor);
-		this.fgColor[3] = this.pressure / 1e5;
+		let rgba = ColorLib.hexToRgb(opt.fgColor);
+		rgba.a = this.pressure / 1e5;
 		
+		this.rgba = rgba;
 		this.ctx.lineWidth = this.size;
-		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
+		this.ctx.strokeStyle = `rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})`;
 		this.ctx.globalCompositeOperation = opt.blend || "source-over";
 
 		this.points = [];
@@ -30,11 +31,11 @@ class Shaded {
 			let dx = p[0] - this.points[this.count][0],
 				dy = p[1] - this.points[this.count][1],
 				d = dx * dx + dy * dy,
-				color = this.fgColor;
+				rgba = this.rgba;
 
 			if (d < 1e3) {
-				this.fgColor[3] = (1 - (d / 1e3)) * 0.001 * this.pressure;
-				this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
+				rgba.a = (1 - (d / 1e3)) * 0.001 * this.pressure;
+				this.ctx.strokeStyle = `rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})`;
 
 				this.ctx.beginPath();
 				this.ctx.moveTo(this.points[this.count][0], this.points[this.count][1]);

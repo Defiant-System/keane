@@ -7,11 +7,11 @@ class Ribbon {
 		this.size = opt.size || 1;
 		this.pressure = opt.pressure || 1e2;
 		
-		this.fgColor = Color.hexToRgb(opt.fgColor);
-		this.fgColor[3] = this.pressure / 25e2;
-
+		let rgba = ColorLib.hexToRgb(opt.fgColor);
+		rgba.a = this.pressure / 25e2;
+		
 		this.ctx.lineWidth = this.size;
-		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
+		this.ctx.strokeStyle = `rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})`;
 		this.ctx.globalCompositeOperation = opt.blend || "source-over";
 
 		this.painters = [...Array(50)].map((e, i) => ({

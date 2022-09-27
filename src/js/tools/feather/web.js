@@ -5,7 +5,7 @@ class Web {
 		this.ctx = opt.ctx;
 		this.size = opt.size || 1;
 		this.pressure = opt.pressure || 1e2;
-		this.fgColor = Color.hexToRgb(opt.fgColor);
+		this.fgColor = ColorLib.hexToRgb(opt.fgColor);
 		
 		this.ctx.lineWidth = this.size;
 		this.ctx.globalCompositeOperation = opt.blend || "source-over";
@@ -22,15 +22,15 @@ class Web {
 	stroke(mX, mY) {
 		this.points.push([mX, mY]);
 
-		this.fgColor[3] = this.pressure / 5e3;
-		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
+		this.fgColor.a = this.pressure / 5e3;
+		this.ctx.strokeStyle = `rgba(${this.fgColor.r},${this.fgColor.g},${this.fgColor.b},${this.fgColor.a})`;
 		this.ctx.beginPath();
 		this.ctx.moveTo(this.mX, this.mY);
 		this.ctx.lineTo(mX, mY);
 		this.ctx.stroke();
 
-		this.fgColor[3] = this.pressure / 1e3;
-		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
+		this.fgColor.a = this.pressure / 1e3;
+		this.ctx.strokeStyle = `rgba(${this.fgColor.r},${this.fgColor.g},${this.fgColor.b},${this.fgColor.a})`;
 		this.points.map(p => {
 			let dx = p[0] - this.points[this.count][0],
 				dy = p[1] - this.points[this.count][1],

@@ -32,7 +32,7 @@
 			case "select-color":
 				el = $(event.target);
 				rgb = el.css("background-color");
-				hex = Color.rgbToHex(rgb);
+				hex = ColorLib.rgbToHex(rgb);
 				// broadcast event
 				karaqu.emit("set-fg-color", { hex });
 				break;

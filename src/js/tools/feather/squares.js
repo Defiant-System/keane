@@ -5,16 +5,16 @@ class Squares {
 		this.ctx = opt.ctx;
 
 		this.size = opt.size || 1;
-		this.pressure = opt.pressure || 1e2
+		this.pressure = (opt.pressure || 1e2) / 1e2;
 
-		this.fgColor = Color.hexToRgb(opt.bgColor);
-		this.fgColor[3] = this.pressure / 5e2;
-		this.bgColor = Color.hexToRgb(opt.fgColor);
-		this.bgColor[3] = this.pressure;
+		this.fgColor = ColorLib.hexToRgb(opt.bgColor);
+		this.fgColor.a = this.pressure;
+		this.bgColor = ColorLib.hexToRgb(opt.fgColor);
+		this.bgColor.a = this.pressure;
 
 		this.ctx.lineWidth = this.size;
-		this.ctx.fillStyle = `rgba(${this.bgColor.join(",")})`;
-		this.ctx.strokeStyle = `rgba(${this.fgColor.join(",")})`;
+		this.ctx.fillStyle = `rgba(${this.bgColor.r},${this.bgColor.g},${this.bgColor.b},${this.bgColor.a})`;
+		this.ctx.strokeStyle = `rgba(${this.fgColor.r},${this.fgColor.g},${this.fgColor.b},${this.fgColor.a})`;
 		this.ctx.globalCompositeOperation = opt.blend || "source-over";
 	}
 
