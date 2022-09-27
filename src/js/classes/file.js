@@ -8,8 +8,8 @@ class File {
 		this.scale = 1;
 		this.width = opt.width || 1;
 		this.height = opt.height || 1;
-		this.bgColor = "#000000";
-		this.fgColor = "#ffffff";
+		this.bgColor = "#000000ff";
+		this.fgColor = "#ffffffff";
 		this.lineWidth = 1;
 		this.showRulers = true;
 

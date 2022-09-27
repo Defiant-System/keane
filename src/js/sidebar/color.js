@@ -27,7 +27,7 @@
 		karaqu.on("set-fg-color", this.dispatch);
 
 		// temp
-		setTimeout(() => window.find(`.swatches-wrapper > div:nth(0)`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.swatches-wrapper > div:nth(0)`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -124,11 +124,12 @@
 				if (Drag.hue < 0) Drag.hue += 360;
 				Drag.cursor.css({ transform: `rotate(${Drag.hue}deg)` });
 
-				Drag.boxHex = Color.hslToHex(Drag.hue, 1, .5);
+				Drag.boxHex = ColorLib.hslToHex({ h: Drag.hue, s: 1, l: .5, a: 1 });
 				Drag.shape.css({ "background-color": Drag.boxHex });
 
-				Drag.hex = Color.hslToHex(Drag.hue, Drag.sat, Drag.lgh, Drag.alpha);
-				Drag.rgb = Color.hexToRgb(Drag.hex);
+				let hsl = { h: Drag.hue, s: Drag.sat, l: Drag.lgh, a: Drag.alpha };
+				Drag.hex = ColorLib.hslToHex(hsl);
+				Drag.rgb = ColorLib.hexToRgb(Drag.hex);
 
 				// rgb values
 				Self.els.iRed.val(Drag.rgb[0]);
@@ -193,8 +194,9 @@
 				Drag.lgh = (hsvValue / 2) * (2 - hsvSaturation);
 				Drag.sat = (hsvValue * hsvSaturation) / (1.0001 - Drag._abs(2 * Drag.lgh - 1));
 
-				Drag.hex = Color.hslToHex(Drag.hue, Drag.sat, Drag.lgh, Drag.alpha);
-				Drag.rgb = Color.hexToRgb(Drag.hex);
+				let hsl = { h: Drag.hue, s: Drag.sat, l: Drag.lgh, a: Drag.alpha };
+				Drag.hex = ColorLib.hslToHex(hsl);
+				Drag.rgb = ColorLib.hexToRgb(Drag.hex);
 
 				// saturation & lightness
 				Self.els.iSaturation.val(Drag._round(Drag.sat * 100) +"%");

@@ -16,7 +16,8 @@
 		// temp
 		// setTimeout(() => {
 		// 	root.find(`.icon[data-click="add-layer"]`).trigger("click");
-		// 	// keane.dispatch({ type: "filter-render", arg: "clouds" });
+			
+		// 	setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
 		// }, 500);
 	},
 	dispatch(event) {

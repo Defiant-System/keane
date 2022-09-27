@@ -32,9 +32,6 @@ const keane = {
 		Filters.init();
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
-
-		// temp
-		// setTimeout(() => this.dispatch({ type: "filter-render", arg: "clouds" }), 500);
 	},
 	dispatch(event) {
 		let Self = keane,

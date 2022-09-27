@@ -12,7 +12,7 @@
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
 		// temp
-		// this.els.root.find(`div[data-content="info"]`).trigger("click");
+		this.els.root.find(`div[data-content="color"]`).trigger("click");
 		// this.els.root.find(`div[data-content="swatches"]`).trigger("click");
 	},
 	dispatch(event) {

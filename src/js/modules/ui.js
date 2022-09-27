@@ -281,8 +281,8 @@ const UI = {
 				data = {
 					type: Self.srcEl.data("change"),
 					el: Self.srcEl,
-					old: Color.rgbToHex(Self.srcEl.find(".value").css("background-color")),
-					value: Color.rgbToHex(el.css("background-color")),
+					old: ColorLib.rgbToHex(Self.srcEl.find(".value").css("background-color")),
+					value: ColorLib.rgbToHex(el.css("background-color")),
 				};
 				if (data.old === data.value) return;
 				// dispatch event to be forwarded
@@ -297,7 +297,7 @@ const UI = {
 			// custom events
 			case "set-initial-value":
 				// initial value
-				value = Color.rgbToHex(event.el.find(".value").css("background-color"));
+				value = ColorLib.rgbToHex(event.el.find(".value").css("background-color"));
 				Self.menu.find(`.swatch[style="background: ${value};"]`).addClass("selected")
 				break;
 		}

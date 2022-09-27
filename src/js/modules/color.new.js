@@ -46,6 +46,7 @@ const ColorLib = {
 		};
 	},
 	rgbToHex(rgb) {
+		if (typeof rgb === "string") rgb = this.parseRgb(rgb);
 		let d = "0123456789abcdef".split(""),
 			hex = x => isNaN(x) ? "00" : d[(x-x%16)/16] + d[x%16],
 			r = hex(Math.round(rgb.r)),

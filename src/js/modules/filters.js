@@ -53,6 +53,10 @@ const Filters = {
 		return pixels;
 	},
 	clouds(pixels) {
+		let File = Projector.file,
+			bg = ColorLib.hexToRgb(File.bgColor),
+			fg = ColorLib.hexToRgb(File.fgColor);
+		// console.log( bg, fg );
 		let simplex = new SimplexNoise,
 			d = pixels.data,
 			w = pixels.width,
