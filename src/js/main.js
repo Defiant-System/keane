@@ -10,6 +10,7 @@
 @import "modules/tabs.js"
 @import "modules/projector.js"
 @import "modules/rulers.js"
+@import "modules/filters.js"
 
 
 // wating for checkers bg to be created as pattern
@@ -28,8 +29,12 @@ const keane = {
 		// init objects
 		UI.init();
 		Tabs.init();
+		Filters.init();
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
+
+		// temp
+		// setTimeout(() => this.dispatch({ type: "filter-render", arg: "clouds" }), 500);
 	},
 	dispatch(event) {
 		let Self = keane,
@@ -74,7 +79,19 @@ const keane = {
 				// show blank view
 				Self.els.content.addClass("show-blank-view");
 				break;
-			
+
+			case "filter-render":
+				let args = event.arg.split(","),
+					layer = Projector.file.activeLayer,
+					pixels = Filters.getPixels(layer.cvs[0]),
+					filtered = Filters[args[0]](pixels, ...args.slice(1));
+				layer.ctx.putImageData(filtered, 0, 0);
+				// update sidebar/layers thumbnail
+				layer.updateThumbnail();
+				// render file
+				Projector.file.render();
+				break;
+
 			// proxy events
 			case "select-tool":
 				return Self.tools.dispatch(event)

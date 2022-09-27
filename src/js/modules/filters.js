@@ -158,18 +158,18 @@ const Filters = {
 			src = pixels.data,
 			sw = pixels.width,
 			sh = pixels.height,
-			w = width = sw,
-			h = height = sh,
-			data = new Float32Array(w*h*4),
+			width = sw,
+			height = sh,
+			data = new Float32Array(width * height * 4),
 			output = { width, height, data },
 			dst = output.data,
 			alphaFac = opaque ? 1 : 0;
 
-		for (let y=0; y<h; y++) {
-			for (let x=0; x<w; x++) {
+		for (let y=0; y<height; y++) {
+			for (let x=0; x<width; x++) {
 				let sy = y,
 					sx = x,
-					dstOff = (y*w+x)*4,
+					dstOff = (y * width + x)*4,
 					r=0, g=0, b=0, a=0;
 				for (let cy=0; cy<side; cy++) {
 					for (let cx=0; cx<side; cx++) {
