@@ -27,7 +27,7 @@
 		karaqu.on("set-fg-color", this.dispatch);
 
 		// temp
-		setTimeout(() => window.find(`.swatches-wrapper > div:nth(5)`).trigger("click"), 500);
+		setTimeout(() => window.find(`.swatches-wrapper > div:nth(0)`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -40,19 +40,30 @@
 			// subscribed events
 			case "set-fg-color":
 				// console.log( event.detail );
-				rgb = Color.hexToRgb(event.detail.hex);
-				// hsl = Color.rgbToHsl(rgb);
+				rgb = ColorLib.hexToRgb(event.detail.hex);
+				hsl = ColorLib.rgbToHsl(rgb);
 				// console.log( hsl );
 
-				// Self.els.iHue.val();
-				// Self.els.iSaturation.val();
-				// Self.els.iLightness.val();
+				Self.els.iHue.val(hsl.h +"°");
+				Self.els.iSaturation.val(hsl.s +"%");
+				Self.els.iLightness.val(hsl.l +"%");
 
-				Self.els.iRed.val(rgb[0]);
-				Self.els.iGreen.val(rgb[1]);
-				Self.els.iBlue.val(rgb[2]);
+				Self.els.iRed.val(rgb.r);
+				Self.els.iGreen.val(rgb.g);
+				Self.els.iBlue.val(rgb.b);
 
 				Self.els.iHex.val(event.detail.hex.slice(1,7));
+
+				let box = Self.els.colorWheel.find(".color-shape"),
+					top = +box.prop("offsetHeight") * (1-(hsl.s/100)),
+					left = +box.prop("offsetWidth") * (hsl.l/100),
+					boxHex = ColorLib.hslToHex({ ...hsl, s: 1, l: .5 });
+console.log( hsl );
+console.log( left );
+				box.css({ "background-color": boxHex });
+
+				Self.els.colorWheel.find(".box-cursor").css({ top, left });
+				Self.els.colorWheel.find(".circle-cursor").css({ transform: `rotate(${hsl.h}deg)` });
 				break;
 
 			// custom events

@@ -5,6 +5,7 @@
 
 @import "modules/misc.js"
 @import "modules/color.js"
+@import "modules/color.new.js"
 @import "modules/ui.js"
 @import "modules/tabs.js"
 @import "modules/projector.js"
