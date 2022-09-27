@@ -17,11 +17,7 @@ const ColorLib = {
 		return { r, g, b, a };
 	},
 	hslToHex(hsl) {
-		let h = hsl.h,
-			s = hsl.s,
-			l = hsl.l,
-			a = hsl.a || 1,
-			rgb = this.hslToRgb({ h, s, l, a });
+		let rgb = this.hslToRgb(hsl);
 		return this.rgbToHex(rgb);
 	},
 	rgbToHsv(rgb) {
@@ -60,6 +56,14 @@ const ColorLib = {
 	rgbToHsl(rgb) {
 		let hsv = this.rgbToHsv(rgb);
 		return this.hsvToHsl(hsv);
+	},
+	hexToHsv(hex) {
+		let rgb = this.hexToRgb(hex);
+		return this.rgbToHsv(rgb);
+	},
+	hsvToHex(hsv) {
+		let hsl = this.hsvToHsl(hsv);
+		return this.hslToHex(hsl);
 	},
 	hsvToHsl(hsv) {
 		let _round = Math.round,

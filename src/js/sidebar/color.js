@@ -33,19 +33,19 @@
 		let APP = keane,
 			Self = APP.sidebar.color,
 			rgb,
+			hsv,
 			hsl,
 			el;
 		// console.log(event);
 		switch (event.type) {
 			// subscribed events
 			case "set-fg-color":
-				// console.log( event.detail );
 				rgb = ColorLib.hexToRgb(event.detail.hex);
 				hsl = ColorLib.rgbToHsl(rgb);
-				// console.log( hsl );
+				hsv = ColorLib.hexToHsv(event.detail.hex);
 
-				Self.els.iHue.val(hsl.h +"°");
-				Self.els.iSaturation.val(hsl.s +"%");
+				Self.els.iHue.val(hsv.h +"°");
+				Self.els.iSaturation.val(hsv.s +"%");
 				Self.els.iLightness.val(hsl.l +"%");
 
 				Self.els.iRed.val(rgb.r);
@@ -55,15 +55,14 @@
 				Self.els.iHex.val(event.detail.hex.slice(1,7));
 
 				let box = Self.els.colorWheel.find(".color-shape"),
-					top = +box.prop("offsetHeight") * (1-(hsl.s/100)),
-					left = +box.prop("offsetWidth") * (hsl.l/100),
-					boxHex = ColorLib.hslToHex({ ...hsl, s: 1, l: .5 });
-console.log( hsl );
-console.log( left );
+					w = +box.prop("offsetHeight"),
+					left = w * (hsv.s/100),
+					top = w * (1-(hsv.v/100)),
+					boxHex = ColorLib.hslToHex({ ...hsv, s: 1, l: .5 });
 				box.css({ "background-color": boxHex });
 
 				Self.els.colorWheel.find(".box-cursor").css({ top, left });
-				Self.els.colorWheel.find(".circle-cursor").css({ transform: `rotate(${hsl.h}deg)` });
+				Self.els.colorWheel.find(".circle-cursor").css({ transform: `rotate(${hsv.h}deg)` });
 				break;
 
 			// custom events
@@ -140,7 +139,7 @@ console.log( left );
 				Self.els.iHue.val(Drag._round(Drag.hue) +"°");
 
 				// broadcast event
-				karaqu.emit("set-fg-color", { hex: Drag.hex });
+				// karaqu.emit("set-fg-color", { hex: Drag.hex });
 				break;
 			case "mouseup":
 				// remove class
@@ -189,10 +188,10 @@ console.log( left );
 				Drag.cursor.css({ top, left });
 
 				// calculate color from pos
-				let hsvValue = 1 - (((top + .01) / Drag.max.y * 100) / 100),
+				let hsvValue = 1 - ((top / Drag.max.y * 100) / 100),
 					hsvSaturation = (left / Drag.max.x * 100) / 100;
 				Drag.lgh = (hsvValue / 2) * (2 - hsvSaturation);
-				Drag.sat = (hsvValue * hsvSaturation) / (1 - Drag._abs(2 * Drag.lgh - 1));
+				Drag.sat = (hsvValue * hsvSaturation) / (1.0001 - Drag._abs(2 * Drag.lgh - 1));
 
 				Drag.hex = Color.hslToHex(Drag.hue, Drag.sat, Drag.lgh, Drag.alpha);
 				Drag.rgb = Color.hexToRgb(Drag.hex);
@@ -210,7 +209,7 @@ console.log( left );
 				Self.els.iHex.val(Drag.hex.slice(1,7));
 
 				// broadcast event
-				karaqu.emit("set-fg-color", { hex: Drag.hex });
+				// karaqu.emit("set-fg-color", { hex: Drag.hex });
 				break;
 			case "mouseup":
 				// remove class
