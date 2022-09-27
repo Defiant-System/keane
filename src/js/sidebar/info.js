@@ -9,7 +9,7 @@
 			root,
 			hslH: root.find(".value.hslH"),
 			hslS: root.find(".value.hslS"),
-			hslV: root.find(".value.hslV"),
+			hslL: root.find(".value.hslL"),
 			rgbR: root.find(".value.rgbR"),
 			rgbG: root.find(".value.rgbG"),
 			rgbB: root.find(".value.rgbB"),
@@ -32,16 +32,16 @@
 			case "mouse-move":
 				isOn = Detail.isOnCanvas;
 				
-				Self.els.hslH.html(isOn ? Detail.hsl[0] +"°" : "");
-				Self.els.hslS.html(isOn ? Detail.hsl[1] +"%" : "");
-				Self.els.hslV.html(isOn ? Detail.hsl[2] +"%" : "");
+				Self.els.hslH.html(isOn ? Detail.hsl.h +"°" : "");
+				Self.els.hslS.html(isOn ? Detail.hsl.s +"%" : "");
+				Self.els.hslL.html(isOn ? Detail.hsl.l +"%" : "");
 				
-				Self.els.rgbR.html(isOn ? Detail.rgba[0] : "");
-				Self.els.rgbG.html(isOn ? Detail.rgba[1] : "");
-				Self.els.rgbB.html(isOn ? Detail.rgba[2] : "");
+				Self.els.rgbR.html(isOn ? Detail.rgb.r : "");
+				Self.els.rgbG.html(isOn ? Detail.rgb.g : "");
+				Self.els.rgbB.html(isOn ? Detail.rgb.b : "");
 				// alpha value is shown if it's not 100%
-				Self.els.rgbA.html(isOn ? Math.round((Detail.rgba[3] / 255) * 100) +"%" : "");
-				Self.els.rgbA.parent().toggleClass("hidden", isOn && Detail.rgba[3] !== 255);
+				Self.els.rgbA.html(isOn ? Math.round((Detail.rgb.a / 255) * 100) +"%" : "");
+				Self.els.rgbA.parent().toggleClass("hidden", isOn && Detail.rgb.a !== 255);
 
 				Self.els.mouseY.html(isOn ? Detail.top : "");
 				Self.els.mouseX.html(isOn ? Detail.left : "");

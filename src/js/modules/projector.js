@@ -27,6 +27,11 @@ const Projector = {
 			};
 			image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
 		});
+
+		setTimeout(() => {
+			this.ctx.fillStyle = "#ff00ff";
+			this.ctx.fillRect(20, 20, 70, 70);
+		}, 1500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -45,10 +50,14 @@ const Projector = {
 				data.left = _round(_min(_max(event.offsetX - File.oX, 0), File.width) / File.scale);
 				data.offsetY = _min(_max(event.offsetY, File.oY), File.oY + File.height) - Self.aY;
 				data.offsetX = _min(_max(event.offsetX, File.oX), File.oX + File.width) - Self.aX;
-				data.rgba = Self.ctx.getImageData(data.left, data.top, 1, 1).data;
-				data.hsl = Color.rgbToHsv.apply({}, data.rgba);
 				data.isOnCanvas = event.offsetY >= File.oY && event.offsetY <= File.oY + File.height
 								&& event.offsetX >= File.oX && event.offsetX <= File.oX + File.width;
+
+				if (data.isOnCanvas) {
+					let rgb = File.ctx.getImageData(data.left, data.top, 1, 1).data;
+					data.rgb = { r: rgb[0], g: rgb[1], b: rgb[2], a: rgb[3] };
+					data.hsl = ColorLib.rgbToHsl(data.rgb);
+				}
 				// broadcast event
 				karaqu.emit("mouse-move", data);
 				break;
