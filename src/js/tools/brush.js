@@ -63,7 +63,7 @@
 			case "select-color":
 			case "switch-color":
 			case "reset-color":
-				console.log(event);
+				// console.log(event);
 				break;
 			case "select-preset-tip":
 				el = APP.els.content.find(".option[data-change='select-preset-tip']");
@@ -125,14 +125,12 @@
 				el = APP.els.content.find(".option[data-change='select-preset-tip']");
 				el.find(".value span").html(event.value + el.data("suffix"));
 				break;
-			case "change-hardness":
-				console.log(event);
-				break;
 			case "change-opacity":
 				Self.preset.opacity = event.value / 100;
 				break;
+			case "change-hardness":
 			case "change-flow":
-				console.log(event);
+				// console.log(event);
 				break;
 			// FEATHER
 			case "change-feather-mode":

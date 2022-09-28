@@ -15,9 +15,10 @@
 
 		// temp
 		setTimeout(() => {
-			root.find(`.icon[data-click="add-layer"]`).trigger("click");
-			
-			setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
+			// root.find(`.icon[data-click="add-layer"]`).trigger("click");
+			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
+
+			console.log( "pixelate image" );
 		}, 500);
 	},
 	dispatch(event) {

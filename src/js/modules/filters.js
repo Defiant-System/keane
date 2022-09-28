@@ -57,7 +57,6 @@ const Filters = {
 			bg = ColorLib.hexToRgb(File.bgColor),
 			fg = ColorLib.hexToRgb(File.fgColor),
 			lerp = (v0, v1, t) => (1 - t) * v0 + t * v1,
-		
 			simplex = new SimplexNoise,
 			d = pixels.data,
 			w = pixels.width,
