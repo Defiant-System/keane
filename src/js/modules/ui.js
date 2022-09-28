@@ -53,6 +53,7 @@ const UI = {
 				};
 				// render menubox
 				Self.menu = window.render(data);
+				Self.menuOrigin = el;
 
 				// position menubox
 				rect = this.getBoundingClientRect();
@@ -78,6 +79,7 @@ const UI = {
 					// clean up
 					Self.menu.remove();
 				}
+				Self.menuOrigin.removeClass("opened");
 				// unbind event handler
 				Self.doc.off("mousedown", Self.dispatch);
 				break;
@@ -200,7 +202,6 @@ const UI = {
 				}
 				break;
 			case "tip-menu-set-tip":
-				console.log(Self);
 				el = event.el;
 				el.parent().find(".selected").removeClass("selected");
 				el.addClass("selected");
