@@ -182,7 +182,7 @@ const UI = {
 				// reset context
 				Self.cvs.prop({ width: 206, height: 78 });
 				Self.ctx.translate(4, 28);
-				Self.ctx.fillStyle = "#fff";
+				// Self.ctx.fillStyle = "#fff";
 
 				image = Tool.preset.tip.cvs[0];
 				size = Tool.preset.size;
