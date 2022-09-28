@@ -52,6 +52,37 @@ const Filters = {
 		}
 		return pixels;
 	},
+	pixelate(pixels, size) {
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height;
+		// TODO
+		return pixels;
+	},
+	gaussianBlur(pixels, radius) {
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height;
+		
+		gaussianBlur(d, w, h, radius);
+
+		return pixels;
+	},
+	noise(pixels) {
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height;
+		for (let x=0; x<w; x++) {
+			for (let y=0; y<h; y++) {
+				let o = (x + y * w) * 4;
+				d[o + 0] =
+                d[o + 1] =
+                d[o + 2] = Math.random() < 0.5 ? 0 : 255;
+                d[o + 3] = 255;
+			}
+		}
+		return pixels;
+	},
 	clouds(pixels) {
 		let File = Projector.file,
 			bg = ColorLib.hexToRgb(File.bgColor),

@@ -12,6 +12,9 @@
 @import "modules/filters.js"
 
 
+@import "modules/filters/gaussian-blur.js"
+
+
 // wating for checkers bg to be created as pattern
 await Projector.init();
 
@@ -44,8 +47,6 @@ const keane = {
 			case "open.file":
 				event.open({ responseType: "blob" })
 					.then(file => Self.dispatch({ type: "prepare-file", file }));
-				
-				//Self.dispatch({ type: "filter-render", arg: "clouds" });
 				break;
 			
 			// custom events

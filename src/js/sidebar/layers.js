@@ -18,7 +18,8 @@
 			// root.find(`.icon[data-click="add-layer"]`).trigger("click");
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
 
-			console.log( "pixelate image" );
+			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
+			setTimeout(() => keane.dispatch({ type: "filter-render", arg: "gaussianBlur,4" }), 400);
 		}, 500);
 	},
 	dispatch(event) {
