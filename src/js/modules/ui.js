@@ -32,28 +32,14 @@ const UI = {
 				value = el.data("options");
 				if (!value || el.hasClass("disabled")) return;
 
-				if (value !== "brush-tips") {
-					// prevent default behaviour
-					event.preventDefault();
-				}
-
-				if (el.hasClass("opened")) {
-					el.removeClass("opened");
-					Self.content.trigger("mousedown");
-					return;
-				}
-
 				// save reference to source element
 				Self.srcEl = el.addClass("opened");
-
-				data = {
-					template: value,
-					append: Self.content,
-					match: el.data("match") || false,
-				};
 				// render menubox
-				Self.menu = window.render(data);
-				Self.menuOrigin = el;
+				Self.menu = window.render({
+						template: value,
+						append: Self.content,
+						match: el.data("match") || false,
+					});
 
 				// position menubox
 				rect = this.getBoundingClientRect();
@@ -64,6 +50,8 @@ const UI = {
 				// set inital value - by associated event handler
 				Self[Self.menu.data("ui")]({ type: "set-initial-value", el });
 
+				// prevent mouse from triggering mouseover
+				APP.els.content.addClass("cover");
 				// event handler checks for clicks outside inline-menubox
 				Self.doc.on("mousedown", Self.dispatch);
 				break;
@@ -79,7 +67,9 @@ const UI = {
 					// clean up
 					Self.menu.remove();
 				}
-				Self.menuOrigin.removeClass("opened");
+				Self.srcEl.removeClass("opened");
+				// uncover app UI
+				APP.els.content.removeClass("cover");
 				// unbind event handler
 				Self.doc.off("mousedown", Self.dispatch);
 				break;
