@@ -297,6 +297,58 @@ content {
 		}
 	}
 
+	.toggler {
+		background: rgba(#fff, .05);
+		// background: linear-gradient(90deg, #f00 0%, #f00 50%, #0b0 50%, #0b0 0%);
+		width: 90px;
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		padding: 0 19px 0 0;
+		margin-top: -1px;
+		margin-right: 7px;
+		font-size: 11px;
+		color: rgba(#fff, .85);
+		border: 1px solid rgba(#000, .45);
+		border-radius: 25px;
+		height: 20px;
+		text-shadow: 0 1px 0 rgba(#000, .45);
+
+		&:before,
+		&:after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 2px;
+			width: 18px;
+			height: 18px;
+			border-radius: 50%;
+			background: url(~/icons/icon-red-cancel.png) 50% 50% no-repeat;
+			filter: brightness(3.5) drop-shadow(0 1px 0 #00000080);
+			background-size: 12px 12px;
+			z-index: 1;
+		}
+
+		&:after {
+			left: auto;
+			right: 2px;
+			background-image: url(~/icons/icon-green-check.png);
+		}
+
+		&[data-value="on"] span {
+			margin-left: 19px;
+		}
+
+		span {
+			background: #707d7d;
+			position: relative;
+			z-index: 2;
+			display: inline-block;
+			padding: 2px 15px;
+			border-radius: inherit;
+		}
+	}
+
 	.color-sample {
 		//background: rgba(0,0,0,.1);
 		position: relative;
