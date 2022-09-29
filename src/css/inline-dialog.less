@@ -17,29 +17,77 @@
 
 	&[data-ui="dlgColors"] {
 		top: 160px;
-		left: 120px;
+		left: 100px;
 
 		.dlg-content {
-			padding: 7px;
+			padding: 9px;
 			display: flex;
-			// height: 285px;
+			--hue: #ff06c8;
+			--color: #56334d;
 
 			.color-box {
-				background: rgba(255,255,255,.1);
-				width: 256px;
-				height: 256px;
-				// border-radius: 5px;
+				background: var(--hue);
+				position: relative;
+				width: 255px;
+				height: 255px;
+				border-radius: 2px;
+				box-shadow: 0 0 0 1px rgba(0,0,0,.25);
+
+				&:before,
+				&:after {
+					content: "";
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: inherit;
+					height: inherit;
+					border-radius: inherit;
+					background: linear-gradient(90deg, #fff 0%, transparent 100%);
+				}
+
+				&:after {
+					background: linear-gradient(180deg, transparent 0%, #000 100%);
+				}
+
+				.cursor {
+					position: absolute;
+					top: 160px;
+					left: 90px;
+					width: 19px;
+					height: 19px;
+					z-index: 2;
+					border-radius: 50%;
+					background: var(--color);
+					// border: 1px solid #ffffff60;
+					box-shadow: inset 0 0 0 1px #ffffff66,
+								0 2px 3px rgba(0,0,0,.4);
+				}
 			}
 
 			.hue-column {
-				background: rgba(0,0,0,.1);
-				width: 23px;
-				margin: 0 7px 0 5px;
-				border-radius: 3px;
+				background: linear-gradient(0deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+				position: relative;
+				width: 19px;
+				margin: 0 9px;
+				border-radius: 2px;
+				box-shadow: 0 0 0 1px rgba(0,0,0,.25);
+
+				.cursor {
+					position: absolute;
+					top: 41px;
+					left: -3px;
+					right: -3px;
+					height: 7px;
+					border-radius: 5px;
+					background: var(--hue);
+					// border: 1px solid #ffffff99;
+					box-shadow: inset 0 0 0 1px #ffffff88,
+								0 1px 3px rgba(0,0,0,.35);
+				}
 			}
 
 			.fields {
-				background: rgba(0,0,0,.1);
+				// background: rgba(0,0,0,.1);
 				width: 190px;
 			}
 		}
