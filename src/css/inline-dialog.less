@@ -1,0 +1,47 @@
+
+.dialog-box {
+	background: rgba(0,0,0,.35);
+	position: absolute;
+	z-index: 99;padding: 1px;
+	z-index: 101;
+	border-radius: 7px;
+	filter: drop-shadow(0 1px 3px rgba(0,0,0,.5));
+	transform-origin: 50% 0;
+
+	.dlg-content {
+		background: linear-gradient(#677 0%, #405050 100%);
+		position: relative;
+		padding: 7px 0 6px;
+		border-radius: inherit;
+	}
+
+	&[data-ui="dlgColors"] {
+		top: 160px;
+		left: 120px;
+
+		.dlg-content {
+			padding: 7px;
+			display: flex;
+			// height: 285px;
+
+			.color-box {
+				background: rgba(255,255,255,.1);
+				width: 256px;
+				height: 256px;
+				// border-radius: 5px;
+			}
+
+			.hue-column {
+				background: rgba(0,0,0,.1);
+				width: 23px;
+				margin: 0 7px 0 5px;
+				border-radius: 3px;
+			}
+
+			.fields {
+				background: rgba(0,0,0,.1);
+				width: 190px;
+			}
+		}
+	}
+}
