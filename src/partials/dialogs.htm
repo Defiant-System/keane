@@ -5,9 +5,11 @@
 		<div class="color-box">
 			<div class="cursor"></div>
 		</div>
+
 		<div class="hue-column">
 			<div class="cursor"></div>
 		</div>
+
 		<div class="fields">
 
 			<div class="field-row">
@@ -18,33 +20,12 @@
 
 				<div class="buttons">
 					<div class="button">OK</div>
-					<div class="button disabled hidden1">Cancel</div>
+					<div class="button disabled hidden">Cancel</div>
 					<div class="button">Close</div>
 				</div>
 			</div>
 
 			<div class="field-row">
-				<div class="fields-hsl">
-					<div class="field">
-						<div class="option input">
-							<span class="label">H</span>
-							<span class="value"><input type="text" name="color-hsl-hue" value="0°"></span>
-						</div>
-					</div>
-					<div class="field">
-						<div class="option input">
-							<span class="label">S</span>
-							<span class="value"><input type="text" name="color-hsl-saturation" value="100%"></span>
-						</div>
-					</div>
-					<div class="field">
-						<div class="option input">
-							<span class="label">L</span>
-							<span class="value"><input type="text" name="color-hsl-lightness" value="100%"></span>
-						</div>
-					</div>
-				</div>
-				
 				<div class="fields-rgb">
 					<div class="field">
 						<div class="option input">
@@ -65,7 +46,42 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="fields-hsl">
+					<div class="field">
+						<div class="option input">
+							<span class="label">H</span>
+							<span class="value"><input type="text" name="color-hsl-hue" value="0°"></span>
+						</div>
+					</div>
+					<div class="field">
+						<div class="option input">
+							<span class="label">S</span>
+							<span class="value"><input type="text" name="color-hsl-saturation" value="100%"></span>
+						</div>
+					</div>
+					<div class="field">
+						<div class="option input">
+							<span class="label">L</span>
+							<span class="value"><input type="text" name="color-hsl-lightness" value="100%"></span>
+						</div>
+					</div>
+				</div>
 			</div>
+
+			<hr/>
+
+			<div class="field-row">
+				<div class="field-opacity">
+					<div class="option input">
+						<span class="label">Opacity</span>
+						<span class="value"><input type="text" name="color-opacity" value="100%"></span>
+					</div>
+				</div>
+				<div class="knob" data-value="68"></div>
+			</div>
+
+			<hr/>
 
 			<div class="field-row">
 				<div class="field-hex">

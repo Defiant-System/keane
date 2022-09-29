@@ -23,6 +23,11 @@
 			font-size: 11px;
 			box-shadow: 0 0 0;
 		}
+
+		hr {
+			background: linear-gradient(90deg, transparent 0%, #788 50%, transparent 100%); //rgba(255,255,255,0.15);
+			margin: 9px 0 10px;
+		}
 	}
 
 	&[data-ui="dlgColors"] {
@@ -79,7 +84,7 @@
 				background: linear-gradient(0deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
 				position: relative;
 				width: 19px;
-				margin: 0 13px 0 9px;
+				margin: 0 17px 0 11px;
 				border-radius: 2px;
 				box-shadow: 0 0 0 1px rgba(0,0,0,.25);
 
@@ -105,10 +110,10 @@
 
 				.field-row {
 					display: flex;
-					margin-bottom: 11px;
+					margin-bottom: 0;
 
 					&:first-child {
-						margin-bottom: 23px;
+						margin-bottom: 13px;
 					}
 
 					&:last-child {
@@ -119,6 +124,27 @@
 
 				.field {
 					margin-bottom: 5px;
+
+					.option {
+						.value {
+							margin-right: 7px;
+						}
+					}
+				}
+
+				.fields-hsl {
+					padding-left: 11px
+				}
+
+				.field-opacity {
+					width: 130px;
+					padding: 5px 0 0;
+
+					.option {
+						.value {
+							margin-right: 13px;
+						}
+					}
 				}
 
 				.field-hex {
@@ -137,20 +163,40 @@
 						left: 0;
 						right: 0;
 						bottom: 0;
+						z-index: 3;
 						border-radius: inherit;
 						box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
 					}
 
+					&:after {
+						content: "";
+						background: linear-gradient(45deg, #677 25%, transparent 25%, transparent 75%, #677 75%, #677 0), linear-gradient(45deg, #677 25%, transparent 25%, transparent 75%, #677 75%, #677 0), #899;
+						background-repeat: repeat, repeat;
+						background-position: 0px 0, 8px 8px;
+						background-origin: padding-box, padding-box;
+						background-clip: border-box, border-box;
+						background-size: 16px 16px, 16px 16px;
+						transform: scaleX(1) scaleY(1) scaleZ(1);
+						position: absolute;
+						top: 0;
+						left: 0;
+						right: 0;
+						bottom: 0;
+						z-index: 1;
+						border-radius: inherit;
+					}
+
 					> div {
+						position: relative;
 						width: 83px;
-						height: 33px;
-						--new-color: #56334d;
-						--old-color: #86637d;
+						height: 32px;
+						z-index: 2;
+						--new-color: #56334dff;
+						--old-color: #86637dff;
 
 						&.new-color     {
 							background: var( --new-color );
 							position: relative;
-							height: 34px;
 							border-radius: 3px 3px 0 0;
 
 							&:after {
