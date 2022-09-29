@@ -56,13 +56,15 @@ const UI = {
 				Self.doc.on("mousedown", Self.dispatch);
 				break;
 			case "mousedown":
-				el = $(event.target).parents(".inline-menubox");
-				if (el.length) {
+				el = $(event.target);
+				if (el.parents(".inline-menubox").length) {
 					if (this === document) return;
 					// forward event to fitting handler
 					Self[this.dataset.ui](event);
 					// handles event differently for brush menu box
 					if (this.dataset.ui === "doBrushTips") return;
+				} else if (el.parents(".dialog-box").length) {
+					return console.log("handle dialog events");
 				} else {
 					// clean up
 					Self.menu.remove();
