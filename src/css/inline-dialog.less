@@ -11,7 +11,9 @@
 	.dlg-content {
 		background: linear-gradient(#677 0%, #405050 100%);
 		position: relative;
-		padding: 7px 0 6px;
+		padding: 9px;
+		display: flex;
+		text-align: left;
 		border-radius: inherit;
 
 		input[type="text"] {
@@ -25,19 +27,95 @@
 		}
 
 		hr {
-			background: linear-gradient(90deg, transparent 0%, #788 50%, transparent 100%); //rgba(255,255,255,0.15);
+			background: linear-gradient(90deg, transparent 0%, #788 50%, transparent 100%);
 			margin: 9px 0 10px;
 		}
+
+		h2 {
+			position: relative;
+			color: rgba(255,255,255,0.75);
+			text-shadow: 0 1px 0 rgba(0,0,0,.25);
+			font-size: 11px;
+			font-weight: 400;
+			text-transform: uppercase;
+			margin-bottom: 7px;
+
+			&:after {
+				content: "";
+				background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 7%, transparent 100%);
+				position: absolute;
+				left: -5px;
+				right: 0;
+				bottom: -3px;
+				height: 1px;
+			}
+		}
+
+		.field-row {
+			&.has-knob {
+				display: flex;
+				margin-right: 7px;
+
+				.option {
+					width: 120px;
+					padding: 6px 0 0;
+					margin-right: 1px;
+
+					.value {
+						margin-right: 7px;
+					}
+				}
+
+				.knob {
+					visibility: hidden;
+					opacity: 0;
+				}
+
+				&:hover {
+					.knob {
+						visibility: visible;
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+		.buttons {
+			text-align: right;
+
+			.button {
+				display: block;
+				width: 90px;
+				text-align: center;
+				margin-bottom: 5px;
+				margin-right: 0;
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+
+				&.hidden {
+					display: none;
+				}
+			}
+		}
+	}
+
+	&[data-ui="dlgGaussianBlur"] {
+		top: 120px;
+		left: 600px;
+	}
+
+	&[data-ui="dlgSharpen"] {
+		top: 420px;
+		left: 600px;
 	}
 
 	&[data-ui="dlgColors"] {
 		top: 160px;
-		left: 100px;
+		left: 50px;
 
 		.dlg-content {
-			padding: 9px;
-			display: flex;
-			text-align: left;
 			--hue: #ff06c8;
 			--color: #56334d;
 
@@ -127,7 +205,7 @@
 
 					.option {
 						.value {
-							margin-right: 7px;
+							margin-right: 15px;
 						}
 					}
 				}
@@ -142,13 +220,19 @@
 
 					.option {
 						.value {
-							margin-right: 13px;
+							margin-right: 15px;
 						}
 					}
 				}
 
 				.field-hex {
 					width: 130px;
+
+					.option {
+						.value {
+							margin-right: 25px;
+						}
+					}
 				}
 
 				.swatches {
@@ -213,21 +297,6 @@
 						&.current-color {
 							background: var( --old-color );
 							border-radius: 0 0 3px 3px;
-						}
-					}
-				}
-
-				.buttons {
-					text-align: right;
-
-					.button {
-						width: 90px;
-						text-align: center;
-						margin-bottom: 5px;
-						margin-right: 0;
-
-						&:last-child {
-							margin-bottom: 0;
 						}
 					}
 				}
