@@ -33,6 +33,7 @@
 
 		h2 {
 			position: relative;
+			top: -1px;
 			color: rgba(255,255,255,0.75);
 			text-shadow: 0 1px 0 rgba(0,0,0,.25);
 			font-size: 11px;
@@ -42,11 +43,11 @@
 
 			&:after {
 				content: "";
-				background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 7%, transparent 100%);
+				background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 5%, transparent 100%);
 				position: absolute;
 				left: -5px;
 				right: 0;
-				bottom: -3px;
+				bottom: -5px;
 				height: 1px;
 			}
 		}
@@ -57,18 +58,27 @@
 				margin-right: 7px;
 
 				.option {
-					width: 120px;
+					width: 150px;
 					padding: 6px 0 0;
 					margin-right: 1px;
 
+					.label {
+						min-width: 80px;
+					}
+
 					.value {
-						margin-right: 7px;
+						margin-right: 3px;
+
+						input {
+							cursor: default;
+						}
 					}
 				}
 
 				.knob {
 					visibility: hidden;
 					opacity: 0;
+					transition: opacity 500ms;
 				}
 
 				&:hover {
@@ -215,10 +225,16 @@
 				}
 
 				.field-opacity {
-					width: 130px;
-					padding: 5px 0 0;
+					width: 123px;
+					padding-left: 7px;
 
 					.option {
+						width: 117px;
+
+						.label {
+							min-width: 30px;
+						}
+
 						.value {
 							margin-right: 15px;
 						}
@@ -300,6 +316,10 @@
 						}
 					}
 				}
+			}
+
+			.buttons {
+				padding-left: 11px;
 			}
 		}
 	}
