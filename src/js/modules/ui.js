@@ -64,7 +64,7 @@ const UI = {
 					// handles event differently for brush menu box
 					if (this.dataset.ui === "doBrushTips") return;
 				} else if (el.parents(".dialog-box").length) {
-					return console.log("handle dialog events");
+					return Self.doDialog(event);
 				} else {
 					// clean up
 					Self.menu.remove();
@@ -87,6 +87,20 @@ const UI = {
 				// forward route events
 				data = event.el.parents("[data-ui]").data("ui");
 				Self[data](event);
+		}
+	},
+	doDialog(event) {
+		let APP = keane,
+			Self = UI,
+			Drag = Self.drag,
+			el;
+		//console.log(event);
+		switch (event.type) {
+			case "mousedown":
+				el = $(event.target);
+				if (el.data("value") === "on") el.data({ value: "off" });
+				else el.data({ value: "on" });
+				break;
 		}
 	},
 	doBrushTips(event) {

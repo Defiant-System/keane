@@ -309,10 +309,11 @@ content {
 		margin-right: 7px;
 		font-size: 11px;
 		color: rgba(#fff, .85);
+		text-shadow: 0 1px 0 rgba(#000, .45);
 		border: 1px solid rgba(#000, .45);
 		border-radius: 25px;
 		height: 20px;
-		text-shadow: 0 1px 0 rgba(#000, .45);
+		cursor: pointer;
 
 		&:before,
 		&:after {
@@ -326,6 +327,7 @@ content {
 			background: url(~/icons/icon-red-cancel.png) 50% 50% no-repeat;
 			filter: brightness(3.5) drop-shadow(0 1px 0 #00000080);
 			background-size: 12px 12px;
+			pointer-events: none;
 			z-index: 1;
 		}
 
@@ -346,6 +348,8 @@ content {
 			display: inline-block;
 			padding: 2px 15px;
 			border-radius: inherit;
+			pointer-events: none;
+			transition: margin 120ms ease-in-out;
 		}
 	}
 
