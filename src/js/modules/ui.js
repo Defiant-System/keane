@@ -98,8 +98,44 @@ const UI = {
 		switch (event.type) {
 			case "mousedown":
 				el = $(event.target);
-				if (el.data("value") === "on") el.data({ value: "off" });
-				else el.data({ value: "on" });
+				if (el.hasClass("toggler")) {
+					if (el.data("value") === "on") el.data({ value: "off" });
+					else el.data({ value: "on" });
+					return;
+				}
+
+				// prevent default behaviour
+				event.preventDefault();
+
+				let dlg = el.parents(".dialog-box"),
+					offset = {
+						y: +dlg.prop("offsetTop"),
+						x: +dlg.prop("offsetLeft"),
+					},
+					click = {
+						y: event.clientY,
+						x: event.clientX,
+					};
+
+				Self.drag = {
+					dlg,
+					offset,
+					click,
+				};
+
+				// bind event handlers
+				Self.content.addClass("no-cursor");
+				Self.doc.on("mousemove mouseup", Self.doDialog);
+				break;
+			case "mousemove":
+				let top = event.clientY - Drag.click.y + Drag.offset.y,
+					left = event.clientX - Drag.click.x + Drag.offset.x;
+				Drag.dlg.css({ top, left });
+				break;
+			case "mouseup":
+				// unbind event handlers
+				Self.content.removeClass("no-cursor");
+				Self.doc.off("mousemove mouseup", Self.doDialog);
 				break;
 		}
 	},
