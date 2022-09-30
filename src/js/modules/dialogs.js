@@ -110,7 +110,7 @@ const Dialogs = {
 						y: +el.prop("offsetHeight"),
 					},
 					hue: parseInt(Self.els.iHue.val(), 10),
-					alpha: 1,
+					alpha: parseInt(Self.els.iAlpha.val(), 10) / 100,
 					_max: Math.max,
 					_min: Math.min,
 					_abs: Math.abs,
