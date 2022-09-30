@@ -8,7 +8,6 @@ const UI = {
 		// bind event handlers
 		this.content.on("click", ".option .value", this.dispatch);
 		this.content.on("mousedown mouseup", "[data-ui]", this.dispatch);
-		this.content.on("mousedown", "[data-dlg]", this.doDialog);
 
 		// temp
 		// setTimeout(() =>
@@ -64,6 +63,8 @@ const UI = {
 					Self[this.dataset.ui](event);
 					// handles event differently for brush menu box
 					if (this.dataset.ui === "doBrushTips") return;
+				} else if (el.parents("[data-dlg]").length) {
+					return;
 				} else {
 					// clean up
 					Self.menu.remove();
@@ -86,51 +87,6 @@ const UI = {
 				// forward route events
 				data = event.el.parents("[data-ui]").data("ui");
 				Self[data](event);
-		}
-	},
-	doDialog(event) {
-		let APP = keane,
-			Self = UI,
-			Drag = Self.drag,
-			el;
-		//console.log(event);
-		switch (event.type) {
-			case "mousedown":
-				el = $(event.target);
-				if (el.hasClass("toggler")) {
-					if (el.data("value") === "on") el.data({ value: "off" });
-					else el.data({ value: "on" });
-					return;
-				}
-
-				// prevent default behaviour
-				event.preventDefault();
-
-				let dlg = el.parents(".dialog-box"),
-					offset = {
-						y: +dlg.prop("offsetTop") - event.clientY,
-						x: +dlg.prop("offsetLeft") - event.clientX,
-					};
-
-				Self.drag = {
-					dlg,
-					offset,
-				};
-
-				// bind event handlers
-				Self.content.addClass("no-cursor");
-				Self.doc.on("mousemove mouseup", Self.doDialog);
-				break;
-			case "mousemove":
-				let top = event.clientY + Drag.offset.y,
-					left = event.clientX + Drag.offset.x;
-				Drag.dlg.css({ top, left });
-				break;
-			case "mouseup":
-				// unbind event handlers
-				Self.content.removeClass("no-cursor");
-				Self.doc.off("mousemove mouseup", Self.doDialog);
-				break;
 		}
 	},
 	doBrushTips(event) {

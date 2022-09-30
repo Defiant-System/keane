@@ -10,6 +10,7 @@
 @import "modules/projector.js"
 @import "modules/rulers.js"
 @import "modules/filters.js"
+@import "modules/dialogs.js"
 
 
 @import "modules/filters/gaussian-blur.js"
@@ -32,6 +33,7 @@ const keane = {
 		UI.init();
 		Tabs.init();
 		Filters.init();
+		Dialogs.init();
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 	},
@@ -105,6 +107,10 @@ const keane = {
 					rEl = el.parents(".inline-menubox");
 					if (rEl.length) {
 						return UI.dispatch(event);
+					}
+					rEl = el.parents(".dialog-box");
+					if (rEl.length) {
+						return Dialogs.dispatch(event);
 					}
 				}
 		}

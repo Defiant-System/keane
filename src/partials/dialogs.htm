@@ -6,7 +6,7 @@
 			<div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Radius</span>
-					<span class="value"><input type="text" name="blur-radius" value="3px"></span>
+					<span class="value"><input type="text" name="blur-radius" value="3px" data-min="0" data-max="20" data-suffix="px"></span>
 				</div>
 				<div class="knob" data-value="68"></div>
 			</div>
@@ -14,7 +14,7 @@
 		<div class="buttons">
 			<div class="button">OK</div>
 			<div class="button disabled1">Reset</div>
-			<div class="toggler" data-value="off">
+			<div class="toggler" data-value="off" data-click="dlg-preview-gaussian-blur">
 				<span>Preview</span>
 			</div>
 		</div>
@@ -29,14 +29,14 @@
 			<div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Amount</span>
-					<span class="value"><input type="text" name="sharpen-amount" value="150%"></span>
+					<span class="value"><input type="text" name="sharpen-amount" value="150%" data-min="50%" data-max="200" data-suffix="%"></span>
 				</div>
 				<div class="knob" data-value="68"></div>
 			</div>
 			<div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Radius</span>
-					<span class="value"><input type="text" name="sharpen-radius" value="3px"></span>
+					<span class="value"><input type="text" name="sharpen-radius" value="3px" data-min="0" data-max="20" data-suffix="px"></span>
 				</div>
 				<div class="knob" data-value="68"></div>
 			</div>
@@ -44,7 +44,7 @@
 		<div class="buttons">
 			<div class="button">OK</div>
 			<div class="button">Reset</div>
-			<div class="toggler" data-value="on">
+			<div class="toggler" data-value="on" data-click="dlg-preview-sharpen">
 				<span>Preview</span>
 			</div>
 		</div>
@@ -127,7 +127,7 @@
 				<div class="field-opacity">
 					<div class="option input">
 						<span class="label">Opacity</span>
-						<span class="value"><input type="text" name="color-opacity" disabled value="100%"></span>
+						<span class="value"><input type="text" name="color-opacity" disabled value="100%" data-min="0" data-max="100" data-suffix="%"></span>
 					</div>
 				</div>
 				<div class="knob" data-value="68"></div>
