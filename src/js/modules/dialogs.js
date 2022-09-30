@@ -92,8 +92,7 @@ const Dialogs = {
 					cursor = el.find(".cursor"),
 					cEl = el.parents(".dlg-content");
 				// UI / UX
-				cursor
-					.addClass("dragging")
+				cursor.addClass("dragging")
 					.css({ left: event.offsetX, top: event.offsetY });
 				// prepare drag object
 				Self.drag = {
@@ -113,6 +112,8 @@ const Dialogs = {
 					_abs: Math.abs,
 					_round: Math.round,
 				};
+				// trigger mousemove
+				Self.doColorBox({ type: "mousemove", clientY: event.clientY, clientX: event.clientX });
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-dlg-cursor");
 				// bind event handlers
