@@ -20,6 +20,8 @@ const Dialogs = {
 		// bind event handlers
 		this.content.on("mousedown", "[data-dlg]", this.dispatch);
 
+		this.doKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgGaussianBlur"]`) });
+		this.doKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgSharpen"]`) });
 		this.doKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgColors"]`) });
 	},
 	dispatch(event) {
