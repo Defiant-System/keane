@@ -109,18 +109,13 @@ const UI = {
 
 				let dlg = el.parents(".dialog-box"),
 					offset = {
-						y: +dlg.prop("offsetTop"),
-						x: +dlg.prop("offsetLeft"),
-					},
-					click = {
-						y: event.clientY,
-						x: event.clientX,
+						y: +dlg.prop("offsetTop") - event.clientY,
+						x: +dlg.prop("offsetLeft") - event.clientX,
 					};
 
 				Self.drag = {
 					dlg,
 					offset,
-					click,
 				};
 
 				// bind event handlers
@@ -128,8 +123,8 @@ const UI = {
 				Self.doc.on("mousemove mouseup", Self.doDialog);
 				break;
 			case "mousemove":
-				let top = event.clientY - Drag.click.y + Drag.offset.y,
-					left = event.clientX - Drag.click.x + Drag.offset.x;
+				let top = event.clientY + Drag.offset.y,
+					left = event.clientX + Drag.offset.x;
 				Drag.dlg.css({ top, left });
 				break;
 			case "mouseup":
