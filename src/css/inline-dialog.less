@@ -131,8 +131,8 @@
 		left: 50px;
 
 		.dlg-content {
-			--hue: #ff06c8;
-			--color: #56334d;
+			--hue: #ff0000;
+			--color: #ffffff;
 
 			.color-box {
 				background: var(--hue);
@@ -160,20 +160,22 @@
 
 				.cursor {
 					position: absolute;
-					top: 160px;
-					left: 90px;
-					width: 19px;
-					height: 19px;
+					top: 0;
+					left: 0;
+					width: 14px;
+					height: 14px;
 					z-index: 2;
 					border-radius: 50%;
 					background: var(--color);
+					transform: translateY(-7px) translateX(-7px);
 					// border: 1px solid #ffffff60;
 					box-shadow: inset 0 0 0 1px #ffffff66,
 								0 2px 3px rgba(0,0,0,.4);
+					pointer-events: none;
 				}
 			}
 
-			.hue-column {
+			.hue-bar {
 				background: linear-gradient(0deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
 				position: relative;
 				width: 19px;
@@ -183,15 +185,17 @@
 
 				.cursor {
 					position: absolute;
-					top: 41px;
+					top: 0;
 					left: -3px;
 					right: -3px;
-					height: 7px;
+					height: 8px;
 					border-radius: 5px;
+					transform: translateY(-4px);
 					background: var(--hue);
 					// border: 1px solid #ffffff99;
 					box-shadow: inset 0 0 0 1px #ffffff88,
 								0 1px 3px rgba(0,0,0,.35);
+					pointer-events: none;
 				}
 			}
 

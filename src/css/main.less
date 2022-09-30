@@ -67,6 +67,7 @@ content {
 
 	// prevent mouse from triggering mouseover when panning for instance
 	&.cover:after,
+	&.no-dlg-cursor:after,
 	&.no-cursor:after {
 		content: "";
 		position: absolute;
@@ -78,6 +79,10 @@ content {
 		background: transparent;
 	}
 
+	&.no-dlg-cursor:after {
+		cursor: none;
+		z-index: 199;
+	}
 	&.no-cursor:after {
 		cursor: none;
 	}
@@ -326,7 +331,7 @@ content {
 			height: 18px;
 			border-radius: 50%;
 			background: url(~/icons/icon-red-cancel.png) 50% 50% no-repeat;
-			filter: brightness(3.5) drop-shadow(0 1px 0 #00000080);
+			filter: drop-shadow(0 1px 0 #00000080);
 			background-size: 12px 12px;
 			pointer-events: none;
 			z-index: 1;
