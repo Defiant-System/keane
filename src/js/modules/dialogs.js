@@ -17,10 +17,13 @@ const Dialogs = {
 		switch (event.type) {
 			case "mousedown":
 				el = $(event.target);
-				if (el.hasClass("toggler")) {
-					if (el.data("value") === "on") el.data({ value: "off" });
-					else el.data({ value: "on" });
-					return;
+				switch (true) {
+					case el.hasClass("toggler"):
+						return el.data("value") === "on"
+								? el.data({ value: "off" })
+								: el.data({ value: "on" });
+					case el.hasClass("knob"):
+						return Self.doKnob(event);
 				}
 
 				// prevent default behaviour
@@ -59,73 +62,41 @@ const Dialogs = {
 				break;
 		}
 	},
-	dlgGaussianBlur: {},
-	dlgSharpen: {},
-	dlgColors: {},
 	doKnob(event) {
 		let APP = keane,
 			Self = Dialogs,
-			Drag = Self.drag,
-			_round = Math.round,
-			_min = Math.min,
-			_max = Math.max,
-			data,
-			value,
-			el;
+			Drag = Self.drag;
 		switch (event.type) {
 			// native events
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
 				
-				el = $(event.target);
-				value = +el.data("value");
-
-				Self.drag = {
-					el,
-					value,
-					src: Self.srcEl.find(".value"),
-					suffix: Self.srcEl.data("suffix") || "",
-					min: +Self.srcEl.data("min"),
-					max: +Self.srcEl.data("max"),
-					clientY: event.clientY,
-					clientX: event.clientX,
-				};
+				let el = $(event.target),
+					src = el.parent().find(".value input"),
+					suffix = src.data("suffix") || "",
+					min = +src.data("min"),
+					max = +src.data("max"),
+					click = {
+						y: event.clientY,
+						x: event.clientX,
+					};
+				Self.drag = { el, src, suffix, min, max, click };
 				// bind event handlers
 				Self.content.addClass("no-cursor");
 				Self.doc.on("mousemove mouseup", Self.doKnob);
 				break;
 			case "mousemove":
-				value = (Drag.clientY - event.clientY) + Drag.value;
-				value = _min(_max(value, 0), 100);
-				Drag.el.data({ value });
-
-				Drag.newValue = Drag.min + _round((value / 100) * (Drag.max - Drag.min));
-				Drag.src.html(Drag.newValue + Drag.suffix);
 				break;
 			case "mouseup":
-				data = {
-					type: Self.srcEl.data("change"),
-					el: Self.srcEl,
-					old: Drag.value,
-					value: Drag.newValue,
-				};
-				if (data.old === data.value) return;
-				// dispatch event to be forwarded
-				if (data.type) APP.dispatch(data);
 
 				// unbind event handlers
 				Self.content.removeClass("no-cursor");
 				Self.doc.off("mousemove mouseup", Self.doKnob);
-				// clean up
-				Self.srcEl = false;
-				Self.menu.remove();
 				break;
 			// custom events
 			case "set-initial-value":
 				// initial value of knob
-				value = parseInt(event.el.find(".value").text(), 10);
-				Self.menu.find(".knob").data({ value });
 				break;
 		}
 	}
