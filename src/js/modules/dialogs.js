@@ -19,6 +19,8 @@ const Dialogs = {
 
 		// bind event handlers
 		this.content.on("mousedown", "[data-dlg]", this.dispatch);
+
+		this.doKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgColors"]`) });
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -189,15 +191,16 @@ const Dialogs = {
 				break;
 			case "mousemove":
 				let top = Drag._min(Drag._max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y),
-					hue = Drag._round((1-(top / Drag.max.y)) * 360);;
+					hue = Drag._round((1-(top / Drag.max.y)) * 360);
+				if (hue >= 360) hue = 0;
+				// move cursor
 				Drag.cursor.css({ top });
-
+				// color box color
 				Drag.hue = ColorLib.hslToHex({ h: hue, s: 1, l: .5, a: 1 });
-
+				// real swatch color
 				let hsl = { h: hue, s: Drag.sat, l: Drag.lgh, a: Drag.alpha };
 				Drag.hex = ColorLib.hslToHex(hsl);
 				Drag.rgb = ColorLib.hexToRgb(Drag.hex);
-
 				// update color-box color
 				Drag.cEl.css({ "--hue": Drag.hue, "--color": Drag.hex });
 				// hue value
@@ -267,6 +270,14 @@ const Dialogs = {
 			// custom events
 			case "set-initial-value":
 				// initial value of knob
+				event.el.find(".field-row.has-knob").map(rEl => {
+					let row = $(rEl),
+						iEl = row.find("input"),
+						min = +iEl.data("min"),
+						max = +iEl.data("max"),
+						val = parseInt(iEl.val(), 10);
+					row.find(".knob").data({ value: Math.round((val-min) / (max-min) * 100) });
+				});
 				break;
 		}
 	}
