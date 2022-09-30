@@ -138,6 +138,8 @@ const Dialogs = {
 				Self.els.iRed.val(Drag.rgb.r);
 				Self.els.iGreen.val(Drag.rgb.g);
 				Self.els.iBlue.val(Drag.rgb.b);
+				// hex value
+				Self.els.iHex.val(Drag.hex.slice(1,7));
 				break;
 			case "mouseup":
 				// remove class
@@ -200,6 +202,8 @@ const Dialogs = {
 				Self.els.iRed.val(Drag.rgb.r);
 				Self.els.iGreen.val(Drag.rgb.g);
 				Self.els.iBlue.val(Drag.rgb.b);
+				// hex value
+				Self.els.iHex.val(Drag.hex.slice(1,7));
 				break;
 			case "mouseup":
 				// remove class
