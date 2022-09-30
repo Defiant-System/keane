@@ -89,8 +89,12 @@ const Dialogs = {
 				event.preventDefault();
 				// get elements & align cursor
 				let el = $(event.target),
-					cursor = el.find(".cursor").css({ left: event.offsetX, top: event.offsetY }),
+					cursor = el.find(".cursor"),
 					cEl = el.parents(".dlg-content");
+				// UI / UX
+				cursor
+					.addClass("dragging")
+					.css({ left: event.offsetX, top: event.offsetY });
 				// prepare drag object
 				Self.drag = {
 					cEl,
@@ -142,6 +146,8 @@ const Dialogs = {
 				Self.els.iHex.val(Drag.hex.slice(1,7));
 				break;
 			case "mouseup":
+				// UI / UX
+				Drag.cursor.cssSequence("dropped", "animationend", el => el.removeClass("dropped dragging"));
 				// remove class
 				APP.els.content.removeClass("no-dlg-cursor");
 				// unbind event handlers
