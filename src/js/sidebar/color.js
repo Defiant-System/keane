@@ -135,9 +135,9 @@
 				Drag.rgb = ColorLib.hexToRgb(Drag.hex);
 
 				// rgb values
-				Self.els.iRed.val(Drag.rgb[0]);
-				Self.els.iGreen.val(Drag.rgb[1]);
-				Self.els.iBlue.val(Drag.rgb[2]);
+				Self.els.iRed.val(Drag.rgb.r);
+				Self.els.iGreen.val(Drag.rgb.g);
+				Self.els.iBlue.val(Drag.rgb.b);
 
 				// hue field
 				Self.els.iHue.val(Drag._round(Drag.hue) +"°");
@@ -205,9 +205,9 @@
 				Self.els.iLightness.val(Drag._round(Drag.lgh * 100) +"%");
 
 				// rgb values
-				Self.els.iRed.val(Drag.rgb[0]);
-				Self.els.iGreen.val(Drag.rgb[1]);
-				Self.els.iBlue.val(Drag.rgb[2]);
+				Self.els.iRed.val(Drag.rgb.r);
+				Self.els.iGreen.val(Drag.rgb.g);
+				Self.els.iBlue.val(Drag.rgb.b);
 
 				// hex value
 				Self.els.iHex.val(Drag.hex.slice(1,7));

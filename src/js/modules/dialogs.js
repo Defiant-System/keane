@@ -13,6 +13,7 @@ const Dialogs = {
 			iRed: dlg.find(`input[name="color-rgb-red"]`),
 			iGreen: dlg.find(`input[name="color-rgb-green"]`),
 			iBlue: dlg.find(`input[name="color-rgb-blue"]`),
+			iAlpha: dlg.find(`input[name="color-opacity"]`),
 			iHex: dlg.find(`input[name="color-hex"]`),
 		};
 
@@ -105,6 +106,8 @@ const Dialogs = {
 					alpha: 1,
 					_max: Math.max,
 					_min: Math.min,
+					_abs: Math.abs,
+					_round: Math.round,
 				};
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-dlg-cursor");
@@ -115,6 +118,26 @@ const Dialogs = {
 				let left = Drag._min(Drag._max(event.clientX + Drag.clickX, Drag.min.x), Drag.max.x),
 					top = Drag._min(Drag._max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y);
 				Drag.cursor.css({ top, left });
+
+				// calculate color from pos
+				let hsvValue = 1 - ((top / Drag.max.y * 100) / 100),
+					hsvSaturation = (left / Drag.max.x * 100) / 100;
+				Drag.lgh = (hsvValue / 2) * (2 - hsvSaturation);
+				Drag.sat = (hsvValue * hsvSaturation) / (1.0001 - Drag._abs(2 * Drag.lgh - 1));
+
+				let hsl = { h: Drag.hue, s: Drag.sat, l: Drag.lgh, a: Drag.alpha };
+				Drag.hex = ColorLib.hslToHex(hsl);
+				Drag.rgb = ColorLib.hexToRgb(Drag.hex);
+
+				// update color
+				Drag.cEl.css({ "--color": Drag.hex });
+				// saturation & lightness
+				Self.els.iSaturation.val(Drag._round(Drag.sat * 100) +"%");
+				Self.els.iLightness.val(Drag._round(Drag.lgh * 100) +"%");
+				// rgb values
+				Self.els.iRed.val(Drag.rgb.r);
+				Self.els.iGreen.val(Drag.rgb.g);
+				Self.els.iBlue.val(Drag.rgb.b);
 				break;
 			case "mouseup":
 				// remove class
@@ -143,6 +166,9 @@ const Dialogs = {
 					clickY: +cursor.prop("offsetTop") - event.clientY,
 					min: { y: 0 },
 					max: { y: +el.prop("offsetHeight") },
+					alpha: parseInt(Self.els.iAlpha.val(), 10) / 100,
+					sat: parseInt(Self.els.iSaturation.val(), 10) / 100,
+					lgh: parseInt(Self.els.iLightness.val(), 10) / 100,
 					_max: Math.max,
 					_min: Math.min,
 					_round: Math.round,
@@ -158,7 +184,22 @@ const Dialogs = {
 				Drag.cursor.css({ top });
 
 				Drag.hue = ColorLib.hslToHex({ h: hue, s: 1, l: .5, a: 1 });
-				Drag.cEl.css({ "--hue": Drag.hue });
+
+				let hsl = { h: hue, s: Drag.sat, l: Drag.lgh, a: Drag.alpha };
+				Drag.hex = ColorLib.hslToHex(hsl);
+				Drag.rgb = ColorLib.hexToRgb(Drag.hex);
+
+				// update color-box color
+				Drag.cEl.css({ "--hue": Drag.hue, "--color": Drag.hex });
+				// hue value
+				Self.els.iHue.val(hue +"°");
+				// saturation & lightness
+				Self.els.iSaturation.val(Drag._round(Drag.sat * 100) +"%");
+				Self.els.iLightness.val(Drag._round(Drag.lgh * 100) +"%");
+				// rgb values
+				Self.els.iRed.val(Drag.rgb.r);
+				Self.els.iGreen.val(Drag.rgb.g);
+				Self.els.iBlue.val(Drag.rgb.b);
 				break;
 			case "mouseup":
 				// remove class
