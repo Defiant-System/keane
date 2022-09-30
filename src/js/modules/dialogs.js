@@ -231,25 +231,37 @@ const Dialogs = {
 				event.preventDefault();
 				
 				let el = $(event.target),
-					src = el.parent().find(".value input"),
-					suffix = src.data("suffix") || "",
-					min = +src.data("min"),
-					max = +src.data("max"),
-					click = {
-						y: event.clientY,
-						x: event.clientX,
-					};
-				Self.drag = { el, src, suffix, min, max, click };
+					pEl = el.parent().addClass("hover"),
+					src = pEl.find(".value input");
+
+				Self.drag = {
+					el,
+					src,
+					suffix: src.data("suffix") || "",
+					min: +src.data("min"),
+					max: +src.data("max"),
+					offsetY: +el.data("value") + event.clientY,
+					_min: Math.min,
+					_max: Math.max,
+					_round: Math.round,
+				};
 				// bind event handlers
-				Self.content.addClass("no-cursor");
+				Self.content.addClass("no-dlg-cursor");
 				Self.doc.on("mousemove mouseup", Self.doKnob);
 				break;
 			case "mousemove":
+				let value = Drag.offsetY - event.clientY;
+				value = Drag._min(Drag._max(value, 0), 100);
+				Drag.el.data({ value });
+
+				let newValue = Drag.min + Drag._round((value / 100) * (Drag.max - Drag.min));
+				Drag.src.val(newValue + Drag.suffix);
 				break;
 			case "mouseup":
-
+				// reset parent element
+				Drag.el.parent().removeClass("hover");
 				// unbind event handlers
-				Self.content.removeClass("no-cursor");
+				Self.content.removeClass("no-dlg-cursor");
 				Self.doc.off("mousemove mouseup", Self.doKnob);
 				break;
 			// custom events

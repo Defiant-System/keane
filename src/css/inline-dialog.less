@@ -81,11 +81,10 @@
 					transition: opacity 500ms;
 				}
 
-				&:hover {
-					.knob {
-						visibility: visible;
-						opacity: 1;
-					}
+				&:hover .knob,
+				&.hover .knob {
+					visibility: visible;
+					opacity: 1;
 				}
 			}
 		}
