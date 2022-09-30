@@ -8,6 +8,7 @@ const UI = {
 		// bind event handlers
 		this.content.on("click", ".option .value", this.dispatch);
 		this.content.on("mousedown mouseup", "[data-ui]", this.dispatch);
+		this.content.on("mousedown", "[data-dlg]", this.doDialog);
 
 		// temp
 		// setTimeout(() =>
@@ -63,8 +64,6 @@ const UI = {
 					Self[this.dataset.ui](event);
 					// handles event differently for brush menu box
 					if (this.dataset.ui === "doBrushTips") return;
-				} else if (el.parents(".dialog-box").length) {
-					return Self.doDialog(event);
 				} else {
 					// clean up
 					Self.menu.remove();
