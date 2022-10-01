@@ -237,6 +237,18 @@
 </xsl:template>
 
 
+<xsl:template name="pop-gradients">
+	<div class="inline-menubox" data-ui="doGradients">
+		<div class="inline-content gradient-strips">
+			<xsl:for-each select="./*">
+				<div class="strip"></div>
+			</xsl:for-each>
+			<div class="add-strip"></div>
+		</div>
+	</div>
+</xsl:template>
+
+
 <xsl:template name="pop-brush-tips">
 	<div class="inline-menubox" data-ui="doBrushTips">
 		<div class="inline-content brush-tips">

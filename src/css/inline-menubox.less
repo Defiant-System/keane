@@ -47,6 +47,71 @@
 		border-radius: inherit;
 		z-index: 2;
 
+		&.gradient-strips {
+			font-size: 0;
+			width: 215px;
+			padding: 7px 3px 6px 7px;
+
+			.strip {
+				position: relative;
+				display: inline-block;
+				margin: 1px 3px 2px 0;
+				width: 31px;
+				height: 31px;
+				cursor: pointer;
+				border-radius: 2px;
+				background: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc 0), linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc 0), #fff;
+				background-repeat: repeat, repeat;
+				background-position: 0px 0, 5px 5px;
+				background-origin: padding-box, padding-box;
+				background-clip: border-box, border-box;
+				background-size: 10px 10px, 10px 10px;
+				transform: scaleX(1) scaleY(1) scaleZ(1);
+
+				&:after {
+					content: "";
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					border-radius: 1px;
+				}
+
+				&:nth-child(1):after { background: linear-gradient(135deg, #336699 0%, #ffffff 100%); }
+				&:nth-child(2):after { background: linear-gradient(135deg, #ffffff 0%, transparent 100%); }
+				&:nth-child(3):after { background: linear-gradient(135deg, #000000 0%, #ffffff 100%); }
+				&:nth-child(4):after { background: linear-gradient(135deg, #df0b24 0%, #095f1f 100%); }
+				&:nth-child(5):after { background: linear-gradient(135deg, #290f58 0%, #fd7c23 100%); }
+
+				&:nth-child(6):after { background: linear-gradient(135deg, #0900b2 0%, #ff0000 50%, #fffb00 100%); }
+				&:nth-child(7):after { background: linear-gradient(135deg, #0b01b8 10%, #fdfa02 50%, #0b01b8 90%); }
+				&:nth-child(8):after { background: linear-gradient(135deg, #ff6e01 0%, #fffe00 50%, #ff6e01 100%); }
+				&:nth-child(9):after { background: linear-gradient(135deg, #6f156c 0%, #00601b 50%, #fd7c00 100%); }
+
+				&:nth-child(10):after { background: linear-gradient(135deg, #f9e500 5%, #6f156c 35%, #fd7c00 65%, #002874 95%); }
+				&:nth-child(11):after { background: linear-gradient(135deg, #97461a 0%, #fbd7c4 30%, #6c2e16 70%, #efdbcd 100%); }
+				&:nth-child(12):after { background: linear-gradient(135deg, #2888cc 0%, #ffffff 50%, #906900 51%, #d99f00 64%, #ffffff 100%); }
+				&:nth-child(13):after { background: linear-gradient(135deg, #ff0000 0%, #ff00ff 15%, #0000ff 33%, #00ffff 49%, #00ff00 67%, #ffff00 84%, #ff0000 100%); }
+				&:nth-child(14):after { background: linear-gradient(135deg, transparent 0%, #ff0000 12%, #ff00ff 28%, #0000ff 45%, #00ffff 60%, #00ff00 0%, #ffff00 75%, #ff0000 88%, transparent 100%); }
+				&:nth-child(15):after { background: linear-gradient(135deg, transparent 0%,
+						transparent 15%, #ffffff 15%, #ffffff 25%, transparent 25%,
+						transparent 45%, #ffffff 45%, #ffffff 55%, transparent 55%,
+						transparent 75%, #ffffff 75%, #ffffff 85%, transparent 85%,
+						transparent 100%); }
+				&:nth-child(16):after { background: linear-gradient(135deg, #000000aa 0%, transparent 100%); }
+
+			}
+
+			.add-strip {
+				background: rgba(0,0,0,.05);
+				display: inline-block;
+				margin: 1px 3px 2px 0;
+				width: 31px;
+				height: 31px;
+			}
+		}
+
 		&.swatches {
 			font-size: 0;
 			width: 215px;

@@ -26,7 +26,8 @@ const UI = {
 		this.doDialogKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgSharpen"]`) });
 		this.doDialogKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgColors"]`) });
 
-		// setTimeout(() => this.content.find(".option[data-options='brush-tips'] .value").trigger("click"), 200);
+		setTimeout(() => this.content.find(".option[data-options='pop-gradients'] .value").trigger("click"), 200);
+		// setTimeout(() => this.content.find(".option[data-options='pop-brush-tips'] .value").trigger("click"), 200);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -103,6 +104,9 @@ const UI = {
 				data = event.el.parents("[data-ui]").data("ui");
 				Self[data](event);
 		}
+	},
+	doGradients(event) {
+
 	},
 	doDialog(event) {
 		let Self = UI,

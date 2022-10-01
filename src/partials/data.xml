@@ -55,6 +55,25 @@
 		<i value="#000000" />
 	</Swatches>
 
+	<Gradients>
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+		<i value="#79fce9" />
+	</Gradients>
+
 	<BlendModes>
 		<i type="option" name="Normal" value="source-over"/>
 		<i type="option" name="Dissolve" value="dissolve"/>

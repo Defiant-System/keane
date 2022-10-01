@@ -1,35 +1,48 @@
-<div class="tool-options-fill hidden" data-area="gradient">
-	<div class="tool tool-gradient down" title="Gradient" data-click="select-option" data-arg="gradient" data-group="options" data-option="main"></div>
-	<div class="tool tool-fill" title="Paint Bucket" data-click="select-option" data-arg="fill" data-group="options" data-option="main"></div>
+<div class="tool-options-gradient hidden" data-area="gradient">
+	<div class="tool tool-gradient down" title="Gradient" data-click="select-option" data-arg="gradient" data-group="options" data-option="main" data-subOptions="gradient"></div>
+	<div class="tool tool-fill" title="Paint Bucket" data-click="select-option" data-arg="fill" data-group="options" data-option="main" data-subOptions="fill"></div>
 
 	<div class="divider"></div>
 
-	<div class="option">
-		<span class="label">Opacity</span>
-		<span class="value">100%</span>
-	</div>
+	<span class="tool-group active" data-subName="gradient">
+	 
+		<div class="option opt-gradient" data-options="pop-gradients" data-match="//Gradients">
+			<div class="value">
+				<div class="gradient-strip"></div>
+			</div>
+		</div>
 
-	<div class="option input">
-		<span class="label">Tolerance:</span>
-		<span class="value"><input type="text" value="0"></span>
-	</div>
+		<div class="option">
+			<span class="label">Opacity</span>
+			<span class="value">100%</span>
+		</div>
 
-	<div class="divider"></div>
+		<div class="option input">
+			<span class="label">Tolerance:</span>
+			<span class="value"><input type="text" value="0"></span>
+		</div>
 
-	<div class="option check">
-		<span class="value">
-			<input type="checkbox" id="fill-anti-alias" checked>
-			<i></i>
-		</span>
-		<label class="label" for="fill-anti-alias">Anti-alias</label>
-	</div>
+		<div class="divider"></div>
 
-	<div class="option check">
-		<span class="value">
-			<input type="checkbox" id="fill-contigous" checked>
-			<i></i>
-		</span>
-		<label class="label" for="fill-contigous">Contiguous</label>
-	</div>
+		<div class="option check">
+			<span class="value">
+				<input type="checkbox" id="fill-anti-alias" checked>
+				<i></i>
+			</span>
+			<label class="label" for="fill-anti-alias">Anti-alias</label>
+		</div>
+
+		<div class="option check">
+			<span class="value">
+				<input type="checkbox" id="fill-contigous" checked>
+				<i></i>
+			</span>
+			<label class="label" for="fill-contigous">Contiguous</label>
+		</div>
+	</span>
+
+	<span class="tool-group" data-subName="fill">
+		<!-- sub options for fill tool -->
+	</span>
 	
 </div>
