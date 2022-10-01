@@ -1,6 +1,7 @@
 
 const ColorLib = {
 	clamp: (num, min, max) => Math.min(Math.max(num, min), max),
+	intToHex: i => i.toString(16).padStart(2, "0"),
 	hslToRgb(hsl) {
 		let _round = Math.round,
 			_min = Math.min,
@@ -47,11 +48,9 @@ const ColorLib = {
 	},
 	rgbToHex(rgb) {
 		if (typeof rgb === "string") rgb = this.parseRgb(rgb);
-		let d = "0123456789abcdef".split(""),
-			hex = x => isNaN(x) ? "00" : d[(x-x%16)/16] + d[x%16],
-			r = hex(Math.round(rgb.r)),
-			g = hex(Math.round(rgb.g)),
-			b = hex(Math.round(rgb.b));
+		let r = this.intToHex(Math.round(rgb.r)),
+			g = this.intToHex(Math.round(rgb.g)),
+			b = this.intToHex(Math.round(rgb.b));
 		return `#${r}${g}${b}`;
 	},
 	rgbToHsl(rgb) {

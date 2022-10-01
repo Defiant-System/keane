@@ -471,7 +471,7 @@ const UI = {
 				// UI / UX
 				Drag.cursor.cssSequence("dropped", "animationend", el => el.removeClass("dropped dragging"));
 				// remove class
-				setTimeout(() => APP.els.content.removeClass("no-dlg-cursor"), 300);
+				APP.els.content.removeClass("no-dlg-cursor");
 				// unbind event handlers
 				Self.doc.off("mousemove mouseup", Self.doColorBox);
 				break;
@@ -573,6 +573,8 @@ const UI = {
 					_max: Math.max,
 					_round: Math.round,
 				};
+				// pre-knob event
+				dlg.func({ ...dlg, type: "before-knob" });
 				// bind event handlers
 				Self.content.addClass("no-dlg-cursor");
 				Self.doc.on("mousemove mouseup", Self.doDialogKnob);

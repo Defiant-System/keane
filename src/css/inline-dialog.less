@@ -176,7 +176,9 @@
 		.dlg-content {
 			--hue: #ff0000;
 			--color: #ffffff;
-			--old-color: #86637dff;
+			--alpha: 1;
+			--old-color: #86637d;
+			--old-alpha: 1;
 
 			.color-box {
 				background: var(--hue);
@@ -379,6 +381,7 @@
 
 						&.new-color     {
 							background: var( --color );
+							opacity: var( --alpha );
 							position: relative;
 							border-radius: 3px 3px 0 0;
 
@@ -395,6 +398,7 @@
 						
 						&.current-color {
 							background: var( --old-color );
+							opacity: var( --old-alpha );
 							border-radius: 0 0 3px 3px;
 						}
 					}

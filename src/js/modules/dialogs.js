@@ -28,11 +28,11 @@ const Dialogs = {
 			case "before-knob": // <-- called before knob is turned
 				// fast references
 				Self.els = {
-					
+					content: event.dEl.find(".dlg-content"),
 				};
 				break;
 			case "set-color-opacity":
-				console.log(event);
+				Self.els.content.css({ "--alpha": event.value / 100 });
 				break;
 			case "dlg-ok":
 				break;
