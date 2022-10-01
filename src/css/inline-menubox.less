@@ -94,21 +94,30 @@
 				&:nth-child(12):after { background: linear-gradient(135deg, #2888cc 0%, #ffffff 50%, #906900 51%, #d99f00 64%, #ffffff 100%); }
 				&:nth-child(13):after { background: linear-gradient(135deg, #ff0000 0%, #ff00ff 15%, #0000ff 33%, #00ffff 49%, #00ff00 67%, #ffff00 84%, #ff0000 100%); }
 				&:nth-child(14):after { background: linear-gradient(135deg, transparent 0%, #ff0000 12%, #ff00ff 28%, #0000ff 45%, #00ffff 60%, #00ff00 0%, #ffff00 75%, #ff0000 88%, transparent 100%); }
-				&:nth-child(15):after { background: linear-gradient(135deg, transparent 0%,
-						transparent 15%, #ffffff 15%, #ffffff 25%, transparent 25%,
-						transparent 45%, #ffffff 45%, #ffffff 55%, transparent 55%,
-						transparent 75%, #ffffff 75%, #ffffff 85%, transparent 85%,
-						transparent 100%); }
+				&:nth-child(15):after { background: linear-gradient(135deg, transparent 0%, transparent 15%, #ffffff 15%, #ffffff 25%, transparent 25%, transparent 45%, #ffffff 45%, #ffffff 55%, transparent 55%, transparent 75%, #ffffff 75%, #ffffff 85%, transparent 85%, transparent 100%); }
 				&:nth-child(16):after { background: linear-gradient(135deg, #000000aa 0%, transparent 100%); }
 
 			}
 
 			.add-strip {
-				background: rgba(0,0,0,.05);
 				display: inline-block;
 				margin: 1px 3px 2px 0;
 				width: 31px;
 				height: 31px;
+				border-radius: 3px;
+				border: 2px dotted rgba(0,0,0,.5);
+				background-color: rgba(0,0,0,.1);
+				background-image: inherit;
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: 50% 50%;
+				background-image: url(~/icons/icon-plus.png);
+				filter: opacity(65%);
+				cursor: pointer;
+
+				&:hover {
+					filter: opacity(100%);
+				}
 			}
 		}
 
