@@ -33,7 +33,6 @@ const keane = {
 		UI.init();
 		Tabs.init();
 		Filters.init();
-		Dialogs.init();
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 	},
@@ -110,7 +109,8 @@ const keane = {
 					}
 					rEl = el.parents(".dialog-box");
 					if (rEl.length) {
-						return Dialogs.dispatch(event);
+						let name = rEl.data("dlg");
+						return Dialogs[name](event);
 					}
 				}
 		}
