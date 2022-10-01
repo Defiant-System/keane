@@ -503,6 +503,8 @@ const UI = {
 					_min: Math.min,
 					_round: Math.round,
 				};
+				// trigger mousemove
+				Self.doHueBar({ type: "mousemove", clientY: event.clientY });
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-dlg-cursor");
 				// bind event handlers
