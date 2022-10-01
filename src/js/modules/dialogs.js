@@ -77,9 +77,41 @@ const Dialogs = {
 				break;
 
 			// custom event
-			case "dlg-preview-gaussian-blur":
-			case "dlg-preview-sharpen":
+			case "dlg-close":
 				console.log( event );
+				break;
+
+			// proxy event
+			default:
+				
+		}
+	},
+	dlgGaussianBlur(event) {
+		let APP = keane,
+			Self = Dialogs,
+			el;
+		switch (event.type) {
+			case "dlg-ok":
+			case "dlg-preview":
+				break;
+		}
+	},
+	dlgSharpen(event) {
+		let APP = keane,
+			Self = Dialogs,
+			el;
+		switch (event.type) {
+			case "dlg-ok":
+			case "dlg-preview":
+				break;
+		}
+	},
+	dlgColors(event) {
+		let APP = keane,
+			Self = Dialogs,
+			el;
+		switch (event.type) {
+			case "dlg-ok":
 				break;
 		}
 	},

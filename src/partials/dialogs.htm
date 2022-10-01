@@ -1,6 +1,7 @@
 
 <div class="dialog-box" data-dlg="dlgGaussianBlur">
 	<div class="dlg-content">
+		<i class="icon-dlg-close" data-click="dg-close"></i>
 		<div class="fields">
 			<h2>Gaussian Blur</h2>
 			<div class="field-row has-knob">
@@ -14,7 +15,7 @@
 		<div class="buttons">
 			<div class="button">OK</div>
 			<div class="button disabled1">Reset</div>
-			<div class="toggler" data-value="off" data-click="dlg-preview-gaussian-blur">
+			<div class="toggler" data-value="off" data-click="dlg-preview">
 				<span>Preview</span>
 			</div>
 		</div>
@@ -24,6 +25,7 @@
 
 <div class="dialog-box" data-dlg="dlgSharpen">
 	<div class="dlg-content">
+		<i class="icon-dlg-close" data-click="dg-close"></i>
 		<div class="fields">
 			<h2>Sharpen</h2>
 			<div class="field-row has-knob">
@@ -42,9 +44,9 @@
 			</div>
 		</div>
 		<div class="buttons">
-			<div class="button">OK</div>
-			<div class="button">Reset</div>
-			<div class="toggler" data-value="on" data-click="dlg-preview-sharpen">
+			<div class="button" data-click="dlg-ok">OK</div>
+			<div class="button" data-click="dlg-reset">Reset</div>
+			<div class="toggler" data-value="on" data-click="dlg-preview">
 				<span>Preview</span>
 			</div>
 		</div>
