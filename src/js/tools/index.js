@@ -14,14 +14,11 @@
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
-		// subscribe to events
-		karaqu.on("set-fg-color", this.dispatch);
-
 		// select a tool
 		this.els.toolBar.find(".tool:nth(2)").trigger("click");
 
 		// temp
-		setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.option .tip-icon`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-options-brush .tool-feather`).trigger("click"), 500);
 	},
@@ -65,11 +62,6 @@
 
 				// select tool option
 				Self[Self._active].dispatch({ type: "select-option", arg: event.el.data("arg") });
-				break;
-
-			// subscribed events
-			case "set-fg-color":
-				Self.els.optionBar.find(".color-sample .fg-color").css({ background: event.detail.hex });
 				break;
 
 			// custom events

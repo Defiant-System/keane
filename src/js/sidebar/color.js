@@ -141,10 +141,10 @@
 
 				// hue field
 				Self.els.iHue.val(Drag._round(Drag.hue) +"°");
-				// broadcast event
-				karaqu.emit("set-fg-color", { hex: Drag.hex, uiDone: true });
 				break;
 			case "mouseup":
+				// broadcast event
+				karaqu.emit("set-fg-color", { hex: Drag.hex, uiDone: true });
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
@@ -180,6 +180,8 @@
 					_abs: Math.abs,
 					_round: Math.round,
 				};
+				// force cursor to position to mouse
+				Self.doColorBox({ type: "mousemove", clientX: event.clientX, clientY: event.clientY });
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
 				// bind event handlers
@@ -211,10 +213,10 @@
 
 				// hex value
 				Self.els.iHex.val(Drag.hex.slice(1,7));
-				// broadcast event
-				karaqu.emit("set-fg-color", { hex: Drag.hex, uiDone: true });
 				break;
 			case "mouseup":
+				// broadcast event
+				karaqu.emit("set-fg-color", { hex: Drag.hex, uiDone: true });
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers

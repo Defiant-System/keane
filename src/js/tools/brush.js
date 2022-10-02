@@ -44,6 +44,7 @@
 			height,
 			roundness,
 			angle,
+			c1, c2,
 			el;
 
 		switch (event.type) {
@@ -54,9 +55,18 @@
 
 			// subscribed events
 			case "set-fg-color":
+				// update file fg
 				File.fgColor = event.detail.hex;
+				// update content level variable
+				APP.els.content.css({ "--fg-color": File.fgColor });
 				// resize / rotate tip
 				Self.dispatch({ type: "resize-rotate-tip" });
+				break;
+			case "set-bg-color":
+				// update file bg
+				File.bgColor = event.detail.hex;
+				// update content level variable
+				APP.els.content.css({ "--bg-color": File.bgColor });
 				break;
 
 			// custom events
@@ -74,8 +84,20 @@
 				})
 				break;
 			case "switch-color":
+				c1 = APP.els.content.cssProp("--fg-color");
+				c2 = APP.els.content.cssProp("--bg-color");
+				APP.els.content.css({ "--fg-color": c2, "--bg-color": c1 });
+				// broadcast event
+				karaqu.emit("set-fg-color", { hex: c1 });
+				karaqu.emit("set-bg-color", { hex: c2 });
+				break;
 			case "reset-color":
-				// console.log(event);
+				c1 = "#ffffff";
+				c2 = "#000000";
+				APP.els.content.css({ "--fg-color": c1, "--bg-color": c2 });
+				// broadcast event
+				karaqu.emit("set-fg-color", { hex: c1 });
+				karaqu.emit("set-bg-color", { hex: c2 });
 				break;
 			case "select-preset-tip":
 				el = APP.els.content.find(".option[data-change='select-preset-tip']");
@@ -118,7 +140,7 @@
 				Self.preset.tip.ctx.translate(-hS, -hS);
 				Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, y, size, height);
 				Self.preset.tip.ctx.globalCompositeOperation = "source-atop"; // difference
-				Self.preset.tip.ctx.fillStyle = File ? File.fgColor : "#fff";
+				Self.preset.tip.ctx.fillStyle = APP.els.content.cssProp("--fg-color") || "#fff";
 				Self.preset.tip.ctx.fillRect(0, 0, size, size);
 				break;
 			case "change-blend-mode":
