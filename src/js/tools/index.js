@@ -18,9 +18,10 @@
 		karaqu.on("set-fg-color", this.dispatch);
 
 		// select a tool
-		this.els.toolBar.find(".tool:nth(3)").trigger("click");
+		this.els.toolBar.find(".tool:nth(2)").trigger("click");
 
 		// temp
+		setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.option .tip-icon`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-options-brush .tool-feather`).trigger("click"), 500);
 	},

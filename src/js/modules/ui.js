@@ -41,7 +41,7 @@ const UI = {
 			top,
 			left,
 			el;
-		//console.log(event);
+		// console.log(event);
 		switch (event.type) {
 			case "click":
 				el = $(this.parentNode);
@@ -116,19 +116,20 @@ const UI = {
 			case "select-gradient-strip":
 				event.el.find(".active").removeClass("active");
 				el = $(event.target).addClass("active");
-
-				Self.srcEl.find(".gradient-strip")
-					.css({ "--gs": el.cssProp("--gs") })
+				// update toolbar option selectbox
+				Self.srcEl.find(".gradient-strip").css({ "--gs": el.cssProp("--gs") })
 				break;
 		}
 	},
 	doDialog(event) {
 		let Self = UI,
-			Drag = Self.drag;
+			Drag = Self.drag,
+			el;
 		// console.log(event);
 		switch (event.type) {
+			// native events
 			case "mousedown":
-				let el = $(event.target);
+				el = $(event.target);
 				
 				switch (true) {
 					case el.hasClass("toggler"):
@@ -166,6 +167,18 @@ const UI = {
 				// unbind event handlers
 				Self.content.removeClass("no-cursor");
 				Self.doc.off("mousemove mouseup", Self.doDialog);
+				break;
+
+			// custom events
+			case "dlg-open":
+				$(`.dialog-box[data-dlg="${event.name}"]`)
+					.cssSequence("opening", "animationend", el => {
+						el.addClass("showing").removeClass("opening");
+					});
+				break;
+			case "dlg-close":
+				event.el.parents(".dialog-box")
+					.cssSequence("closing", "animationend", el => el.removeClass("showing closing"));
 				break;
 		}
 	},

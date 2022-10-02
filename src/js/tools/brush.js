@@ -61,6 +61,12 @@
 
 			// custom events
 			case "select-color":
+				UI.doDialog({
+					type: "dlg-open",
+					name: event.el.data("arg"),
+					value: "#ffffff",
+				})
+				break;
 			case "switch-color":
 			case "reset-color":
 				// console.log(event);
