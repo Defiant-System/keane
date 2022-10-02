@@ -239,11 +239,14 @@
 
 <xsl:template name="pop-gradients">
 	<div class="inline-menubox" data-ui="doGradients">
-		<div class="inline-content gradient-strips">
+		<div class="inline-content gradient-strips" data-click="select-gradient-strip">
 			<xsl:for-each select="./*">
-				<div class="strip"></div>
+				<div class="strip">
+					<xsl:if test="position() = 2"><xsl:attribute name="class">strip active</xsl:attribute></xsl:if>
+					<xsl:attribute name="style">--gs: <xsl:value-of select="@g"/>;</xsl:attribute>
+				</div>
 			</xsl:for-each>
-			<div class="add-strip"></div>
+			<div class="add-strip" data-click="add-gradient-strip"></div>
 		</div>
 	</div>
 </xsl:template>

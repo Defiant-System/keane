@@ -106,7 +106,17 @@ const UI = {
 		}
 	},
 	doGradients(event) {
-
+		let Self = UI,
+			Drag = Self.drag;
+		// console.log(event);
+		switch (event.type) {
+			case "add-gradient-strip":
+				console.log(event);
+				break;
+			case "select-gradient-strip":
+				console.log(event);
+				break;
+		}
 	},
 	doDialog(event) {
 		let Self = UI,
