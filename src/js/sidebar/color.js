@@ -33,8 +33,8 @@
 		let APP = keane,
 			Self = APP.sidebar.color,
 			rgb,
-			hsv,
 			hsl,
+			hsv,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -44,12 +44,12 @@
 				if (event.detail.uiDone) return;
 
 				rgb = ColorLib.hexToRgb(event.detail.hex);
-				hsl = ColorLib.rgbToHsl(rgb);
 				hsv = ColorLib.hexToHsv(event.detail.hex);
+				hsl = ColorLib.rgbToHsl(rgb);
 
-				Self.els.iHue.val(hsv.h +"°");
-				Self.els.iSaturation.val(hsv.s +"%");
-				Self.els.iLightness.val(hsl.l +"%");
+				Self.els.iHue.val(hsl.h +"°");
+				Self.els.iSaturation.val(Math.round(hsl.s * 100) +"%");
+				Self.els.iLightness.val(Math.round(hsl.l * 100) +"%");
 
 				Self.els.iRed.val(rgb.r);
 				Self.els.iGreen.val(rgb.g);
@@ -59,13 +59,13 @@
 
 				let box = Self.els.colorWheel.find(".color-shape"),
 					w = +box.prop("offsetHeight"),
-					left = w * (hsv.s/100),
-					top = w * (1-(hsv.v/100)),
-					boxHex = ColorLib.hslToHex({ ...hsv, s: 1, l: .5 });
+					left = w * hsv.s,
+					top = w * (1-hsv.v),
+					boxHex = ColorLib.hslToHex({ ...hsl, s: 1, l: .5 });
 				box.css({ "background-color": boxHex });
 
 				Self.els.colorWheel.find(".box-cursor").css({ top, left });
-				Self.els.colorWheel.find(".circle-cursor").css({ transform: `rotate(${hsv.h}deg)` });
+				Self.els.colorWheel.find(".circle-cursor").css({ transform: `rotate(${hsl.h}deg)` });
 				break;
 
 			// custom events

@@ -597,11 +597,11 @@ const UI = {
 			// custom events
 			case "position-cursor":
 				// position cursor
-				let iHsv = ColorLib.hexToHsv(event.value),
+				let iHsl = ColorLib.hexToHsl(event.value),
 					iRgb = ColorLib.hexToRgb(event.value),
-					hueHex = ColorLib.hslToHex({ h: iHsv.h, s: 1, l: .5, a: 1 }),
+					hueHex = ColorLib.hslToHex({ h: iHsl.h, s: 1, l: .5, a: 1 }),
 					iHeight = +event.dEl.find(".hue-bar").prop("offsetHeight"),
-					iTop = (1-(iHsv.h / 360)) * iHeight;
+					iTop = (1-(iHsl.h / 360)) * iHeight;
 				// dialog content variables
 				event.dEl.find(".dlg-content").css({
 					"--color": event.value,
@@ -614,9 +614,9 @@ const UI = {
 				event.dEl.find(".hue-bar .cursor").css({ top: iTop });
 
 				// hsl values
-				Self.els.iHue.val(iHsv.h +"°");
-				Self.els.iSaturation.val(Math.round(iHsv.s * 100) +"%");
-				Self.els.iLightness.val(Math.round(iHsv.v * 100) +"%");
+				Self.els.iHue.val(iHsl.h +"°");
+				Self.els.iSaturation.val(Math.round(iHsl.s * 100) +"%");
+				Self.els.iLightness.val(Math.round(iHsl.l * 100) +"%");
 				// rgb values
 				Self.els.iRed.val(iRgb.r);
 				Self.els.iGreen.val(iRgb.g);
