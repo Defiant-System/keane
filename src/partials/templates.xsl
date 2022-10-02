@@ -237,7 +237,7 @@
 </xsl:template>
 
 
-<xsl:template name="pop-gradients">
+<xsl:template name="pop-gradient-strips">
 	<div class="inline-menubox" data-ui="doGradients">
 		<div class="inline-content gradient-strips" data-click="select-gradient-strip">
 			<xsl:for-each select="./*">

@@ -618,7 +618,7 @@
 
 	<svg id="icon-plus" viewBox="0 0 31 31">
 		<style type="text/css">
-			.st0{fill:rgba(0,0,0,.35);}
+			.st0{fill:#354040;}
 		</style>
 		<rect x="14" y="5" class="st0" width="3" height="21"/>
 		<rect x="5" y="14" class="st0" width="21" height="3"/>

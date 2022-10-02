@@ -26,7 +26,7 @@ const UI = {
 		this.doDialogKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgSharpen"]`) });
 		this.doDialogKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgColors"]`) });
 
-		setTimeout(() => this.content.find(".option[data-options='pop-gradients'] .value").trigger("click"), 200);
+		// setTimeout(() => this.content.find(".option[data-options='pop-gradient-strips'] .value").trigger("click"), 200);
 		// setTimeout(() => this.content.find(".option[data-options='pop-brush-tips'] .value").trigger("click"), 200);
 	},
 	dispatch(event) {
@@ -107,14 +107,18 @@ const UI = {
 	},
 	doGradients(event) {
 		let Self = UI,
-			Drag = Self.drag;
+			el;
 		// console.log(event);
 		switch (event.type) {
 			case "add-gradient-strip":
 				console.log(event);
 				break;
 			case "select-gradient-strip":
-				console.log(event);
+				event.el.find(".active").removeClass("active");
+				el = $(event.target).addClass("active");
+
+				Self.srcEl.find(".gradient-strip")
+					.css({ "--gs": el.cssProp("--gs") })
 				break;
 		}
 	},
