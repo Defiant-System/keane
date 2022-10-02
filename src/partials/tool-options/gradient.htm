@@ -5,7 +5,6 @@
 	<div class="divider"></div>
 
 	<span class="tool-group active" data-subName="gradient">
-	 
 		<div class="option opt-gradient" data-options="pop-gradients" data-match="//Gradients">
 			<div class="value">
 				<div class="gradient-strip"></div>
@@ -42,7 +41,38 @@
 	</span>
 
 	<span class="tool-group" data-subName="fill">
-		<!-- sub options for fill tool -->
+		<div class="option disabled1" data-arg="blend" data-change="change-blend-mode" data-options="blend-modes" data-match="//BlendModes">
+			<span class="label">Blend</span>
+			<span class="value">Normal</span>
+		</div>
+
+		<div class="option">
+			<span class="label">Opacity</span>
+			<span class="value">100%</span>
+		</div>
+
+		<div class="option input">
+			<span class="label">Tolerance:</span>
+			<span class="value"><input type="text" value="0"></span>
+		</div>
+
+		<div class="divider"></div>
+
+		<div class="option check">
+			<span class="value">
+				<input type="checkbox" id="fill-anti-alias" checked>
+				<i></i>
+			</span>
+			<label class="label" for="fill-anti-alias">Anti-alias</label>
+		</div>
+
+		<div class="option check">
+			<span class="value">
+				<input type="checkbox" id="fill-contigous" checked>
+				<i></i>
+			</span>
+			<label class="label" for="fill-contigous">Contiguous</label>
+		</div>
 	</span>
 	
 </div>
