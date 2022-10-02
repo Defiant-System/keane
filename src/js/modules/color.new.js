@@ -41,8 +41,8 @@ const ColorLib = {
 		}
 		return {
 			h: _round(hue * 60 % 360),
-			s: _round(this.clamp(saturation * 100, 0, 100)),
-			v: _round(this.clamp(value * 100, 0, 100)),
+			s: _round(this.clamp(saturation * 100, 0, 100)) / 100,
+			v: _round(this.clamp(value * 100, 0, 100)) / 100,
 			a
 		};
 	},

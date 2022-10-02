@@ -22,10 +22,6 @@ const UI = {
 		this.content.on("mousedown mouseup", "[data-ui], [data-dlg]", this.dispatch);
 
 		// temp
-		this.doDialogKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgGaussianBlur"]`) });
-		this.doDialogKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgSharpen"]`) });
-		this.doDialogKnob({ type: "set-initial-value", el: window.find(`.dialog-box[data-dlg="dlgColors"]`) });
-
 		// setTimeout(() => this.content.find(".option[data-options='pop-gradient-strips'] .value").trigger("click"), 200);
 		// setTimeout(() => this.content.find(".option[data-options='pop-brush-tips'] .value").trigger("click"), 200);
 	},
@@ -173,6 +169,8 @@ const UI = {
 			// custom events
 			case "dlg-open":
 				dEl = $(`.dialog-box[data-dlg="${event.name}"]`);
+				// make sure knobs in dialog is synced with its sibling input element
+				Self.doDialogKnob({ type: "set-initial-value", dEl });
 				// auto forward open event
 				Dialogs[event.name]({ ...event, dEl });
 				// prevent mouse from triggering mouseover
@@ -524,8 +522,8 @@ const UI = {
 				// position cursor
 				let iHsv = ColorLib.hexToHsv(event.value),
 					iWidth = +event.dEl.find(".color-box").prop("offsetWidth"),
-					iLeft = iWidth * (iHsv.s / 100),
-					iTop = iWidth * (1-(iHsv.v / 100));
+					iLeft = iWidth * iHsv.s,
+					iTop = iWidth * (1-iHsv.v);
 				event.dEl.find(".color-box .cursor").css({ top: iTop, left: iLeft });
 				break;
 		}
@@ -600,11 +598,10 @@ const UI = {
 			case "position-cursor":
 				// position cursor
 				let iHsv = ColorLib.hexToHsv(event.value),
+					iRgb = ColorLib.hexToRgb(event.value),
 					hueHex = ColorLib.hslToHex({ h: iHsv.h, s: 1, l: .5, a: 1 }),
 					iHeight = +event.dEl.find(".hue-bar").prop("offsetHeight"),
 					iTop = (1-(iHsv.h / 360)) * iHeight;
-				// hue bar cursor
-				event.dEl.find(".hue-bar .cursor").css({ top: iTop });
 				// dialog content variables
 				event.dEl.find(".dlg-content").css({
 					"--color": event.value,
@@ -613,6 +610,19 @@ const UI = {
 					"--old-alpha": 1,
 					"--hue": hueHex,
 				});
+				// hue bar cursor
+				event.dEl.find(".hue-bar .cursor").css({ top: iTop });
+
+				// hsl values
+				Self.els.iHue.val(iHsv.h +"°");
+				Self.els.iSaturation.val(Math.round(iHsv.s * 100) +"%");
+				Self.els.iLightness.val(Math.round(iHsv.v * 100) +"%");
+				// rgb values
+				Self.els.iRed.val(iRgb.r);
+				Self.els.iGreen.val(iRgb.g);
+				Self.els.iBlue.val(iRgb.b);
+				// hex value
+				Self.els.iHex.val(event.value.slice(1,7));
 				break;
 		}
 	},
@@ -673,7 +683,7 @@ const UI = {
 			// custom events
 			case "set-initial-value":
 				// initial value of knob
-				event.el.find(".field-row.has-knob").map(rEl => {
+				event.dEl.find(".field-row.has-knob").map(rEl => {
 					let row = $(rEl),
 						iEl = row.find("input"),
 						min = +iEl.data("min"),
