@@ -35,14 +35,9 @@ const Dialogs = {
 			el;
 		switch (event.type) {
 			case "dlg-open":
-				value = "#ffffff";
-				// set "current color"
-				event.dEl.find(".dlg-content").css({
-					"--color": value,
-					"--old-color": value,
-					"--alpha": 1,
-					"--old-alpha": 1,
-				});
+				// position cursors
+				UI.doColorBox({ ...event, type: "position-cursor" });
+				UI.doHueBar({ ...event, type: "position-cursor" });
 				// save reference to event
 				Self.srcEvent = event;
 				break;

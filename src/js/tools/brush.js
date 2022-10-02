@@ -9,7 +9,7 @@
 		this.feather = {
 			brush: "sketchy",
 			blend: "source-over",
-			pressure: 50,
+			pressure: 100,
 			size: 1,
 		};
 
@@ -65,11 +65,12 @@
 					type: "dlg-open",
 					name: event.el.data("arg"),
 					src: event.el,
+					value: APP.els.content.cssProp("--fg-color"),
 					callback(event) {
-						APP.els.content.css({
-							"--fg-color": event.value,
-						});
-					}
+						APP.els.content.css({ "--fg-color": event.value });
+
+						karaqu.emit("set-fg-color", { hex: event.value });
+					},
 				})
 				break;
 			case "switch-color":

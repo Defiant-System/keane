@@ -85,7 +85,7 @@ const UI = {
 					// clean up
 					Self.menu.remove();
 				}
-				Self.srcEl.removeClass("opened");
+				// Self.srcEl.removeClass("opened");
 				// uncover app UI
 				APP.els.content.removeClass("cover");
 				// unbind event handler
@@ -448,6 +448,7 @@ const UI = {
 			Self = UI,
 			Drag = Self.drag;
 		switch (event.type) {
+			// native events
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
@@ -518,6 +519,15 @@ const UI = {
 				// unbind event handlers
 				Self.doc.off("mousemove mouseup", Self.doColorBox);
 				break;
+			// custom events
+			case "position-cursor":
+				// position cursor
+				let iHsv = ColorLib.hexToHsv(event.value),
+					iWidth = +event.dEl.find(".color-box").prop("offsetWidth"),
+					iLeft = iWidth * (iHsv.s / 100),
+					iTop = iWidth * (1-(iHsv.v / 100));
+				event.dEl.find(".color-box .cursor").css({ top: iTop, left: iLeft });
+				break;
 		}
 	},
 	doHueBar(event) {
@@ -525,6 +535,7 @@ const UI = {
 			Self = UI,
 			Drag = Self.drag;
 		switch (event.type) {
+			// native events
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
@@ -584,6 +595,24 @@ const UI = {
 				APP.els.content.removeClass("no-dlg-cursor");
 				// unbind event handlers
 				Self.doc.off("mousemove mouseup", Self.doHueBar);
+				break;
+			// custom events
+			case "position-cursor":
+				// position cursor
+				let iHsv = ColorLib.hexToHsv(event.value),
+					hueHex = ColorLib.hslToHex({ h: iHsv.h, s: 1, l: .5, a: 1 }),
+					iHeight = +event.dEl.find(".hue-bar").prop("offsetHeight"),
+					iTop = (1-(iHsv.h / 360)) * iHeight;
+				// hue bar cursor
+				event.dEl.find(".hue-bar .cursor").css({ top: iTop });
+				// dialog content variables
+				event.dEl.find(".dlg-content").css({
+					"--color": event.value,
+					"--old-color": event.value,
+					"--alpha": 1,
+					"--old-alpha": 1,
+					"--hue": hueHex,
+				});
 				break;
 		}
 	},

@@ -61,6 +61,10 @@ const ColorLib = {
 		let rgb = this.hexToRgb(hex);
 		return this.rgbToHsv(rgb);
 	},
+	hexToHsl(hex) {
+		let rgb = this.hexToRgb(hex);
+		return this.rgbToHsl(rgb);
+	},
 	hsvToHex(hsv) {
 		let hsl = this.hsvToHsl(hsv);
 		return this.hslToHex(hsl);
