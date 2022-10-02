@@ -377,12 +377,19 @@ content {
 			height: 13px;
 			border: 1px solid rgba(#000, .5);
 			z-index: 2;
+
+			&.fg-color {
+				background: var(--fg-color);
+			}
+
+			&.bg-color {
+				background: var(--bg-color);
+				top: 8px;
+				left: 26px;
+				z-index: 1;
+			}
 		}
-		.bg-color {
-			top: 8px;
-			left: 26px;
-			z-index: 1;
-		}
+
 		.color-reset {
 			position: absolute;
 			bottom: 0;
@@ -394,6 +401,7 @@ content {
 			filter: invert() drop-shadow(0 1px 0 #00000070);
 			opacity: 0.4;
 		}
+
 		.color-switch {
 			position: absolute;
 			top: 0;

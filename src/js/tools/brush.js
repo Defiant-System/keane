@@ -64,7 +64,12 @@
 				UI.doDialog({
 					type: "dlg-open",
 					name: event.el.data("arg"),
-					value: "#ffffff",
+					src: event.el,
+					callback(event) {
+						APP.els.content.css({
+							"--fg-color": event.value,
+						});
+					}
 				})
 				break;
 			case "switch-color":

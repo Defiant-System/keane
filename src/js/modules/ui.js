@@ -124,6 +124,7 @@ const UI = {
 	doDialog(event) {
 		let Self = UI,
 			Drag = Self.drag,
+			dEl,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -171,14 +172,25 @@ const UI = {
 
 			// custom events
 			case "dlg-open":
-				$(`.dialog-box[data-dlg="${event.name}"]`)
-					.cssSequence("opening", "animationend", el => {
+				dEl = $(`.dialog-box[data-dlg="${event.name}"]`);
+				// auto forward open event
+				Dialogs[event.name]({ ...event, dEl });
+				// prevent mouse from triggering mouseover
+				Self.content.addClass("cover");
+				// open dialog
+				dEl.cssSequence("opening", "animationend", el => {
 						el.addClass("showing").removeClass("opening");
 					});
 				break;
 			case "dlg-close":
+				// close dialog
 				event.el.parents(".dialog-box")
-					.cssSequence("closing", "animationend", el => el.removeClass("showing closing"));
+					.cssSequence("closing", "animationend", el => {
+						// prevent mouse from triggering mouseover
+						Self.content.removeClass("cover");
+						// reset element
+						el.removeClass("showing closing");
+					});
 				break;
 		}
 	},
