@@ -138,6 +138,7 @@ const UI = {
 					case el.hasClass("hue-bar"):
 						return Self.doHueBar(event);
 					case el.hasClass("knob"):
+					case el.hasClass("pan-knob"):
 						return Self.doDialogKnob(event);
 				}
 
@@ -688,8 +689,14 @@ const UI = {
 						iEl = row.find("input"),
 						min = +iEl.data("min"),
 						max = +iEl.data("max"),
-						val = parseInt(iEl.val(), 10);
-					row.find(".knob").data({ value: Math.round((val-min) / (max-min) * 100) });
+						val = parseInt(iEl.val(), 10),
+						kEl = row.find(".knob");
+					if (kEl.length) {
+						kEl.data({ value: Math.round((val-min) / (max-min) * 100) });
+					} else {
+						kEl = row.find(".pan-knob");
+						kEl.data({ value: "0" });
+					}
 				});
 				break;
 		}

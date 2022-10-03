@@ -17,7 +17,7 @@
 		<div class="buttons">
 			<div class="button">OK</div>
 			<div class="button disabled1">Reset</div>
-			<div class="toggler" data-value="off" data-click="dlg-preview">
+			<div class="toggler" data-value="on" data-click="dlg-preview">
 				<span>Preview</span>
 			</div>
 		</div>
@@ -45,6 +45,39 @@
 					<span class="value"><input type="text" name="sharpen-radius" value="3px" data-min="0" data-max="20" data-suffix="px"></span>
 				</div>
 				<div class="knob" data-change="set-sharpen-radius"></div>
+			</div>
+		</div>
+		<div class="buttons">
+			<div class="button" data-click="dlg-ok">OK</div>
+			<div class="button" data-click="dlg-reset">Reset</div>
+			<div class="toggler" data-value="on" data-click="dlg-preview">
+				<span>Preview</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="dialog-box" data-dlg="dlgBrightnessContrast">
+	<div class="dlg-content">
+		<div class="fields">
+			<h2>
+				<i class="icon-dlg-close" data-click="dlg-close"></i>
+				Brightness / Contrast
+			</h2>
+			<div class="field-row has-knob">
+				<div class="option input">
+					<span class="label">Brightness</span>
+					<span class="value"><input type="text" name="brightness-amount" value="0" data-min="-150" data-max="150"></span>
+				</div>
+				<div class="pan-knob" data-change="set-brightness-amount"></div>
+			</div>
+			<div class="field-row has-knob">
+				<div class="option input">
+					<span class="label">Contrast</span>
+					<span class="value"><input type="text" name="contrast-amount" value="0" data-min="-100" data-max="1000"></span>
+				</div>
+				<div class="pan-knob" data-change="set-contrast-amount"></div>
 			</div>
 		</div>
 		<div class="buttons">

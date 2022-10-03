@@ -79,7 +79,7 @@
 					value: APP.els.content.cssProp(`--${name}`),
 					// broadcast event
 					callback: ev => karaqu.emit(`set-${name}`, { hex: ev.value }),
-				})
+				});
 				break;
 			case "switch-color":
 				let c1 = APP.els.content.cssProp("--fg-color"),

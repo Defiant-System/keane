@@ -1,5 +1,19 @@
 
 const Dialogs = {
+	dlgBrightnessContrast(event) {
+		let APP = keane,
+			Self = Dialogs,
+			el;
+		// console.log(event);
+		switch (event.type) {
+			case "dlg-close":
+				UI.doDialog(event);
+				break;
+			case "dlg-ok":
+			case "dlg-preview":
+				break;
+		}
+	},
 	dlgGaussianBlur(event) {
 		let APP = keane,
 			Self = Dialogs,
