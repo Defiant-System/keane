@@ -116,6 +116,36 @@ const Projector = {
 		this.ctx.putImageData(this.frame, File.oX, File.oY);
 		this.ctx.save();
 		this.ctx.translate(File.oX, File.oY);
+
+		// render color channels
+		if (File.channels !== "111") {
+			this.swap.cvs.prop({ width: File.oW, height: File.oH });
+			let cImg = File.ctx.getImageData(0, 0, File.oW, File.oH),
+				data = cImg.data,
+				rgb,
+				hash = {
+					"000": "000",
+					"100": "111",
+					"010": "222",
+					"001": "333",
+					"101": "103",
+					"110": "120",
+					"011": "023",
+					"111": "123",
+				},
+				val = hash[File.channels].split("").map(i => +i),
+				il = data.length,
+				i = 0;
+			for (; i<il; i+=4) {
+				rgb = [0, data[i], data[i+1], data[i+2]];
+				data[i]   = rgb[val[0]];
+				data[i+1] = rgb[val[1]];
+				data[i+2] = rgb[val[2]];
+			}
+			this.swap.ctx.putImageData(cImg, 0, 0);
+			opt.imgCvs = this.swap.cvs[0];
+		}
+
 		// file canvas
 		this.ctx.imageSmoothingEnabled = false;
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);

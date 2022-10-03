@@ -15,6 +15,7 @@
 	},
 	dispatch(event) {
 		let APP = keane,
+			File = Projector.file,
 			Self = APP.sidebar.channels,
 			channels,
 			value,
@@ -33,14 +34,29 @@
 				channels = Self.els.channelsList.find(".row");
 				value = channels.find(".icon-eye-off").length === 0;
 				channels.find(".icon-eye-on").map(icon => $(icon)[value ? "addClass" : "removeClass"]("icon-eye-off"));
+				// finalize file render
+				Self.dispatch({ type: "render-file" });
 				break;
 			case "toggle-red-channel":
 			case "toggle-green-channel":
 			case "toggle-blue-channel":
 				event.el.toggleClass("icon-eye-off", event.el.hasClass("icon-eye-off"));
-				if (Self.els.channelsList.find(".row:not(:first-child) .icon-eye-off").length === 0) {
+				// toggles RGB "eye" if 0 or 3
+				value = Self.els.channelsList.find(".row:not(:first-child) .icon-eye-off").length;
+				if (value === 0) {
 					Self.els.channelsList.find(".row:first-child .icon-eye-on").removeClass("icon-eye-off");
+				} else if (value === 3) {
+					Self.els.channelsList.find(".row:first-child .icon-eye-on").addClass("icon-eye-off");
 				}
+				// finalize file render
+				Self.dispatch({ type: "render-file" });
+				break;
+			case "render-file":
+				File.channels  = !Self.els.channelsList.find(`.row[data-channel="red"] .icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
+				File.channels += !Self.els.channelsList.find(`.row[data-channel="green"] .icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
+				File.channels += !Self.els.channelsList.find(`.row[data-channel="blue"] .icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
+				// trigger file render
+				File.render();
 				break;
 		}
 	}
