@@ -32,9 +32,9 @@
 			case "mouse-move":
 				isOn = Detail.isOnCanvas;
 				
-				Self.els.hslH.html(isOn ? Detail.hsl.h +"°" : "");
-				Self.els.hslS.html(isOn ? Detail.hsl.s +"%" : "");
-				Self.els.hslL.html(isOn ? Detail.hsl.l +"%" : "");
+				Self.els.hslH.html(isOn ? Math.round(Detail.hsl.h) +"°" : "");
+				Self.els.hslS.html(isOn ? Math.round(Detail.hsl.s * 100) +"%" : "");
+				Self.els.hslL.html(isOn ? Math.round(Detail.hsl.l * 100) +"%" : "");
 				
 				Self.els.rgbR.html(isOn ? Detail.rgb.r : "");
 				Self.els.rgbG.html(isOn ? Detail.rgb.g : "");
