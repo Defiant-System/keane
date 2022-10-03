@@ -28,27 +28,52 @@ const Filters = {
 		}
 		return pixels;
 	},
-	brightness(pixels, adjustment) {
-		let d = pixels.data,
+	constrast(pixels, contrast) {
+		let factor = (259 * (contrast + 255)) / (255 * (259 - contrast)),
+			d = pixels.data,
 			i = 0,
 			il = d.length;
 		for (; i<il; i+=4) {
-			d[i] += adjustment;
-			d[i+1] += adjustment;
-			d[i+2] += adjustment;
+			d[i] = factor * (d[i] - 128) + 128;
+			d[i+1] = factor * (d[i+1] - 128) + 128;
+			d[i+2] = factor * (d[i+2] - 128) + 128;
+		}
+		return pixels;
+	},
+	brightness(pixels, adjustment) {
+		let d = pixels.data,
+			a = +adjustment,
+			i = 0,
+			il = d.length;
+		for (; i<il; i+=4) {
+			d[i] += a;
+			d[i+1] += a;
+			d[i+2] += a;
 		}
 		return pixels;
 	},
 	threshold(pixels, threshold) {
 		let d = pixels.data,
+			t = +threshold,
 			i = 0,
 			il = d.length;
 		for (; i<il; i+=4) {
 			let r = d[i],
 				g = d[i+1],
 				b = d[i+2],
-				v = (0.2126*r + 0.7152*g + 0.0722*b >= threshold) ? 255 : 0;
+				v = (0.2126*r + 0.7152*g + 0.0722*b >= t) ? 255 : 0;
 			d[i] = d[i+1] = d[i+2] = v
+		}
+		return pixels;
+	},
+	invert(pixels) {
+		let d = pixels.data,
+			i = 0,
+			il = d.length;
+		for (; i<il; i+=4) {
+			d[i] = d[i] ^ 255;
+			d[i+1] = d[i+1] ^ 255;
+			d[i+2] = d[i+2] ^ 255;
 		}
 		return pixels;
 	},
@@ -62,9 +87,10 @@ const Filters = {
 	gaussianBlur(pixels, radius) {
 		let d = pixels.data,
 			w = pixels.width,
-			h = pixels.height;
+			h = pixels.height,
+			r = +radius;
 		// TODO: make it better !?
-		gaussianBlur(d, w, h, radius);
+		gaussianBlur(d, w, h, r);
 
 		return pixels;
 	},
