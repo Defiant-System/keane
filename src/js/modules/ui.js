@@ -651,9 +651,15 @@ const UI = {
 					src,
 					dlg,
 					suffix: src.data("suffix") || "",
-					min: +src.data("min"),
-					max: +src.data("max"),
-					offsetY: +el.data("value") + event.clientY,
+					min: el.hasClass("pan-knob") ? -50 : 0,
+					max: el.hasClass("pan-knob") ? 50 : 100,
+					value: +el.data("value"),
+					clientY: event.clientY,
+					val: {
+						min: el.hasClass("pan-knob") ? 0 : +src.data("min"),
+						max: +src.data("max") - +src.data("min"),
+						step: +src.data("step") || 1,
+					},
 					_min: Math.min,
 					_max: Math.max,
 					_round: Math.round,
@@ -665,12 +671,13 @@ const UI = {
 				Self.doc.on("mousemove mouseup", Self.doDialogKnob);
 				break;
 			case "mousemove":
-				let value = Drag.offsetY - event.clientY;
-				value = Drag._min(Drag._max(value, 0), 100);
+				let value = (Drag.clientY - event.clientY) + Drag.value;
+				value = Drag._min(Drag._max(value, Drag.min), Drag.max);
 				Drag.el.data({ value });
 
-				let newValue = Drag.min + Drag._round((value / 100) * (Drag.max - Drag.min));
-				Drag.src.val(newValue + Drag.suffix);
+				let i = Drag.val.step.toString().split(".")[1],
+					val = ((Drag.val.max * (value / 100)) + Drag.val.min).toFixed(i ? i.length : 0);
+				Drag.src.val(val + Drag.suffix);
 				// forward event
 				Drag.dlg.func({ ...Drag.dlg, value });
 				break;
