@@ -89,6 +89,19 @@ class File {
 			}
 		});
 
+
+		let cImg = this.ctx.getImageData(0, 0, this.oW, this.oH),
+			data = cImg.data,
+			il = data.length,
+			i = 0;
+		for (; i<il; i+=4) {
+			data[i + 0] = data[i + 0];
+			data[i + 1] = data[i + 0];
+			data[i + 2] = data[i + 0];
+		}
+		this.ctx.putImageData(cImg, 0, 0);
+
+
 		// render projector
 		Projector.render(opt);
 		// update channels
