@@ -121,16 +121,26 @@ class File {
 			// transfer layer image resized to thumbnail canvas
 			let opt = { resizeWidth: tW, resizeHeight: tH, resizeQuality: "medium" };
 			createImageBitmap(this.cvs[0], opt)
-				.then(img => ctx.drawImage(img, tX, tY))
-				.catch(e => null);
+				.then(img => {
+					ctx.drawImage(img, tX, tY);
 
-			switch (el.parents(".row").data("channel")) {
-				case "rgb": break;
-				case "red": break;
-				case "green": break;
-				case "blue": break;
-			}
-			// console.log( el.parents(".row").data("channel") );
+					let channel = el.parents(".row").data("channel"),
+						c = ["red", "green", "blue"].indexOf(channel);
+
+					if (channel !== "rgb") {
+						let cImg = ctx.getImageData(tX, tY, tW, tH),
+							data = cImg.data,
+							il = data.length,
+							i = 0;
+						for (; i<il; i+=4) {
+							data[i + 0] = data[i + c];
+							data[i + 1] = data[i + c];
+							data[i + 2] = data[i + c];
+						}
+						ctx.putImageData(cImg, tX, tY);
+					}
+				})
+				.catch(e => null); // TODO: handle errors
 		});
 	}
 
