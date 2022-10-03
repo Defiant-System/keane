@@ -38,6 +38,9 @@
 			case "toggle-green-channel":
 			case "toggle-blue-channel":
 				event.el.toggleClass("icon-eye-off", event.el.hasClass("icon-eye-off"));
+				if (Self.els.channelsList.find(".row:not(:first-child) .icon-eye-off").length === 0) {
+					Self.els.channelsList.find(".row:first-child .icon-eye-on").removeClass("icon-eye-off");
+				}
 				break;
 		}
 	}

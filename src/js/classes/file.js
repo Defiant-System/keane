@@ -92,10 +92,10 @@ class File {
 		// render projector
 		Projector.render(opt);
 		// update channels
-		this.updateChannels();
+		if (!opt.noEmit) this.updateChannelThumbnails();
 	}
 
-	updateChannels() {
+	updateChannelThumbnails() {
 		keane.sidebar.channels.els.channelsList.find("canvas").map(cvs => {
 			let el = $(cvs),
 				ctx = cvs.getContext("2d"),
