@@ -6,6 +6,15 @@ const Dialogs = {
 			el;
 		// console.log(event);
 		switch (event.type) {
+			// "fast events"
+			case "set-brightness-amount":
+			case "set-contrast-amount":
+				console.log(event);
+				break;
+			// slow events
+			case "before-knob":
+
+				break;
 			case "dlg-close":
 				UI.doDialog(event);
 				break;
@@ -48,6 +57,17 @@ const Dialogs = {
 			value,
 			el;
 		switch (event.type) {
+			// "fast events"
+			case "set-color-opacity":
+				Self.els.content.css({ "--alpha": event.value / 100 });
+				break;
+			// slow events
+			case "before-knob": // <-- called before knob is turned
+				// fast references
+				Self.els = {
+					content: event.dEl.find(".dlg-content"),
+				};
+				break;
 			case "dlg-open":
 				// position cursors
 				UI.doColorBox({ ...event, type: "position-cursor" });
@@ -68,15 +88,6 @@ const Dialogs = {
 				});
 				// close dialog
 				Self.dlgColors({ ...event, type: "dlg-close" });
-				break;
-			case "before-knob": // <-- called before knob is turned
-				// fast references
-				Self.els = {
-					content: event.dEl.find(".dlg-content"),
-				};
-				break;
-			case "set-color-opacity":
-				Self.els.content.css({ "--alpha": event.value / 100 });
 				break;
 		}
 	}
