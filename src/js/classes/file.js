@@ -91,6 +91,47 @@ class File {
 
 		// render projector
 		Projector.render(opt);
+		// update channels
+		this.updateChannels();
+	}
+
+	updateChannels() {
+		keane.sidebar.channels.els.channelsList.find("canvas").map(cvs => {
+			let el = $(cvs),
+				ctx = cvs.getContext("2d"),
+				width = cvs.offsetWidth || 32,
+				height = cvs.offsetHeight || 32,
+				ratio = this.width / this.height,
+				_floor = Math.floor;
+
+			// set height & width of channel canvas
+			el.prop({ width, height });
+			// calculate dimensions
+			let tW = ratio < 1 ? height * ratio : width,
+				tH = ratio < 1 ? height : width / ratio,
+				tX = (width - tW) >> 1,
+				tY = (height - tH) >> 1;
+			// background checker for semi transparency
+			ctx.save();
+			ctx.scale(.5, .5);
+			ctx.fillStyle = Projector.checkers;
+			ctx.fillRect(_floor(tX*2), _floor(tY*2), _floor(tW*2), _floor(tH*2));
+			ctx.restore();
+
+			// transfer layer image resized to thumbnail canvas
+			let opt = { resizeWidth: tW, resizeHeight: tH, resizeQuality: "medium" };
+			createImageBitmap(this.cvs[0], opt)
+				.then(img => ctx.drawImage(img, tX, tY))
+				.catch(e => null);
+
+			switch (el.parents(".row").data("channel")) {
+				case "rgb": break;
+				case "red": break;
+				case "green": break;
+				case "blue": break;
+			}
+			// console.log( el.parents(".row").data("channel") );
+		});
 	}
 
 	dispatch(event) {

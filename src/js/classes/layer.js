@@ -65,11 +65,10 @@ class Layer {
 		// let index = this._file.activeLayerIndex;
 		let thumbCvsEl = keane.sidebar.layers.els.layerList.find(".row:nth-child(1) canvas");
 		let tCtx = thumbCvsEl[0].getContext("2d"),
-			width = thumbCvsEl.prop("offsetWidth"),
-			height = thumbCvsEl.prop("offsetHeight"),
+			width = thumbCvsEl.prop("offsetWidth") || 32,
+			height = thumbCvsEl.prop("offsetHeight") || 32,
 			ratio = this.width / this.height,
-			_floor = Math.floor,
-			opt;
+			_floor = Math.floor;
 		// set height & width of thumbnail canvas
 		thumbCvsEl.prop({ width, height });
 		// calculate dimensions
@@ -84,7 +83,7 @@ class Layer {
 		tCtx.fillRect(_floor(tX*2), _floor(tY*2), _floor(tW*2), _floor(tH*2));
 		tCtx.restore();
 		// transfer layer image resized to thumbnail canvas
-		opt = { resizeWidth: tW, resizeHeight: tH, resizeQuality: "medium" };
+		let opt = { resizeWidth: tW, resizeHeight: tH, resizeQuality: "medium" };
 		createImageBitmap(this.cvs[0], opt)
 			.then(img => tCtx.drawImage(img, tX, tY))
 			.catch(e => null);

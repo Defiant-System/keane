@@ -40,8 +40,8 @@
 					// match: `//File/Layers`,
 					target: Self.els.layerList,
 				});
-				// temp
-				Self.els.layerList.find(".row:nth-child(1)").addClass("active");
+				// auto select active layer
+				Self.els.layerList.find(`.row[data-id="${File._activeLayer._id}"]`).trigger("click");
 				break;
 
 			// custom events
