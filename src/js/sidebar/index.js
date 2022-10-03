@@ -14,7 +14,7 @@
 		// temp
 		this.els.root.find(`div[data-content="info"]`).trigger("click");
 		this.els.root.find(`div[data-content="swatches"]`).trigger("click");
-		// this.els.root.find(`div[data-content="channels"]`).trigger("click");
+		this.els.root.find(`div[data-content="channels"]`).trigger("click");
 	},
 	dispatch(event) {
 		let APP = keane,

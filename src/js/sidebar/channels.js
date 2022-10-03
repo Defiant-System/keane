@@ -29,6 +29,17 @@
 					template: "channels",
 					target: Self.els.channelsList,
 				});
+				// more fast references
+				Self.els.chRGB = Self.els.channelsList.find(`.row[data-channel="rgb"]`);
+				Self.els.chR = Self.els.channelsList.find(`.row[data-channel="red"]`);
+				Self.els.chG = Self.els.channelsList.find(`.row[data-channel="green"]`);
+				Self.els.chB = Self.els.channelsList.find(`.row[data-channel="blue"]`);
+
+				Self.els.chR.find(".icon-eye-on").toggleClass("icon-eye-off", File.channels[0] === "1");
+				Self.els.chG.find(".icon-eye-on").toggleClass("icon-eye-off", File.channels[1] === "1");
+				Self.els.chB.find(".icon-eye-on").toggleClass("icon-eye-off", File.channels[2] === "1");
+				
+				Self.dispatch({ type: "check-channel-visibility" });
 				break;
 			case "toggle-rgb-channel":
 				channels = Self.els.channelsList.find(".row");
@@ -37,24 +48,25 @@
 				// finalize file render
 				Self.dispatch({ type: "render-file" });
 				break;
-			case "toggle-red-channel":
-			case "toggle-green-channel":
-			case "toggle-blue-channel":
+			case "toggle-channel":
 				event.el.toggleClass("icon-eye-off", event.el.hasClass("icon-eye-off"));
-				// toggles RGB "eye" if 0 or 3
-				value = Self.els.channelsList.find(".row:not(:first-child) .icon-eye-off").length;
-				if (value === 0) {
-					Self.els.channelsList.find(".row:first-child .icon-eye-on").removeClass("icon-eye-off");
-				} else if (value === 3) {
-					Self.els.channelsList.find(".row:first-child .icon-eye-on").addClass("icon-eye-off");
-				}
+				Self.dispatch({ type: "check-channel-visibility" });
 				// finalize file render
 				Self.dispatch({ type: "render-file" });
 				break;
+			case "check-channel-visibility":
+				// toggles RGB "eye" if 0 or 3
+				value = Self.els.channelsList.find(".row:not(:first-child) .icon-eye-off").length;
+				if (value === 0) {
+					Self.els.chRGB.find(".icon-eye-on").removeClass("icon-eye-off");
+				} else if (value === 3) {
+					Self.els.chRGB.find(".icon-eye-on").addClass("icon-eye-off");
+				}
+				break;
 			case "render-file":
-				File.channels  = !Self.els.channelsList.find(`.row[data-channel="red"] .icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
-				File.channels += !Self.els.channelsList.find(`.row[data-channel="green"] .icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
-				File.channels += !Self.els.channelsList.find(`.row[data-channel="blue"] .icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
+				File.channels  = !Self.els.chR.find(`.icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
+				File.channels += !Self.els.chG.find(`.icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
+				File.channels += !Self.els.chB.find(`.icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
 				// trigger file render
 				File.render();
 				break;

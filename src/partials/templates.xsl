@@ -139,17 +139,17 @@
 	<div class="row" data-channel="red" data-click="select-channel">
 		<div class="thumbnail channel-red"><canvas></canvas></div>
 		<div class="name">Red</div>
-		<div class="icon icon-eye-on" data-click="toggle-red-channel"></div>
+		<div class="icon icon-eye-on" data-click="toggle-channel"></div>
 	</div>
 	<div class="row" data-channel="green" data-click="select-channel">
 		<div class="thumbnail channel-green"><canvas></canvas></div>
 		<div class="name">Green</div>
-		<div class="icon icon-eye-on" data-click="toggle-green-channel"></div>
+		<div class="icon icon-eye-on" data-click="toggle-channel"></div>
 	</div>
 	<div class="row" data-channel="blue" data-click="select-channel">
 		<div class="thumbnail channel-blue"><canvas></canvas></div>
 		<div class="name">Blue</div>
-		<div class="icon icon-eye-on" data-click="toggle-blue-channel"></div>
+		<div class="icon icon-eye-on" data-click="toggle-channel"></div>
 	</div>
 </xsl:template>
 

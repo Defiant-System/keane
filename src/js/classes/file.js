@@ -12,7 +12,7 @@ class File {
 		this.fgColor = "#ffffffff";
 		this.lineWidth = 1;
 		this.showRulers = true;
-		this.channels = "111"; // rgb
+		this.channels = "101"; // rgb
 
 		// file canvas
 		let { cvs, ctx } = Misc.createCanvas(this.width, this.height);
