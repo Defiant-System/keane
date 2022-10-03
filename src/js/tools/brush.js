@@ -28,6 +28,7 @@
 
 		// subscribe to events
 		karaqu.on("set-fg-color", this.dispatch);
+		karaqu.on("set-bg-color", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -44,7 +45,6 @@
 			height,
 			roundness,
 			angle,
-			c1, c2,
 			el;
 
 		switch (event.type) {
@@ -71,33 +71,27 @@
 
 			// custom events
 			case "select-color":
+				name = event.el.hasClass("fg-color") ? "fg-color" : "bg-color";
+				// open dialog
 				UI.doDialog({
 					type: "dlg-open",
 					name: event.el.data("arg"),
-					src: event.el,
-					value: APP.els.content.cssProp("--fg-color"),
-					callback(event) {
-						APP.els.content.css({ "--fg-color": event.value });
-
-						karaqu.emit("set-fg-color", { hex: event.value });
-					},
+					value: APP.els.content.cssProp(`--${name}`),
+					// broadcast event
+					callback: ev => karaqu.emit(`set-${name}`, { hex: ev.value }),
 				})
 				break;
 			case "switch-color":
-				c1 = APP.els.content.cssProp("--fg-color");
-				c2 = APP.els.content.cssProp("--bg-color");
-				APP.els.content.css({ "--fg-color": c2, "--bg-color": c1 });
+				let c1 = APP.els.content.cssProp("--fg-color"),
+					c2 = APP.els.content.cssProp("--bg-color");
 				// broadcast event
-				karaqu.emit("set-fg-color", { hex: c1 });
-				karaqu.emit("set-bg-color", { hex: c2 });
+				karaqu.emit("set-fg-color", { hex: c2 });
+				karaqu.emit("set-bg-color", { hex: c1 });
 				break;
 			case "reset-color":
-				c1 = "#ffffff";
-				c2 = "#000000";
-				APP.els.content.css({ "--fg-color": c1, "--bg-color": c2 });
 				// broadcast event
-				karaqu.emit("set-fg-color", { hex: c1 });
-				karaqu.emit("set-bg-color", { hex: c2 });
+				karaqu.emit("set-fg-color", { hex: "#ffffff" });
+				karaqu.emit("set-bg-color", { hex: "#000000" });
 				break;
 			case "select-preset-tip":
 				el = APP.els.content.find(".option[data-change='select-preset-tip']");
@@ -147,14 +141,10 @@
 				Self.preset.blend = event.value.toLowerCase().replace(/ /g, "-");
 				break;
 			case "change-size":
-				width =
-				height =
+				// set tip size
 				Self.preset.size = event.value;
-
-				// resize tip canvas
-				Self.preset.tip.cvs.prop({ width, height });
-				Self.preset.tip.ctx.drawImage(Self.preset.tipImage, 0, 0, width, height);
-
+				// update tip canvas
+				Self.dispatch({ type: "resize-rotate-tip" });
 				// update toolbar
 				el = APP.els.content.find(".option[data-change='select-preset-tip']");
 				el.find(".value span").html(event.value + el.data("suffix"));
