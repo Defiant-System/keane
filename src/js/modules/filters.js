@@ -29,29 +29,27 @@ const Filters = {
 		return pixels;
 	},
 	contrast(pixels, adjustment) {
-		/*
-		 * min: -100
+		/* min: -100
 		 * max: 100
 		 */
-		let a = adjustment / 1.5,
-			factor = (259 * (a + 255)) / (255 * (259 - a)),
+		let a = (adjustment / 254) + 1,
+			f = 128 * (1 - a),
 			d = pixels.data,
 			i = 0,
 			il = d.length;
 		for (; i<il; i+=4) {
-			d[i]   = factor * (d[i] - 128) + 128;
-			d[i+1] = factor * (d[i+1] - 128) + 128;
-			d[i+2] = factor * (d[i+2] - 128) + 128;
+			d[i]   = d[i]   * a + f;
+			d[i+1] = d[i+1] * a + f;
+			d[i+2] = d[i+2] * a + f;
 		}
 		return pixels;
 	},
 	brightness(pixels, adjustment) {
-		/*
-		 * min: -150
+		/* min: -150
 		 * max: 150
 		 */
 		let d = pixels.data,
-			a = +adjustment / 1.75,
+			a = 128 * (+adjustment / 300),
 			i = 0,
 			il = d.length;
 		for (; i<il; i+=4) {

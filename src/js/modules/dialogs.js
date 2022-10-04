@@ -13,6 +13,7 @@ const Dialogs = {
 			filter,
 			copy,
 			filtered,
+			value,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -27,20 +28,25 @@ const Dialogs = {
 			case "apply-filter-data":
 				// apply filter on pixels
 				pixels = Self.data.pixels;
-				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
-				filtered = Filters[Self.data.filter](copy, event.value);
+				filtered = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+				
+				value = +Self.srcEvent.dEl.find(`.dlg-content input[name="contrast-amount"]`).val();
+				filtered = Filters.contrast(filtered, value);
+				value = +Self.srcEvent.dEl.find(`.dlg-content input[name="brightness-amount"]`).val();
+				filtered = Filters.brightness(filtered, value);
+
 				Self.data.layer.ctx.putImageData(filtered, 0, 0);
 				// render file
 				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
 				break;
 			// slow/once events
-			case "after:set-contrast-amount":
-			case "after:set-brightness-amount":
-				// console.log(event);
-				break;
 			case "before:set-contrast-amount":
 			case "before:set-brightness-amount":
 				Self.data.filter = event.type.split("-")[1];
+				break;
+			case "after:set-contrast-amount":
+			case "after:set-brightness-amount":
+				// console.log(event);
 				break;
 
 			// standard dialog events
