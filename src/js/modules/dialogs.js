@@ -3,17 +3,35 @@ const Dialogs = {
 	dlgBrightnessContrast(event) {
 		let APP = keane,
 			Self = Dialogs,
+			filtered,
 			el;
 		// console.log(event);
 		switch (event.type) {
 			// "fast events"
 			case "set-brightness-amount":
-			case "set-contrast-amount":
-				console.log(event);
-				break;
-			// slow events
-			case "before-knob":
+				if (Self.data.value === event.value) return;
+				Self.data.value = event.value;
 
+				filtered = Filters.brightness(Self.data.pixels, event.value);
+				Self.data.layer.ctx.putImageData(filtered, 0, 0);
+				// render file
+				Projector.file.render({ noEmit: 1 });
+				break;
+			case "set-contrast-amount":
+				// console.log(event);
+				break;
+			// slow/once events
+			case "after:set-contrast-amount":
+			case "after:set-contrast-amount":
+			case "before:set-contrast-amount":
+				// console.log(event);
+				break;
+			case "before:set-brightness-amount":
+				let file = Projector.file,
+					layer = Projector.file.activeLayer,
+					pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height);
+				// fast references for knob twist event
+				Self.data = {file, layer, pixels};
 				break;
 			case "dlg-close":
 				UI.doDialog(event);
@@ -61,12 +79,15 @@ const Dialogs = {
 			case "set-color-opacity":
 				Self.els.content.css({ "--alpha": event.value / 100 });
 				break;
-			// slow events
-			case "before-knob": // <-- called before knob is turned
+
+			// slow/once events
+			case "before:set-color-opacity":
 				// fast references
 				Self.els = {
 					content: event.dEl.find(".dlg-content"),
 				};
+				break;
+			case "after:set-color-opacity":
 				break;
 			case "dlg-open":
 				// position cursors
