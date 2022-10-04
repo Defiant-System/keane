@@ -3,35 +3,35 @@ const Dialogs = {
 	dlgBrightnessContrast(event) {
 		let APP = keane,
 			Self = Dialogs,
-			filtered,
 			el;
 		// console.log(event);
 		switch (event.type) {
 			// "fast events"
+			case "set-contrast-amount":
 			case "set-brightness-amount":
 				if (Self.data.value === event.value) return;
 				Self.data.value = event.value;
-
-				filtered = Filters.brightness(Self.data.pixels, event.value);
+				// apply filter on pixels
+				let px = Self.data.pixels,
+					copy = new ImageData( new Uint8ClampedArray(px.data), px.width, px.height ),
+					filtered = Filters[Self.data.filter](copy, event.value);
 				Self.data.layer.ctx.putImageData(filtered, 0, 0);
 				// render file
 				Projector.file.render({ noEmit: 1 });
 				break;
-			case "set-contrast-amount":
-				// console.log(event);
-				break;
 			// slow/once events
 			case "after:set-contrast-amount":
-			case "after:set-contrast-amount":
-			case "before:set-contrast-amount":
+			case "after:set-brightness-amount":
 				// console.log(event);
 				break;
+			case "before:set-contrast-amount":
 			case "before:set-brightness-amount":
 				let file = Projector.file,
 					layer = Projector.file.activeLayer,
-					pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height);
+					pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height),
+					filter = event.type.split("-")[1];
 				// fast references for knob twist event
-				Self.data = {file, layer, pixels};
+				Self.data = { file, layer, pixels, filter };
 				break;
 			case "dlg-close":
 				UI.doDialog(event);

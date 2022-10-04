@@ -28,13 +28,13 @@ const Filters = {
 		}
 		return pixels;
 	},
-	constrast(pixels, contrast) {
-		let factor = (259 * (contrast + 255)) / (255 * (259 - contrast)),
+	contrast(pixels, adjustment) {
+		let factor = (259 * (adjustment + 255)) / (255 * (259 - adjustment)),
 			d = pixels.data,
 			i = 0,
 			il = d.length;
 		for (; i<il; i+=4) {
-			d[i] = factor * (d[i] - 128) + 128;
+			d[i]   = factor * (d[i] - 128) + 128;
 			d[i+1] = factor * (d[i+1] - 128) + 128;
 			d[i+2] = factor * (d[i+2] - 128) + 128;
 		}
@@ -46,7 +46,7 @@ const Filters = {
 			i = 0,
 			il = d.length;
 		for (; i<il; i+=4) {
-			d[i] += a;
+			d[i]   += a;
 			d[i+1] += a;
 			d[i+2] += a;
 		}
@@ -71,7 +71,7 @@ const Filters = {
 			i = 0,
 			il = d.length;
 		for (; i<il; i+=4) {
-			d[i] = d[i] ^ 255;
+			d[i]   = d[i]   ^ 255;
 			d[i+1] = d[i+1] ^ 255;
 			d[i+2] = d[i+2] ^ 255;
 		}
