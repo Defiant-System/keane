@@ -67,14 +67,7 @@ const Projector = {
 		if (isNaN(w) || isNaN(h)) return;
 
 		// reset canvases
-		// this.swap.ctx.clear();
 		this.swap.cvs.prop({ width: w, height: h });
-		
-		this.swap.ctx.shadowOffsetX = 0;
-		this.swap.ctx.shadowOffsetY = 1;
-		this.swap.ctx.shadowBlur = 5;
-		this.swap.ctx.shadowColor = "#292929";
-		this.swap.ctx.fillRect(0, 0, w, h);
 		// checkes background
 		this.swap.ctx.fillStyle = this.checkers;
 		this.swap.ctx.fillRect(0, 0, w, h);
@@ -113,9 +106,18 @@ const Projector = {
 		this.ctx.clear();
 		// this.cvs.prop({ width: window.width, height: window.height });
 
-		this.ctx.putImageData(this.frame, File.oX, File.oY);
 		this.ctx.save();
 		this.ctx.translate(File.oX, File.oY);
+		// drop shadow
+		this.ctx.save();
+		this.ctx.shadowOffsetX = 0;
+		this.ctx.shadowOffsetY = 2;
+		this.ctx.shadowBlur = 13;
+		this.ctx.shadowColor = "#292929";
+		this.ctx.fillRect(0, 0, w, h);
+		// checkers background
+		this.ctx.putImageData(this.frame, File.oX, File.oY);
+		this.ctx.restore();
 
 		// render color channels
 		if (File.channels !== "111") {
