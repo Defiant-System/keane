@@ -659,6 +659,7 @@ const UI = {
 						min: el.hasClass("pan-knob") ? 0 : +src.data("min"),
 						max: +src.data("max") - +src.data("min"),
 						step: +src.data("step") || 1,
+						value: +src.val(),
 					},
 					_min: Math.min,
 					_max: Math.max,
@@ -671,19 +672,21 @@ const UI = {
 				Self.doc.on("mousemove mouseup", Self.doDialogKnob);
 				break;
 			case "mousemove":
-				let value = (Drag.clientY - event.clientY) + Drag.value;
-				Drag.value = Drag._min(Drag._max(value, Drag.min), Drag.max) >> 1;
-				Drag.el.data({ value: Drag.value });
+				let value = (Drag.clientY - event.clientY) + (Drag.value * 2);
+				value = Drag._min(Drag._max(value, Drag.min), Drag.max) >> 1;
+				Drag.el.data({ value: value });
 
 				let i = Drag.val.step.toString().split(".")[1],
-					val = ((Drag.val.max * (Drag.value / 100)) + Drag.val.min).toFixed(i ? i.length : 0);
+					val = ((Drag.val.max * (value / 100)) + Drag.val.min).toFixed(i ? i.length : 0);
 				Drag.src.val(val + Drag.suffix);
 				// forward event
-				Drag.dlg.func({ ...Drag.dlg, value: Drag.value });
+				Drag.dlg.func({ ...Drag.dlg, value: val });
+				// save value
+				Drag.newValue = val;
 				break;
 			case "mouseup":
 				// post-knob twist event
-				Drag.dlg.func({ ...Drag.dlg, type: `after:${Drag.dlg.type}`, value: Drag.value });
+				Drag.dlg.func({ ...Drag.dlg, type: `after:${Drag.dlg.type}`, value: Drag.newValue });
 				// reset parent element
 				Drag.el.parent().removeClass("hover");
 				// unbind event handlers

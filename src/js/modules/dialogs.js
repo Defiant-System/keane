@@ -1,8 +1,18 @@
 
 const Dialogs = {
+	/*
+	 * Brightness -  Min: -150   Max: 150
+	 * Contrast -    Min: -100   Max: 100
+	 */
 	dlgBrightnessContrast(event) {
 		let APP = keane,
 			Self = Dialogs,
+			file,
+			layer,
+			pixels,
+			filter,
+			copy,
+			filtered,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -11,12 +21,14 @@ const Dialogs = {
 			case "set-brightness-amount":
 				if (Self.data.value === event.value) return;
 				Self.data.value = event.value;
+				// exit if "preview" is not enabled
+				if (!Self.preview) return;
 				/* falls-through */
 			case "apply-filter-data":
 				// apply filter on pixels
-				let px = Self.data.pixels,
-					copy = new ImageData( new Uint8ClampedArray(px.data), px.width, px.height ),
-					filtered = Filters[Self.data.filter](copy, event.value);
+				pixels = Self.data.pixels;
+				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+				filtered = Filters[Self.data.filter](copy, event.value);
 				Self.data.layer.ctx.putImageData(filtered, 0, 0);
 				// render file
 				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
@@ -28,18 +40,20 @@ const Dialogs = {
 				break;
 			case "before:set-contrast-amount":
 			case "before:set-brightness-amount":
-				let file = Projector.file,
-					layer = file.activeLayer,
-					pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height),
-					filter = event.type.split("-")[1];
-				// fast references for knob twist event
-				Self.data = { file, layer, pixels, filter };
+				Self.data.filter = event.type.split("-")[1];
 				break;
 
 			// standard dialog events
 			case "dlg-open":
+				file = Projector.file;
+				layer = file.activeLayer;
+				pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height);
+				// fast references for knob twist event
+				Self.data = { file, layer, pixels };
 				// save reference to event
 				Self.srcEvent = event;
+				// read preview toggler state
+				Self.preview = event.dEl.find(`.toggler[data-click="dlg-preview"]`).data("value") === "on";
 				break;
 			case "dlg-ok":
 				let cEl = Self.srcEvent.dEl.find(".dlg-content"),
@@ -61,8 +75,22 @@ const Dialogs = {
 				// close dialog
 				Self.dlgBrightnessContrast({ ...event, type: "dlg-close" });
 				break;
+			case "dlg-reset":
+				pixels = Self.data.pixels;
+				Self.data.layer.ctx.putImageData(pixels, 0, 0);
+				// reset input fields
+				Self.srcEvent.dEl.find(`input[name="brightness-amount"]`).val(0);
+				Self.srcEvent.dEl.find(`input[name="contrast-amount"]`).val(0);
+				// reset pan-knobs
+				Self.srcEvent.dEl.find(`.pan-knob`).data({ value: 0 });
+				// render file
+				Projector.file.render({ noEmit: 1 });
+				break;
 			case "dlg-preview":
-				Self.preview = event.el.data("value") === "on;
+				Self.preview = event.el.data("value") === "on";
+				if (Self.preview) {
+					console.log("render");
+				}
 				break;
 			case "dlg-close":
 				UI.doDialog(event);

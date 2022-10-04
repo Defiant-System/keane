@@ -29,7 +29,12 @@ const Filters = {
 		return pixels;
 	},
 	contrast(pixels, adjustment) {
-		let factor = (259 * (adjustment + 255)) / (255 * (259 - adjustment)),
+		/*
+		 * min: -100
+		 * max: 100
+		 */
+		let a = adjustment / 1.5,
+			factor = (259 * (a + 255)) / (255 * (259 - a)),
 			d = pixels.data,
 			i = 0,
 			il = d.length;
@@ -41,8 +46,12 @@ const Filters = {
 		return pixels;
 	},
 	brightness(pixels, adjustment) {
+		/*
+		 * min: -150
+		 * max: 150
+		 */
 		let d = pixels.data,
-			a = +adjustment,
+			a = +adjustment / 1.75,
 			i = 0,
 			il = d.length;
 		for (; i<il; i+=4) {
