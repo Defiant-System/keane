@@ -91,16 +91,6 @@ const Filters = {
 		// TODO
 		return pixels;
 	},
-	gaussianBlur(pixels, radius) {
-		let d = pixels.data,
-			w = pixels.width,
-			h = pixels.height,
-			r = +radius;
-		// TODO: make it better !?
-		gaussianBlur(d, w, h, r);
-
-		return pixels;
-	},
 	noise(pixels) {
 		let d = pixels.data,
 			w = pixels.width,

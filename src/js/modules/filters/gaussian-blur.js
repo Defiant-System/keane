@@ -9,8 +9,8 @@
 let gaussianBlur = (function() {
 
 	function updateDataTextureFromChannelArrs(dt, w, h, arrR, arrG, arrB, arrA) {
-	    for(var i=0; i<w*h; i++) {
-	        dt[i*4] = arrR[i];
+	    for(var i=0, il=w*h; i<il; i++) {
+	        dt[i*4]   = arrR[i];
 	        dt[i*4+1] = arrG[i];
 	        dt[i*4+2] = arrB[i];
 	        dt[i*4+3] = arrA[i];
@@ -19,11 +19,11 @@ let gaussianBlur = (function() {
 	}
 
 	function splitDataTextureIntoChannelArrays(dt, w, h) {
-	    var arrR=[];
-	    var arrG=[];
-	    var arrB=[];
-	    var arrA=[];
-	    for(var i=0; i<w*h; i++) {
+	    var arrR = [],
+	    	arrG = [],
+	    	arrB = [],
+	    	arrA = [];
+	    for(var i=0, il=w*h; i<il; i++) {
 	        arrR.push(dt[i*4]);
 	        arrG.push(dt[i*4+1]);
 	        arrB.push(dt[i*4+2]);
@@ -69,7 +69,7 @@ let gaussianBlur = (function() {
 				val += scl[ri++] - fv;
 				tcl[ti++] = Math.round(val * iarr);
 			}
-			for (var j = r + 1; j < w - r; j++) {
+			for (var j = r + 1, jl=w - r; j < jl; j++) {
 				val += scl[ri++] - scl[li++];
 				tcl[ti++] = Math.round(val * iarr);
 			}
@@ -96,7 +96,7 @@ let gaussianBlur = (function() {
 				ri += w;
 				ti += w;
 			}
-			for (var j = r + 1; j < h - r; j++) {
+			for (var j = r + 1, jl=h - r; j < jl; j++) {
 				val += scl[ri] - scl[li];
 				tcl[ti] = Math.round(val * iarr);
 				li += w;
@@ -114,14 +114,16 @@ let gaussianBlur = (function() {
 
 	function boxesForGauss(sigma, n) {  // standard deviation, number of boxes
 	    var wIdeal = Math.sqrt((12*sigma*sigma/n)+1);  // Ideal averaging filter width
-	    var wl = Math.floor(wIdeal);  if(wl%2==0) wl--;
+	    var wl = Math.floor(wIdeal);
+	    if(wl%2==0) wl--;
+	    
 	    var wu = wl+2;
-
 	    var mIdeal = (12*sigma*sigma - n*wl*wl - 4*n*wl - 3*n)/(-4*wl - 4);
 	    var m = Math.round(mIdeal);
 	    // var sigmaActual = Math.sqrt( (m*wl*wl + (n-m)*wu*wu - n)/12 );
 
-	    var sizes = [];  for(var i=0; i<n; i++) sizes.push(i<m?wl:wu);
+	    var sizes = [];
+	    for(var i=0; i<n; i++) sizes.push(i<m?wl:wu);
 	    return sizes;
 	}
 

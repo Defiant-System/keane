@@ -23,7 +23,12 @@
 	</Menu>
 	<Menu name="Image">
 		<Menu name="Mode">
+			<Menu name="RGB" disabled="1"/>
+			<Menu name="CMYK" disabled="1"/>
 			<Menu name="Grayscale" click="filter-render" arg="grayscale"/>
+			<Menu type="divider"/>
+			<Menu name="Raster" disabled="1"/>
+			<Menu name="Vector" disabled="1"/>
 		</Menu>
 		<Menu name="Adjustments">
 			<Menu name="Brightness / Contrast" click="open-dialog" arg="dlgBrightnessContrast"/>
@@ -47,7 +52,7 @@
 			<Menu type="divider"/>
 			<Menu name="Shadow Highlights" disabled="1"/>
 			<Menu type="divider"/>
-			<Menu name="Desaturate" disabled="1"/>
+			<Menu name="Desaturate" click="filter-render" arg="grayscale"/>
 			<Menu name="Match Color" disabled="1"/>
 			<Menu name="Replace Color" disabled="1"/>
 		</Menu>
