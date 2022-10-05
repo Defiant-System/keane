@@ -28,34 +28,34 @@ const Filters = {
 		}
 		return pixels;
 	},
-	contrast(pixels, adjustment) {
-		/* min: -100
-		 * max: 100
+	brightnessContrast(pixels, val={}) {
+		/* Brightness = min: -100   max: 100
+		 * Contrast   = min: -150   max: 150
 		 */
-		let a = (adjustment / 254) + 1,
-			f = 128 * (1 - a),
-			d = pixels.data,
-			i = 0,
-			il = d.length;
-		for (; i<il; i+=4) {
-			d[i]   = d[i]   * a + f;
-			d[i+1] = d[i+1] * a + f;
-			d[i+2] = d[i+2] * a + f;
+		let contrast = false, c, f,
+			brightness = false, b;
+		if (val.contrast) {
+			contrast = true;
+			c = (val.contrast / 254) + 1;
+			f = 128 * (1 - c);
 		}
-		return pixels;
-	},
-	brightness(pixels, adjustment) {
-		/* min: -150
-		 * max: 150
-		 */
-		let d = pixels.data,
-			a = 128 * (+adjustment / 300),
-			i = 0,
-			il = d.length;
+		if (val.brightness) {
+			brightness = true;
+			b = 128 * (val.brightness / 300);
+		}
+		
+		let i = 0, d = pixels.data, il = d.length;
 		for (; i<il; i+=4) {
-			d[i]   += a;
-			d[i+1] += a;
-			d[i+2] += a;
+			if (contrast) {
+				d[i]   = d[i]   * c + f;
+				d[i+1] = d[i+1] * c + f;
+				d[i+2] = d[i+2] * c + f;
+			}
+			if (brightness) {
+				d[i]   += b;
+				d[i+1] += b;
+				d[i+2] += b;
+			}
 		}
 		return pixels;
 	},

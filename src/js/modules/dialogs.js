@@ -12,7 +12,6 @@ const Dialogs = {
 			pixels,
 			filter,
 			copy,
-			filtered,
 			value,
 			el;
 		// console.log(event);
@@ -21,21 +20,17 @@ const Dialogs = {
 			case "set-contrast-amount":
 			case "set-brightness-amount":
 				if (Self.data.value === event.value) return;
-				Self.data.value = event.value;
+				Self.data.value[Self.data.filter] = +event.value;
 				// exit if "preview" is not enabled
 				if (!Self.preview) return;
 				/* falls-through */
 			case "apply-filter-data":
-				// apply filter on pixels
+				// copy first, then apply filter on pixels
 				pixels = Self.data.pixels;
-				filtered = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
-				
-				value = +Self.srcEvent.dEl.find(`.dlg-content input[name="contrast-amount"]`).val();
-				filtered = Filters.contrast(filtered, value);
-				value = +Self.srcEvent.dEl.find(`.dlg-content input[name="brightness-amount"]`).val();
-				filtered = Filters.brightness(filtered, value);
+				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+				copy = Filters.brightnessContrast(copy, Self.data.value);
+				Self.data.layer.ctx.putImageData(copy, 0, 0);
 
-				Self.data.layer.ctx.putImageData(filtered, 0, 0);
 				// render file
 				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
 				break;
@@ -54,8 +49,12 @@ const Dialogs = {
 				file = Projector.file;
 				layer = file.activeLayer;
 				pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height);
+				value = {
+					contrast: +event.dEl.find(`.dlg-content input[name="contrast-amount"]`).val(),
+					brightness: +event.dEl.find(`.dlg-content input[name="brightness-amount"]`).val(),
+				};
 				// fast references for knob twist event
-				Self.data = { file, layer, pixels };
+				Self.data = { file, layer, pixels, value };
 				// save reference to event
 				Self.srcEvent = event;
 				// read preview toggler state
@@ -71,10 +70,9 @@ const Dialogs = {
 						...Self.data,
 						pixels: Self.data.layer.ctx.getImageData(0, 0, Self.data.layer.width, Self.data.layer.height),
 					};
-				// apply
+				// apply -- In case Preview is turned off, apply filter on image
 				if (Self.data) {
-					Self.dlgBrightnessContrast({ data, type: "apply-filter-data", filter: "contrast", value: val.contrast });
-					Self.dlgBrightnessContrast({ data, type: "apply-filter-data", filter: "brightness", value: val.brightness, noEmit: 0 });
+					console.log(Self.data);
 				}
 				// notify event origin of the results
 				Self.srcEvent.callback(val);
@@ -99,6 +97,9 @@ const Dialogs = {
 				}
 				break;
 			case "dlg-close":
+				if (event.el && event.el.hasClass("icon-dlg-close")) {
+					Self.dlgBrightnessContrast({ type: "dlg-reset" });
+				}
 				UI.doDialog(event);
 				break;
 		}
