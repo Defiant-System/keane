@@ -644,19 +644,21 @@ const UI = {
 						func: Dialogs[dEl.data("dlg")],
 						type: el.data("change"),
 					},
-					src = pEl.find(".value input");
+					src = pEl.find(".value input"),
+					isPanKnob = el.hasClass("pan-knob");
 				// references needed for drag'n drop
 				Self.drag = {
 					el,
 					src,
 					dlg,
+					isPanKnob,
 					suffix: src.data("suffix") || "",
-					min: el.hasClass("pan-knob") ? -100 : 0,
-					max: el.hasClass("pan-knob") ? 100 : 100,
+					min: isPanKnob ? -100 : 0,
+					max: isPanKnob ? 100 : 100,
 					value: +el.data("value"),
 					clientY: event.clientY,
 					val: {
-						min: el.hasClass("pan-knob") ? 0 : +src.data("min"),
+						min: isPanKnob ? 0 : +src.data("min"),
 						max: +src.data("max") - +src.data("min"),
 						step: +src.data("step") || 1,
 						value: +src.val(),
@@ -672,9 +674,10 @@ const UI = {
 				Self.doc.on("mousemove mouseup", Self.doDialogKnob);
 				break;
 			case "mousemove":
-				let value = (Drag.clientY - event.clientY) + (Drag.value * 2);
-				value = Drag._min(Drag._max(value, Drag.min), Drag.max) >> 1;
-				Drag.el.data({ value: value });
+				let value = (Drag.clientY - event.clientY) + (Drag.isPanKnob ? Drag.value * 2 : Drag.value);
+				value = Drag._min(Drag._max(value, Drag.min), Drag.max);
+				if (Drag.isPanKnob) value = value >> 1;
+				Drag.el.data({ value });
 
 				let i = Drag.val.step.toString().split(".")[1],
 					val = ((Drag.val.max * (value / 100)) + Drag.val.min).toFixed(i ? i.length : 0);

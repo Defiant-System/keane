@@ -22,11 +22,14 @@
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "invert" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "brightness,-25" }), 400);
 
+
+			// UI.doDialog({ type: "dlg-open", name: "dlgBrightnessContrast" });
+
 			// open dialog
 			UI.doDialog({
 				type: "dlg-open",
-				name: "dlgBrightnessContrast",
-				callback: ev => console.log(ev),
+				name: "dlgGaussianBlur",
+				// callback: ev => console.log(ev),
 			});
 		}, 500);
 	},

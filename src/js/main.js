@@ -78,6 +78,9 @@ const keane = {
 				Self.els.content.addClass("show-blank-view");
 				break;
 
+			case "open-dialog":
+				UI.doDialog({ type: "dlg-open", name: event.arg });
+				break;
 			case "filter-render":
 				let args = event.arg.split(","),
 					layer = Projector.file.activeLayer,

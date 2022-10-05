@@ -26,9 +26,54 @@
 			<Menu name="Grayscale" click="filter-render" arg="grayscale"/>
 		</Menu>
 		<Menu name="Adjustments">
-			<Menu name="Brighten" click="filter-render" arg="brightness,50"/>
-			<Menu name="Threshold" click="filter-render" arg="threshold,50"/>
+			<Menu name="Brightness / Contrast" click="open-dialog" arg="dlgBrightnessContrast"/>
+			<Menu name="Levels" disabled="1"/>
+			<Menu name="Curves" disabled="1"/>
+			<Menu name="Exposure" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Vibrance" disabled="1"/>
+			<Menu name="Hue / Saturation" disabled="1"/>
+			<Menu name="Color Balance" disabled="1"/>
+			<Menu name="Black &amp; White" disabled="1"/>
+			<Menu name="Photo Filter" disabled="1"/>
+			<Menu name="Channel Mixer" disabled="1"/>
+			<Menu name="Color Lookup" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Invert" disabled="1"/>
+			<Menu name="Posterize" disabled="1"/>
+			<Menu name="Threshold" click="open-dialog" arg="dlgThreshold"/>
+			<Menu name="Gradient Map" disabled="1"/>
+			<Menu name="Selective Color" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Shadow Highlights" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Desaturate" disabled="1"/>
+			<Menu name="Match Color" disabled="1"/>
+			<Menu name="Replace Color" disabled="1"/>
 		</Menu>
+		<Menu name="Auto Tone" disabled="1"/>
+		<Menu name="Auto Contrast" disabled="1"/>
+		<Menu name="Auto Color" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Reduce Colors" disabled="1"/>
+		<Menu name="Vectorize Bitmap" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Canvas Size" disabled="1"/>
+		<Menu name="Image Size" disabled="1"/>
+		<Menu name="Transform">
+			<Menu name="Rotate 90° Clockwise" disabled="1"/>
+			<Menu name="Rotate 90° Counter Clockwise" disabled="1"/>
+			<Menu name="Rotate 180°" disabled="1"/>
+			<Menu name="Flip Horizontally" disabled="1"/>
+			<Menu name="Flip Verticaally" disabled="1"/>
+		</Menu>
+		<Menu name="Crop" disabled="1"/>
+		<Menu name="Trim" disabled="1"/>
+		<Menu name="Reveal All" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Apply Image" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Variables" disabled="1"/>
 	</Menu>
 	<Menu name="Layer"></Menu>
 	<Menu name="Type"></Menu>
@@ -47,6 +92,8 @@
 		<Menu type="divider"/>
 		<Menu name="Blur">
 			<Menu name="Blur" click="filter-render" arg="blur"/>
+			<Menu type="divider"/>
+			<Menu name="Gaussian Blur" click="open-dialog" arg="dlgGaussianBlur"/>
 		</Menu>
 		<Menu name="Disort" disabled="1" />
 		<Menu name="Noise" disabled="1" />

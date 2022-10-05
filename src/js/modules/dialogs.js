@@ -10,7 +10,6 @@ const Dialogs = {
 			file,
 			layer,
 			pixels,
-			filter,
 			copy,
 			value,
 			el;
@@ -70,7 +69,7 @@ const Dialogs = {
 				Self.dlgBrightnessContrast({ type: "apply-filter-data", noEmit: 0 });
 
 				// notify event origin of the results
-				Self.srcEvent.callback(Self.data.value);
+				if (Self.srcEvent.callback) Self.srcEvent.callback(Self.data.value);
 				// close dialog
 				Self.dlgBrightnessContrast({ ...event, type: "dlg-close" });
 				break;
@@ -108,6 +107,20 @@ const Dialogs = {
 		}
 	},
 	dlgGaussianBlur(event) {
+		let APP = keane,
+			Self = Dialogs,
+			el;
+		// console.log(event);
+		switch (event.type) {
+			case "dlg-close":
+				UI.doDialog(event);
+				break;
+			case "dlg-ok":
+			case "dlg-preview":
+				break;
+		}
+	},
+	dlgThreshold(event) {
 		let APP = keane,
 			Self = Dialogs,
 			el;
@@ -166,10 +179,12 @@ const Dialogs = {
 				break;
 			case "dlg-ok":
 				el = Self.srcEvent.dEl.find(".dlg-content");
-				Self.srcEvent.callback({
-					value: el.cssProp("--color"),
-					src: event.src,
-				});
+				if (Self.srcEvent.callback) {
+					Self.srcEvent.callback({
+						value: el.cssProp("--color"),
+						src: event.src,
+					});
+				}
 				// close dialog
 				Self.dlgColors({ ...event, type: "dlg-close" });
 				break;
