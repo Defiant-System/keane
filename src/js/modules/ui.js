@@ -214,7 +214,7 @@ const UI = {
 				// read preview toggler state
 				Dialogs.preview = event.dEl.find(`.toggler[data-click="dlg-preview"]`).data("value") === "on";
 				// apply -- In case Preview is turned off, apply filter on image
-				Dialogs[event.name]({ type: "apply-filter-data", noEmit: 0 });
+				Dialogs[event.name]({ type: "apply-filter-data" });
 				break;
 			case "dlg-ok-common":
 				// collect values
