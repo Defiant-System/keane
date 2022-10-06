@@ -21,6 +21,7 @@
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "invert" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "dither" }), 400);
+			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "brightSteps,3" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "brightness,-25" }), 400);
 
 

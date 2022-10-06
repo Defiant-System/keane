@@ -92,6 +92,42 @@ const Filters = {
 		}
 		return pixels;
 	},
+	brightSteps(pixels, number) {
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height,
+			i = 0,
+			il = d.length,
+
+			high = 0,
+			low = 255,
+			getRange = l => {
+				if (l > high) high = l;
+				if (l < low) low = l;
+			};
+		// convert to grayscale
+		for (; i<il; i+=4) {
+			let luma = d[i] * 0.2126 + d[i+1] * .7152 + d[i+2] * .0722;
+			getRange(luma);
+			d[i] =
+			d[i+1] =
+			d[i+2] = luma;
+		}
+
+		let step = (high - low) / number;
+		for (i=0; i<il; i+=4) {
+			let luma = d[i];
+			for (let k=step; k<=high; k+=step) {
+				if (luma < k) {
+					d[i] =
+					d[i+1] =
+					d[i+2] = k;
+					break;
+				}
+			}
+		}
+		return pixels;
+	},
 	threshold(pixels, threshold) {
 		let d = pixels.data,
 			t = +threshold,
