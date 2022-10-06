@@ -105,7 +105,7 @@ const Dialogs = {
 				// render file
 				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
 				break;
-			
+
 			// standard dialog events
 			case "dlg-open":
 			case "dlg-ok":
@@ -116,7 +116,7 @@ const Dialogs = {
 				break;
 		}
 	},
-	dlgSharpen(event) {
+	dlgMosaic(event) {
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
@@ -124,13 +124,60 @@ const Dialogs = {
 			el;
 		// console.log(event);
 		switch (event.type) {
+			// "fast events"
+			case "set-size":
+				if (Self.data.value.size === +event.value) return;
+				Self.data.value.size = +event.value;
+				// exit if "preview" is not enabled
+				if (!Self.preview) return;
+				/* falls-through */
+			case "apply-filter-data":
+				
+				break;
+
 			// standard dialog events
 			case "dlg-open":
 			case "dlg-ok":
 			case "dlg-reset":
 			case "dlg-preview":
 			case "dlg-close":
-				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgSharpen" });
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgMosaic" });
+				break;
+		}
+	},
+	dlgSmartSharpen(event) {
+		let APP = keane,
+			Self = Dialogs,
+			pixels,
+			copy,
+			el;
+		// console.log(event);
+		switch (event.type) {
+			// "fast events"
+			case "set-contrast":
+			case "set-brightness":
+				if (Self.data.value[Self.data.filter] === +event.value) return;
+				Self.data.value[Self.data.filter] = +event.value;
+				// exit if "preview" is not enabled
+				if (!Self.preview) return;
+				/* falls-through */
+			case "apply-filter-data":
+				// TODO
+				break;
+			
+			// slow/once events
+			case "before:set-amount":
+			case "before:set-radius":
+				Self.data.filter = event.type.split("-")[1];
+				break;
+
+			// standard dialog events
+			case "dlg-open":
+			case "dlg-ok":
+			case "dlg-reset":
+			case "dlg-preview":
+			case "dlg-close":
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgSmartSharpen" });
 				break;
 		}
 	},

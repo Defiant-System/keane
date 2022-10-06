@@ -44,7 +44,7 @@
 			<Menu name="Channel Mixer" disabled="1"/>
 			<Menu name="Color Lookup" disabled="1"/>
 			<Menu type="divider"/>
-			<Menu name="Invert" disabled="1"/>
+			<Menu name="Invert" click="filter-render" arg="invert"/>
 			<Menu name="Posterize" disabled="1"/>
 			<Menu name="Threshold" click="open-dialog" arg="dlgThreshold"/>
 			<Menu name="Gradient Map" disabled="1"/>
@@ -102,15 +102,20 @@
 		</Menu>
 		<Menu name="Disort" disabled="1" />
 		<Menu name="Noise" disabled="1" />
-		<Menu name="Pixelate" disabled="1" />
+		<Menu name="Pixelate">
+			<Menu name="Mosaic" click="open-dialog" arg="dlgMosaic"/>
+		</Menu>
 		<Menu name="Render">
 			<Menu name="Clouds" click="filter-render" arg="clouds"/>
+			<Menu name="Noise" click="filter-render" arg="noise"/>
 		</Menu>
 		<Menu name="Sharpen">
 			<Menu name="Sharpen" click="filter-render" arg="sharpen"/>
 		</Menu>
 		<Menu name="Stylize" disabled="1" />
-		<Menu name="Other" disabled="1" />
+		<Menu name="Other">
+			<Menu name="Dither" click="filter-render" arg="dither"/>
+		</Menu>
 	</Menu>
 	<Menu name="View">
 		<Menu name="Rulers" click="toggle-rulers" check-group="toggle-rulers" is-checked="1" hotkey="alt+r" />

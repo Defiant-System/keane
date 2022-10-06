@@ -25,26 +25,19 @@
 </div>
 
 
-<div class="dialog-box" data-dlg="dlgSharpen">
+<div class="dialog-box" data-dlg="dlgMosaic">
 	<div class="dlg-content">
 		<div class="fields">
 			<h2>
 				<i class="icon-dlg-close" data-click="dlg-close"></i>
-				Sharpen
+				Mosaic
 			</h2>
 			<div class="field-row has-knob">
 				<div class="option input">
-					<span class="label">Amount</span>
-					<span class="value"><input type="text" name="sharpen-amount" value="150%" data-min="50" data-max="200" data-default="150" data-suffix="%"></span>
+					<span class="label">Cell Size</span>
+					<span class="value"><input type="text" name="size" value="12" data-min="2" data-max="100" data-default="12"></span>
 				</div>
-				<div class="knob" data-change="set-sharpen-amount"></div>
-			</div>
-			<div class="field-row has-knob">
-				<div class="option input">
-					<span class="label">Radius</span>
-					<span class="value"><input type="text" name="sharpen-radius" value="3px" data-min="0" data-max="20" data-default="3" data-suffix="px"></span>
-				</div>
-				<div class="knob" data-change="set-sharpen-radius"></div>
+				<div class="knob" data-change="set-size"></div>
 			</div>
 		</div>
 		<div class="buttons">
@@ -57,6 +50,39 @@
 	</div>
 </div>
 
+<!--
+<div class="dialog-box" data-dlg="dlgSmartSharpen">
+	<div class="dlg-content">
+		<div class="fields">
+			<h2>
+				<i class="icon-dlg-close" data-click="dlg-close"></i>
+				Smart Sharpen
+			</h2>
+			<div class="field-row has-knob">
+				<div class="option input">
+					<span class="label">Amount</span>
+					<span class="value"><input type="text" name="amount" value="150%" data-min="50" data-max="200" data-default="150" data-suffix="%"></span>
+				</div>
+				<div class="knob" data-change="set-amount"></div>
+			</div>
+			<div class="field-row has-knob">
+				<div class="option input">
+					<span class="label">Radius</span>
+					<span class="value"><input type="text" name="radius" value="3px" data-min="0" data-max="20" data-default="3" data-suffix="px"></span>
+				</div>
+				<div class="knob" data-change="set-radius"></div>
+			</div>
+		</div>
+		<div class="buttons">
+			<div class="button" data-click="dlg-ok">OK</div>
+			<div class="button" data-click="dlg-reset">Reset</div>
+			<div class="toggler" data-value="on" data-click="dlg-preview">
+				<span>Preview</span>
+			</div>
+		</div>
+	</div>
+</div>
+-->
 
 <div class="dialog-box" data-dlg="dlgThreshold">
 	<div class="dlg-content">

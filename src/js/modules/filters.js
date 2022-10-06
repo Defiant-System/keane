@@ -59,6 +59,39 @@ const Filters = {
 		}
 		return pixels;
 	},
+	dither(pixels) {
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height,
+			closest = p => 256-p < 128 ? 255 : 0,
+			i = 0,
+			il = d.length;
+		// convert to grayscale
+		for (; i<il; i+=4) {
+			d[i] =
+			d[i+1] =
+			d[i+2] = d[i] * 0.2126 + d[i+1] * .7152 + d[i+2] * .0722;
+			d[i+3] = d[i+3];
+		}
+		// floyd-steinberg dither
+		for (i=0; i<il; i+=4) {
+			if (d[i+(w * 4)] === -1 || d[i+4] === -1 ) {
+				break;
+			} else {
+				let op = d[i],
+					np = closest(d[i]),
+					qe = op - np;
+				d[i] =
+				d[i+1] =
+				d[i+2] = np;
+				d[i+4] = d[i+4] + qe * (7 / 16);
+				d[i+(w * 4)] = d[i+(w * 4)] + qe * (5 / 16);
+				d[i+(w* 4 -4)] = d[i+(w*4 -4)] + qe * (3 / 16);
+				d[i+(w* 4 +4)] = d[i+(w * 4 +4)] + qe * (1 / 16);
+			}
+		}
+		return pixels;
+	},
 	threshold(pixels, threshold) {
 		let d = pixels.data,
 			t = +threshold,
@@ -182,7 +215,6 @@ const Filters = {
 			output = this.createImageData(w, h),
 			dst = output.data,
 			alphaFac = opaque ? 1 : 0;
-
 		for (let y=0; y<h; y++) {
 			for (let x=0; x<w; x++) {
 				let sy = y,
@@ -223,7 +255,6 @@ const Filters = {
 			output = { width, height, data },
 			dst = output.data,
 			alphaFac = opaque ? 1 : 0;
-
 		for (let y=0; y<height; y++) {
 			for (let x=0; x<width; x++) {
 				let sy = y,
