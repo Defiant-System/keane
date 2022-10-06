@@ -26,7 +26,7 @@
 			// open dialog
 			UI.doDialog({
 				type: "dlg-open",
-				name: "dlgBrightnessContrast",
+				name: "dlgThreshold",
 				// callback: ev => console.log(ev),
 			});
 		}, 500);

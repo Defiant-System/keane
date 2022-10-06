@@ -213,6 +213,8 @@ const UI = {
 				Dialogs.srcEvent = event;
 				// read preview toggler state
 				Dialogs.preview = event.dEl.find(`.toggler[data-click="dlg-preview"]`).data("value") === "on";
+				// apply -- In case Preview is turned off, apply filter on image
+				Dialogs[event.name]({ type: "apply-filter-data", noEmit: 0 });
 				break;
 			case "dlg-ok-common":
 				// collect values
@@ -245,7 +247,7 @@ const UI = {
 				// reset pan-knobs
 				Dialogs.srcEvent.dEl.find(`.knob`).data({ value: 0 });
 				// render file
-				Projector.file.render({ noEmit: 1 });
+				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
 				break;
 			case "dlg-preview-common":
 				Dialogs.preview = event.el.data("value") === "on";
@@ -263,7 +265,7 @@ const UI = {
 				break;
 			case "dlg-close-common":
 				if (event.el && event.el.hasClass("icon-dlg-close")) {
-					Dialogs[event.name]({ type: "dlg-reset" });
+					Dialogs[event.name]({ type: "dlg-reset", noEmit: 0 });
 				}
 				Self.doDialog({ ...event, type: "dlg-close" });
 				break;

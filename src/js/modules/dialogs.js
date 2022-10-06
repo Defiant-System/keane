@@ -35,9 +35,6 @@ const Dialogs = {
 			case "before:set-brightness":
 				Self.data.filter = event.type.split("-")[1];
 				break;
-			case "after:set-contrast":
-			case "after:set-brightness":
-				break;
 
 			// standard dialog events
 			case "dlg-ok":
@@ -87,9 +84,28 @@ const Dialogs = {
 	dlgThreshold(event) {
 		let APP = keane,
 			Self = Dialogs,
+			pixels,
+			copy,
 			el;
 		// console.log(event);
 		switch (event.type) {
+			// "fast events"
+			case "set-amount":
+				if (Self.data.value.amount === +event.value) return;
+				Self.data.value.amount = +event.value;
+				// exit if "preview" is not enabled
+				if (!Self.preview) return;
+				/* falls-through */
+			case "apply-filter-data":
+				// copy first, then apply filter on pixels
+				pixels = Self.data.pixels;
+				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+				copy = Filters.threshold(copy, Self.data.value.amount);
+				Self.data.layer.ctx.putImageData(copy, 0, 0);
+				// render file
+				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
+				break;
+			
 			// standard dialog events
 			case "dlg-open":
 			case "dlg-ok":
@@ -103,6 +119,8 @@ const Dialogs = {
 	dlgSharpen(event) {
 		let APP = keane,
 			Self = Dialogs,
+			pixels,
+			copy,
 			el;
 		// console.log(event);
 		switch (event.type) {
