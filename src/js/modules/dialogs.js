@@ -16,8 +16,8 @@ const Dialogs = {
 		// console.log(event);
 		switch (event.type) {
 			// "fast events"
-			case "set-contrast-amount":
-			case "set-brightness-amount":
+			case "set-contrast":
+			case "set-brightness":
 				if (Self.data.value[Self.data.filter] === +event.value) return;
 				Self.data.value[Self.data.filter] = +event.value;
 				// exit if "preview" is not enabled
@@ -34,12 +34,12 @@ const Dialogs = {
 				break;
 			
 			// slow/once events
-			case "before:set-contrast-amount":
-			case "before:set-brightness-amount":
+			case "before:set-contrast":
+			case "before:set-brightness":
 				Self.data.filter = event.type.split("-")[1];
 				break;
-			case "after:set-contrast-amount":
-			case "after:set-brightness-amount":
+			case "after:set-contrast":
+			case "after:set-brightness":
 				break;
 
 			// standard dialog events
@@ -48,8 +48,8 @@ const Dialogs = {
 				layer = file.activeLayer;
 				pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height);
 				value = {
-					contrast: +event.dEl.find(`.dlg-content input[name="contrast-amount"]`).val(),
-					brightness: +event.dEl.find(`.dlg-content input[name="brightness-amount"]`).val(),
+					contrast: +event.dEl.find(`.dlg-content input[name="contrast"]`).val(),
+					brightness: +event.dEl.find(`.dlg-content input[name="brightness"]`).val(),
 				};
 				// fast references for knob twist event
 				Self.data = { file, layer, pixels, value };
@@ -61,47 +61,22 @@ const Dialogs = {
 			case "dlg-ok":
 				let cEl = Self.srcEvent.dEl.find(".dlg-content");
 				Self.data.value = {
-					brightness: +cEl.find(`input[name="brightness-amount"]`).val(),
-					contrast: +cEl.find(`input[name="contrast-amount"]`).val(),
+					brightness: +cEl.find(`input[name="brightness"]`).val(),
+					contrast: +cEl.find(`input[name="contrast"]`).val(),
 				};
 				// apply -- In case Preview is turned off, apply filter on image
 				Self.dlgBrightnessContrast({ type: "apply-filter-data", noEmit: 0 });
-
+				// update layer thumbnail
+				Self.data.layer.updateThumbnail();
 				// notify event origin of the results
 				if (Self.srcEvent.callback) Self.srcEvent.callback(Self.data.value);
 				// close dialog
 				Self.dlgBrightnessContrast({ ...event, type: "dlg-close" });
 				break;
 			case "dlg-reset":
-				pixels = Self.data.pixels;
-				Self.data.layer.ctx.putImageData(pixels, 0, 0);
-				// reset input fields
-				Self.srcEvent.dEl.find(`input[name="brightness-amount"]`).val(0);
-				Self.srcEvent.dEl.find(`input[name="contrast-amount"]`).val(0);
-				// reset pan-knobs
-				Self.srcEvent.dEl.find(`.pan-knob`).data({ value: 0 });
-				// render file
-				Projector.file.render({ noEmit: 1 });
-				break;
 			case "dlg-preview":
-				Self.preview = event.el.data("value") === "on";
-				if (Self.preview) {
-					// apply -- In case Preview is turned off, apply filter on image
-					Self.dlgBrightnessContrast({ type: "apply-filter-data", noEmit: 1 });
-				} else {
-					// revert layer to initial state
-					pixels = Self.data.pixels;
-					copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
-					Self.data.layer.ctx.putImageData(copy, 0, 0);
-					// render file
-					Projector.file.render({ noEmit: 1 });
-				}
-				break;
 			case "dlg-close":
-				if (event.el && event.el.hasClass("icon-dlg-close")) {
-					Self.dlgBrightnessContrast({ type: "dlg-reset" });
-				}
-				UI.doDialog(event);
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgBrightnessContrast" });
 				break;
 		}
 	},
@@ -117,7 +92,7 @@ const Dialogs = {
 		// console.log(event);
 		switch (event.type) {
 			// "fast events"
-			case "set-gaussian-radius":
+			case "set-radius":
 				if (Self.data.value.radius === +event.value) return;
 				Self.data.value.radius = +event.value;
 				// exit if "preview" is not enabled
@@ -139,7 +114,7 @@ const Dialogs = {
 				layer = file.activeLayer;
 				pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height);
 				value = {
-					radius: parseInt(event.dEl.find(`input[name="blur-radius"]`).val(), 10),
+					radius: parseInt(event.dEl.find(`input[name="radius"]`).val(), 10),
 				};
 				// fast references for knob twist event
 				Self.data = { file, layer, pixels, value };
@@ -151,46 +126,21 @@ const Dialogs = {
 			case "dlg-ok":
 				let cEl = Self.srcEvent.dEl.find(".dlg-content");
 				Self.data.value = {
-					radius: parseInt(cEl.find(`input[name="blur-radius"]`).val(), 10),
+					radius: parseInt(cEl.find(`input[name="radius"]`).val(), 10),
 				};
 				// apply -- In case Preview is turned off, apply filter on image
 				Self.dlgGaussianBlur({ type: "apply-filter-data", noEmit: 0 });
-
+				// update layer thumbnail
+				Self.data.layer.updateThumbnail();
 				// notify event origin of the results
 				if (Self.srcEvent.callback) Self.srcEvent.callback(Self.data.value);
 				// close dialog
 				Self.dlgGaussianBlur({ ...event, type: "dlg-close" });
 				break;
 			case "dlg-reset":
-				pixels = Self.data.pixels;
-				Self.data.layer.ctx.putImageData(pixels, 0, 0);
-				// reset input fields
-				el = Self.srcEvent.dEl.find(`input[name="blur-radius"]`);
-				el.val(`0${el.data("suffix")}`);
-				// reset pan-knobs
-				Self.srcEvent.dEl.find(`.knob`).data({ value: 0 });
-				// render file
-				Projector.file.render({ noEmit: 1 });
-				break;
 			case "dlg-preview":
-				Self.preview = event.el.data("value") === "on";
-				if (Self.preview) {
-					// apply -- In case Preview is turned off, apply filter on image
-					Self.dlgGaussianBlur({ type: "apply-filter-data", noEmit: 1 });
-				} else {
-					// revert layer to initial state
-					pixels = Self.data.pixels;
-					copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
-					Self.data.layer.ctx.putImageData(copy, 0, 0);
-					// render file
-					Projector.file.render({ noEmit: 1 });
-				}
-				break;
 			case "dlg-close":
-				if (event.el && event.el.hasClass("icon-dlg-close")) {
-					Self.dlgGaussianBlur({ type: "dlg-reset" });
-				}
-				UI.doDialog(event);
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgGaussianBlur" });
 				break;
 		}
 	},
@@ -202,16 +152,13 @@ const Dialogs = {
 		switch (event.type) {
 			// standard dialog events
 			case "dlg-open":
-				Self.preview = event.dEl.find(`.toggler[data-click="dlg-preview"]`).data("value") === "on";
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgThreshold" });
 				break;
 			case "dlg-ok":
 			case "dlg-reset":
-				break;
 			case "dlg-preview":
-				Self.preview = event.el.data("value") === "on";
-				break;
 			case "dlg-close":
-				UI.doDialog(event);
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgThreshold" });
 				break;
 		}
 	},
@@ -227,12 +174,9 @@ const Dialogs = {
 				break;
 			case "dlg-ok":
 			case "dlg-reset":
-				break;
 			case "dlg-preview":
-				Self.preview = event.el.data("value") === "on";
-				break;
 			case "dlg-close":
-				UI.doDialog(event);
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgSharpen" });
 				break;
 		}
 	},

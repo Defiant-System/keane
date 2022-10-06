@@ -120,6 +120,11 @@ const UI = {
 	doDialog(event) {
 		let Self = UI,
 			Drag = Self.drag,
+			file,
+			layer,
+			pixels,
+			copy,
+			value,
 			dEl,
 			el;
 		// console.log(event);
@@ -190,6 +195,61 @@ const UI = {
 						// reset element
 						el.removeClass("showing closing");
 					});
+				break;
+
+			case "dlg-open-common":
+				file = Projector.file;
+				layer = file.activeLayer;
+				pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height);
+				value = {
+					amount: parseInt(event.dEl.find(`input[name="amount"]`).val(), 10),
+				};
+				// fast references for knob twist event
+				Dialogs.data = { file, layer, pixels, value };
+				// save reference to event
+				Dialogs.srcEvent = event;
+				// read preview toggler state
+				Dialogs.preview = event.dEl.find(`.toggler[data-click="dlg-preview"]`).data("value") === "on";
+				break;
+
+			case "dlg-reset-common":
+				pixels = Dialogs.data.pixels;
+				Dialogs.data.layer.ctx.putImageData(pixels, 0, 0);
+				// reset input fields
+				Dialogs.srcEvent.dEl.find(`.field-row input`).map(elem => {
+					let iEl = $(elem),
+						row = iEl.parents(".field-row"),
+						suffix = iEl.data("suffix") || "";
+					iEl.val(iEl.data("default") + suffix);
+					if (row.hasClass("has-knob")) {
+						row.find(".knob, .pan-knob").data({ value: iEl.data("default") });
+					}
+				});
+				// reset pan-knobs
+				Dialogs.srcEvent.dEl.find(`.knob`).data({ value: 0 });
+				// render file
+				Projector.file.render({ noEmit: 1 });
+				break;
+
+			case "dlg-preview-common":
+				Dialogs.preview = event.el.data("value") === "on";
+				if (Dialogs.preview) {
+					// apply -- In case Preview is turned off, apply filter on image
+					Dialogs[event.name]({ type: "apply-filter-data", noEmit: 1 });
+				} else {
+					// revert layer to initial state
+					pixels = Dialogs.data.pixels;
+					copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+					Dialogs.data.layer.ctx.putImageData(copy, 0, 0);
+					// render file
+					Projector.file.render({ noEmit: 1 });
+				}
+				break;
+			case "dlg-close-common":
+				if (event.el && event.el.hasClass("icon-dlg-close")) {
+					Dialogs[event.name]({ type: "dlg-reset" });
+				}
+				Self.doDialog({ ...event, type: "dlg-close" });
 				break;
 		}
 	},

@@ -9,9 +9,9 @@
 			<div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Radius</span>
-					<span class="value"><input type="text" name="blur-radius" value="0px" data-min="0" data-max="50" data-suffix="px"></span>
+					<span class="value"><input type="text" name="radius" value="0px" data-min="0" data-max="50" data-default="0" data-suffix="px"></span>
 				</div>
-				<div class="knob" data-change="set-gaussian-radius"></div>
+				<div class="knob" data-change="set-radius"></div>
 			</div>
 		</div>
 		<div class="buttons">
@@ -35,14 +35,14 @@
 			<div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Amount</span>
-					<span class="value"><input type="text" name="sharpen-amount" value="150%" data-min="50" data-max="200" data-suffix="%"></span>
+					<span class="value"><input type="text" name="sharpen-amount" value="150%" data-min="50" data-max="200" data-default="150" data-suffix="%"></span>
 				</div>
 				<div class="knob" data-change="set-sharpen-amount"></div>
 			</div>
 			<div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Radius</span>
-					<span class="value"><input type="text" name="sharpen-radius" value="3px" data-min="0" data-max="20" data-suffix="px"></span>
+					<span class="value"><input type="text" name="sharpen-radius" value="3px" data-min="0" data-max="20" data-default="3" data-suffix="px"></span>
 				</div>
 				<div class="knob" data-change="set-sharpen-radius"></div>
 			</div>
@@ -68,9 +68,9 @@
 			<div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Threshold</span>
-					<span class="value"><input type="text" name="threshold-amount" value="127" data-min="1" data-max="255"></span>
+					<span class="value"><input type="text" name="amount" value="127" data-min="1" data-max="255" data-default="127"></span>
 				</div>
-				<div class="knob" data-change="set-threshold-amount"></div>
+				<div class="knob" data-change="set-amount"></div>
 			</div>
 		</div>
 		<div class="buttons">
@@ -94,16 +94,16 @@
 			<div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Brightness</span>
-					<span class="value"><input type="text" name="brightness-amount" value="0" data-min="-150" data-max="150"></span>
+					<span class="value"><input type="text" name="brightness" value="0" data-min="-150" data-max="150" data-default="0"></span>
 				</div>
-				<div class="pan-knob" data-change="set-brightness-amount"></div>
+				<div class="pan-knob" data-change="set-brightness"></div>
 			</div>
 			<div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Contrast</span>
-					<span class="value"><input type="text" name="contrast-amount" value="0" data-min="-100" data-max="100"></span>
+					<span class="value"><input type="text" name="contrast" value="0" data-min="-100" data-max="100" data-default="0"></span>
 				</div>
-				<div class="pan-knob" data-change="set-contrast-amount"></div>
+				<div class="pan-knob" data-change="set-contrast"></div>
 			</div>
 		</div>
 		<div class="buttons">

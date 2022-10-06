@@ -23,6 +23,13 @@
 	}
 
 
+	// default position
+	&[data-dlg] {
+		top: 120px;
+		left: 250px;
+	}
+
+	/*
 	&[data-dlg="dlgBrightnessContrast"] {
 		top: 105px;
 		left: 310px;
@@ -37,7 +44,7 @@
 		top: 420px;
 		left: 600px;
 	}
-
+	*/
 
 	.dlg-content {
 		background: linear-gradient(#677 0%, #405050 100%);
@@ -152,9 +159,9 @@
 
 				.knob,
 				.pan-knob {
-					// visibility: hidden;
-					// opacity: 0;
-					// transition: opacity 500ms;
+					visibility: hidden;
+					opacity: 0;
+					transition: opacity 500ms;
 				}
 
 				&:hover .pan-knob,
