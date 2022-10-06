@@ -7,11 +7,8 @@ const Dialogs = {
 	dlgBrightnessContrast(event) {
 		let APP = keane,
 			Self = Dialogs,
-			file,
-			layer,
 			pixels,
 			copy,
-			value,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -55,11 +52,8 @@ const Dialogs = {
 	dlgGaussianBlur(event) {
 		let APP = keane,
 			Self = Dialogs,
-			file,
-			layer,
 			pixels,
 			copy,
-			value,
 			el;
 		// console.log(event);
 		switch (event.type) {

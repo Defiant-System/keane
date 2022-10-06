@@ -197,11 +197,28 @@ const UI = {
 					});
 				break;
 
+			case "dlg-open-common":
+				file = Projector.file;
+				layer = file.activeLayer;
+				pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height);
+				value = {};
+				// collect default values
+				event.dEl.find(`.field-row input`).map(elem => {
+					let iEl = $(elem);
+					value[iEl.attr("name")] = parseInt(iEl.val(), 10);
+				});
+				// fast references for knob twist event
+				Dialogs.data = { file, layer, pixels, value };
+				// save reference to event
+				Dialogs.srcEvent = event;
+				// read preview toggler state
+				Dialogs.preview = event.dEl.find(`.toggler[data-click="dlg-preview"]`).data("value") === "on";
+				break;
 			case "dlg-ok-common":
 				// collect values
 				Dialogs.srcEvent.dEl.find(`.field-row input`).map(elem => {
 					let iEl = $(elem);
-					Dialogs.data.value[iEl.data("name")] = parseInt(iEl.val(), 10);
+					Dialogs.data.value[iEl.attr("name")] = parseInt(iEl.val(), 10);
 				});
 				// apply -- In case Preview is turned off, apply filter on image
 				Dialogs[event.name]({ type: "apply-filter-data", noEmit: 0 });
@@ -211,23 +228,6 @@ const UI = {
 				if (Dialogs.srcEvent.callback) Dialogs.srcEvent.callback(Dialogs.data.value);
 				// close dialog
 				Dialogs[event.name]({ ...event, type: "dlg-close" });
-				break;
-			case "dlg-open-common":
-				file = Projector.file;
-				layer = file.activeLayer;
-				pixels = layer.ctx.getImageData(0, 0, layer.width, layer.height);
-				value = {};
-				// collect default values
-				event.dEl.find(`.field-row input`).map(elem => {
-					let iEl = $(elem);
-					value[iEl.data("name")] = parseInt(iEl.val(), 10);
-				});
-				// fast references for knob twist event
-				Dialogs.data = { file, layer, pixels, value };
-				// save reference to event
-				Dialogs.srcEvent = event;
-				// read preview toggler state
-				Dialogs.preview = event.dEl.find(`.toggler[data-click="dlg-preview"]`).data("value") === "on";
 				break;
 			case "dlg-reset-common":
 				pixels = Dialogs.data.pixels;
