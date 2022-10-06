@@ -132,7 +132,13 @@ const Dialogs = {
 				if (!Self.preview) return;
 				/* falls-through */
 			case "apply-filter-data":
-				
+				// copy first, then apply filter on pixels
+				pixels = Self.data.pixels;
+				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+				copy = Filters.pixelate(copy, Self.data.value.size);
+				Self.data.layer.ctx.putImageData(copy, 0, 0);
+				// render file
+				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
 				break;
 
 			// standard dialog events

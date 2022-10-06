@@ -26,11 +26,11 @@
 
 
 			// open dialog
-			// UI.doDialog({
-			// 	type: "dlg-open",
-			// 	name: "dlgMosaic",
-			// 	// callback: ev => console.log(ev),
-			// });
+			UI.doDialog({
+				type: "dlg-open",
+				name: "dlgMosaic",
+				// callback: ev => console.log(ev),
+			});
 		}, 500);
 	},
 	dispatch(event) {
