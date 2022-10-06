@@ -28,7 +28,7 @@
 			// open dialog
 			UI.doDialog({
 				type: "dlg-open",
-				name: "dlgBrightnessContrast",
+				name: "dlgGaussianBlur",
 				// callback: ev => console.log(ev),
 			});
 		}, 500);
