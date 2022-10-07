@@ -25,9 +25,8 @@ const Dialogs = {
 				pixels = Self.data.pixels;
 				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
 				copy = Filters.brightnessContrast(copy, Self.data.value);
-				Self.data.layer.ctx.putImageData(copy, 0, 0);
-				// render file
-				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
+				// update layer
+				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
 				break;
 			
 			// slow/once events
@@ -66,9 +65,8 @@ const Dialogs = {
 				pixels = Self.data.pixels;
 				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
 				gaussianBlur(copy.data, pixels.width, pixels.height, Self.data.value.radius);
-				Self.data.layer.ctx.putImageData(copy, 0, 0);
-				// render file
-				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
+				// update layer
+				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
 				break;
 			
 			// standard dialog events
@@ -101,9 +99,8 @@ const Dialogs = {
 				pixels = Self.data.pixels;
 				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
 				copy = Filters.threshold(copy, Self.data.value.amount);
-				Self.data.layer.ctx.putImageData(copy, 0, 0);
-				// render file
-				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
+				// update layer
+				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
 				break;
 
 			// standard dialog events
@@ -136,9 +133,8 @@ const Dialogs = {
 				pixels = Self.data.pixels;
 				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
 				copy = Filters.pixelate(copy, Self.data.value.size);
-				Self.data.layer.ctx.putImageData(copy, 0, 0);
-				// render file
-				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
+				// update layer
+				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
 				break;
 
 			// standard dialog events

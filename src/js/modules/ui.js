@@ -200,9 +200,8 @@ const UI = {
 				// revert layer to initial state
 				pixels = Dialogs.data.pixels;
 				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
-				Dialogs.data.layer.ctx.putImageData(copy, 0, 0);
-				// render file
-				Projector.file.render({ noEmit: 1 });
+				// update layer
+				Dialogs.data.layer.putImageData({ data: copy, noEmit: 1 });
 				break;
 
 			case "dlg-open-common":
@@ -240,8 +239,6 @@ const UI = {
 				Dialogs[event.name]({ ...event, type: "dlg-close" });
 				break;
 			case "dlg-reset-common":
-				pixels = Dialogs.data.pixels;
-				Dialogs.data.layer.ctx.putImageData(pixels, 0, 0);
 				// reset input fields
 				Dialogs.srcEvent.dEl.find(`.field-row input`).map(elem => {
 					let iEl = $(elem),
@@ -250,15 +247,17 @@ const UI = {
 					iEl.val(iEl.data("default") + suffix);
 					if (row.hasClass("has-knob")) {
 						// reset knobs
-						row.find(".knob, .pan-knob").data({ value: iEl.data("default") });
+						let val = +iEl.data("default"),
+							min = +iEl.data("min"),
+							max = +iEl.data("max"),
+							value = Math.round((val-min) / (max-min) * 100);
+						row.find(".knob, .pan-knob").data({ value });
 					}
 					// default values for dialog
 					Dialogs.data.value[iEl.attr("name")] = parseInt(iEl.val(), 10);
 				});
 				// apply filter with default values
-				Dialogs[event.name]({ type: "apply-filter-data" });
-				// render file
-				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
+				Dialogs[event.name]({ type: "apply-filter-data", noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
 				break;
 			case "dlg-preview-common":
 				Dialogs.preview = event.el.data("value") === "on";

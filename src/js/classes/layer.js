@@ -127,6 +127,14 @@ class Layer {
 		});
 	}
 
+	putImageData(opt) {
+		// TODO: pass data through "mask"
+
+		this.ctx.putImageData(opt.data, opt.x || 0, opt.y || 0);
+		// render file
+		Projector.file.render({ noEmit: (opt.noEmit !== undefined) ? opt.noEmit : 1 });
+	}
+
 	bufferImageData() {
 		// save reference image data
 		this._imgData = this.ctx.getImageData(0, 0, this.width, this.height);
