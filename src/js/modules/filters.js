@@ -154,74 +154,56 @@ const Filters = {
 		return pixels;
 	},
 	pixelate(pixels, size) {
-		let data = pixels.data,
-			width = pixels.width,
-			height = pixels.height;
-
-		let nBinsX = Math.ceil(width / size),
-			nBinsY = Math.ceil(height / size),
-			xBinStart,
-			xBinEnd,
-			yBinStart,
-			yBinEnd,
-			xBin,
-			yBin,
-			pixelsInBin,
-			red,
-			green,
-			blue,
-			alpha,
-			x,
-			y,
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height,
+			nBinsX = Math.ceil(w / size),
+			nBinsY = Math.ceil(h / size),
+			xbS, xbE,
+			ybS, ybE,
+			xBin, yBin,
+			pinBin,
+			r, g, b, a,
+			x, xl,
+			y, yl,
 			i;
-
-		for (xBin = 0; xBin < nBinsX; xBin += 1) {
-			for (yBin = 0; yBin < nBinsY; yBin += 1) {
+		for (xBin=0; xBin<nBinsX; xBin+=1) {
+			for (yBin=0; yBin<nBinsY; yBin+=1) {
 				// Initialize the color accumlators to 0
-				red = 0;
-				green = 0;
-				blue = 0;
-				alpha = 0;
+				r = 0;
+				g = 0;
+				b = 0;
+				a = 0;
 				// Determine which pixels are included in this bin
-				xBinStart = xBin * size;
-				xBinEnd = xBinStart + size;
-				yBinStart = yBin * size;
-				yBinEnd = yBinStart + size;
+				xbS = xBin * size;
+				xbE = xbS + size;
+				ybS = yBin * size;
+				ybE = ybS + size;
 				// Add all of the pixels to this bin!
-				pixelsInBin = 0;
-				for (x = xBinStart; x < xBinEnd; x += 1) {
-					if (x >= width) continue;
-					
-					for (y = yBinStart; y < yBinEnd; y += 1) {
-						if (y >= height) continue;
-						
-						i = (width * y + x) * 4;
-						red += data[i + 0];
-						green += data[i + 1];
-						blue += data[i + 2];
-						alpha += data[i + 3];
-						pixelsInBin += 1;
+				pinBin = 0;
+				for (x=xbS, xl=Math.min(xbE, w); x<xl; x+=1) {
+					for (y=ybS, yl=Math.min(ybE, h); y<yl; y+=1) {
+						i = (w * y + x) * 4;
+						r += d[i];
+						g += d[i+1];
+						b += d[i+2];
+						a += d[i+3];
+						pinBin += 1;
 					}
 				}
-
 				// Make sure the channels are between 0-255
-				red = red / pixelsInBin;
-				green = green / pixelsInBin;
-				blue = blue / pixelsInBin;
-				alpha = alpha / pixelsInBin;
-
+				r = r / pinBin;
+				g = g / pinBin;
+				b = b / pinBin;
+				a = a / pinBin;
 				// Draw this bin
-				for (x = xBinStart; x < xBinEnd; x += 1) {
-					if (x >= width) continue;
-					
-					for (y = yBinStart; y < yBinEnd; y += 1) {
-						if (y >= height) continue;
-						
-						i = (width * y + x) * 4;
-						data[i + 0] = red;
-						data[i + 1] = green;
-						data[i + 2] = blue;
-						data[i + 3] = alpha;
+				for (x=xbS, xl=Math.min(xbE, w); x<xl; x+=1) {
+					for (y=ybS, yl=Math.min(ybE, h); y<yl; y+=1) {
+						i = (w * y + x) * 4;
+						d[i]   = r;
+						d[i+1] = g;
+						d[i+2] = b;
+						d[i+3] = a;
 					}
 				}
 			}
