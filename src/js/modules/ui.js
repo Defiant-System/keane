@@ -241,11 +241,14 @@ const UI = {
 						suffix = iEl.data("suffix") || "";
 					iEl.val(iEl.data("default") + suffix);
 					if (row.hasClass("has-knob")) {
+						// reset knobs
 						row.find(".knob, .pan-knob").data({ value: iEl.data("default") });
 					}
+					// default values for dialog
+					Dialogs.data.value[iEl.attr("name")] = parseInt(iEl.val(), 10);
 				});
-				// reset pan-knobs
-				Dialogs.srcEvent.dEl.find(`.knob`).data({ value: 0 });
+				// apply filter with default values
+				Dialogs[event.name]({ type: "apply-filter-data" });
 				// render file
 				Projector.file.render({ noEmit: (event.noEmit !== undefined) ? event.noEmit : 1 });
 				break;
