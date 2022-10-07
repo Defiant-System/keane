@@ -196,6 +196,14 @@ const UI = {
 						el.removeClass("showing closing");
 					});
 				break;
+			case "dlg-undo-filter":
+				// revert layer to initial state
+				pixels = Dialogs.data.pixels;
+				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+				Dialogs.data.layer.ctx.putImageData(copy, 0, 0);
+				// render file
+				Projector.file.render({ noEmit: 1 });
+				break;
 
 			case "dlg-open-common":
 				file = Projector.file;
@@ -258,17 +266,13 @@ const UI = {
 					// apply -- In case Preview is turned off, apply filter on image
 					Dialogs[event.name]({ type: "apply-filter-data", noEmit: 1 });
 				} else {
-					// revert layer to initial state
-					pixels = Dialogs.data.pixels;
-					copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
-					Dialogs.data.layer.ctx.putImageData(copy, 0, 0);
-					// render file
-					Projector.file.render({ noEmit: 1 });
+					Self.doDialog({ type: "dlg-undo-filter" });
 				}
 				break;
 			case "dlg-close-common":
 				if (event.el && event.el.hasClass("icon-dlg-close")) {
-					Dialogs[event.name]({ type: "dlg-reset", noEmit: 0 });
+					// Dialogs[event.name]({ type: "dlg-reset", noEmit: 0 });
+					Self.doDialog({ type: "dlg-undo-filter" });
 				}
 				Self.doDialog({ ...event, type: "dlg-close" });
 				break;

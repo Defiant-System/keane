@@ -139,7 +139,7 @@ class Layer {
 	}
 
 	applyCompositeImage(opt) {
-		this.ctx.globalCompositeOperation = opt.operation;
+		this.ctx.globalCompositeOperation = opt.operation || "source-over";
 		this.ctx.drawImage(opt.image, 0, 0);
 		this.updateThumbnail();
 	}
