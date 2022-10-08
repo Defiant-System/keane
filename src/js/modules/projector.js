@@ -60,18 +60,18 @@ const Projector = {
 	},
 	renderFrame(File) {
 		// pre-render frame
-		let w = File.oW * File.scale,
-			h = File.oH * File.scale,
-			oX = File.oX || Math.round(this.cX - (w >> 1)),
-			oY = File.oY || Math.round(this.cY - (h >> 1));
-		if (isNaN(w) || isNaN(h)) return;
+		let width = File.oW * File.scale,
+			height = File.oH * File.scale,
+			oX = File.oX || Math.round(this.cX - (width >> 1)),
+			oY = File.oY || Math.round(this.cY - (height >> 1));
+		if (isNaN(width) || isNaN(height)) return;
 
 		// reset canvases
-		this.swap.cvs.prop({ width: w, height: h });
+		this.swap.cvs.prop({ width });
 		// checkes background
 		this.swap.ctx.fillStyle = this.checkers;
-		this.swap.ctx.fillRect(0, 0, w, h);
-		this.frame = this.swap.ctx.getImageData(0, 0, w, h);
+		this.swap.ctx.fillRect(0, 0, width, height);
+		this.frame = this.swap.ctx.getImageData(0, 0, width, height);
 	},
 	reset(File) {
 		// reset canvases
