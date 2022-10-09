@@ -61,12 +61,14 @@ const Dialogs = {
 				if (!Self.preview) return;
 				/* falls-through */
 			case "apply-filter-data":
+				console.time("test");
 				// copy first, then apply filter on pixels
 				pixels = Self.data.pixels;
 				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
 				gaussianBlur(copy.data, pixels.width, pixels.height, Self.data.value.radius);
 				// update layer
 				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
+				console.timeEnd("test");
 				break;
 			
 			// standard dialog events

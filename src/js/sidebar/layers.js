@@ -15,7 +15,7 @@
 
 		// temp
 		setTimeout(() => {
-			return;
+			// return;
 			// root.find(`.icon[data-click="add-layer"]`).trigger("click");
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
 
@@ -29,7 +29,7 @@
 			// open dialog
 			UI.doDialog({
 				type: "dlg-open",
-				name: "dlgMosaic",
+				name: "dlgGaussianBlur",
 				// callback: ev => console.log(ev),
 			});
 		}, 500);
