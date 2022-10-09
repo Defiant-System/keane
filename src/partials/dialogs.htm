@@ -51,27 +51,58 @@
 </div>
 
 
-<div class="dialog-box" data-dlg="dlgPixelate">
+<div class="dialog-box" data-dlg="dlgPixelator">
 	<div class="dlg-content">
 		<div class="fields">
 			<h2>
 				<i class="icon-dlg-close" data-click="dlg-close"></i>
-				Close Pixelate
+				Pixelator
 			</h2>
-			<div class="field-row has-knob">
-				<div class="option input">
-					<span class="label">Amount</span>
-					<span class="value"><input type="text" name="amount" value="150%" data-min="50" data-max="200" data-default="150" data-suffix="%"></span>
+			
+			<div class="layers">
+				<div class="list-head">
+					<div class="row">
+						<div>Shape</div>
+						<div>Spacing</div>
+						<div>Size</div>
+						<div>Offset</div>
+						<div>Alpha</div>
+					</div>
 				</div>
-				<div class="knob" data-change="set-amount"></div>
+				<div class="list-body">
+					<div class="row">
+						<div>Square</div>
+						<div>12px</div>
+						<div>14px</div>
+						<div>4px</div>
+						<div>2px</div>
+					</div>
+
+					<div class="row">
+						<div>Circle</div>
+						<div>24px</div>
+						<div>12px</div>
+						<div>14px</div>
+						<div>1px</div>
+					</div>
+
+					<div class="row">
+						<div>Diamond</div>
+						<div>8px</div>
+						<div>7px</div>
+						<div>6px</div>
+						<div>4px</div>
+					</div>
+				</div>
 			</div>
-			<div class="field-row has-knob">
+
+			<!-- <div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Radius</span>
 					<span class="value"><input type="text" name="radius" value="3px" data-min="0" data-max="20" data-default="3" data-suffix="px"></span>
 				</div>
 				<div class="knob" data-change="set-radius"></div>
-			</div>
+			</div> -->
 		</div>
 		<div class="buttons">
 			<div class="button" data-click="dlg-ok">OK</div>

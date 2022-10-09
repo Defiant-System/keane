@@ -147,7 +147,7 @@ const Dialogs = {
 				break;
 		}
 	},
-	dlgPixelate(event) {
+	dlgPixelator(event) {
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
@@ -237,7 +237,7 @@ const Dialogs = {
 			case "dlg-reset":
 			case "dlg-preview":
 			case "dlg-close":
-				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgPixelate" });
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgPixelator" });
 				break;
 		}
 	},
