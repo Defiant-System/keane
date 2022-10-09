@@ -147,7 +147,7 @@ const Dialogs = {
 				break;
 		}
 	},
-	dlgSmartSharpen(event) {
+	dlgPixelate(event) {
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
@@ -165,6 +165,7 @@ const Dialogs = {
 				/* falls-through */
 			case "apply-filter-data":
 				// TODO
+				console.log(event);
 				break;
 			
 			// slow/once events
@@ -179,7 +180,7 @@ const Dialogs = {
 			case "dlg-reset":
 			case "dlg-preview":
 			case "dlg-close":
-				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgSmartSharpen" });
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgPixelate" });
 				break;
 		}
 	},

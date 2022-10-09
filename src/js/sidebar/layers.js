@@ -25,11 +25,10 @@
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "brightSteps,3" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "brightness,-25" }), 400);
 
-
 			// open dialog
 			UI.doDialog({
 				type: "dlg-open",
-				name: "dlgGaussianBlur",
+				name: "dlgPixelate",
 				// callback: ev => console.log(ev),
 			});
 		}, 500);
