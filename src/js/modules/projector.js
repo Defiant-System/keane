@@ -67,7 +67,8 @@ const Projector = {
 		if (isNaN(width) || isNaN(height)) return;
 
 		// reset canvases
-		this.swap.cvs.prop({ width });
+		this.swap.cvs.prop({ width, height });
+		// this.swap.ctx.clearRect(0, 0, width, height);
 		// checkes background
 		this.swap.ctx.fillStyle = this.checkers;
 		this.swap.ctx.fillRect(0, 0, width, height);

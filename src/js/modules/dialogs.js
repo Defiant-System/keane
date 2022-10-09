@@ -164,8 +164,65 @@ const Dialogs = {
 				if (!Self.preview) return;
 				/* falls-through */
 			case "apply-filter-data":
-				// TODO
-				console.log(event);
+				// copy first, then apply filter on pixels
+				pixels = Self.data.pixels;
+				
+				console.time("test");
+				let layers = [
+						// { res: 16 },
+
+						// { res: 32 },
+						// { shape: 'circle', res: 32, offset: 15 },
+						// { shape: 'circle', res: 32, size: 26, offset: 13 },
+						// { shape: 'circle', res: 32, size: 18, offset: 10 },
+						// { shape: 'circle', res: 32, size: 12, offset: 8 },
+
+						{ res: 48 },
+						{ shape: 'diamond', res: 48, offset: 12, alpha: 0.5  },
+						{ shape: 'diamond', res: 48, offset: 36, alpha: 0.5  },
+						{ shape: 'circle', res: 16, size: 8, offset: 4, alpha: 0.5 },
+
+						// { shape: 'circle', res: 32, size: 6, offset: 8 },
+						// { shape: 'circle', res: 32, size: 9, offset: 16 },
+						// { shape: 'circle', res: 32, size: 12, offset: 24 },
+						// { shape: 'circle', res: 32, size: 9, offset: 0 },
+
+						// { shape: 'diamond', res: 24, size: 25 },
+						// { shape: 'diamond', res: 24, offset: 12 },
+						// { res: 24, alpha: 0.5 },
+
+						// { shape: 'circle', res: 24 },
+						// { shape: 'circle', res: 24, size: 9, offset: 12 },
+
+						// { shape: 'square', res: 48 },
+						// { shape: 'diamond', res: 12, size: 8 },
+						// { shape: 'diamond', res: 12, size: 8, offset: 6 },
+
+						// { shape: 'square', res: 48, offset: 24 },
+						// { shape: 'circle', res: 48, offset: 0 },
+						// { shape: 'diamond', res: 16, size: 15, offset: 0, alpha: 0.6 },
+						// { shape: 'diamond', res: 16, size: 15, offset: 8, alpha: 0.6 },
+
+						// { shape: 'square', res: 32 },
+						// { shape: 'circle', res: 32, offset: 16 },
+						// { shape: 'circle', res: 32, offset: 0, alpha: 0.5 },
+						// { shape: 'circle', res: 16, size: 9, offset: 0, alpha: 0.5 },
+
+						// { shape: 'diamond', res: 48, size: 50 },
+						// { shape: 'diamond', res: 48, offset: 24 },
+						// { shape: 'circle', res: 8, size: 6 },
+					];
+
+				copy = closePixelate({
+						copy: new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height),
+						width: pixels.width,
+						height: pixels.height,
+						layers,
+					});
+				console.timeEnd("test");
+
+				// update layer
+				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
 				break;
 			
 			// slow/once events
