@@ -30,16 +30,18 @@
 	}
 
 	&[data-dlg="dlgPixelator"] {
+		top: 50px;
+
 		.layers {
-			width: 320px;
-			padding: 7px 13px 23px 0;
+			width: 340px;
+			padding: 7px 13px 0 0;
 
 			.list-head .row,
 			.list-body .row {
 				display: flex;
 				padding: 1px 0;
 
-				div {
+				> div {
 					&:nth-child(1) { flex: 1; padding-left: 7px; }
 					&:nth-child(2) { width: 65px; }
 					&:nth-child(3) { width: 50px; }
@@ -69,6 +71,65 @@
 					&:hover {
 						color: rgba(#fff, .85);
 					}
+				}
+			}
+
+			.shape-options {
+				font-size: 0;
+
+				i {
+					position: relative;
+					border: 1px solid #596262;
+					display: inline-block;
+					width: 21px;
+					height: 19px;
+					cursor: pointer;
+
+					&:first-child {
+						border-radius: 11px 0 0 11px;
+						border-right: 0;
+						width: 22px;
+
+						&:after {
+							left: 5px;
+						}
+					}
+
+					&:last-child {
+						border-radius: 0 11px 11px 0;
+						border-left: 0;
+						width: 22px;
+					}
+
+					&.active {
+						background-color: #596262;
+						cursor: default;
+
+						&:after { opacity: .6; }
+					}
+
+					&:hover:not(.active):after {
+						opacity: .35;
+					}
+
+					&:after {
+						content: "";
+						position: absolute;
+						top: 2px;
+						left: 3px;
+						width: 13px;
+						height: 13px;
+						opacity: .125;
+						background-image: inherit;
+						background-size: cover;
+						background-repeat: no-repeat;
+						background-position: 50% 50%;
+						filter: invert() drop-shadow(0 1px 0 rgba(#000, .4));
+					}
+
+					&.icon-shape-square:after   { background-image: url(~/icons/icon-shape-square.png); }
+					&.icon-shape-diamond:after  { background-image: url(~/icons/icon-shape-diamond.png); }
+					&.icon-shape-disc:after     { background-image: url(~/icons/icon-shape-disc.png); }
 				}
 			}
 		}

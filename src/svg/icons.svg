@@ -204,8 +204,7 @@
 
 	<svg id="tool-pointer-object" viewBox="0 0 17 17">
 		<polygon fill="#fff" points="12.8,10.2 4.3,1.7 4.3,14.4 6.9,11.1 9.1,15.6 10.9,14.7 8.6,10.2"/>
-		<path fill="#fff" d="M9,16l-2.2-4.4L4,15.3V1l9.5,9.5H9.1l2.2,4.4L9,16z M6.9,10.5l2.4,4.7l1.2-0.6L8.1,9.9H12L4.6,2.5v11L6.9,10.5
-			z"/>
+		<path fill="#fff" d="M9,16l-2.2-4.4L4,15.3V1l9.5,9.5H9.1l2.2,4.4L9,16z M6.9,10.5l2.4,4.7l1.2-0.6L8.1,9.9H12L4.6,2.5v11L6.9,10.5 z"/>
 	</svg>
 
 	<svg id="tool-hand" viewBox="0 0 17 17">
@@ -994,6 +993,31 @@
 		<path fill="#333" d="M13.7,11.5V6.8c0-1.2-0.3-2.1-0.9-2.8c-0.6-0.7-1.6-1-2.9-1H5.8V1.5L1.8,4l4,2.5V4.9h4.1
 			c0.7,0,1.2,0.1,1.5,0.4c0.3,0.3,0.4,0.8,0.4,1.5v4.7h-1.5l2.5,4l2.5-4L13.7,11.5L13.7,11.5z"/>
 	</svg>
+
+
+
+	<svg id="icon-shape-square" viewBox="0 0 13 13">
+		<style type="text/css">
+			.st0{fill:#000;}
+		</style>
+		<rect x="1.5" y="1.5" class="st0" width="10" height="10"/>
+	</svg>
+
+	<svg id="icon-shape-diamond" viewBox="0 0 13 13">
+		<style type="text/css">
+			.st0{fill:#000;}
+		</style>
+		<polygon class="st0" points="0.8,6.5 6.5,12.2 12.2,6.5 6.5,0.8 "/>
+	</svg>
+
+	<svg id="icon-shape-disc" viewBox="0 0 13 13">
+		<style type="text/css">
+			.st0{fill:##000;}
+		</style>
+		<circle class="st0" cx="6.5" cy="6.5" r="5"/>
+	</svg>
+
+
 
 	<svg id="icon-black-white" viewBox="0 0 17 17">
 		<style type="text/css">
