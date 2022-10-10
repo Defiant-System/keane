@@ -117,6 +117,42 @@ const UI = {
 				break;
 		}
 	},
+	doDialogKnobValue(event) {
+		console.log( "dlg-knob" );
+	},
+	doDialogBars(event) {
+		let Self = UI,
+			Drag = Self.drag;
+		// console.log(event);
+		switch (event.type) {
+			// native events
+			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+
+				let el = $(event.target),
+					min = 0,
+					max = 100,
+					offset = parseInt(el.cssProp("--value"), 10) - event.clientX,
+					_min = Math.min,
+					_max = Math.max;
+				Self.drag = { el, min, max, offset, _min, _max };
+
+				// bind event handlers
+				Self.content.addClass("no-dlg-cursor");
+				Self.doc.on("mousemove mouseup", Self.doDialogBars);
+				break;
+			case "mousemove":
+				let value = Drag._min(Drag.offset + event.clientX, Drag.max);
+				Drag.el.css({ "--value": `${value}%` });
+				break;
+			case "mouseup":
+				// unbind event handlers
+				Self.content.removeClass("no-dlg-cursor");
+				Self.doc.off("mousemove mouseup", Self.doDialogBars);
+				break;
+		}
+	},
 	doDialog(event) {
 		let Self = UI,
 			Drag = Self.drag,
@@ -132,7 +168,7 @@ const UI = {
 			// native events
 			case "mousedown":
 				el = $(event.target);
-				
+
 				switch (true) {
 					case el.hasClass("toggler"):
 						return el.data("value") === "on"
@@ -142,6 +178,10 @@ const UI = {
 						return Self.doColorBox(event);
 					case el.hasClass("hue-bar"):
 						return Self.doHueBar(event);
+					case el.data("ux") === "dlg-knob":
+						return Self.doDialogKnobValue(event);
+					case el.data("ux") === "dlg-bars":
+						return Self.doDialogBars(event);
 					case el.hasClass("knob"):
 					case el.hasClass("pan-knob"):
 						return Self.doDialogKnob(event);

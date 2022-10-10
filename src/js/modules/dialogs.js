@@ -1,10 +1,10 @@
 
 const Dialogs = {
-	/*
-	 * Brightness -  Min: -150   Max: 150
-	 * Contrast -    Min: -100   Max: 100
-	 */
 	dlgBrightnessContrast(event) {
+		/*
+		 * Brightness -  Min: -150   Max: 150
+		 * Contrast -    Min: -100   Max: 100
+		 */
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
@@ -225,24 +225,30 @@ const Dialogs = {
 				// update layer
 				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
 				break;
-			
+
 			// slow/once events
 			case "before:set-amount":
 			case "before:set-radius":
 				Self.data.filter = event.type.split("-")[1];
 				break;
 
+			case "set-spacing":
+			case "set-size":
+			case "set-offset":
+			case "set-opacity":
+				// console.log(event);
+				break;
+
 			// custom dialog events
 			case "add-layer":
 				let str = window.render({
 						template: "pixelator-preset-layer",
-						match: "//Pixelator/Preset[2]",
-					});
-				console.log(str);
-				// 	row = event.el.before(dom);
+						match: "//Pixelator/Preset[1]",
+					}),
+					row = event.el.before(str).addClass("adding");
 
-				// requestAnimationFrame(() =>
-					// row.cssSequence("!adding", "transitionend", el => el.removeClass("adding")));
+				requestAnimationFrame(() =>
+					row.cssSequence("!adding", "transitionend", el => el.removeClass("adding")));
 				break;
 			case "remove-layer":
 				event.el.parents(".row").cssSequence("removing", "transitionend", el => el.remove());
@@ -257,12 +263,12 @@ const Dialogs = {
 
 			// standard dialog events
 			case "dlg-open":
+				// render active preset layer list
 				window.render({
 					template: "pixelator-preset",
 					match: "//Pixelator/Preset[2]",
-					append: event.dEl.find(".list-body"),
+					prepend: event.dEl.find(".list-body"),
 				});
-				// event.dEl.find(".add-row").trigger("click");
 			case "dlg-ok":
 			case "dlg-reset":
 			case "dlg-preview":

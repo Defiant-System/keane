@@ -72,6 +72,7 @@
 				background: #344;
 				color: rgba(#fff, .55);
 				text-shadow: 0 1px 0 #122;
+				opacity: 1;
 
 				&:hover .add-row {
 					opacity: .35;
@@ -81,14 +82,16 @@
 					padding: 2px 0 3px;
 					max-height: 23px;
 					overflow: hidden;
-					transition: max-height 150ms ease-in-out,
-								padding 150ms ease-in-out;
+					transition: max-height 150ms,
+								padding 150ms,
+								opacity 150ms;
 
 					&.adding,
 					&.removing {
 						padding-top: 0;
 						padding-bottom: 0;
 						max-height: 0;
+						opacity: 0;
 					}
 
 					&:hover {
@@ -188,6 +191,7 @@
 					background-size: 32px 9px;
 					background-repeat: repeat-x;
 					background-position: 0 0;
+					pointer-events: none;
 				}
 
 				&:before {

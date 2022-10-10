@@ -329,11 +329,11 @@
 				</xsl:if></i>
 			</div>
 		</div>
-		<div><xsl:value-of select="@res"/></div>
-		<div><xsl:value-of select="@size"/></div>
-		<div><xsl:value-of select="@offset"/></div>
+		<div data-ux="dlg-knob" data-change="set-spacing" data-min="0" data-max="100" data-suffix="px"><xsl:value-of select="@res"/> <xsl:if test="@res">px</xsl:if></div>
+		<div data-ux="dlg-knob" data-change="set-size" data-min="0" data-max="100" data-suffix="px"><xsl:value-of select="@size"/> <xsl:if test="@size">px</xsl:if></div>
+		<div data-ux="dlg-knob" data-change="set-offset" data-min="0" data-max="100" data-suffix="px"><xsl:value-of select="@offset"/> <xsl:if test="@offset">px</xsl:if></div>
 		<div>
-			<i class="icon-bars">
+			<i class="icon-bars" data-ux="dlg-bars" data-change="set-opacity">
 				<xsl:attribute name="style">--value: <xsl:value-of select="$alpha"/>%;</xsl:attribute>
 			</i>
 			<i class="icon-eye-on" data-click="toggle-layer"><xsl:if test="@hidden = 1">
