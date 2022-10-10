@@ -23,11 +23,11 @@
 	</Recents> -->
 	
 	<Pixelator>
-		<Preset>
+		<Preset id="prst-1">
 			<Layer res="16" />
 		</Preset>
 		
-		<Preset>
+		<Preset id="prst-2">
 			<Layer res="32" />
 			<Layer shape="circle" res="32" offset="15" />
 			<Layer shape="circle" res="32" offset="13" size="26" />
@@ -35,11 +35,56 @@
 			<Layer shape="circle" res="32" offset="8" size="8" />
 		</Preset>
 		
-		<Preset>
+		<Preset id="prst-3">
+			<Layer res="48" />
+			<Layer shape="diamond" res="48" offset="12" alpha=".5" />
+			<Layer shape="diamond" res="48" offset="36" alpha=".5" />
+			<Layer shape="circle" res="16" offset="4" alpha=".5" size="8" />
+			<Layer res="24" alpha=".5" />
+		</Preset>
+
+		<Preset id="prst-4">
+			<Layer shape="circle" res="32" offset="8" size="6" />
+			<Layer shape="circle" res="32" offset="16" size="9" />
+			<Layer shape="circle" res="32" offset="24" size="12" />
+			<Layer shape="circle" res="32" offset="0" size="9" />
+		</Preset>
+
+		<Preset id="prst-5">
+			<Layer shape="diamond" res="24" size="25" />
+			<Layer shape="diamond" res="24" offset="12" />
+			<Layer res="24" alpha=".5" />
+		</Preset>
+
+		<Preset id="prst-6">
+			<Layer shape="circle" res="24" />
+			<Layer shape="circle" res="24" size="9" offset="12" />
+		</Preset>
+
+		<Preset id="prst-7">
+			<Layer res="48" />
+			<Layer shape="diamond" res="12" size="8" />
+			<Layer shape="diamond" res="12" size="8" offset="6" />
+		</Preset>
+
+		<Preset id="prst-8">
+			<Layer shape="square" res="48" offset="24" />
+			<Layer shape="circle" res="48" offset="0" />
+			<Layer shape="diamond" res="16" size="15" offset="0" alpha=".6" />
+			<Layer shape="diamond" res="16" size="15" offset="8" alpha=".6" />
+		</Preset>
+
+		<Preset id="prst-9">
 			<Layer res="32" />
 			<Layer shape="circle" res="32" offset="16" />
-			<Layer shape="circle" res="32" offset="8" alpha="0.5" />
-			<Layer shape="circle" res="16" offset="8" alpha="0.5" size="9" />
+			<Layer shape="circle" res="32" offset="0" alpha="0.5" />
+			<Layer shape="circle" res="16" offset="0" alpha="0.5" size="9" />
+		</Preset>
+		
+		<Preset id="prst-10">
+			<Layer shape="diamond" res="48" size="50" />
+			<Layer shape="diamond" res="48" offset="24" />
+			<Layer shape="circle" res="8" size="6" />
 		</Preset>
 	</Pixelator>
 

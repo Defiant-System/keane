@@ -71,6 +71,7 @@ const Projector = {
 		// this.swap.ctx.clearRect(0, 0, width, height);
 		// checkes background
 		this.swap.ctx.fillStyle = this.checkers;
+		this.swap.ctx.fillStyle = "#000";
 		this.swap.ctx.fillRect(0, 0, width, height);
 		this.frame = this.swap.ctx.getImageData(0, 0, width, height);
 	},
