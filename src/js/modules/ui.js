@@ -134,7 +134,7 @@ const UI = {
 					min = +el.data("min"),
 					max = +el.data("max"),
 					suffix = el.data("suffix") || "",
-					val = Math.round(((parseInt(el.text(), 10) - min) / (max - min)) * 100),
+					val = Math.round(((parseInt(el.text() || "0", 10) - min) / (max - min)) * 100),
 					offset = val + event.clientY,
 					_min = Math.min,
 					_max = Math.max;
@@ -142,7 +142,6 @@ const UI = {
 
 				// reset knob
 				kEl.data({ value: val });
-
 				// show bubble
 				bEl.removeClass("hidden")
 					.css({
@@ -159,7 +158,8 @@ const UI = {
 				Drag.kEl.data({ value });
 
 				value = Math.round((value / 100) * (Drag.max - Drag.min));
-				Drag.el.html(`${value}${Drag.suffix}`);
+				let str = value > 0 ? `${value}${Drag.suffix}` : "";
+				Drag.el.html(str);
 				break;
 			case "mouseup":
 				Drag.bEl.cssSequence("close", "animationend", el => el.addClass("hidden").removeClass("close"));
