@@ -118,7 +118,56 @@ const UI = {
 		}
 	},
 	doDialogKnobValue(event) {
-		console.log( "dlg-knob" );
+		let Self = UI,
+			Drag = Self.drag;
+		// console.log(event);
+		switch (event.type) {
+			// native events
+			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+
+				// prepare drag object
+				let el = $(event.target),
+					bEl = el.parents(".dlg-content").find(".hover-knob"),
+					kEl = bEl.find(".knob"),
+					min = +el.data("min"),
+					max = +el.data("max"),
+					suffix = el.data("suffix") || "",
+					val = Math.round(((parseInt(el.text(), 10) - min) / (max - min)) * 100),
+					offset = val + event.clientY,
+					_min = Math.min,
+					_max = Math.max;
+				Self.drag = { el, bEl, kEl, min, max, offset, suffix, _min, _max };
+
+				// reset knob
+				kEl.data({ value: val });
+
+				// show bubble
+				bEl.removeClass("hidden")
+					.css({
+						top: el.prop("offsetTop"),
+						left: el.prop("offsetLeft"),
+					});
+
+				// bind event handlers
+				Self.content.addClass("no-dlg-cursor");
+				Self.doc.on("mousemove mouseup", Self.doDialogKnobValue);
+				break;
+			case "mousemove":
+				let value = Drag._max(Drag._min(Drag.offset - event.clientY, 100), 0);
+				Drag.kEl.data({ value });
+
+				value = Math.round((value / 100) * (Drag.max - Drag.min));
+				Drag.el.html(`${value}${Drag.suffix}`);
+				break;
+			case "mouseup":
+				Drag.bEl.cssSequence("close", "animationend", el => el.addClass("hidden").removeClass("close"));
+				// unbind event handlers
+				Self.content.removeClass("no-dlg-cursor");
+				Self.doc.off("mousemove mouseup", Self.doDialogKnobValue);
+				break;
+		}
 	},
 	doDialogBars(event) {
 		let Self = UI,
@@ -130,15 +179,17 @@ const UI = {
 				// prevent default behaviour
 				event.preventDefault();
 
+				// prepare drag object
 				let el = $(event.target),
 					bEl = el.parents(".dlg-content").find(".hover-bubble"),
+					offset = parseInt(el.cssProp("--value"), 10) - event.clientX,
 					min = 0,
 					max = 100,
-					offset = parseInt(el.cssProp("--value"), 10) - event.clientX,
 					_min = Math.min,
 					_max = Math.max;
 				Self.drag = { el, bEl, min, max, offset, _min, _max };
 
+				// show bubble
 				bEl.removeClass("hidden")
 					.css({
 						top: el.parent().prop("offsetTop"),
@@ -150,12 +201,13 @@ const UI = {
 				Self.doc.on("mousemove mouseup", Self.doDialogBars);
 				break;
 			case "mousemove":
-				let value = Drag._min(Drag.offset + event.clientX, Drag.max);
+				let value = Drag._max(Drag._min(Drag.offset + event.clientX, Drag.max), Drag.min);
 				Drag.el.css({ "--value": `${value}%` });
-
+				// show value in bubble
 				Drag.bEl.html(`${value}%`);
 				break;
 			case "mouseup":
+				// hide bubble
 				Drag.bEl.cssSequence("close", "animationend", el => el.addClass("hidden").removeClass("close"));
 				// unbind event handlers
 				Self.content.removeClass("no-dlg-cursor");

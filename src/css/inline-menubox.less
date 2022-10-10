@@ -14,6 +14,26 @@
 		animation: popup-hide 120ms linear forwards;
 	}
 
+	&.arrow-below {
+		.inline-content {
+			padding-bottom: 5px;
+		}
+
+		&:before {
+			top: auto;
+			bottom: -10px;
+			border-bottom: 0;
+			border-top: 11px solid rgba(0,0,0,.45);
+		}
+
+		&:after {
+			top: auto;
+			bottom: -9px;
+			border-bottom: 0;
+			border-top: 10px solid #415050;
+		}
+	}
+
 	&:before {
 		content: "";
 		position: absolute;
