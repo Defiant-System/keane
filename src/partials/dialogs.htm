@@ -72,7 +72,7 @@
 				<div class="list-body">
 					<div class="row">
 						<div>
-							<div class="shape-options">
+							<div class="shape-options" data-click="set-layer-shape">
 								<i class="icon-shape-square active"></i>
 								<i class="icon-shape-diamond"></i>
 								<i class="icon-shape-disc"></i>
@@ -83,14 +83,14 @@
 						<div>4px</div>
 						<div>
 							<i class="icon-bars" style="--value: 50%;"></i>
-							<i class="icon-eye-on"></i>
-							<i class="icon-trashcan"></i>
+							<i class="icon-eye-on" data-click="toggle-layer"></i>
+							<i class="icon-trashcan" data-click="remove-layer"></i>
 						</div>
 					</div>
 
 					<div class="row">
 						<div>
-							<div class="shape-options">
+							<div class="shape-options" data-click="set-layer-shape">
 								<i class="icon-shape-square"></i>
 								<i class="icon-shape-diamond"></i>
 								<i class="icon-shape-disc active"></i>
@@ -101,14 +101,14 @@
 						<div>14px</div>
 						<div>
 							<i class="icon-bars" style="--value: 75%;"></i>
-							<i class="icon-eye-off"></i>
-							<i class="icon-trashcan"></i>
+							<i class="icon-eye-on icon-eye-off" data-click="toggle-layer"></i>
+							<i class="icon-trashcan" data-click="remove-layer"></i>
 						</div>
 					</div>
 
 					<div class="row">
 						<div>
-							<div class="shape-options">
+							<div class="shape-options" data-click="set-layer-shape">
 								<i class="icon-shape-square"></i>
 								<i class="icon-shape-diamond active"></i>
 								<i class="icon-shape-disc"></i>
@@ -119,17 +119,15 @@
 						<div>6px</div>
 						<div>
 							<i class="icon-bars" style="--value: 37%;"></i>
-							<i class="icon-eye-on"></i>
-							<i class="icon-trashcan"></i>
+							<i class="icon-eye-on" data-click="toggle-layer"></i>
+							<i class="icon-trashcan" data-click="remove-layer"></i>
 						</div>
 					</div>
 
-					<!-- <div class="row">
-						<div>
-							<i class="icon-add"></i>
-							Add Layer
-						</div>
-					</div> -->
+					<div class="add-row" data-click="add-layer">
+						<i class="icon-add-layer"></i>
+						Add Layer
+					</div>
 				</div>
 			</div>
 		</div>

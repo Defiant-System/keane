@@ -137,7 +137,7 @@
 
 	<svg id="tool-eraser-bg" viewBox="0 0 17 17">
 		<style type="text/css">
-			.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#333333;}
+			.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#333;}
 		</style>
 		<polygon fill="#333" points="8.7,15.5 1.2,15.5 2.4,11.1 9.8,11.1"/>
 		<polygon fill="#333" points="9.1,15.3 15.3,8.1 16,4.9 10.2,10.9"/>
@@ -998,23 +998,31 @@
 
 	<svg id="icon-shape-square" viewBox="0 0 13 13">
 		<style type="text/css">
-			.st0{fill:#000;}
+			.st0{fill:#333;}
 		</style>
 		<rect x="2" y="2" class="st0" width="9" height="9"/>
 	</svg>
 
 	<svg id="icon-shape-diamond" viewBox="0 0 13 13">
 		<style type="text/css">
-			.st0{fill:#000;}
+			.st0{fill:#333;}
 		</style>
 		<polygon class="st0" points="0.8,6.5 6.5,12.2 12.2,6.5 6.5,0.8 "/>
 	</svg>
 
 	<svg id="icon-shape-disc" viewBox="0 0 13 13">
 		<style type="text/css">
-			.st0{fill:##000;}
+			.st0{fill:#333;}
 		</style>
 		<circle class="st0" cx="6.5" cy="6.5" r="5"/>
+	</svg>
+
+	<svg id="icon-add-layer" viewBox="0 0 13 13">
+		<style type="text/css">
+			.st0{fill:#333;}
+		</style>
+		<rect x="6" y="2" class="st0" width="2" height="10"/>
+		<rect x="2" y="6" class="st0" width="10" height="2"/>
 	</svg>
 
 	<svg id="icon-bars" viewBox="0 0 32 9">
@@ -1032,8 +1040,8 @@
 
 	<svg id="icon-black-white" viewBox="0 0 17 17">
 		<style type="text/css">
-			.st0{fill:#333333;}
-			.st1{fill:#FFFFFF;}
+			.st0{fill:#333;}
+			.st1{fill:#fff;}
 		</style>
 		<path class="st1" d="M16,16h-9V7h9V16z"/>
 		<rect x="7.9" y="8" class="st0" width="7" height="7"/>

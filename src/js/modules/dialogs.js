@@ -177,11 +177,11 @@ const Dialogs = {
 						// { shape: "circle", res: 32, size: 18, offset: 10 },
 						// { shape: "circle", res: 32, size: 12, offset: 8 },
 
-						{ res: 48 },
-						{ shape: "diamond", res: 48, offset: 12, alpha: 0.5 },
-						{ shape: "diamond", res: 48, offset: 36, alpha: 0.5 },
-						{ shape: "circle", res: 16, size: 8, offset: 4, alpha: 0.5 },
-						{ res: 24, alpha: 0.25, hidden: 1 },
+						// { res: 48 },
+						// { shape: "diamond", res: 48, offset: 12, alpha: 0.5 },
+						// { shape: "diamond", res: 48, offset: 36, alpha: 0.5 },
+						// { shape: "circle", res: 16, size: 8, offset: 4, alpha: 0.5 },
+						// { res: 24, alpha: 0.25, hidden: 1 },
 
 						// { shape: "circle", res: 32, size: 6, offset: 8 },
 						// { shape: "circle", res: 32, size: 9, offset: 16 },
@@ -204,10 +204,10 @@ const Dialogs = {
 						// { shape: "diamond", res: 16, size: 15, offset: 0, alpha: 0.6 },
 						// { shape: "diamond", res: 16, size: 15, offset: 8, alpha: 0.6 },
 
-						// { shape: "square", res: 32 },
-						// { shape: "circle", res: 32, offset: 16 },
-						// { shape: "circle", res: 32, offset: 0, alpha: 0.5 },
-						// { shape: "circle", res: 16, size: 9, offset: 0, alpha: 0.5 },
+						{ shape: "square", res: 32 },
+						{ shape: "circle", res: 32, offset: 16 },
+						{ shape: "circle", res: 32, offset: 0, alpha: 0.5 },
+						{ shape: "circle", res: 16, size: 9, offset: 0, alpha: 0.5 },
 
 						// { shape: "diamond", res: 48, size: 50 },
 						// { shape: "diamond", res: 48, offset: 24 },
@@ -230,6 +230,22 @@ const Dialogs = {
 			case "before:set-amount":
 			case "before:set-radius":
 				Self.data.filter = event.type.split("-")[1];
+				break;
+
+			// custom dialog events
+			case "add-layer":
+				break;
+			case "remove-layer":
+				event.el.parents(".row").cssSequence("removing", "transitionend", el => {
+					el.remove();
+				});
+				break;
+			case "toggle-layer":
+				event.el.toggleClass("icon-eye-off", event.el.hasClass("icon-eye-off"));
+				break;
+			case "set-layer-shape":
+				event.el.find(".active").removeClass("active");
+				el = $(event.target).addClass("active");
 				break;
 
 			// standard dialog events

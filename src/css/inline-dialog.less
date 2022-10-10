@@ -63,6 +63,7 @@
 			}
 
 			.list-body {
+				position: relative;
 				min-height: 101px;
 				border-radius: 3px;
 				padding: 3px 0 21px;
@@ -71,8 +72,19 @@
 				color: rgba(#fff, .55);
 				text-shadow: 0 1px 0 #122;
 
+				&:hover .add-row {
+					opacity: 1;
+				}
+
 				.row {
 					padding: 2px 0 3px;
+					max-height: 23px;
+					overflow: hidden;
+					transition: max-height 150ms ease-in-out;
+
+					&.removing {
+						max-height: 0;
+					}
 
 					&:hover {
 						color: rgba(#fff, .85);
@@ -84,6 +96,31 @@
 					}
 
 					> div:nth-child(5) { font-size: 0; }
+				}
+
+				.add-row {
+					position: absolute;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					opacity: 0;
+					padding: 0 0 4px;
+					text-align: center;
+					cursor: pointer;
+
+					.icon-add-layer {
+						display: inline-block;
+						width: 13px;
+						height: 13px;
+						opacity: .35;
+						margin: 0 3px 0 0;
+						vertical-align: text-top;
+						background-size: 13px 13px;
+						background-repeat: no-repeat;
+						background-position: 50% 50%;
+						background-image: url(~/icons/icon-add-layer.png);
+						filter: invert() drop-shadow(0 1px 0 rgba(#000, .4));
+					}
 				}
 			}
 
@@ -100,6 +137,7 @@
 				background-repeat: no-repeat;
 				background-position: 50% 50%;
 				filter: invert() drop-shadow(0 1px 0 rgba(#000, .4));
+				cursor: pointer;
 			}
 
 			.icon-eye-on   {
