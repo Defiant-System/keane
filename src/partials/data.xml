@@ -36,7 +36,7 @@
 		</Preset>
 		
 		<Preset>
-			<Layer shape="square" res="32" />
+			<Layer res="32" />
 			<Layer shape="circle" res="32" offset="16" />
 			<Layer shape="circle" res="32" offset="8" alpha="0.5" />
 			<Layer shape="circle" res="16" offset="8" alpha="0.5" size="9" />

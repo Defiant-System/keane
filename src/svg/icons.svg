@@ -1010,7 +1010,7 @@
 		<polygon class="st0" points="0.8,6.5 6.5,12.2 12.2,6.5 6.5,0.8 "/>
 	</svg>
 
-	<svg id="icon-shape-disc" viewBox="0 0 13 13">
+	<svg id="icon-shape-circle" viewBox="0 0 13 13">
 		<style type="text/css">
 			.st0{fill:#333;}
 		</style>
