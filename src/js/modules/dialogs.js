@@ -234,11 +234,18 @@ const Dialogs = {
 
 			// custom dialog events
 			case "add-layer":
+				let str = window.render({
+						template: "pixelator-preset-layer",
+						match: "//Pixelator/Preset[2]",
+					});
+				console.log(str);
+				// 	row = event.el.before(dom);
+
+				// requestAnimationFrame(() =>
+					// row.cssSequence("!adding", "transitionend", el => el.removeClass("adding")));
 				break;
 			case "remove-layer":
-				event.el.parents(".row").cssSequence("removing", "transitionend", el => {
-					el.remove();
-				});
+				event.el.parents(".row").cssSequence("removing", "transitionend", el => el.remove());
 				break;
 			case "toggle-layer":
 				event.el.toggleClass("icon-eye-off", event.el.hasClass("icon-eye-off"));
@@ -250,6 +257,12 @@ const Dialogs = {
 
 			// standard dialog events
 			case "dlg-open":
+				window.render({
+					template: "pixelator-preset",
+					match: "//Pixelator/Preset[2]",
+					append: event.dEl.find(".list-body"),
+				});
+				// event.dEl.find(".add-row").trigger("click");
 			case "dlg-ok":
 			case "dlg-reset":
 			case "dlg-preview":

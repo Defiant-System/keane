@@ -22,6 +22,27 @@
 		<i name="coast.jpg" filepath="/fs/Desktop/coast.jpg"/>
 	</Recents> -->
 	
+	<Pixelator>
+		<Preset>
+			<Layer res="16" />
+		</Preset>
+		
+		<Preset>
+			<Layer res="32" />
+			<Layer shape="circle" res="32" offset="15" />
+			<Layer shape="circle" res="32" offset="13" size="26" />
+			<Layer shape="circle" res="32" offset="10" size="18" />
+			<Layer shape="circle" res="32" offset="8" size="8" />
+		</Preset>
+		
+		<Preset>
+			<Layer shape="square" res="32" />
+			<Layer shape="circle" res="32" offset="16" />
+			<Layer shape="circle" res="32" offset="8" alpha="0.5" />
+			<Layer shape="circle" res="16" offset="8" alpha="0.5" size="9" />
+		</Preset>
+	</Pixelator>
+
 	<Swatches>
 		<i value="#5cc2fc" />
 		<i value="#79fce9" />

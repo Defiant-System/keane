@@ -30,7 +30,8 @@
 	}
 
 	&[data-dlg="dlgPixelator"] {
-		top: 50px;
+		top: 10px;
+		left: 350px;
 
 		.layers {
 			width: 367px;
@@ -64,7 +65,7 @@
 
 			.list-body {
 				position: relative;
-				min-height: 101px;
+				min-height: 134px;
 				border-radius: 3px;
 				padding: 3px 0 21px;
 				font-size: 11px;
@@ -73,16 +74,20 @@
 				text-shadow: 0 1px 0 #122;
 
 				&:hover .add-row {
-					opacity: 1;
+					opacity: .35;
 				}
 
 				.row {
 					padding: 2px 0 3px;
 					max-height: 23px;
 					overflow: hidden;
-					transition: max-height 150ms ease-in-out;
+					transition: max-height 150ms ease-in-out,
+								padding 150ms ease-in-out;
 
+					&.adding,
 					&.removing {
+						padding-top: 0;
+						padding-bottom: 0;
 						max-height: 0;
 					}
 
@@ -107,6 +112,10 @@
 					padding: 0 0 4px;
 					text-align: center;
 					cursor: pointer;
+
+					&:hover {
+						opacity: 1;
+					}
 
 					.icon-add-layer {
 						display: inline-block;

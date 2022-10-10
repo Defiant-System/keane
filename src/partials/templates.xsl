@@ -296,4 +296,44 @@
 	</div>
 </xsl:template>
 
+
+<xsl:template name="pixelator-preset">
+	<xsl:for-each select="./*">
+		<xsl:call-template name="pixelator-preset-layer" />
+	</xsl:for-each>
+</xsl:template>
+
+
+<xsl:template name="pixelator-preset-layer">
+	<xsl:variable name="alpha"><xsl:choose>
+		<xsl:when test="@alpha"><xsl:value-of select="@alpha * 100"/></xsl:when>
+		<xsl:otherwise>100</xsl:otherwise>
+	</xsl:choose></xsl:variable>
+
+	<div class="row">
+		<div>
+			<div class="shape-options" data-click="set-layer-shape">
+				<i class="icon-shape-square">
+				</i>
+				<i class="icon-shape-diamond"></i>
+				<i class="icon-shape-disc"></i>
+			</div>
+		</div>
+		<div><xsl:value-of select="@res"/></div>
+		<div><xsl:value-of select="@size"/></div>
+		<div><xsl:value-of select="@offset"/></div>
+		<div>
+			<i class="icon-bars">
+				<xsl:attribute name="style">--value: <xsl:value-of select="$alpha"/>%;</xsl:attribute>
+			</i>
+			<i class="icon-eye-on" data-click="toggle-layer">
+				<xsl:if test="@hidden = 1">
+					<xsl:attribute name="class">icon-eye-on icon-eye-off</xsl:attribute>
+				</xsl:if>
+			</i>
+			<i class="icon-trashcan" data-click="remove-layer"></i>
+		</div>
+	</div>
+</xsl:template>
+
 </xsl:stylesheet>
