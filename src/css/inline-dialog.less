@@ -33,7 +33,7 @@
 		top: 50px;
 
 		.layers {
-			width: 360px;
+			width: 367px;
 			padding: 7px 13px 0 0;
 
 			.list-head .row,
@@ -46,7 +46,7 @@
 					position: relative;
 
 					&:nth-child(1) { flex: 1; padding-left: 7px; }
-					&:nth-child(2) { width: 65px; padding-top: 1px; }
+					&:nth-child(2) { width: 63px; padding-top: 1px; }
 					&:nth-child(3) { width: 50px; padding-top: 1px; }
 					&:nth-child(4) { width: 57px; padding-top: 1px; }
 					&:nth-child(5) { width: 95px; padding-right: 1px; }
@@ -62,15 +62,17 @@
 			}
 
 			.list-body {
-				// height: 100px;
+				min-height: 101px;
 				border-radius: 3px;
 				padding: 3px 0 21px;
 				font-size: 11px;
-				background: rgba(#000, .3);
+				background: #344;
 				color: rgba(#fff, .55);
 				text-shadow: 0 1px 0 #122;
 
 				.row {
+					padding: 2px 0 3px;
+					
 					&:hover {
 						color: rgba(#fff, .85);
 
@@ -358,6 +360,7 @@
 		}
 
 		.buttons {
+			position: relative;
 			text-align: right;
 
 			.button {
@@ -377,7 +380,9 @@
 			}
 
 			.toggler {
-				margin-top: 3px;
+				position: absolute;
+				left: 0;
+				bottom: 0;
 				margin-right: 0;
 			}
 		}
