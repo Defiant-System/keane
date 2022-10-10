@@ -169,8 +169,9 @@ const Dialogs = {
 				pixels = Self.data.pixels;
 				
 				console.time("test");
-				layers = Dialogs.dlgPixelator({ type: "xml-preset-to-json", id: "prst-7" });
-				
+				// layers = Dialogs.dlgPixelator({ type: "preset-from-xml", id: "prst-2" });
+				layers = Self.dlgPixelator({ type: "preset-from-html" });
+
 				copy = closePixelate({
 						copy: new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height),
 						width: pixels.width,
@@ -189,7 +190,27 @@ const Dialogs = {
 				Self.data.filter = event.type.split("-")[1];
 				break;
 
-			case "xml-preset-to-json":
+			case "preset-from-html":
+				layers = Self.srcEvent.dEl.find(".list-body .row").map(row => {
+					let el = $(row),
+						sEl = el.find(".shape-options i.active"),
+						[a, b, shape] = sEl.prop("className").split(" ")[0].split("-"),
+						res = parseInt(el.find("> div:nth(1)").text(), 10),
+						size = parseInt(el.find("> div:nth(2)").text(), 10),
+						offset = parseInt(el.find("> div:nth(3)").text(), 10),
+						alpha = parseInt(el.find(".icon-bars").cssProp("--value"), 10) / 100,
+						data = { res };
+
+					if (shape !== "square") data.shape = shape;
+					if (!isNaN(size)) data.size = size;
+					if (!isNaN(offset)) data.offset = offset;
+					if (!isNaN(alpha) && alpha !== 1) data.alpha = alpha;
+
+					return data;
+				});
+				return layers;
+
+			case "preset-from-xml":
 				let xPreset = window.bluePrint.selectSingleNode(`//Pixelator/Preset[@id="${event.id}"]`);
 				layers = xPreset.selectNodes("./*").map(xLayer => {
 					let data = {};
@@ -228,6 +249,8 @@ const Dialogs = {
 			case "set-layer-shape":
 				event.el.find(".active").removeClass("active");
 				el = $(event.target).addClass("active");
+
+				Self.dlgPixelator({ type: "apply-filter-data" });
 				break;
 
 			// standard dialog events
@@ -238,6 +261,8 @@ const Dialogs = {
 					match: "//Pixelator/Preset[2]",
 					prepend: event.dEl.find(".list-body"),
 				});
+				// temp
+				// requestAnimationFrame(() => Self.dlgPixelator({ type: "preset-from-html" }));
 			case "dlg-ok":
 			case "dlg-reset":
 			case "dlg-preview":
