@@ -27,7 +27,9 @@ let closePixelate = (function() {
             this.data = cfg.copy.data;
             // this.ctx.putImageData(cfg.copy, 0, 0);
 
-            cfg.layers.map(layer => this.renderClosePixels(layer));
+            cfg.layers
+                .filter(layer => layer.hidden === undefined)
+                .map(layer => this.renderClosePixels(layer));
 
             return this.ctx.getImageData(0, 0, this.width, this.height);
         }
