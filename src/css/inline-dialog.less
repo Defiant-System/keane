@@ -33,20 +33,23 @@
 		top: 50px;
 
 		.layers {
-			width: 340px;
+			width: 360px;
 			padding: 7px 13px 0 0;
 
 			.list-head .row,
 			.list-body .row {
 				display: flex;
-				padding: 1px 0 2px;
+				padding: 1px 0;
+				// border-bottom: 1px solid #ffffff40;
 
 				> div {
-					&:nth-child(1) { flex: 1; padding-left: 7px; }
-					&:nth-child(2) { width: 65px; }
-					&:nth-child(3) { width: 50px; }
-					&:nth-child(4) { width: 60px; }
-					&:nth-child(5) { width: 56px; }
+					position: relative;
+
+					&:nth-child(1) { flex: 1; padding-left: 27px; font: 0; }
+					&:nth-child(2) { width: 65px; padding-top: 1px; }
+					&:nth-child(3) { width: 50px; padding-top: 1px; }
+					&:nth-child(4) { width: 57px; padding-top: 1px; }
+					&:nth-child(5) { width: 71px; padding-right: 31px; }
 				}
 			}
 
@@ -70,13 +73,50 @@
 				.row {
 					&:hover {
 						color: rgba(#fff, .85);
+
+						.icon-eye-on,
+						.icon-trashcan {
+							opacity: .35;
+						}
 					}
 				}
 			}
 
+			.icon-eye-on,
+			.icon-eye-off,
+			.icon-trashcan {
+				position: absolute;
+				top: 0;
+				left: 5px;
+				width: 17px;
+				height: 17px;
+				opacity: 0;
+				background-size: 15px 15px;
+				background-repeat: no-repeat;
+				background-position: 50% 50%;
+				filter: invert() drop-shadow(0 1px 0 rgba(#000, .4));
+			}
+
+			.icon-eye-on   {
+				background-image: url(~/icons/icon-eye-on.png);
+			}
+
+			.icon-eye-off  {
+				background-image: url(~/icons/icon-eye-off.png);
+				opacity: .35;
+			}
+
+			.icon-trashcan {
+				background-image: url(~/icons/icon-trashcan.png);
+				background-size: 17px 17px;
+				top: 0;
+				left: auto;
+				right: 3px;
+			}
+
 			.icon-bars {
 				position: relative;
-				top: 1px;
+				top: 2px;
 				left: -1px;
 				display: inline-block;
 				width: 48px;
