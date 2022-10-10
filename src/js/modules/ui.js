@@ -131,12 +131,19 @@ const UI = {
 				event.preventDefault();
 
 				let el = $(event.target),
+					bEl = el.parents(".dlg-content").find(".hover-bubble"),
 					min = 0,
 					max = 100,
 					offset = parseInt(el.cssProp("--value"), 10) - event.clientX,
 					_min = Math.min,
 					_max = Math.max;
-				Self.drag = { el, min, max, offset, _min, _max };
+				Self.drag = { el, bEl, min, max, offset, _min, _max };
+
+				bEl.removeClass("hidden")
+					.css({
+						top: el.parent().prop("offsetTop"),
+						left: el.parent().prop("offsetLeft"),
+					});
 
 				// bind event handlers
 				Self.content.addClass("no-dlg-cursor");
@@ -145,8 +152,11 @@ const UI = {
 			case "mousemove":
 				let value = Drag._min(Drag.offset + event.clientX, Drag.max);
 				Drag.el.css({ "--value": `${value}%` });
+
+				Drag.bEl.html(`${value}%`);
 				break;
 			case "mouseup":
+				Drag.bEl.cssSequence("close", "animationend", el => el.addClass("hidden").removeClass("close"));
 				// unbind event handlers
 				Self.content.removeClass("no-dlg-cursor");
 				Self.doc.off("mousemove mouseup", Self.doDialogBars);
