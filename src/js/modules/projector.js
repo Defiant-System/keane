@@ -58,23 +58,6 @@ const Projector = {
 				break;
 		}
 	},
-	renderFrame(File) {
-		// pre-render frame
-		let width = File.oW * File.scale,
-			height = File.oH * File.scale,
-			oX = File.oX || Math.round(this.cX - (width >> 1)),
-			oY = File.oY || Math.round(this.cY - (height >> 1));
-		if (isNaN(width) || isNaN(height)) return;
-
-		// reset canvases
-		this.swap.cvs.prop({ width, height });
-		// this.swap.ctx.clearRect(0, 0, width, height);
-		// checkes background
-		this.swap.ctx.fillStyle = this.checkers;
-		this.swap.ctx.fillStyle = "#000";
-		this.swap.ctx.fillRect(0, 0, width, height);
-		this.frame = this.swap.ctx.getImageData(0, 0, width, height);
-	},
 	reset(File) {
 		// reset canvases
 		this.cvs.prop({ width: window.width, height: window.height });
@@ -88,7 +71,7 @@ const Projector = {
 		this.cY = (window.height + this.aY - this.els.statusBar.height()) >> 1;
 
 		// pre-render frame
-		this.renderFrame(File);
+		// this.renderFrame(File);
 
 		if (this.file !== File) {
 			// reference to displayed file
@@ -106,7 +89,6 @@ const Projector = {
 
 		// reset canvas
 		this.ctx.clear();
-		// this.cvs.prop({ width: window.width, height: window.height });
 
 		this.ctx.save();
 		this.ctx.translate(File.oX, File.oY);
@@ -116,9 +98,9 @@ const Projector = {
 		this.ctx.shadowOffsetY = 2;
 		this.ctx.shadowBlur = 13;
 		this.ctx.shadowColor = "#292929";
-		this.ctx.fillRect(0, 0, w, h);
 		// checkers background
-		this.ctx.putImageData(this.frame, File.oX, File.oY);
+		this.ctx.fillStyle = this.checkers;
+		this.ctx.fillRect(0, 0, w, h);
 		this.ctx.restore();
 
 		// render color channels

@@ -202,8 +202,6 @@ class File {
 				this.oY = Math.round(Proj.cY - (this.height >> 1));
 
 				if (!event.noRender) {
-					// render projector canvas
-					Proj.renderFrame(this);
 					// render file
 					this.render();
 					// Proj.render();
@@ -227,7 +225,6 @@ class File {
 				this.oX = Math.round(Proj.cX - (this.width >> 1));
 				this.oY = Math.round(Proj.cY - (this.height >> 1));
 				// render projector canvas
-				Proj.renderFrame(this);
 				Proj.render();
 
 				APP.els.content.toggleClass("show-rulers", !this.showRulers);
