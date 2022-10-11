@@ -83,17 +83,45 @@ const Projector = {
 	drawCheckers(ctx, opt) {
 		let cfg = {
 				size: 8,
+				pX: 0,
+				pY: 0,
+				oX: 0,
+				oY: 0,
+				x: 0,
+				y: 0,
 				w: 16,
 				h: 16,
 				...opt,
-			};
-		
+			},
+			il = cfg.w / cfg.size,
+			jl = cfg.h / cfg.size;
+
+		ctx.save();
+		if (cfg.oX < 0) {
+			cfg.pX = cfg.oX % cfg.size;
+			cfg.x = (cfg.pX - cfg.oX) / cfg.size;
+			il -= cfg.x;
+		}
+		if (cfg.oY < 0) {
+			cfg.pY = cfg.oY % cfg.size;
+			cfg.y = (cfg.pY - cfg.oY) / cfg.size;
+			jl -= cfg.y;
+		}
+		for (let i=cfg.x; i<il; i++) {
+			for (let j=cfg.y; j<jl; j++) {
+				ctx.fillStyle = ((i + j) % 2) ? "#bbb" : "#fff";
+				ctx.fillRect(i*cfg.size+cfg.pX, j*cfg.size+cfg.pY, cfg.size, cfg.size);
+			}
+		}
+		ctx.restore();
 	},
 	render(opt={}) {
 		// reference to displayed file
 		let File = this.file,
 			w = File.width,
-			h = File.height;
+			h = File.height,
+			oX = File.oX,
+			oY = File.oY;
 		opt.imgCvs = opt.imgCvs || File.cvs[0];
 
 		console.time("Projector Render");
@@ -101,7 +129,7 @@ const Projector = {
 		this.ctx.clear();
 
 		this.ctx.save();
-		this.ctx.translate(File.oX, File.oY);
+		this.ctx.translate(oX, oY);
 		// drop shadow
 		this.ctx.save();
 		this.ctx.shadowOffsetX = 0;
@@ -111,24 +139,10 @@ const Projector = {
 		this.ctx.fillRect(0, 0, w, h);
 		this.ctx.restore();
 		
+
 		// checkers background
-		this.ctx.save();
-		let cfg = {
-				size: 8,
-				x: 0,
-				y: 0,
-				w: Math.min(w, this.cvs[0].width),
-				h: Math.min(h, this.cvs[0].height),
-			},
-			il = cfg.w / cfg.size,
-			jl = cfg.h / cfg.size;
-		for (let i=cfg.x; i<il; i++) {
-			for (let j=cfg.y; j<jl; j++) {
-				this.ctx.fillStyle = ((i + j) % 2) ? "#bbb" : "#fff";
-				this.ctx.fillRect(i*cfg.size, j*cfg.size, cfg.size, cfg.size);
-			}
-		}
-		this.ctx.restore();
+		this.drawCheckers(this.ctx, { w, h, oX, oY });
+
 
 		// render color channels
 		if (File.channels !== "111") {
@@ -163,11 +177,10 @@ const Projector = {
 		this.ctx.imageSmoothingEnabled = false;
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
-
 		console.timeEnd("Projector Render");
 
 		if (File.showRulers) {
-			Rulers.render(this);
+			// Rulers.render(this);
 		}
 		if (!opt.noEmit) {
 			// emit event
