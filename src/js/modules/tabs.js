@@ -12,7 +12,7 @@ const Tabs = {
 		return Math.max.apply({}, [0, ...ids]) + 1;
 	},
 	open(fsFile, opt={}) {
-		if (!opt.fill) opt.fill = "#ddd";
+		if (!opt.fill) opt.fill = "transparent";
 		if (!fsFile) fsFile = new karaqu.File({ kind: "psd" });
 		
 		// create file

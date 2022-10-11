@@ -129,7 +129,8 @@ const UI = {
 
 				// prepare drag object
 				let el = $(event.target),
-					bEl = el.parents(".dlg-content").find(".hover-knob"),
+					dEl = el.parents(".dialog-box"),
+					bEl = dEl.find(".hover-knob"),
 					kEl = bEl.find(".knob"),
 					min = +el.data("min"),
 					max = +el.data("max"),

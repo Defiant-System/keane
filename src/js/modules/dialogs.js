@@ -168,7 +168,7 @@ const Dialogs = {
 				// copy first, then apply filter on pixels
 				pixels = Self.data.pixels;
 				
-				console.time("test");
+				console.time("Pixelator Filter");
 				// layers = Dialogs.dlgPixelator({ type: "preset-from-xml", id: "prst-2" });
 				layers = Self.dlgPixelator({ type: "preset-from-html" });
 
@@ -178,7 +178,7 @@ const Dialogs = {
 						height: pixels.height,
 						layers,
 					});
-				console.timeEnd("test");
+				console.timeEnd("Pixelator Filter");
 
 				// update layer
 				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
@@ -190,6 +190,7 @@ const Dialogs = {
 				Self.data.filter = event.type.split("-")[1];
 				break;
 
+			// custom dialog events
 			case "preset-from-html":
 				layers = Self.srcEvent.dEl.find(".list-body .row").map(row => {
 					let el = $(row),
@@ -199,9 +200,11 @@ const Dialogs = {
 						size = parseInt(el.find("> div:nth(2)").text(), 10),
 						offset = parseInt(el.find("> div:nth(3)").text(), 10),
 						alpha = parseInt(el.find(".icon-bars").cssProp("--value"), 10) / 100,
+						hidden = el.find(".icon-eye-on").hasClass("icon-eye-off") ? 1 : 0,
 						data = { res };
 
 					if (shape !== "square") data.shape = shape;
+					if (hidden) data.hidden = hidden;
 					if (!isNaN(size)) data.size = size;
 					if (!isNaN(offset)) data.offset = offset;
 					if (!isNaN(alpha) && alpha !== 1) data.alpha = alpha;
@@ -209,7 +212,6 @@ const Dialogs = {
 					return data;
 				});
 				return layers;
-
 			case "preset-from-xml":
 				let xPreset = window.bluePrint.selectSingleNode(`//Pixelator/Preset[@id="${event.id}"]`);
 				layers = xPreset.selectNodes("./*").map(xLayer => {
@@ -222,14 +224,6 @@ const Dialogs = {
 				});
 				return layers;
 
-			case "set-spacing":
-			case "set-size":
-			case "set-offset":
-			case "set-opacity":
-				// console.log(event);
-				break;
-
-			// custom dialog events
 			case "add-layer":
 				let str = window.render({
 						template: "pixelator-preset-layer",
@@ -245,12 +239,21 @@ const Dialogs = {
 				break;
 			case "toggle-layer":
 				event.el.toggleClass("icon-eye-off", event.el.hasClass("icon-eye-off"));
+				// re-apply filter
+				Self.dlgPixelator({ type: "apply-filter-data" });
 				break;
 			case "set-layer-shape":
 				event.el.find(".active").removeClass("active");
 				el = $(event.target).addClass("active");
-
+				// re-apply filter
 				Self.dlgPixelator({ type: "apply-filter-data" });
+				break;
+
+			case "set-spacing":
+			case "set-size":
+			case "set-offset":
+			case "set-opacity":
+				console.log(event);
 				break;
 
 			// standard dialog events

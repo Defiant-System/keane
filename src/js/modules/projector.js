@@ -80,6 +80,15 @@ const Projector = {
 			karaqu.emit("file-selected");
 		}
 	},
+	drawCheckers(ctx, opt) {
+		let cfg = {
+				size: 8,
+				w: 16,
+				h: 16,
+				...opt,
+			};
+		
+	},
 	render(opt={}) {
 		// reference to displayed file
 		let File = this.file,
@@ -87,6 +96,7 @@ const Projector = {
 			h = File.height;
 		opt.imgCvs = opt.imgCvs || File.cvs[0];
 
+		console.time("Projector Render");
 		// reset canvas
 		this.ctx.clear();
 
@@ -98,9 +108,26 @@ const Projector = {
 		this.ctx.shadowOffsetY = 2;
 		this.ctx.shadowBlur = 13;
 		this.ctx.shadowColor = "#292929";
-		// checkers background
-		this.ctx.fillStyle = this.checkers;
 		this.ctx.fillRect(0, 0, w, h);
+		this.ctx.restore();
+		
+		// checkers background
+		this.ctx.save();
+		let cfg = {
+				size: 8,
+				x: 0,
+				y: 0,
+				w: Math.min(w, this.cvs[0].width),
+				h: Math.min(h, this.cvs[0].height),
+			},
+			il = cfg.w / cfg.size,
+			jl = cfg.h / cfg.size;
+		for (let i=cfg.x; i<il; i++) {
+			for (let j=cfg.y; j<jl; j++) {
+				this.ctx.fillStyle = ((i + j) % 2) ? "#bbb" : "#fff";
+				this.ctx.fillRect(i*cfg.size, j*cfg.size, cfg.size, cfg.size);
+			}
+		}
 		this.ctx.restore();
 
 		// render color channels
@@ -136,6 +163,8 @@ const Projector = {
 		this.ctx.imageSmoothingEnabled = false;
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
+
+		console.timeEnd("Projector Render");
 
 		if (File.showRulers) {
 			Rulers.render(this);
