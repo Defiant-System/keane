@@ -51,6 +51,39 @@
 </div>
 
 
+<div class="dialog-box" data-dlg="dlgSponge">
+	<div class="dlg-content">
+		<div class="fields">
+			<h2>
+				<i class="icon-dlg-close" data-click="dlg-close"></i>
+				Sponge
+			</h2>
+			<div class="field-row has-knob">
+				<div class="option input">
+					<span class="label">Intensity</span>
+					<span class="value"><input type="text" name="intensity" value="12" data-min="0" data-max="40" data-default="12"></span>
+				</div>
+				<div class="knob" data-change="set-intensity"></div>
+			</div>
+			<div class="field-row has-knob">
+				<div class="option input">
+					<span class="label">Radius</span>
+					<span class="value"><input type="text" name="radius" value="4" data-min="1" data-max="20" data-default="4"></span>
+				</div>
+				<div class="knob" data-change="set-radius"></div>
+			</div>
+		</div>
+		<div class="buttons">
+			<div class="button" data-click="dlg-ok">OK</div>
+			<div class="button" data-click="dlg-reset">Reset</div>
+			<div class="toggler" data-value="on" data-click="dlg-preview">
+				<span>Preview</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <div class="dialog-box" data-dlg="dlgPixelator">
 	<div class="dlg-content">
 		<div class="fields">

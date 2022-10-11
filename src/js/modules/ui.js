@@ -130,16 +130,18 @@ const UI = {
 				// prepare drag object
 				let el = $(event.target),
 					dEl = el.parents(".dialog-box"),
+					dId = dEl.data("dlg"),
 					bEl = dEl.find(".hover-knob"),
 					kEl = bEl.find(".knob"),
 					min = +el.data("min"),
 					max = +el.data("max"),
 					suffix = el.data("suffix") || "",
+					type = el.data("change"),
 					val = Math.round(((parseInt(el.text() || "0", 10) - min) / (max - min)) * 100),
 					offset = val + event.clientY,
 					_min = Math.min,
 					_max = Math.max;
-				Self.drag = { el, bEl, kEl, min, max, offset, suffix, _min, _max };
+				Self.drag = { el, bEl, kEl, dId, min, max, type, offset, suffix, _min, _max };
 
 				// reset knob
 				kEl.data({ value: val });
@@ -155,15 +157,23 @@ const UI = {
 				Self.doc.on("mousemove mouseup", Self.doDialogKnobValue);
 				break;
 			case "mousemove":
+				// update knob
 				let value = Drag._max(Drag._min(Drag.offset - event.clientY, 100), 0);
 				Drag.kEl.data({ value });
-
+				// update origin element value
 				value = Math.round((value / 100) * (Drag.max - Drag.min));
 				let str = value > 0 ? `${value}${Drag.suffix}` : "";
 				Drag.el.html(str);
+
+				if (Drag.value === value) return;
+				Drag.value = value;
+				
+				// proxy changed value
+				Dialogs[Drag.dId]({ type: Drag.type, value: Drag.value });
 				break;
 			case "mouseup":
-				Dialogs.dlgPixelator({ type: "after:set-spacing" });
+				// proxy changed value
+				Dialogs[Drag.dId]({ type: `after:${Drag.type}`, value: Drag.value });
 				// hide knob-bubble
 				Drag.bEl.cssSequence("close", "animationend", el => el.addClass("hidden").removeClass("close"));
 				// unbind event handlers
@@ -184,13 +194,16 @@ const UI = {
 
 				// prepare drag object
 				let el = $(event.target),
-					bEl = el.parents(".dlg-content").find(".hover-bubble"),
+					dEl = el.parents(".dialog-box"),
+					dId = dEl.data("dlg"),
+					bEl = dEl.find(".hover-bubble"),
 					offset = parseInt(el.cssProp("--value"), 10) - event.clientX,
+					type = el.data("change"),
 					min = 0,
 					max = 100,
 					_min = Math.min,
 					_max = Math.max;
-				Self.drag = { el, bEl, min, max, offset, _min, _max };
+				Self.drag = { el, bEl, dId, min, max, type, offset, _min, _max };
 
 				// show bubble
 				bEl.removeClass("hidden")
@@ -204,13 +217,21 @@ const UI = {
 				Self.doc.on("mousemove mouseup", Self.doDialogBars);
 				break;
 			case "mousemove":
+				// update bars icon UI
 				let value = Drag._max(Drag._min(Drag.offset + event.clientX, Drag.max), Drag.min);
 				Drag.el.css({ "--value": `${value}%` });
 				// show value in bubble
 				Drag.bEl.html(`${value}%`);
+
+				if (Drag.value === value) return;
+				Drag.value = value;
+
+				// proxy changed value
+				Dialogs[Drag.dId]({ type: Drag.type, value: Drag.value });
 				break;
 			case "mouseup":
-				Dialogs.dlgPixelator({ type: "after:set-opacity" });
+				// proxy changed value
+				Dialogs[Drag.dId]({ type: `after:${Drag.type}`, value: Drag.value });
 				// hide bubble
 				Drag.bEl.cssSequence("close", "animationend", el => el.addClass("hidden").removeClass("close"));
 				// unbind event handlers
@@ -870,7 +891,7 @@ const UI = {
 				Drag.el.data({ value });
 
 				let i = Drag.val.step.toString().split(".")[1],
-					val = ((Drag.val.max * (value / 100)) + Drag.val.min).toFixed(i ? i.length : 0);
+					val = +((Drag.val.max * (value / 100)) + Drag.val.min).toFixed(i ? i.length : 0);
 				Drag.src.val(val + Drag.suffix);
 				// forward event
 				Drag.dlg.func({ ...Drag.dlg, value: val });

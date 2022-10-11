@@ -59,6 +59,72 @@ const Filters = {
 		}
 		return pixels;
 	},
+	sponge(pixels, val={}) {
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height;
+		// console.log(val);
+
+		let destData = this.createImageData(w, h),
+			destPixels = destData.data,
+			iLUT = [],
+			rgbLUT = [];
+		
+		for (let y = 0; y < h; y++) {
+			iLUT[y] = [];
+			rgbLUT[y] = [];
+			for (let x = 0; x < w; x++) {
+				let idx = (y * w + x) * 4,
+					r = d[idx],
+					g = d[idx + 1],
+					b = d[idx + 2],
+					avg = (r + g + b) / 3;
+				iLUT[y][x] = Math.round((avg * val.intensity) / 255);
+				rgbLUT[y][x] = { r, g, b };
+			}
+		}
+		
+		for (let y = 0; y < h; y++) {
+			for (let x = 0; x < w; x++) {
+				let piC = [];
+				
+				// Find intensities of nearest pixels within radius.
+				for (var yy = -val.radius; yy <= val.radius; yy++) {
+					for (var xx = -val.radius; xx <= val.radius; xx++) {
+					 	if (y + yy > 0 && y + yy < h && x + xx > 0 && x + xx < w) {
+							var iVal = iLUT[y + yy][x + xx];
+
+							if (!piC[iVal]) {
+								piC[iVal] = {
+									val: 1,
+									r: rgbLUT[y + yy][x + xx].r,
+									g: rgbLUT[y + yy][x + xx].g,
+									b: rgbLUT[y + yy][x + xx].b
+								}
+							} else {
+								piC[iVal].val++;
+								piC[iVal].r += rgbLUT[y + yy][x + xx].r;
+								piC[iVal].g += rgbLUT[y + yy][x + xx].g;
+								piC[iVal].b += rgbLUT[y + yy][x + xx].b;
+							}
+						}
+					}
+				}
+				
+				piC.sort((a, b) => b.val - a.val);
+
+				var curMax = piC[0].val,
+					dIdx = (y * w + x) * 4;
+				
+				destPixels[dIdx] = ~~ (piC[0].r / curMax);
+				destPixels[dIdx + 1] = ~~ (piC[0].g / curMax);
+				destPixels[dIdx + 2] = ~~ (piC[0].b / curMax);
+				destPixels[dIdx + 3] = 255;
+			}
+		}
+		
+		return destData;
+	},
 	dither(pixels) {
 		let d = pixels.data,
 			w = pixels.width,
@@ -218,9 +284,9 @@ const Filters = {
 			for (let y=0; y<h; y++) {
 				let o = (x + y * w) * 4;
 				d[o + 0] =
-                d[o + 1] =
-                d[o + 2] = Math.random() < 0.5 ? 0 : 255;
-                d[o + 3] = 255;
+				d[o + 1] =
+				d[o + 2] = Math.random() < 0.5 ? 0 : 255;
+				d[o + 3] = 255;
 			}
 		}
 		return pixels;
@@ -250,9 +316,9 @@ const Filters = {
 				let o = (x + y * w) * 4,
 					n = noise(x, y);
 				d[o + 0] = lerp(bg.r, fg.r, n);
-                d[o + 1] = lerp(bg.g, fg.g, n);
-                d[o + 2] = lerp(bg.b, fg.b, n);
-                d[o + 3] = 255;
+				d[o + 1] = lerp(bg.g, fg.g, n);
+				d[o + 2] = lerp(bg.b, fg.b, n);
+				d[o + 3] = 255;
 			}
 		}
 		return pixels;

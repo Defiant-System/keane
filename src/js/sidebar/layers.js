@@ -29,6 +29,7 @@
 			// dlgGaussianBlur
 			// dlgThreshold
 			// dlgMosaic
+			// dlgSponge
 			// dlgPixelator
 			UI.doDialog({
 				type: "dlg-open",

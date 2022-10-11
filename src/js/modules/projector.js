@@ -83,14 +83,10 @@ const Projector = {
 	drawCheckers(ctx, opt) {
 		let cfg = {
 				size: 8,
-				pX: 0,
-				pY: 0,
-				oX: 0,
-				oY: 0,
-				x: 0,
-				y: 0,
-				w: 16,
-				h: 16,
+				pX: 0, pY: 0,
+				oX: 0, oY: 0,
+				x:  0, y:  0,
+				w: 16, h: 16,
 				...opt,
 			},
 			lX = cfg.w % cfg.size,
@@ -131,7 +127,7 @@ const Projector = {
 			oY = File.oY;
 		opt.imgCvs = opt.imgCvs || File.cvs[0];
 
-		console.time("Projector Render");
+		// console.time("Projector Render");
 		// reset canvas
 		this.ctx.clear();
 		// this.cvs.attr({ width: this.cvs[0].width });
@@ -182,7 +178,7 @@ const Projector = {
 		this.ctx.imageSmoothingEnabled = false;
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
-		console.timeEnd("Projector Render");
+		// console.timeEnd("Projector Render");
 
 		if (File.showRulers) {
 			Rulers.render(this);

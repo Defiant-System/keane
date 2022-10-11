@@ -147,6 +147,49 @@ const Dialogs = {
 				break;
 		}
 	},
+	dlgSponge(event) {
+		let APP = keane,
+			Self = Dialogs,
+			pixels,
+			copy,
+			el;
+		// console.log(event);
+		switch (event.type) {
+			// "fast events"
+			case "set-intensity":
+			case "set-radius":
+				if (Self.data.value[Self.data.filter] === +event.value) return;
+				Self.data.value[Self.data.filter] = +event.value;
+				// exit if "preview" is not enabled
+				if (!Self.preview) return;
+				/* falls-through */
+			case "apply-filter-data":
+				console.time("Sponge Filter");
+				// copy first, then apply filter on pixels
+				pixels = Self.data.pixels;
+				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+				copy = Filters.sponge(copy, Self.data.value);
+				// update layer
+				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
+				console.timeEnd("Sponge Filter");
+				break;
+			
+			// slow/once events
+			case "before:set-intensity":
+			case "before:set-radius":
+				Self.data.filter = event.type.split("-")[1];
+				break;
+
+			// standard dialog events
+			case "dlg-open":
+			case "dlg-ok":
+			case "dlg-reset":
+			case "dlg-preview":
+			case "dlg-close":
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgSponge" });
+				break;
+		}
+	},
 	dlgPixelator(event) {
 		let APP = keane,
 			Self = Dialogs,
@@ -251,10 +294,10 @@ const Dialogs = {
 				Self.dlgPixelator({ type: "apply-filter-data" });
 				break;
 
-			case "after:set-spacing":
-			case "after:set-size":
-			case "after:set-offset":
-			case "after:set-opacity":
+			case "set-spacing":
+			case "set-size":
+			case "set-offset":
+			case "set-opacity":
 				// re-apply filter
 				Self.dlgPixelator({ type: "apply-filter-data" });
 				break;
