@@ -97,17 +97,46 @@
 		<Menu type="divider"/>
 		<Menu name="Blur">
 			<Menu name="Blur" click="filter-render" arg="blur"/>
-			<Menu type="divider"/>
+			<Menu name="Blur More" click="filter-render" arg="gaussianBlur,2"/>
 			<Menu name="Gaussian Blur" click="open-dialog" arg="dlgGaussianBlur"/>
+			<Menu name="Motion Blur" disabled="1"/>
+			<Menu name="Radial Blur" disabled="1"/>
+			<Menu name="Surface Blur" disabled="1"/>
 		</Menu>
-		<Menu name="Disort" disabled="1" />
-		<Menu name="Noise" disabled="1" />
+		<Menu name="Disort">
+			<Menu name="Displace" disabled="1"/>
+			<Menu name="Kaleidoscope" disabled="1"/>
+			<Menu name="Pinch" disabled="1"/>
+			<Menu name="Polar Coordinates" disabled="1"/>
+			<Menu name="Ripple" disabled="1"/>
+			<Menu name="Shear" disabled="1"/>
+			<Menu name="Spherize" disabled="1"/>
+			<Menu name="Twirl" disabled="1"/>
+			<Menu name="Wave" disabled="1"/>
+			<Menu name="ZigZag" disabled="1"/>
+		</Menu>
+		<Menu name="Noise">
+			<Menu name="Add Noise" disabled="1"/>
+			<Menu name="Despeckle" disabled="1"/>
+			<Menu name="Dust &amp; Scratches" disabled="1"/>
+			<Menu name="Median" disabled="1"/>
+			<Menu name="Reduce Noise" disabled="1"/>
+		</Menu>
 		<Menu name="Pixelate">
+			<Menu name="Color Halftone" disabled="1"/>
+			<Menu name="Crystallize" disabled="1"/>
+			<Menu name="Fragment" disabled="1"/>
+			<Menu name="Mezzotint" disabled="1"/>
 			<Menu name="Mosaic" click="open-dialog" arg="dlgMosaic"/>
+			<Menu name="Pointillize" disabled="1"/>
 		</Menu>
 		<Menu name="Render">
+			<Menu name="Flame" disabled="1"/>
 			<Menu name="Clouds" click="filter-render" arg="clouds"/>
 			<Menu name="Noise" click="filter-render" arg="noise"/>
+			<Menu name="Difference Clouds" disabled="1"/>
+			<Menu name="Fibers" disabled="1"/>
+			<Menu name="Lens Flare" disabled="1"/>
 		</Menu>
 		<Menu name="Sharpen">
 			<Menu name="Sharpen" click="filter-render" arg="sharpen"/>

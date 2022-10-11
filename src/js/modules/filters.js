@@ -28,6 +28,16 @@ const Filters = {
 		}
 		return pixels;
 	},
+	gaussianBlur(pixels, radius) {
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height;
+		
+		// copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+		gaussianBlur(d, w, h, radius);
+
+		return pixels;
+	},
 	brightnessContrast(pixels, val={}) {
 		/* Brightness = min: -100   max: 100
 		 * Contrast   = min: -150   max: 150
