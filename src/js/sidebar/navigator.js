@@ -32,6 +32,10 @@
 			// dispatch if ratio is calculated
 			this.dispatch({ type: "projector-update" });
 		}
+
+		// temp
+		// setTimeout(() => root.find(".icon.mini").trigger("click"), 900);
+		// setTimeout(() => root.find(".icon.maxi").trigger("click"), 900);
 	},
 	dispatch(event) {
 		let APP = keane,

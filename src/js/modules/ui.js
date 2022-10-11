@@ -143,7 +143,7 @@ const UI = {
 
 				// reset knob
 				kEl.data({ value: val });
-				// show bubble
+				// show knob-bubble
 				bEl.removeClass("hidden")
 					.css({
 						top: el.prop("offsetTop"),
@@ -163,6 +163,8 @@ const UI = {
 				Drag.el.html(str);
 				break;
 			case "mouseup":
+				Dialogs.dlgPixelator({ type: "after:set-spacing" });
+				// hide knob-bubble
 				Drag.bEl.cssSequence("close", "animationend", el => el.addClass("hidden").removeClass("close"));
 				// unbind event handlers
 				Self.content.removeClass("no-dlg-cursor");
@@ -208,6 +210,7 @@ const UI = {
 				Drag.bEl.html(`${value}%`);
 				break;
 			case "mouseup":
+				Dialogs.dlgPixelator({ type: "after:set-opacity" });
 				// hide bubble
 				Drag.bEl.cssSequence("close", "animationend", el => el.addClass("hidden").removeClass("close"));
 				// unbind event handlers

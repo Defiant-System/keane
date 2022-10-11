@@ -15,7 +15,7 @@
 
 		// temp
 		setTimeout(() => {
-			return;
+			// return;
 			// root.find(`.icon[data-click="add-layer"]`).trigger("click");
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
 
@@ -25,7 +25,11 @@
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "brightSteps,3" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "brightness,-25" }), 400);
 
-			// open dialog
+			// dlgBrightnessContrast
+			// dlgGaussianBlur
+			// dlgThreshold
+			// dlgMosaic
+			// dlgPixelator
 			UI.doDialog({
 				type: "dlg-open",
 				name: "dlgPixelator",

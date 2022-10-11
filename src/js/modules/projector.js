@@ -185,7 +185,7 @@ const Projector = {
 		console.timeEnd("Projector Render");
 
 		if (File.showRulers) {
-			// Rulers.render(this);
+			Rulers.render(this);
 		}
 		if (!opt.noEmit) {
 			// emit event

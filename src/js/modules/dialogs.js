@@ -236,6 +236,8 @@ const Dialogs = {
 				break;
 			case "remove-layer":
 				event.el.parents(".row").cssSequence("removing", "transitionend", el => el.remove());
+				// re-apply filter
+				Self.dlgPixelator({ type: "apply-filter-data" });
 				break;
 			case "toggle-layer":
 				event.el.toggleClass("icon-eye-off", event.el.hasClass("icon-eye-off"));
@@ -249,11 +251,12 @@ const Dialogs = {
 				Self.dlgPixelator({ type: "apply-filter-data" });
 				break;
 
-			case "set-spacing":
-			case "set-size":
-			case "set-offset":
-			case "set-opacity":
-				console.log(event);
+			case "after:set-spacing":
+			case "after:set-size":
+			case "after:set-offset":
+			case "after:set-opacity":
+				// re-apply filter
+				Self.dlgPixelator({ type: "apply-filter-data" });
 				break;
 
 			// standard dialog events
