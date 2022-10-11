@@ -93,24 +93,31 @@ const Projector = {
 				h: 16,
 				...opt,
 			},
-			il = cfg.w / cfg.size,
-			jl = cfg.h / cfg.size;
-
+			lX = cfg.w % cfg.size,
+			lY = cfg.h % cfg.size,
+			il = (cfg.w-lX) / cfg.size,
+			jl = (cfg.h-lY) / cfg.size;
 		ctx.save();
 		if (cfg.oX < 0) {
 			cfg.pX = cfg.oX % cfg.size;
 			cfg.x = (cfg.pX - cfg.oX) / cfg.size;
-			il -= cfg.x;
+			il = (il-lX) - cfg.x;
 		}
 		if (cfg.oY < 0) {
 			cfg.pY = cfg.oY % cfg.size;
 			cfg.y = (cfg.pY - cfg.oY) / cfg.size;
-			jl -= cfg.y;
+			jl = (jl-lY) - cfg.y;
 		}
 		for (let i=cfg.x; i<il; i++) {
 			for (let j=cfg.y; j<jl; j++) {
 				ctx.fillStyle = ((i + j) % 2) ? "#bbb" : "#fff";
-				ctx.fillRect(i*cfg.size+cfg.pX, j*cfg.size+cfg.pY, cfg.size, cfg.size);
+				let x = i * cfg.size + cfg.pX,
+					y = j * cfg.size + cfg.pY,
+					w = cfg.size,
+					h = cfg.size;
+				if (i === il-1) w = lX;
+				if (j === jl-1) h = lY;
+				ctx.fillRect(x, y, w, h);
 			}
 		}
 		ctx.restore();
@@ -127,6 +134,7 @@ const Projector = {
 		console.time("Projector Render");
 		// reset canvas
 		this.ctx.clear();
+		// this.cvs.attr({ width: this.cvs[0].width });
 
 		this.ctx.save();
 		this.ctx.translate(oX, oY);
@@ -138,11 +146,8 @@ const Projector = {
 		this.ctx.shadowColor = "#292929";
 		this.ctx.fillRect(0, 0, w, h);
 		this.ctx.restore();
-		
-
 		// checkers background
 		this.drawCheckers(this.ctx, { w, h, oX, oY });
-
 
 		// render color channels
 		if (File.channels !== "111") {
