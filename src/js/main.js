@@ -56,6 +56,20 @@ const keane = {
 			// system events
 			case "window.init":
 				break;
+			case "window.keystroke":
+				switch (event.char) {
+					case "meta":
+						karaqu.emit("meta-key", { state: "down" });
+						break;
+				}
+				break;
+			case "window.keyup":
+				switch (event.char) {
+					case "meta":
+						karaqu.emit("meta-key", { state: "up" });
+						break;
+				}
+				break;
 			case "open.file":
 				event.open({ responseType: "blob" })
 					.then(file => Self.dispatch({ type: "prepare-file", file }));

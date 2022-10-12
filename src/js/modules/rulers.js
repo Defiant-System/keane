@@ -13,6 +13,9 @@ const Rulers = {
 			rgCorner: this.content.find(".corner-over"),
 		};
 
+		// subscribe to events
+		karaqu.on("meta-key", this.doGuide);
+
 		// bind event handlers
 		this.els.rg.on("mousedown", this.doGuide)
 	},
@@ -21,6 +24,28 @@ const Rulers = {
 			Self = Rulers,
 			Drag = Self.drag;
 		switch (event.type) {
+			// subscribed events
+			case "meta-key":
+				if (event.detail.state === "down") {
+					// add DOM elements of guidelines
+					let File = Projector.file,
+						fileGuides = File.rulers.guides,
+						oY = File.oY - Projector.aY + (File.rulers.show ? Self.t : 0),
+						oX = File.oX - Projector.aX + (File.rulers.show ? Self.t : 0),
+						str = [];
+					fileGuides.horizontal.map(y => str.push(`<div class="lineH" style="top: ${oY+y}px;"></div>`));
+					fileGuides.vertical.map(x => str.push(`<div class="lineV" style="left: ${oX+x}px;"></div>`));
+					Self.els.rg.append(str.join(""));
+
+					console.log( "render projector without guidelines" );
+					
+				} else {
+					// remove DOM elements of guidelines
+					Self.els.rg.find(".lineH, .lineV").remove();
+
+					console.log( "re-render projector with updated guidelines" );
+				}
+				break;
 			// native events
 			case "mousedown":
 				// prevent default behaviour

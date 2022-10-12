@@ -969,13 +969,8 @@ content {
 			right: 273px;
 			pointer-events: none;
 			z-index: 5;
-			--line-color: #00bff0;
+			--line-color: #f00;
 			--ruler-width: 18px;
-
-			&.lines-ux {
-				.lineH,
-				.lineV { pointer-events: all; }
-			}
 
 			.top-over {
 				// background: rgba(255,0,0,.5);
@@ -1019,6 +1014,7 @@ content {
 				right: 0;
 				height: 1px;
 				cursor: row-resize;
+				pointer-events: all;
 			}
 
 			.lineV {
@@ -1029,6 +1025,7 @@ content {
 				bottom: 0;
 				width: 1px;
 				cursor: col-resize;
+				pointer-events: all;
 			}
 		}
 
