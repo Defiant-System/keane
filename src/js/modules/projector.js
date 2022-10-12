@@ -170,12 +170,11 @@ const Projector = {
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
 
-		Rule.drawGuides(this);
+		if (!opt.noGuideLines) Rule.drawGuides(this);
+		if (File.rulers.show) Rule.render(this);
+
 		// console.timeEnd("Projector Render");
 
-		if (File.rulers.show) {
-			Rule.render(this);
-		}
 		if (!opt.noEmit) {
 			// emit event
 			karaqu.emit("projector-update");

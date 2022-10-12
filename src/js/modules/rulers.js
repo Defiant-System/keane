@@ -36,14 +36,28 @@ const Rulers = {
 					fileGuides.horizontal.map(y => str.push(`<div class="lineH" style="top: ${oY+y}px;"></div>`));
 					fileGuides.vertical.map(x => str.push(`<div class="lineV" style="left: ${oX+x}px;"></div>`));
 					Self.els.rg.append(str.join(""));
+					// render projector without guidelines
+					Projector.render({ noGuideLines: 1 });
 
-					console.log( "render projector without guidelines" );
-					
 				} else {
+					let File = Projector.file,
+						lines = Self.els.rg.find(".lineH, .lineV");
+					// reset file guide lists
+					File.rulers.guides.horizontal = [];
+					File.rulers.guides.vertical = [];
+					lines.map(elem => {
+						if (elem.classList.contains("lineH")) {
+							let top = +elem.offsetTop - (File.oY - Projector.aY + (File.rulers.show ? Self.t : 0));
+							File.rulers.guides.horizontal.push(top);
+						} else {
+							let left = +elem.offsetLeft - (File.oX - Projector.aX + (File.rulers.show ? Self.t : 0));
+							File.rulers.guides.vertical.push(left);
+						}
+					});
+					// re-render projector with updated guidelines
+					Projector.render();
 					// remove DOM elements of guidelines
-					Self.els.rg.find(".lineH, .lineV").remove();
-
-					console.log( "re-render projector with updated guidelines" );
+					lines.remove();
 				}
 				break;
 			// native events
