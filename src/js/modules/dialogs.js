@@ -267,7 +267,19 @@ const Dialogs = {
 				});
 				return layers;
 			case "select-preset":
-				console.log(event);
+				el = $(event.target);
+
+				let prepend = Self.srcEvent.dEl.find(".list-body");
+				prepend.find(".row").remove();
+				// render active preset layer list
+				window.render({
+					template: "pixelator-preset",
+					match: `//Pixelator/Preset[@id="${el.data("id")}"]`,
+					prepend,
+				});
+
+				// re-apply filter
+				Self.dlgPixelator({ type: "apply-filter-data" });
 				break;
 			case "add-layer":
 				let str = window.render({
