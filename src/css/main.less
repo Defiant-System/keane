@@ -969,6 +969,13 @@ content {
 			right: 273px;
 			pointer-events: none;
 			z-index: 5;
+			--line-color: #00bff0;
+			--ruler-width: 18px;
+
+			&.lines-ux {
+				.lineH,
+				.lineV { pointer-events: all; }
+			}
 
 			.top-over {
 				// background: rgba(255,0,0,.5);
@@ -976,7 +983,7 @@ content {
 				top: 0;
 				left: 0;
 				right: 0;
-				height: 18px;
+				height: var( --ruler-width );
 				pointer-events: all;
 				cursor: row-resize;
 			}
@@ -987,7 +994,7 @@ content {
 				top: 0;
 				left: 0;
 				bottom: 0;
-				width: 18px;
+				width: var( --ruler-width );
 				pointer-events: all;
 				border-bottom-left-radius: 5px;
 				cursor: col-resize;
@@ -998,12 +1005,31 @@ content {
 				position: absolute;
 				top: 0;
 				left: 0;
-				width: 18px;
-				height: 18px;
+				width: var( --ruler-width );
+				height: var( --ruler-width );
 				pointer-events: all;
 				cursor: crosshair;
 			}
 
+			.lineH {
+				background: var( --line-color );
+				position: absolute;
+				top: -999px;
+				left: var( --ruler-width );
+				right: 0;
+				height: 1px;
+				cursor: row-resize;
+			}
+
+			.lineV {
+				background: var( --line-color );
+				position: absolute;
+				left: -999px;
+				top: var( --ruler-width );
+				bottom: 0;
+				width: 1px;
+				cursor: col-resize;
+			}
 		}
 
 		.status-bar {

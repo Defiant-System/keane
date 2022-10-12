@@ -3,13 +3,106 @@ const Rulers = {
 	t: 18, // ruler thickness
 	init() {
 		// fast references
+		this.doc = UI.doc;
+		this.content = UI.content;
+
 		this.els = {
-			rgTop: window.find(".ruler-guides .top-over"),
-			rgLeft: window.find(".ruler-guides .left-over"),
-			rgCorner: window.find(".ruler-guides .corner-over"),
+			rg: window.find(".ruler-guides"),
+			rgTop: this.content.find(".top-over"),
+			rgLeft: this.content.find(".left-over"),
+			rgCorner: this.content.find(".corner-over"),
 		};
 
-		console.log(123);
+		// bind event handlers
+		this.els.rg.on("mousedown", this.doGuide)
+	},
+	doGuide(event) {
+		let APP = keane,
+			Self = Rulers,
+			Drag = Self.drag;
+		switch (event.type) {
+			// native events
+			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+
+				// get element & variables
+				let el = $(event.target),
+					type = el.prop("className").split("-")[0],
+					click = {
+						y: event.clientY - +el.prop("offsetTop"),
+						x: event.clientX - +el.prop("offsetLeft"),
+					};
+				// identify type of element
+				switch (type) {
+					case "top":
+					case "left":
+						type = type === "top" ? "lineH" : "lineV";
+						el = el.parent().append(`<div class="${type}"></div>`);
+						break;
+					case "corner":
+						el = el.parent().append(`<div class="lineH"></div><div class="lineV"></div>`);
+						break;
+				}
+				// prepare drag object
+				Self.drag = { el, type, click, data: {} };
+
+				// prevent mouse from triggering mouseover
+				APP.els.content.addClass("no-cursor");
+				// bind event handlers
+				Self.doc.on("mousemove mouseup", Self.doGuide);
+				break;
+			case "mousemove":
+				let left = event.clientX - Drag.click.x,
+					top = event.clientY - Drag.click.y;
+				if (left < Self.t) left = -999;
+				if (top < Self.t) top = -999;
+				// drag element(s)
+				switch (Drag.type) {
+					case "corner":
+						// save value for mouseup
+						Drag.data.top = top;
+						Drag.data.left = left;
+						// UI update
+						Drag.el.get(0).css({ top });
+						Drag.el.get(1).css({ left });
+						break;
+					case "lineV":
+						// save value for mouseup
+						Drag.data.left = left;
+						// UI update
+						Drag.el.css({ left });
+						break;
+					case "lineH":
+						// save value for mouseup
+						Drag.data.top = top;
+						// UI update
+						Drag.el.css({ top });
+						break;
+				}
+				break;
+			case "mouseup":
+				// possible actions
+				switch (Drag.type) {
+					case "corner":
+						if (Drag.data.top < 0) Drag.el.get(0).remove();
+						if (Drag.data.left < 0) Drag.el.get(1).remove();
+						break;
+					case "lineV":
+						// remove element if flagged
+						if (Drag.data.left < 0) Drag.el.remove();
+						break;
+					case "lineH":
+						// remove element if flagged
+						if (Drag.data.top < 0) Drag.el.remove();
+						break;
+				}
+				// remove class
+				APP.els.content.removeClass("no-cursor");
+				// unbind event handlers
+				Self.doc.off("mousemove mouseup", Self.doGuide);
+				break;
+		}
 	},
 	render(Proj) {
 		let _abs = Math.abs,

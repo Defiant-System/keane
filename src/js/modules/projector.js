@@ -110,7 +110,8 @@ const Projector = {
 	},
 	render(opt={}) {
 		// reference to displayed file
-		let File = this.file,
+		let Rule = Rulers,
+			File = this.file,
 			w = File.width,
 			h = File.height,
 			oX = File.oX,
@@ -169,11 +170,11 @@ const Projector = {
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
 
-		Rulers.drawGuides(this);
+		Rule.drawGuides(this);
 		// console.timeEnd("Projector Render");
 
 		if (File.rulers.show) {
-			Rulers.render(this);
+			Rule.render(this);
 		}
 		if (!opt.noEmit) {
 			// emit event
