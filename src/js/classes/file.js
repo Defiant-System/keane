@@ -103,42 +103,41 @@ class File {
 				width = cvs.offsetWidth || 32,
 				height = cvs.offsetHeight || 32,
 				ratio = this.width / this.height,
-				_floor = Math.floor;
+				// calculate dimensions
+				tW = ratio < 1 ? Math.round(height * ratio) : width,
+				tH = ratio < 1 ? height : Math.round(width / ratio),
+				pX = Math.floor((width - tW) * .5),
+				pY = Math.floor((height - tH) * .5);
 
 			// set height & width of channel canvas
 			el.prop({ width, height });
-			// calculate dimensions
-			let tW = ratio < 1 ? height * ratio : width,
-				tH = ratio < 1 ? height : width / ratio,
-				tX = (width - tW) >> 1,
-				tY = (height - tH) >> 1;
-			// background checker for semi transparency
-			ctx.save();
-			ctx.scale(.5, .5);
-			ctx.fillStyle = Projector.checkers;
-			ctx.fillRect(_floor(tX*2), _floor(tY*2), _floor(tW*2), _floor(tH*2));
-			ctx.restore();
-
+			// checkers background
+			Projector.drawCheckers(ctx, {
+				pX, pY,
+				w: tW + pX,
+				h: tH + pY,
+				size: 4
+			});
 			// transfer layer image resized to thumbnail canvas
 			let opt = { resizeWidth: tW, resizeHeight: tH, resizeQuality: "medium" };
 			createImageBitmap(this.cvs[0], opt)
 				.then(img => {
-					ctx.drawImage(img, tX, tY);
+					ctx.drawImage(img, pX, tp);
 
 					let channel = el.parents(".row").data("channel"),
 						c = ["red", "green", "blue"].indexOf(channel);
 
 					if (channel !== "rgb") {
-						let cImg = ctx.getImageData(tX, tY, tW, tH),
+						let cImg = ctx.getImageData(pX, tp, tW, tH),
 							data = cImg.data,
 							il = data.length,
 							i = 0;
 						for (; i<il; i+=4) {
-							data[i + 0] = data[i + c];
-							data[i + 1] = data[i + c];
-							data[i + 2] = data[i + c];
+							data[i]   = data[i+c];
+							data[i+1] = data[i+c];
+							data[i+2] = data[i+c];
 						}
-						ctx.putImageData(cImg, tX, tY);
+						ctx.putImageData(cImg, pX, tp);
 					}
 				})
 				.catch(e => null); // TODO: handle errors

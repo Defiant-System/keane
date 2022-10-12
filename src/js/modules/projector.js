@@ -17,16 +17,6 @@ const Projector = {
 
 		// bind event handlers
 		this.cvs.on("mousemove", this.dispatch);
-
-		// checkers background
-		return new Promise(resolve => {
-			let image = new Image;
-			image.onload = () => {
-				Projector.checkers = Projector.ctx.createPattern(image, "repeat");
-				resolve();
-			};
-			image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2P8////fwY8YM+ePfikGRhHDRgWYbB792686cDFxQV/Ohg1gIFx6IcBAPU7UXHPhMXmAAAAAElFTkSuQmCC";
-		});
 	},
 	dispatch(event) {
 		let APP = keane,

@@ -93,12 +93,12 @@ class Layer {
 	}
 
 	async parseImage(content) {
-		let src = URL.createObjectURL(content.blob);
-		let image = await this.loadImage(src);
-		let top = content.top || 0;
-		let left = content.left || 0;
-		let width = image.width || file.width;
-		let height = image.height || file.height;
+		let src = URL.createObjectURL(content.blob),
+			image = await this.loadImage(src),
+			top = content.top || 0,
+			left = content.left || 0,
+			width = image.width || file.width,
+			height = image.height || file.height;
 
 		// set image dimensions
 		this.width = width;

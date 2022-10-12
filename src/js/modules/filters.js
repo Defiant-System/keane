@@ -32,10 +32,8 @@ const Filters = {
 		let d = pixels.data,
 			w = pixels.width,
 			h = pixels.height;
-		
-		// copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+		// shortcut for "Blur More" menu option
 		gaussianBlur(d, w, h, radius);
-
 		return pixels;
 	},
 	brightnessContrast(pixels, val={}) {
