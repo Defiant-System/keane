@@ -108,6 +108,37 @@ const Projector = {
 		}
 		ctx.restore();
 	},
+	drawGuides(ctx) {
+		let File = this.file,
+			aX = this.aX,
+			aY = this.aY,
+			aW = this.aX + this.aW,
+			aH = this.aY + this.aH + Rulers.t,
+			hori = [140],
+			vert = [120, 220];
+
+		this.ctx.save();
+		this.ctx.translate(.5, .5);
+		this.ctx.strokeStyle = Pref.guides.color;
+		this.ctx.lineWidth = 1;
+		// vertical guides
+		vert.map(x => {
+			let gX = File.oX + x;
+			this.ctx.beginPath();
+			this.ctx.moveTo(gX, aY);
+			this.ctx.lineTo(gX, aH);
+			this.ctx.stroke();
+		});
+		// horisontal guides
+		hori.map(y => {
+			let gY = File.oY + y;
+			this.ctx.beginPath();
+			this.ctx.moveTo(aX, gY);
+			this.ctx.lineTo(aW, gY);
+			this.ctx.stroke();
+		});
+		this.ctx.restore();
+	},
 	render(opt={}) {
 		// reference to displayed file
 		let File = this.file,
@@ -168,6 +199,8 @@ const Projector = {
 		this.ctx.imageSmoothingEnabled = false;
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
+
+		this.drawGuides();
 		// console.timeEnd("Projector Render");
 
 		if (File.showRulers) {

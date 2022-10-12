@@ -17,8 +17,16 @@
 @import "modules/filters/close-pixelate.js"
 
 
-// wating for checkers bg to be created as pattern
-await Projector.init();
+let Pref = {
+	guides: {
+		on: true,
+		color: "#0ff",
+	},
+	grid: {
+		on: true,
+		type: "square", // isometric
+	}
+};
 
 
 const keane = {
@@ -34,6 +42,7 @@ const keane = {
 		UI.init();
 		Tabs.init();
 		Filters.init();
+		Projector.init();
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 	},
