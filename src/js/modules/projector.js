@@ -111,8 +111,8 @@ const Projector = {
 					y = j * cfg.size + cfg.pY,
 					w = cfg.size,
 					h = cfg.size;
-				if (i === il-1) w = lX;
-				if (j === jl-1) h = lY;
+				if (i === il-1) w = lX || cfg.size;
+				if (j === jl-1) h = lY || cfg.size;
 				ctx.fillRect(x, y, w, h);
 			}
 		}
