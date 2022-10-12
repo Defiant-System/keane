@@ -266,7 +266,9 @@ const Dialogs = {
 					return data;
 				});
 				return layers;
-
+			case "select-preset":
+				console.log(event);
+				break;
 			case "add-layer":
 				let str = window.render({
 						template: "pixelator-preset-layer",

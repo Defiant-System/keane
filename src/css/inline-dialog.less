@@ -33,9 +33,54 @@
 		top: 10px;
 		left: 350px;
 
+		.presets {
+			color: rgba(255,255,255,0.5);
+			text-shadow: 0 1px 0 rgba(0,0,0,.25);
+			text-transform: uppercase;
+			font-size: 11px;
+			// height: 19px;
+			margin: 15px 0 11px;
+
+			.preset-head {
+				display: inline-block;
+			}
+
+			ul {
+				margin-left: 11px;
+				display: inline-block;
+				font-size: 0;
+
+				li {
+					background: rgba(255,255,255,.175);
+					display: inline-block;
+					font-size: 13px;
+					padding: 2px 7px;
+					margin-right: 1px;
+					box-shadow: 0 1px 0 rgba(0,0,0,.15);
+
+					&:not(.active) {
+						cursor: pointer;
+					}
+
+					&:first-child {
+						border-radius: 11px 0 0 11px;
+						padding-left: 9px;
+						padding-right: 6px;
+					}
+
+					&:last-child {
+						border-radius: 0 11px 11px 0;
+						padding-left: 6px;
+						padding-right: 9px;
+						margin-right: 0;
+					}
+				}
+			}
+		}
+			
 		.layers {
 			width: 367px;
-			padding: 7px 13px 0 0;
+			padding: 0 13px 0 0;
 
 			.list-head .row,
 			.list-body .row {
