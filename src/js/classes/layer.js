@@ -68,24 +68,27 @@ class Layer {
 			width = thumbCvsEl.prop("offsetWidth") || 32,
 			height = thumbCvsEl.prop("offsetHeight") || 32,
 			ratio = this.width / this.height,
-			_floor = Math.floor;
-		// set height & width of thumbnail canvas
+			// calculate dimensions
+			tW = ratio < 1 ? Math.round(height * ratio) : width,
+			tH = ratio < 1 ? height : Math.round(width / ratio),
+			pX = Math.floor((width - tW) * .5),
+			pY = Math.floor((height - tH) * .5);
+		
+		// reset thumbnail canvas
 		thumbCvsEl.prop({ width, height });
-		// calculate dimensions
-		let tW = ratio < 1 ? height * ratio : width,
-			tH = ratio < 1 ? height : width / ratio,
-			tX = (width - tW) >> 1,
-			tY = (height - tH) >> 1;
-		// background checker for semi transparency
-		tCtx.save();
-		tCtx.scale(.5, .5);
-		tCtx.fillStyle = Projector.checkers;
-		tCtx.fillRect(_floor(tX*2), _floor(tY*2), _floor(tW*2), _floor(tH*2));
-		tCtx.restore();
+		
+		// checkers background
+		Projector.drawCheckers(tCtx, {
+			pX, pY,
+			w: tW + pX,
+			h: tH + pY,
+			size: 4
+		});
+
 		// transfer layer image resized to thumbnail canvas
 		let opt = { resizeWidth: tW, resizeHeight: tH, resizeQuality: "medium" };
 		createImageBitmap(this.cvs[0], opt)
-			.then(img => tCtx.drawImage(img, tX, tY))
+			.then(img => tCtx.drawImage(img, pX, pY))
 			.catch(e => null);
 	}
 
