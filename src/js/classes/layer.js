@@ -69,10 +69,10 @@ class Layer {
 			height = thumbCvsEl.prop("offsetHeight") || 32,
 			ratio = this.width / this.height,
 			// calculate dimensions
-			tW = ratio < 1 ? Math.round(height * ratio) : width,
-			tH = ratio < 1 ? height : Math.round(width / ratio),
-			pX = Math.floor((width - tW) * .5),
-			pY = Math.floor((height - tH) * .5);
+			tW = ratio < 1 ? (height * ratio) : width,
+			tH = ratio < 1 ? height : (width / ratio),
+			pX = (width - tW) >> 1,
+			pY = (height - tH) >> 1;
 		
 		// reset thumbnail canvas
 		thumbCvsEl.prop({ width, height });
@@ -80,13 +80,17 @@ class Layer {
 		// checkers background
 		Projector.drawCheckers(tCtx, {
 			pX, pY,
-			w: tW + pX,
-			h: tH + pY,
+			w: Math.floor(tW + pX),
+			h: Math.floor(tH + pY),
 			size: 4
 		});
 
 		// transfer layer image resized to thumbnail canvas
-		let opt = { resizeWidth: tW, resizeHeight: tH, resizeQuality: "medium" };
+		let opt = {
+				resizeWidth: Math.ceil(tW),
+				resizeHeight: Math.ceil(tH),
+				resizeQuality: "medium"
+			};
 		createImageBitmap(this.cvs[0], opt)
 			.then(img => tCtx.drawImage(img, pX, pY))
 			.catch(e => null);

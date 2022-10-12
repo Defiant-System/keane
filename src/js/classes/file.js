@@ -104,31 +104,35 @@ class File {
 				height = cvs.offsetHeight || 32,
 				ratio = this.width / this.height,
 				// calculate dimensions
-				tW = ratio < 1 ? Math.round(height * ratio) : width,
-				tH = ratio < 1 ? height : Math.round(width / ratio),
-				pX = Math.floor((width - tW) * .5),
-				pY = Math.floor((height - tH) * .5);
+				tW = ratio < 1 ? (height * ratio) : width,
+				tH = ratio < 1 ? height : (width / ratio),
+				pX = (width - tW) >> 1,
+				pY = (height - tH) >> 1;
 
 			// set height & width of channel canvas
 			el.prop({ width, height });
 			// checkers background
 			Projector.drawCheckers(ctx, {
 				pX, pY,
-				w: tW + pX,
-				h: tH + pY,
+				w: Math.floor(tW + pX),
+				h: Math.floor(tH + pY),
 				size: 4
 			});
 			// transfer layer image resized to thumbnail canvas
-			let opt = { resizeWidth: tW, resizeHeight: tH, resizeQuality: "medium" };
+			let opt = {
+					resizeWidth: Math.ceil(tW),
+					resizeHeight: Math.ceil(tH),
+					resizeQuality: "medium"
+				};
 			createImageBitmap(this.cvs[0], opt)
 				.then(img => {
-					ctx.drawImage(img, pX, tp);
+					ctx.drawImage(img, pX, pY);
 
 					let channel = el.parents(".row").data("channel"),
 						c = ["red", "green", "blue"].indexOf(channel);
 
 					if (channel !== "rgb") {
-						let cImg = ctx.getImageData(pX, tp, tW, tH),
+						let cImg = ctx.getImageData(pX, pY, tW, tH),
 							data = cImg.data,
 							il = data.length,
 							i = 0;
@@ -137,7 +141,7 @@ class File {
 							data[i+1] = data[i+c];
 							data[i+2] = data[i+c];
 						}
-						ctx.putImageData(cImg, pX, tp);
+						ctx.putImageData(cImg, pX, pY);
 					}
 				})
 				.catch(e => null); // TODO: handle errors
