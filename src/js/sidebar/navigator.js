@@ -72,7 +72,7 @@
 					Self.navHeight = Self.ratio * Self.navWidth;
 				}
 
-				let rT = File.showRulers ? _rulers.t : 0;
+				let rT = File.rulers.show ? _rulers.t : 0;
 				data.top = (((Proj.aY - File.oY) / File.height) * Self.navHeight);
 				data.left = (((Proj.aX - File.oX) / File.width) * Self.navWidth);
 				data.height = _min((((Proj.aH + rT) / File.height) * Self.navHeight), Self.navHeight - data.top);
@@ -162,8 +162,8 @@
 					max: {
 						x: +el.parent().prop("offsetWidth") - +el.prop("offsetWidth"),
 						y: +el.parent().prop("offsetHeight") - +el.prop("offsetHeight") - 4,
-						w: Proj.aW - File.width - (File.showRulers ? Rulers.t : 0),
-						h: Proj.aH - File.height + (File.showRulers ? Rulers.t : 0),
+						w: Proj.aW - File.width - (File.rulers.show ? Rulers.t : 0),
+						h: Proj.aH - File.height + (File.rulers.show ? Rulers.t : 0),
 					}
 				};
 				// prevent mouse from triggering mouseover

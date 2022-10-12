@@ -20,7 +20,7 @@
 let Pref = {
 	guides: {
 		on: true,
-		color: "#0ff",
+		color: "#00bff0",
 	},
 	grid: {
 		on: true,

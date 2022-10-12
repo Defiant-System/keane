@@ -1,20 +1,20 @@
 
 const Rulers = {
 	t: 18, // ruler thickness
-	render(Projector) {
+	render(Proj) {
 		let _abs = Math.abs,
 			_round = Math.round,
 			g, x, y,
 			p = .5,
 			t = this.t,
-			ctx = Projector.ctx,
-			scale = Projector.file.scale,
-			aX = Projector.aX,
-			aY = Projector.aY,
-			aW = Projector.aW,
-			aH = Projector.aH,
-			oX = Projector.file.oX,
-			oY = Projector.file.oY,
+			ctx = Proj.ctx,
+			scale = Proj.file.scale,
+			aX = Proj.aX,
+			aY = Proj.aY,
+			aW = Proj.aW,
+			aH = Proj.aH,
+			oX = Proj.file.oX,
+			oY = Proj.file.oY,
 			rG = ZOOM.find(z => z.level === scale * 100).rG,
 			w = aW + 1,
 			h = aH + t + t + 1,
@@ -69,6 +69,39 @@ const Rulers = {
 			let nr = _round(_abs(y - oY - t + aY) / scale);
 			nr.toString().split("").map((c, i) => ctx.fillText(c, 4, y + 1 + ((i + 1) * 9)));
 		}
+		ctx.restore();
+	},
+	drawGuides(Proj) {
+		let ctx = Proj.ctx,
+			File = Proj.file,
+			Guides = File.rulers.guides,
+			aX = Proj.aX,
+			aY = Proj.aY,
+			aW = Proj.aX + Proj.aW,
+			aH = Proj.aY + Proj.aH + Rulers.t,
+			hori = Guides.horizontal,
+			vert = Guides.vertical;
+
+		ctx.save();
+		ctx.translate(.5, .5);
+		ctx.strokeStyle = Pref.guides.color;
+		ctx.lineWidth = 1;
+		// vertical guides
+		vert.map(x => {
+			let gX = File.oX + x;
+			ctx.beginPath();
+			ctx.moveTo(gX, aY);
+			ctx.lineTo(gX, aH);
+			ctx.stroke();
+		});
+		// horisontal guides
+		hori.map(y => {
+			let gY = File.oY + y;
+			ctx.beginPath();
+			ctx.moveTo(aX, gY);
+			ctx.lineTo(aW, gY);
+			ctx.stroke();
+		});
 		ctx.restore();
 	}
 };

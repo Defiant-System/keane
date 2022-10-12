@@ -957,6 +957,47 @@ content {
 		overflow: hidden;
 		//pointer-events: none;
 
+		.ruler-guides {
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 273px;
+			z-index: 5;
+
+			.top-over {
+				// background: rgba(255,0,0,.5);
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 18px;
+				cursor: row-resize;
+			}
+
+			.left-over {
+				// background: rgba(255,0,0,.5);
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				width: 18px;
+				border-bottom-left-radius: 5px;
+				cursor: col-resize;
+			}
+
+			.corner-over {
+				// background: rgba(255,0,0,.5);
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 18px;
+				height: 18px;
+				cursor: crosshair;
+			}
+
+		}
+
 		.status-bar {
 			position: absolute;
 			left: 0;

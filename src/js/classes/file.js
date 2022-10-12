@@ -11,8 +11,15 @@ class File {
 		this.bgColor = "#000000ff";
 		this.fgColor = "#ffffffff";
 		this.lineWidth = 1;
-		this.showRulers = true;
 		this.channels = "111"; // rgb
+		this.rulers = {
+			show: true,
+			guides: {
+				show: true,
+				horizontal: [140],
+				vertical: [120, 220],
+			}
+		};
 
 		// file canvas
 		let { cvs, ctx } = Misc.createCanvas(this.width, this.height);
@@ -221,7 +228,7 @@ class File {
 				Proj.render();
 				break;
 			case "toggle-rulers":
-				this.showRulers = event.checked === 1;
+				this.rulers.show = event.checked === 1;
 				// trigger re-calculations + re-paint
 				Proj.reset(this);
 				// update origo
@@ -230,7 +237,7 @@ class File {
 				// render projector canvas
 				Proj.render();
 
-				APP.els.content.toggleClass("show-rulers", !this.showRulers);
+				APP.els.content.toggleClass("show-rulers", !this.rulers.show);
 				break;
 
 			case "select-layer":

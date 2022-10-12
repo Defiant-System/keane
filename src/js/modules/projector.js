@@ -52,10 +52,10 @@ const Projector = {
 		// reset canvases
 		this.cvs.prop({ width: window.width, height: window.height });
 
-		this.aX = File.showRulers ? Rulers.t : 0;
-		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (File.showRulers ? Rulers.t : 0);
-		this.aW = window.width - this.aX - this.els.sideBar.width() + (File.showRulers ? Rulers.t : 0);
-		this.aH = window.height - this.aY - (File.showRulers ? Rulers.t : 0); // - this.els.statusBar.height()
+		this.aX = File.rulers.show ? Rulers.t : 0;
+		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (File.rulers.show ? Rulers.t : 0);
+		this.aW = window.width - this.aX - this.els.sideBar.width() + (File.rulers.show ? Rulers.t : 0);
+		this.aH = window.height - this.aY - (File.rulers.show ? Rulers.t : 0); // - this.els.statusBar.height()
 		// center
 		this.cX = (window.width + this.aX - this.els.sideBar.width()) >> 1;
 		this.cY = (window.height + this.aY - this.els.statusBar.height()) >> 1;
@@ -107,37 +107,6 @@ const Projector = {
 			}
 		}
 		ctx.restore();
-	},
-	drawGuides(ctx) {
-		let File = this.file,
-			aX = this.aX,
-			aY = this.aY,
-			aW = this.aX + this.aW,
-			aH = this.aY + this.aH + Rulers.t,
-			hori = [140],
-			vert = [120, 220];
-
-		this.ctx.save();
-		this.ctx.translate(.5, .5);
-		this.ctx.strokeStyle = Pref.guides.color;
-		this.ctx.lineWidth = 1;
-		// vertical guides
-		vert.map(x => {
-			let gX = File.oX + x;
-			this.ctx.beginPath();
-			this.ctx.moveTo(gX, aY);
-			this.ctx.lineTo(gX, aH);
-			this.ctx.stroke();
-		});
-		// horisontal guides
-		hori.map(y => {
-			let gY = File.oY + y;
-			this.ctx.beginPath();
-			this.ctx.moveTo(aX, gY);
-			this.ctx.lineTo(aW, gY);
-			this.ctx.stroke();
-		});
-		this.ctx.restore();
 	},
 	render(opt={}) {
 		// reference to displayed file
@@ -200,10 +169,10 @@ const Projector = {
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
 
-		this.drawGuides();
+		Rulers.drawGuides(this);
 		// console.timeEnd("Projector Render");
 
-		if (File.showRulers) {
+		if (File.rulers.show) {
 			Rulers.render(this);
 		}
 		if (!opt.noEmit) {
