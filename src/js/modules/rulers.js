@@ -35,7 +35,12 @@ const Rulers = {
 						str = [];
 					fileGuides.horizontal.map(y => str.push(`<div class="lineH" style="top: ${oY+y}px;"></div>`));
 					fileGuides.vertical.map(x => str.push(`<div class="lineV" style="left: ${oX+x}px;"></div>`));
-					Self.els.rg.append(str.join(""));
+					Self.els.rg
+						.css({
+							"--line-color": Pref.guides.color,
+							"--ruler-width": `${Self.t}px`,
+						})
+						.append(str.join(""));
 					// render projector without guidelines
 					Projector.render({ noGuideLines: 1 });
 
