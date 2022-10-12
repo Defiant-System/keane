@@ -15,7 +15,7 @@
 
 		// temp
 		setTimeout(() => {
-			return;
+			// return;
 			// root.find(`.icon[data-click="add-layer"]`).trigger("click");
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
 
@@ -24,7 +24,8 @@
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "dither" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "gaussianBlur,3" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "brightness,-25" }), 400);
-			// return;
+			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "emboss" }), 400);
+			return;
 
 			// dlgBrightnessContrast
 			// dlgGaussianBlur

@@ -87,8 +87,11 @@ content {
 		cursor: none;
 	}
 
-	&.show-rulers .workspace .status-bar {
-		left: 18px;
+	&.show-rulers {
+		.workspace {
+			.ruler-guides { display: block; }
+			.status-bar { left: 18px; }
+		}
 	}
 
 	.tools-bar {
@@ -958,6 +961,7 @@ content {
 		//pointer-events: none;
 
 		.ruler-guides {
+			display: none;
 			position: absolute;
 			top: 0;
 			left: 0;

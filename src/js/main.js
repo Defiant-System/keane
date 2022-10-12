@@ -103,6 +103,13 @@ const keane = {
 				Projector.file.render();
 				break;
 
+			case "toggle-rulers":
+				Projector.file.dispatch(event);
+				break;
+			case "toggle-statusbar":
+				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
+				break;
+
 			// proxy events
 			case "select-tool":
 				return Self.tools.dispatch(event)

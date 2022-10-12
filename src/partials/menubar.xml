@@ -93,8 +93,6 @@
 	<Menu name="Filter">
 		<Menu name="Last Filter" disabled="1" />
 		<Menu type="divider"/>
-		<Menu name="Sobel" click="filter-render" arg="sobel"/>
-		<Menu type="divider"/>
 		<Menu name="Blur">
 			<Menu name="Blur" click="filter-render" arg="blur"/>
 			<Menu name="Blur More" click="filter-render" arg="gaussianBlur,2"/>
@@ -140,15 +138,28 @@
 		</Menu>
 		<Menu name="Sharpen">
 			<Menu name="Sharpen" click="filter-render" arg="sharpen"/>
+			<Menu name="Sharpen Edges" disabled="1"/>
+			<Menu name="Sharpen More" disabled="1"/>
+			<Menu name="Smart Sharpen" disabled="1"/>
+			<Menu name="Unsharp Mask" disabled="1"/>
 		</Menu>
-		<Menu name="Stylize" disabled="1" />
+		<Menu name="Stylize">
+			<Menu name="Diffuse" disabled="1"/>
+			<Menu name="Emboss" click="filter-render" arg="emboss"/>
+			<Menu name="Sobel" click="filter-render" arg="sobel"/>
+			<Menu name="Find Edges" disabled="1"/>
+			<Menu name="Oil Paint" disabled="1"/>
+			<Menu name="Solarize" disabled="1"/>
+			<Menu name="Trace Contour" disabled="1"/>
+			<Menu name="Wind" disabled="1"/>
+		</Menu>
 		<Menu name="Other">
 			<Menu name="Dither" click="filter-render" arg="dither"/>
 		</Menu>
 	</Menu>
 	<Menu name="View">
 		<Menu name="Rulers" click="toggle-rulers" check-group="toggle-rulers" is-checked="1" hotkey="alt+r" />
-		<Menu name="Status Bar" click="toggle-statusbar" check-group="toggle-statusbar" />
+		<Menu name="Status Bar" click="toggle-statusbar" check-group="toggle-statusbar" is-checked="1" />
 	</Menu>
 	<Menu name="Window">
 		<Menu name="Navigator" check-group="sidebar-top" is-checked="1"/>
