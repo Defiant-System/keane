@@ -35,7 +35,8 @@
 
 		// temp
 		// setTimeout(() => root.find(".icon.mini").trigger("click"), 900);
-		// setTimeout(() => root.find(".icon.maxi").trigger("click"), 900);
+		// setTimeout(() => root.find(".icon.maxi").trigger("click"), 700);
+		setTimeout(() => Projector.file.dispatch({ type: "set-scale", scale: 32 }), 750);
 	},
 	dispatch(event) {
 		let APP = keane,

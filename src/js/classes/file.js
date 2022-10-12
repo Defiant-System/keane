@@ -16,10 +16,10 @@ class File {
 			show: true,
 			guides: {
 				show: true,
-				horizontal: [150],
-				vertical: [150],
-				// horizontal: [],
-				// vertical: [],
+				// horizontal: [150],
+				// vertical: [150],
+				horizontal: [],
+				vertical: [],
 			}
 		};
 
