@@ -1,6 +1,16 @@
 
 const Rulers = {
 	t: 18, // ruler thickness
+	init() {
+		// fast references
+		this.els = {
+			rgTop: window.find(".ruler-guides .top-over"),
+			rgLeft: window.find(".ruler-guides .left-over"),
+			rgCorner: window.find(".ruler-guides .corner-over"),
+		};
+
+		console.log(123);
+	},
 	render(Proj) {
 		let _abs = Math.abs,
 			_round = Math.round,

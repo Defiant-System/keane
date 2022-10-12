@@ -41,6 +41,7 @@ const keane = {
 		// init objects
 		UI.init();
 		Tabs.init();
+		Rulers.init();
 		Filters.init();
 		Projector.init();
 		// init sub objects
