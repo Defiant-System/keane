@@ -8,7 +8,7 @@ const Filters = {
 		this.ctx = ctx;
 	},
 	getPixels(cvs) {
-		let ctx = cvs.getContext("2d");
+		let ctx = cvs.getContext("2d", { willReadFrequently: true });
 		return ctx.getImageData(0, 0, cvs.width, cvs.height);
 	},
 	createImageData(w, h) {

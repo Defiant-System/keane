@@ -1,5 +1,5 @@
 
-// TOOLS.pipette
+// keane.tools.pipette
 
 {
 	init() {
@@ -7,7 +7,7 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = TOOLS.pipette;
+			Self = APP.tools.pipette;
 
 		switch (event.type) {
 			// custom events

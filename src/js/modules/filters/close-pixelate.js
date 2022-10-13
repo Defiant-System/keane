@@ -10,7 +10,7 @@ let closePixelate = (function() {
     class ClosePixelation {
         constructor() {
             this.cvs = document.createElement("canvas");
-            this.ctx = this.cvs.getContext("2d");
+            this.ctx = this.cvs.getContext("2d", { willReadFrequently: true });
         }
 
         render(opt={}) {

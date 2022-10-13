@@ -11,7 +11,7 @@ const Projector = {
 		};
 		// canvases
 		this.cvs = window.find(".cvs-wrapper .canvas");
-		this.ctx = this.cvs[0].getContext("2d");
+		this.ctx = this.cvs[0].getContext("2d", { willReadFrequently: true });
 		// publicly used swap canvas
 		this.swap = Misc.createCanvas(1, 1);
 

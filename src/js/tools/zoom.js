@@ -1,5 +1,5 @@
 
-// TOOLS.zoom
+// keane.tools.zoom
 
 {
 	init() {
@@ -7,7 +7,7 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = TOOLS.zoom;
+			Self = APP.tools.zoom;
 
 		switch (event.type) {
 			// custom events

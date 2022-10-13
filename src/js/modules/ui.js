@@ -488,7 +488,7 @@ const UI = {
 			// custom events
 			case "set-initial-value":
 				Self.cvs = Self.menu.find(".preview canvas");
-				Self.ctx = Self.cvs[0].getContext("2d");
+				Self.ctx = Self.cvs[0].getContext("2d", { willReadFrequently: true });
 				Self.cvs.prop({ width: 206, height: 78 });
 
 				// indicate currect tip in menu

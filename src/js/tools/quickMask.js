@@ -1,5 +1,5 @@
 
-// TOOLS.quickMask
+// keane.tools.quickMask
 
 {
 	init() {
@@ -7,7 +7,7 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = TOOLS.quickMask;
+			Self = APP.tools.quickMask;
 
 		switch (event.type) {
 			// custom events

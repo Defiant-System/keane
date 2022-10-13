@@ -1,5 +1,5 @@
 
-// TOOLS.pointer
+// keane.tools.pointer
 
 {
 	init() {
@@ -7,7 +7,7 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = TOOLS.pointer;
+			Self = APP.tools.pointer;
 
 		switch (event.type) {
 			// custom events

@@ -31,7 +31,7 @@ const Misc = {
 	},
 	createCanvas(width, height) {
 		let cvs = $(document.createElement("canvas")),
-			ctx = cvs[0].getContext("2d");
+			ctx = cvs[0].getContext("2d", { willReadFrequently: true });
 		cvs.prop({ width, height });
 		return { cvs, ctx }
 	},

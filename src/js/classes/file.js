@@ -106,7 +106,7 @@ class File {
 	updateChannelThumbnails() {
 		keane.sidebar.channels.els.channelsList.find("canvas").map(cvs => {
 			let el = $(cvs),
-				ctx = cvs.getContext("2d"),
+				ctx = cvs.getContext("2d", { willReadFrequently: true }),
 				width = cvs.offsetWidth || 32,
 				height = cvs.offsetHeight || 32,
 				ratio = this.width / this.height,

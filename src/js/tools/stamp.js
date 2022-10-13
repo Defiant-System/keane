@@ -1,5 +1,5 @@
 
-// TOOLS.stamp
+// keane.tools.stamp
 
 {
 	init() {
@@ -7,7 +7,7 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = TOOLS.stamp;
+			Self = APP.tools.stamp;
 
 		switch (event.type) {
 			// custom events

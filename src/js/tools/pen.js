@@ -1,5 +1,5 @@
 
-// TOOLS.pen
+// keane.tools.pen
 
 {
 	init() {
@@ -7,7 +7,7 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = TOOLS.pen;
+			Self = APP.tools.pen;
 
 		switch (event.type) {
 			// custom events
