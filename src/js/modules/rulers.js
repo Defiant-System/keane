@@ -50,10 +50,10 @@ const Rulers = {
 					case "top":
 					case "left":
 						type = type === "top" ? "lineH" : "lineV";
-						el = el.parent().append(`<div class="${type}"></div>`);
+						el = el.parent().append(`<div class="${type} new-line"></div>`);
 						break;
 					case "corner":
-						el = el.parent().append(`<div class="lineH"></div><div class="lineV"></div>`);
+						el = el.parent().append(`<div class="lineH new-line"></div><div class="lineV new-line"></div>`);
 						break;
 				}
 				// prepare drag object
@@ -113,6 +113,9 @@ const Rulers = {
 						if (Drag.data.top < 0) Drag.el.remove();
 						break;
 				}
+				if (Self.els.rg.find(".new-line").length) {
+					Self.dispatch({ type: "elements-to-lines", merge: true });
+				}
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
@@ -138,26 +141,30 @@ const Rulers = {
 						.append(str.join(""));
 					// render projector without guidelines
 					Proj.render({ noGuideLines: 1 });
-
 				} else {
-					let lines = Self.els.rg.find(".lineH, .lineV");
+					Self.dispatch({ type: "elements-to-lines" });
+				}
+				break;
+			case "elements-to-lines":
+				let lines = Self.els.rg.find(".lineH, .lineV");
+				if (!event.merge) {
 					// reset file guide lists
 					File.rulers.guides.horizontal = [];
 					File.rulers.guides.vertical = [];
-					lines.map(elem => {
-						if (elem.classList.contains("lineH")) {
-							let top = +elem.offsetTop - (File.oY - Proj.aY + (File.rulers.show ? Self.t : 0));
-							File.rulers.guides.horizontal.push(top / File.scale);
-						} else {
-							let left = +elem.offsetLeft - (File.oX - Proj.aX + (File.rulers.show ? Self.t : 0));
-							File.rulers.guides.vertical.push(left / File.scale);
-						}
-					});
-					// re-render projector with updated guidelines
-					Proj.render();
-					// remove DOM elements of guidelines
-					lines.remove();
 				}
+				lines.map(elem => {
+					if (elem.classList.contains("lineH")) {
+						let top = +elem.offsetTop - (File.oY - Proj.aY + (File.rulers.show ? Self.t : 0));
+						File.rulers.guides.horizontal.push(top / File.scale);
+					} else {
+						let left = +elem.offsetLeft - (File.oX - Proj.aX + (File.rulers.show ? Self.t : 0));
+						File.rulers.guides.vertical.push(left / File.scale);
+					}
+				});
+				// re-render projector with updated guidelines
+				Proj.render();
+				// remove DOM elements of guidelines
+				lines.remove();
 				break;
 
 			// proxied events
