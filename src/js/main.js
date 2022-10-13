@@ -62,6 +62,7 @@ const keane = {
 		switch (event.type) {
 			// system events
 			case "window.init":
+				Self.dispatch({ type: "show-blank-view" });
 				break;
 			case "window.keystroke":
 				switch (event.char) {
@@ -106,6 +107,8 @@ const keane = {
 				Tabs.open(event.file, event);
 				break;
 			case "show-blank-view":
+				if (Self.els.content.hasClass("show-blank-view")) return;
+
 				let str = "show-blank-view";
 				str += Tabs._stack.length ? " files-open" : "";
 				// show blank view
