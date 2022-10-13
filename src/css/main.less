@@ -1014,31 +1014,32 @@ content {
 			}
 
 			.lineH {
+				background: var( --line-color );
 				position: absolute;
 				top: -999px;
 				left: var( --ruler-width );
 				right: 0;
-				height: 3px;
+				height: 1px;
 				cursor: row-resize;
 				pointer-events: all;
 
 				&:before {
 					content: "";
 					position: absolute;
-					top: 1px;
+					top: -1px;
 					left: 0;
 					right: 0;
-					height: 1px;
-					background: var( --line-color );
+					height: 3px;
 				}
 			}
 
 			.lineV {
+				background: var( --line-color );
 				position: absolute;
 				left: -999px;
 				top: var( --ruler-width );
 				bottom: 0;
-				width: 3px;
+				width: 1px;
 				cursor: col-resize;
 				pointer-events: all;
 
@@ -1047,9 +1048,8 @@ content {
 					position: absolute;
 					top: 0;
 					bottom: 0;
-					left: 1px;
-					width: 1px;
-					background: var( --line-color );
+					left: -1px;
+					width: 3px;
 				}
 			}
 		}

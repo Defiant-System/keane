@@ -17,13 +17,14 @@ const Rulers = {
 		karaqu.on("meta-key", this.dispatch);
 
 		// bind event handlers
-		this.els.rg.on("mousedown", this.dispatch)
+		this.els.rg.on("mousedown", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = keane,
 			Self = Rulers,
+			Proj = Projector,
 			Drag = Self.drag,
-			File = Projector.file;
+			File = Proj.file;
 		switch (event.type) {
 			// native events
 			case "mousedown":
@@ -33,15 +34,17 @@ const Rulers = {
 				// get element & variables
 				let el = $(event.target),
 					type = el.prop("className").split("-")[0],
+					scale = File.scale,
 					screen = {
-						scale: File.scale,
-						oY: 4,
-						oX: 12,
+						scale,
+						oY: (Proj.aY - Self.t - File.oY) % scale,
+						oX: (Proj.aX - Self.t - File.oX) % scale,
 					},
 					click = {
 						y: event.clientY - +el.prop("offsetTop"),
 						x: event.clientX - +el.prop("offsetLeft"),
 					};
+
 				// identify type of element
 				switch (type) {
 					case "top":
@@ -64,6 +67,10 @@ const Rulers = {
 			case "mousemove":
 				let left = event.clientX - Drag.click.x,
 					top = event.clientY - Drag.click.y;
+
+				left -= Drag.screen.oX + (left % Drag.screen.scale);
+				top -= Drag.screen.oY + (top % Drag.screen.scale);
+
 				if (left < Self.t) left = -999;
 				if (top < Self.t) top = -999;
 				// drag element(s)
@@ -77,14 +84,12 @@ const Rulers = {
 						Drag.el.get(1).css({ left });
 						break;
 					case "lineV":
-						left -= Drag.screen.oX + (left % Drag.screen.scale);
 						// save value for mouseup
 						Drag.data.left = left;
 						// UI update
 						Drag.el.css({ left });
 						break;
 					case "lineH":
-						top -= Drag.screen.oY + (top % Drag.screen.scale);
 						// save value for mouseup
 						Drag.data.top = top;
 						// UI update
@@ -120,8 +125,8 @@ const Rulers = {
 				if (event.detail.state === "down") {
 					// add DOM elements of guidelines
 					let fileGuides = File.rulers.guides,
-						oY = File.oY - Projector.aY + (File.rulers.show ? Self.t : 0),
-						oX = File.oX - Projector.aX + (File.rulers.show ? Self.t : 0),
+						oY = File.oY - Proj.aY + (File.rulers.show ? Self.t : 0),
+						oX = File.oX - Proj.aX + (File.rulers.show ? Self.t : 0),
 						str = [];
 					fileGuides.horizontal.map(y => str.push(`<div class="lineH" style="top: ${oY + (y * File.scale)}px;"></div>`));
 					fileGuides.vertical.map(x => str.push(`<div class="lineV" style="left: ${oX + (x * File.scale)}px;"></div>`));
@@ -132,7 +137,7 @@ const Rulers = {
 						})
 						.append(str.join(""));
 					// render projector without guidelines
-					Projector.render({ noGuideLines: 1 });
+					Proj.render({ noGuideLines: 1 });
 
 				} else {
 					let lines = Self.els.rg.find(".lineH, .lineV");
@@ -141,15 +146,15 @@ const Rulers = {
 					File.rulers.guides.vertical = [];
 					lines.map(elem => {
 						if (elem.classList.contains("lineH")) {
-							let top = +elem.offsetTop - (File.oY - Projector.aY + (File.rulers.show ? Self.t : 0));
+							let top = +elem.offsetTop - (File.oY - Proj.aY + (File.rulers.show ? Self.t : 0));
 							File.rulers.guides.horizontal.push(top / File.scale);
 						} else {
-							let left = +elem.offsetLeft - (File.oX - Projector.aX + (File.rulers.show ? Self.t : 0));
+							let left = +elem.offsetLeft - (File.oX - Proj.aX + (File.rulers.show ? Self.t : 0));
 							File.rulers.guides.vertical.push(left / File.scale);
 						}
 					});
 					// re-render projector with updated guidelines
-					Projector.render();
+					Proj.render();
 					// remove DOM elements of guidelines
 					lines.remove();
 				}
@@ -159,28 +164,28 @@ const Rulers = {
 			case "toggle-grid":
 				Pref.grid.show = !Pref.grid.show;
 				// re-render projector
-				Projector.render();
+				Proj.render();
 				break;
 			case "toggle-pixel-grid":
 				Pref.grid.pixelGrid = !Pref.grid.pixelGrid;
 				// re-render projector
-				Projector.render();
+				Proj.render();
 				break;
 			case "toggle-guides":
 				Pref.guides.show =
 				File.rulers.guides.show = !File.rulers.guides.show;
 				// re-render projector
-				Projector.render();
+				Proj.render();
 				break;
 			case "toggle-rulers":
 				File.rulers.show = event.checked === 1;
 				// trigger re-calculations + re-paint
-				Projector.reset(File);
+				Proj.reset(File);
 				// update origo
-				File.oX = Math.round(Projector.cX - (File.width >> 1));
-				File.oY = Math.round(Projector.cY - (File.height >> 1));
+				File.oX = Math.round(Proj.cX - (File.width >> 1));
+				File.oY = Math.round(Proj.cY - (File.height >> 1));
 				// render projector canvas
-				Projector.render();
+				Proj.render();
 
 				APP.els.content.toggleClass("show-rulers", !File.rulers.show);
 				break;
@@ -263,8 +268,8 @@ const Rulers = {
 			scale = File.scale,
 			aX = Proj.aX,
 			aY = Proj.aY,
-			aW = Proj.aX + Proj.aW,
-			aH = Proj.aY + Proj.aH + Rulers.t,
+			aW = aX + Proj.aW,
+			aH = aY + Proj.aH + Rulers.t,
 			hori = Guides.horizontal,
 			vert = Guides.vertical;
 		ctx.save();
