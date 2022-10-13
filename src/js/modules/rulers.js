@@ -37,8 +37,8 @@ const Rulers = {
 					scale = File.scale,
 					screen = {
 						scale,
-						oY: (Proj.aY - Self.t - File.oY) % scale,
-						oX: (Proj.aX - Self.t - File.oX) % scale,
+						oY: ((Proj.aY - Self.t - File.oY) % scale) - scale,
+						oX: ((Proj.aX - Self.t - File.oX) % scale) - scale,
 					},
 					click = {
 						y: event.clientY - +el.prop("offsetTop"),
@@ -67,10 +67,10 @@ const Rulers = {
 			case "mousemove":
 				let left = event.clientX - Drag.click.x,
 					top = event.clientY - Drag.click.y;
-
+				// snaps (when zoomed)
 				left -= Drag.screen.oX + (left % Drag.screen.scale);
 				top -= Drag.screen.oY + (top % Drag.screen.scale);
-
+				// line is going to be removed
 				if (left < Self.t) left = -999;
 				if (top < Self.t) top = -999;
 				// drag element(s)
