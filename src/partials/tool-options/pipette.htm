@@ -1,27 +1,55 @@
 <div class="tool-options-pipette hidden" data-area="pipette">
-	<div class="tool tool-pipette down" title="Eye Dropper Tool" data-click="select-option" data-arg="pipette" data-group="options" data-option="main"></div>
-	<div class="tool tool-ruler" title="Ruler Tool" data-click="select-option" data-arg="ruler" data-group="options" data-option="main"></div>
+	<div class="tool tool-pipette down" title="Eye Dropper Tool" data-click="select-option" data-arg="pipette" data-group="options" data-option="main" data-subOptions="pipette"></div>
+	<div class="tool tool-ruler" title="Ruler Tool" data-click="select-option" data-arg="ruler" data-group="options" data-option="main" data-subOptions="ruler"></div>
 
 	<div class="divider"></div>
 	
-	<div class="option">
-		<span class="label">Sample Size</span>
-		<span class="value">Point Sample</span>
-	</div>
-	
-	<div class="option">
-		<span class="label">Sample</span>
-		<span class="value">All Layers</span>
-	</div>
+	<span class="tool-group active" data-subName="pipette">
+		<div class="option">
+			<span class="label">Sample Size</span>
+			<span class="value">Point Sample</span>
+		</div>
+		
+		<div class="option">
+			<span class="label">Sample</span>
+			<span class="value">All Layers</span>
+		</div>
 
-	<div class="divider"></div>
+		<div class="divider"></div>
 
-	<div class="option check">
-		<span class="value">
-			<input type="checkbox" id="pipette-sample-ring" checked>
-			<i></i>
-		</span>
-		<label class="label" for="pipette-sample-ring">Show Sampling Ring</label>
-	</div>
+		<div class="option check">
+			<span class="value">
+				<input type="checkbox" id="pipette-sample-ring" checked>
+				<i></i>
+			</span>
+			<label class="label" for="pipette-sample-ring">Show Sampling Ring</label>
+		</div>
+	</span>
+
+	<span class="tool-group" data-subName="ruler">
+		<div class="option input">
+			<span class="label">X:</span>
+			<span class="value"><input type="text" value="193" disabled></span>
+		</div>
+		
+		<div class="option input">
+			<span class="label">Y:</span>
+			<span class="value"><input type="text" value="213" disabled></span>
+		</div>
+		
+		<div class="option input">
+			<span class="label">W:</span>
+			<span class="value"><input type="text" value="91" disabled></span>
+		</div>
+		
+		<div class="option input">
+			<span class="label">H:</span>
+			<span class="value"><input type="text" value="52" disabled></span>
+		</div>
+		<div class="option input">
+			<span class="label">Angle:</span>
+			<span class="value"><input type="text" value="135°" disabled></span>
+		</div>
+	</span>
 
 </div>
