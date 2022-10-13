@@ -611,6 +611,7 @@ content {
 		&.icon-eye-off          { background-image: url(~/icons/icon-eye-off.png); }
 		&.icon-selection-ring   { background-image: url(~/icons/icon-selection-ring.png); }
 		&.icon-new              { background-image: url(~/icons/icon-new.png); }
+		&.icon-clipboard        { background-image: url(~/icons/icon-clipboard.png); }
 		&.icon-trashcan         { background-image: url(~/icons/icon-trashcan.png); }
 		&.icon-folder           { background-image: url(~/icons/icon-folder.png); }
 		&.icon-folder-open      { background-image: url(~/icons/icon-folder-open.png); }
@@ -1122,16 +1123,26 @@ content {
 
 				&:hover {
 					color: #eee;
-
-					i:after {
-						opacity: 1;
-					}
 				}
 
 				i {
 					display: inline-block;
 					vertical-align: bottom;
 					top: 1px;
+
+					&:hover:after {
+						opacity: 1;
+					}
+
+					&.icon-new {
+						margin-left: 5px;
+						margin-right: 1px;
+					}
+
+					&.icon-clipboard {
+						margin-left: 0;
+						margin-right: 3px;
+					}
 				}
 			}
 		}

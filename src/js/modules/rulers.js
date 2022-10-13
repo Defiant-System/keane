@@ -273,5 +273,41 @@ const Rulers = {
 			ctx.stroke();
 		});
 		ctx.restore();
+	},
+	drawPixelGrid(Proj) {
+		let ctx = Proj.ctx,
+			File = Proj.file,
+			rSize = Rulers.t,
+			aX = Proj.aX,
+			aY = Proj.aY,
+			aW = Proj.aX + Proj.aW - rSize,
+			aH = Proj.aY + Proj.aH + rSize,
+			oX = File.scale - (Proj.aX - File.oX) % File.scale,
+			oY = File.scale - (Proj.aY - File.oY) % File.scale;
+
+		ctx.save();
+		ctx.translate(.5, .5);
+		ctx.strokeStyle = "#66666650";
+		ctx.lineWidth = 1;
+
+		// horizontal lines
+		for (let y=0; y<22; y++) {
+			let lY = aY + (y * File.scale) + oY;
+			ctx.beginPath();
+			ctx.moveTo(aX, lY);
+			ctx.lineTo(aW, lY);
+			ctx.stroke();
+		}
+
+		// vertical lines
+		for (let x=0; x<25; x++) {
+			let lX = aX + (x * File.scale) + oX;
+			ctx.beginPath();
+			ctx.moveTo(lX, aY);
+			ctx.lineTo(lX, aH);
+			ctx.stroke();
+		}
+
+		ctx.restore();
 	}
 };

@@ -22,7 +22,7 @@ let Pref = {
 		show: true,
 		color: "#00bff0",
 	},
-	grid: {
+	pixelGrid: {
 		show: true,
 		type: "square", // isometric
 	}
@@ -47,7 +47,10 @@ const keane = {
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
 		// temp
-		// setTimeout(() => Projector.file.dispatch({ type: "set-scale", scale: 4 }), 750);
+		setTimeout(() => {
+			Projector.file.dispatch({ type: "set-scale", scale: 32 });
+			Projector.file.dispatch({ type: "pan-canvas", top: -10300, left: -12300, noZoom: true });
+		}, 750);
 	},
 	dispatch(event) {
 		let Self = keane,
@@ -103,6 +106,9 @@ const keane = {
 			case "show-blank-view":
 				// show blank view
 				Self.els.content.addClass("show-blank-view");
+				break;
+			case "new-from-clipboard":
+				console.log("TODO!");
 				break;
 
 			case "open-dialog":
