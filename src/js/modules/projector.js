@@ -170,7 +170,8 @@ const Projector = {
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
 
-		if (Pref.pixelGrid.show && File.scale > 12) Rule.drawPixelGrid(this);
+		if (Pref.grid.pixelGrid && File.scale > 12) Rule.drawPixelGrid(this);
+		if (Pref.grid.show) Rule.drawGrid(this);
 		if (File.rulers.guides.show && !opt.noGuideLines) Rule.drawGuides(this);
 		if (File.rulers.show) Rule.render(this);
 

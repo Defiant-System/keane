@@ -149,8 +149,16 @@ const Rulers = {
 				break;
 
 			// proxied events
-			case "toggle-grid": break;
-			case "toggle-pixel-grid": break;
+			case "toggle-grid":
+				Pref.grid.show = !Pref.grid.show;
+				// re-render projector
+				Projector.render();
+				break;
+			case "toggle-pixel-grid":
+				Pref.grid.pixel = !Pref.grid.pixel;
+				// re-render projector
+				Projector.render();
+				break;
 			case "toggle-guides":
 				Pref.guides.show =
 				File.rulers.guides.show = !File.rulers.guides.show;
@@ -251,7 +259,6 @@ const Rulers = {
 			aH = Proj.aY + Proj.aH + Rulers.t,
 			hori = Guides.horizontal,
 			vert = Guides.vertical;
-
 		ctx.save();
 		ctx.translate(.5, .5);
 		ctx.strokeStyle = Pref.guides.color;
@@ -274,40 +281,48 @@ const Rulers = {
 		});
 		ctx.restore();
 	},
-	drawPixelGrid(Proj) {
+	drawGrid(Proj) {
+		let cfg = {
+				color: "#dddddd50",
+				gap: Pref.grid.gap,
+			};
+		this.drawPixelGrid(Proj, cfg);
+	},
+	drawPixelGrid(Proj, cfg={}) {
 		let ctx = Proj.ctx,
 			File = Proj.file,
 			rSize = Rulers.t,
-			aX = Proj.aX,
-			aY = Proj.aY,
+			gap = cfg.gap || 1,
+			scale = File.scale * gap,
+			aX = Math.max(Proj.aX, File.oX),
+			aY = Math.max(Proj.aY, File.oY),
 			aW = Proj.aX + Proj.aW - rSize,
 			aH = Proj.aY + Proj.aH + rSize,
-			oX = File.scale - (Proj.aX - File.oX) % File.scale,
-			oY = File.scale - (Proj.aY - File.oY) % File.scale;
+			oX = scale - (aX - File.oX) % scale,
+			oY = scale - (aY - File.oY) % scale,
+			xl = Math.ceil((Proj.aW + rSize) / scale),
+			yl = Math.ceil((Proj.aH + rSize) / scale);
 
 		ctx.save();
 		ctx.translate(.5, .5);
-		ctx.strokeStyle = "#66666650";
+		ctx.strokeStyle = cfg.color || "#777";
 		ctx.lineWidth = 1;
-
 		// horizontal lines
-		for (let y=0; y<22; y++) {
-			let lY = aY + (y * File.scale) + oY;
+		for (let y=0; y<yl; y++) {
+			let lY = aY + (y * scale) + oY;
 			ctx.beginPath();
 			ctx.moveTo(aX, lY);
 			ctx.lineTo(aW, lY);
 			ctx.stroke();
 		}
-
 		// vertical lines
-		for (let x=0; x<25; x++) {
-			let lX = aX + (x * File.scale) + oX;
+		for (let x=0; x<xl; x++) {
+			let lX = aX + (x * scale) + oX;
 			ctx.beginPath();
 			ctx.moveTo(lX, aY);
 			ctx.lineTo(lX, aH);
 			ctx.stroke();
 		}
-
 		ctx.restore();
 	}
 };

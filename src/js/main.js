@@ -22,9 +22,11 @@ let Pref = {
 		show: true,
 		color: "#00bff0",
 	},
-	pixelGrid: {
+	grid: {
 		show: true,
 		type: "square", // isometric
+		gap: 10,
+		pixelGrid: true,
 	}
 };
 
@@ -47,10 +49,10 @@ const keane = {
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
 		// temp
-		setTimeout(() => {
-			Projector.file.dispatch({ type: "set-scale", scale: 32 });
-			Projector.file.dispatch({ type: "pan-canvas", top: -10300, left: -12300, noZoom: true });
-		}, 750);
+		// setTimeout(() => {
+		// 	Projector.file.dispatch({ type: "set-scale", scale: 32 });
+		// 	Projector.file.dispatch({ type: "pan-canvas", top: -10300, left: -12300, noZoom: true });
+		// }, 750);
 	},
 	dispatch(event) {
 		let Self = keane,
