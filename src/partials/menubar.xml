@@ -171,7 +171,7 @@
 			<Menu name="Selection" disabled="1"/>
 			<Menu name="Paths" disabled="1"/>
 			<Menu name="Guides" click="toggle-guides" check-group="toggle-guides" is-checked="1"/>
-			<Menu name="Grid" click="toggle-grid" check-group="toggle-grid" is-checked="1"/>
+			<Menu name="Grid" click="toggle-grid" check-group="toggle-grid"/>
 			<Menu name="Pixel Grid" click="toggle-pixel-grid" check-group="toggle-pixel-grid" is-checked="1"/>
 			<Menu name="Pixel Slices" disabled="1"/>
 		</Menu>

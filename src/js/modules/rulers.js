@@ -155,7 +155,7 @@ const Rulers = {
 				Projector.render();
 				break;
 			case "toggle-pixel-grid":
-				Pref.grid.pixel = !Pref.grid.pixel;
+				Pref.grid.pixelGrid = !Pref.grid.pixelGrid;
 				// re-render projector
 				Projector.render();
 				break;
@@ -305,7 +305,7 @@ const Rulers = {
 
 		ctx.save();
 		ctx.translate(.5, .5);
-		ctx.strokeStyle = cfg.color || "#777";
+		ctx.strokeStyle = cfg.color || "#777777aa";
 		ctx.lineWidth = 1;
 		// horizontal lines
 		for (let y=0; y<yl; y++) {

@@ -23,7 +23,7 @@ let Pref = {
 		color: "#00bff0",
 	},
 	grid: {
-		show: true,
+		show: false,
 		type: "square", // isometric
 		gap: 10,
 		pixelGrid: true,
