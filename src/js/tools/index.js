@@ -15,7 +15,7 @@
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
 		// select a tool
-		this.els.toolBar.find(".tool:nth(1)").trigger("click");
+		this.els.toolBar.find(".tool:nth(0)").trigger("click");
 
 		// temp
 		// setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);

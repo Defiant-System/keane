@@ -13,6 +13,19 @@
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
 		this.option = "rectangle";
+
+		// temp
+		setTimeout(() => {
+			let File = Projector.file;
+			this.cvs.prop({ width: File.width, height: File.height });
+			Projector.swap.cvs.prop({ width: File.width, height: File.height });
+
+			// this.ants.init(this);
+			// this.ctx.clear();
+			this.ctx.fillRect(110, 64, 234, 205);
+			this.ctx.fill();
+			this.ants.init(this, true);
+		}, 900);
 	},
 	dispatch(event) {
 		let APP = keane,
