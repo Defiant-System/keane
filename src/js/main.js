@@ -109,9 +109,6 @@ const keane = {
 				// show blank view
 				Self.els.content.addClass("show-blank-view");
 				break;
-			case "new-from-clipboard":
-				console.log("TODO!");
-				break;
 
 			case "open-dialog":
 				UI.doDialog({ type: "dlg-open", name: event.arg });

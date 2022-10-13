@@ -33,7 +33,7 @@
 				});
 
 				// setTimeout(() => window.find(".sample:nth(0)").trigger("click"), 300);
-				// setTimeout(() => vermeer.dispatch({ type: "close-file" }), 500);
+				// setTimeout(() => window.find(`.btn[data-click="new-from-clipboard"]`).trigger("click"), 200);
 			});
 	},
 	dispatch(event) {
@@ -48,8 +48,32 @@
 			case "open-filesystem":
 				APP.dispatch({ type: "open-file" });
 				break;
-			case "from-clipboard":
-				// TODO
+			case "new-from-clipboard":
+				navigator.clipboard.read().then(async clipboardItems => {
+					clipboardItems.map(clipboardItem => {
+						clipboardItem.types.map(async type => {
+							if (type.startsWith("image")) {
+								let blob = await clipboardItem.getType(type),
+									file = new karaqu.File({ kind: "png" }),
+									img = new Image;
+
+								// here the image is a blob
+								file.blob = blob;
+								file.size = blob.size;
+									
+								img.onload = () => {
+									APP.dispatch({
+										type: "setup-workspace",
+										width: img.width,
+										height: img.height,
+										file,
+									});
+								};
+								img.src = URL.createObjectURL(blob);
+							}
+						});
+					});
+				});
 				break;
 			case "select-sample":
 				el = $(event.target);
