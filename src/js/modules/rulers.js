@@ -33,6 +33,11 @@ const Rulers = {
 				// get element & variables
 				let el = $(event.target),
 					type = el.prop("className").split("-")[0],
+					screen = {
+						scale: File.scale,
+						oY: 4,
+						oX: 12,
+					},
 					click = {
 						y: event.clientY - +el.prop("offsetTop"),
 						x: event.clientX - +el.prop("offsetLeft"),
@@ -49,7 +54,7 @@ const Rulers = {
 						break;
 				}
 				// prepare drag object
-				Self.drag = { el, type, click, data: {} };
+				Self.drag = { el, type, click, screen, data: {} };
 
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
@@ -72,12 +77,14 @@ const Rulers = {
 						Drag.el.get(1).css({ left });
 						break;
 					case "lineV":
+						left -= Drag.screen.oX + (left % Drag.screen.scale);
 						// save value for mouseup
 						Drag.data.left = left;
 						// UI update
 						Drag.el.css({ left });
 						break;
 					case "lineH":
+						top -= Drag.screen.oY + (top % Drag.screen.scale);
 						// save value for mouseup
 						Drag.data.top = top;
 						// UI update
@@ -253,6 +260,7 @@ const Rulers = {
 		let ctx = Proj.ctx,
 			File = Proj.file,
 			Guides = File.rulers.guides,
+			scale = File.scale,
 			aX = Proj.aX,
 			aY = Proj.aY,
 			aW = Proj.aX + Proj.aW,
@@ -265,7 +273,7 @@ const Rulers = {
 		ctx.lineWidth = 1;
 		// vertical guides
 		vert.map(x => {
-			let gX = File.oX + (x * File.scale);
+			let gX = File.oX + (x * scale);
 			ctx.beginPath();
 			ctx.moveTo(gX, aY);
 			ctx.lineTo(gX, aH);
@@ -273,7 +281,7 @@ const Rulers = {
 		});
 		// horisontal guides
 		hori.map(y => {
-			let gY = File.oY + (y * File.scale);
+			let gY = File.oY + (y * scale);
 			ctx.beginPath();
 			ctx.moveTo(aX, gY);
 			ctx.lineTo(aW, gY);
