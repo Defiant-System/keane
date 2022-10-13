@@ -75,6 +75,10 @@ const Tabs = {
 		if (!next.length) next = el.nextAll(".file")
 		if (!next.length) next = el.prevAll(".file");
 
+		// remove file from stack
+		let file = this._stack.find(f => f._file.id === id);
+		this._stack.splice(this._stack.indexOf(file), 1);
+
 		// remove elmeent
 		el.remove();
 
