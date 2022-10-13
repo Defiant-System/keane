@@ -283,7 +283,7 @@ const Rulers = {
 	},
 	drawGrid(Proj) {
 		let cfg = {
-				color: "#dddddd50",
+				color: "#ffffff77",
 				gap: Pref.grid.gap,
 			};
 		this.drawPixelGrid(Proj, cfg);
@@ -296,12 +296,12 @@ const Rulers = {
 			scale = File.scale * gap,
 			aX = Math.max(Proj.aX, File.oX),
 			aY = Math.max(Proj.aY, File.oY),
-			aW = Proj.aX + Proj.aW - rSize,
-			aH = Proj.aY + Proj.aH + rSize,
+			aW = Math.min(aX + Proj.aW - rSize, File.width - rSize),
+			aH = Math.min(aY + Proj.aH + rSize, File.height - rSize),
 			oX = scale - (aX - File.oX) % scale,
 			oY = scale - (aY - File.oY) % scale,
-			xl = Math.ceil((Proj.aW + rSize) / scale),
-			yl = Math.ceil((Proj.aH + rSize) / scale);
+			xl = Math.ceil((aW + rSize) / scale),
+			yl = Math.ceil((aH + rSize) / scale);
 
 		ctx.save();
 		ctx.translate(.5, .5);
@@ -312,7 +312,7 @@ const Rulers = {
 			let lY = aY + (y * scale) + oY;
 			ctx.beginPath();
 			ctx.moveTo(aX, lY);
-			ctx.lineTo(aW, lY);
+			ctx.lineTo(aX + aW + rSize, lY);
 			ctx.stroke();
 		}
 		// vertical lines
@@ -320,7 +320,7 @@ const Rulers = {
 			let lX = aX + (x * scale) + oX;
 			ctx.beginPath();
 			ctx.moveTo(lX, aY);
-			ctx.lineTo(lX, aH);
+			ctx.lineTo(lX, aY + aH + rSize);
 			ctx.stroke();
 		}
 		ctx.restore();
