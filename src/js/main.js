@@ -19,11 +19,11 @@
 
 let Pref = {
 	guides: {
-		on: true,
+		show: true,
 		color: "#00bff0",
 	},
 	grid: {
-		on: true,
+		show: true,
 		type: "square", // isometric
 	}
 };
@@ -36,7 +36,6 @@ const keane = {
 			content: window.find("content"),
 			toolsBar: window.find(".tools-bar"),
 			blankView: window.find(".blank-view"),
-			statusBar: window.find(".status-bar"),
 		};
 		// init objects
 		UI.init();
@@ -48,7 +47,7 @@ const keane = {
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
 		// temp
-		setTimeout(() => Projector.file.dispatch({ type: "set-scale", scale: 4 }), 750);
+		// setTimeout(() => Projector.file.dispatch({ type: "set-scale", scale: 4 }), 750);
 	},
 	dispatch(event) {
 		let Self = keane,
@@ -121,14 +120,14 @@ const keane = {
 				Projector.file.render();
 				break;
 
-			case "toggle-rulers":
-				Projector.file.dispatch(event);
-				break;
-			case "toggle-statusbar":
-				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
-				break;
-
 			// proxy events
+			case "toggle-guides":
+			case "toggle-rulers":
+			case "toggle-grid":
+			case "toggle-pixel-grid":
+				return Rulers.dispatch(event);
+			case "toggle-statusbar":
+				return Self.statusbar.dispatch(event);
 			case "select-tool":
 				return Self.tools.dispatch(event)
 			case "box-head-tab":

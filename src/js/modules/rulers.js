@@ -14,57 +14,17 @@ const Rulers = {
 		};
 
 		// subscribe to events
-		karaqu.on("meta-key", this.doGuide);
+		karaqu.on("meta-key", this.dispatch);
 
 		// bind event handlers
-		this.els.rg.on("mousedown", this.doGuide)
+		this.els.rg.on("mousedown", this.dispatch)
 	},
-	doGuide(event) {
+	dispatch(event) {
 		let APP = keane,
 			Self = Rulers,
-			Drag = Self.drag;
+			Drag = Self.drag,
+			File = Projector.file;
 		switch (event.type) {
-			// subscribed events
-			case "meta-key":
-				if (event.detail.state === "down") {
-					// add DOM elements of guidelines
-					let File = Projector.file,
-						fileGuides = File.rulers.guides,
-						oY = File.oY - Projector.aY + (File.rulers.show ? Self.t : 0),
-						oX = File.oX - Projector.aX + (File.rulers.show ? Self.t : 0),
-						str = [];
-					fileGuides.horizontal.map(y => str.push(`<div class="lineH" style="top: ${oY + (y * File.scale)}px;"></div>`));
-					fileGuides.vertical.map(x => str.push(`<div class="lineV" style="left: ${oX + (x * File.scale)}px;"></div>`));
-					Self.els.rg
-						.css({
-							"--line-color": Pref.guides.color,
-							"--ruler-width": `${Self.t}px`,
-						})
-						.append(str.join(""));
-					// render projector without guidelines
-					Projector.render({ noGuideLines: 1 });
-
-				} else {
-					let File = Projector.file,
-						lines = Self.els.rg.find(".lineH, .lineV");
-					// reset file guide lists
-					File.rulers.guides.horizontal = [];
-					File.rulers.guides.vertical = [];
-					lines.map(elem => {
-						if (elem.classList.contains("lineH")) {
-							let top = +elem.offsetTop - (File.oY - Projector.aY + (File.rulers.show ? Self.t : 0));
-							File.rulers.guides.horizontal.push(top / File.scale);
-						} else {
-							let left = +elem.offsetLeft - (File.oX - Projector.aX + (File.rulers.show ? Self.t : 0));
-							File.rulers.guides.vertical.push(left / File.scale);
-						}
-					});
-					// re-render projector with updated guidelines
-					Projector.render();
-					// remove DOM elements of guidelines
-					lines.remove();
-				}
-				break;
 			// native events
 			case "mousedown":
 				// prevent default behaviour
@@ -94,7 +54,7 @@ const Rulers = {
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
 				// bind event handlers
-				Self.doc.on("mousemove mouseup", Self.doGuide);
+				Self.doc.on("mousemove mouseup", Self.dispatch);
 				break;
 			case "mousemove":
 				let left = event.clientX - Drag.click.x,
@@ -144,7 +104,70 @@ const Rulers = {
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
-				Self.doc.off("mousemove mouseup", Self.doGuide);
+				Self.doc.off("mousemove mouseup", Self.dispatch);
+				break;
+
+			// subscribed events
+			case "meta-key":
+				if (!File.rulers.guides.show) return;
+				if (event.detail.state === "down") {
+					// add DOM elements of guidelines
+					let fileGuides = File.rulers.guides,
+						oY = File.oY - Projector.aY + (File.rulers.show ? Self.t : 0),
+						oX = File.oX - Projector.aX + (File.rulers.show ? Self.t : 0),
+						str = [];
+					fileGuides.horizontal.map(y => str.push(`<div class="lineH" style="top: ${oY + (y * File.scale)}px;"></div>`));
+					fileGuides.vertical.map(x => str.push(`<div class="lineV" style="left: ${oX + (x * File.scale)}px;"></div>`));
+					Self.els.rg
+						.css({
+							"--line-color": Pref.guides.color,
+							"--ruler-width": `${Self.t}px`,
+						})
+						.append(str.join(""));
+					// render projector without guidelines
+					Projector.render({ noGuideLines: 1 });
+
+				} else {
+					let lines = Self.els.rg.find(".lineH, .lineV");
+					// reset file guide lists
+					File.rulers.guides.horizontal = [];
+					File.rulers.guides.vertical = [];
+					lines.map(elem => {
+						if (elem.classList.contains("lineH")) {
+							let top = +elem.offsetTop - (File.oY - Projector.aY + (File.rulers.show ? Self.t : 0));
+							File.rulers.guides.horizontal.push(top / File.scale);
+						} else {
+							let left = +elem.offsetLeft - (File.oX - Projector.aX + (File.rulers.show ? Self.t : 0));
+							File.rulers.guides.vertical.push(left / File.scale);
+						}
+					});
+					// re-render projector with updated guidelines
+					Projector.render();
+					// remove DOM elements of guidelines
+					lines.remove();
+				}
+				break;
+
+			// proxied events
+			case "toggle-grid": break;
+			case "toggle-pixel-grid": break;
+			case "toggle-guides":
+				Pref.guides.show =
+				File.rulers.guides.show = !File.rulers.guides.show;
+				// re-render projector
+				Projector.render();
+				break;
+			case "toggle-rulers":
+				File.rulers.show = event.checked === 1;
+				// trigger re-calculations + re-paint
+				Projector.reset(File);
+				// update origo
+				File.oX = Math.round(Projector.cX - (File.width >> 1));
+				File.oY = Math.round(Projector.cY - (File.height >> 1));
+				// render projector canvas
+				Projector.render();
+
+				APP.els.content.toggleClass("show-rulers", !File.rulers.show);
 				break;
 		}
 	},

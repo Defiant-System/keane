@@ -170,7 +170,7 @@ const Projector = {
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
 
-		if (!opt.noGuideLines) Rule.drawGuides(this);
+		if (File.rulers.guides.show && !opt.noGuideLines) Rule.drawGuides(this);
 		if (File.rulers.show) Rule.render(this);
 
 		// console.timeEnd("Projector Render");

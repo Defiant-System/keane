@@ -3,7 +3,10 @@
 
 {
 	init() {
-		
+		// fast references
+		this.els = {
+			statusBar: window.find(".status-bar"),
+		};
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -16,6 +19,9 @@
 				break;
 			case "close-file":
 				Tabs.close(event.el.parent().data("arg"));
+				break;
+			case "toggle-statusbar":
+				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
 				break;
 		}
 	}

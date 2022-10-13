@@ -16,8 +16,8 @@ class File {
 			show: true,
 			guides: {
 				show: true,
-				horizontal: [202],
-				vertical: [298],
+				horizontal: [],
+				vertical: [],
 			}
 		};
 
@@ -226,18 +226,6 @@ class File {
 						: this.height > Proj.aH ? Proj.cY - (this.height >> 1) + event.y : false) || this.oY;
 				// render projector canvas
 				Proj.render();
-				break;
-			case "toggle-rulers":
-				this.rulers.show = event.checked === 1;
-				// trigger re-calculations + re-paint
-				Proj.reset(this);
-				// update origo
-				this.oX = Math.round(Proj.cX - (this.width >> 1));
-				this.oY = Math.round(Proj.cY - (this.height >> 1));
-				// render projector canvas
-				Proj.render();
-
-				APP.els.content.toggleClass("show-rulers", !this.rulers.show);
 				break;
 
 			case "select-layer":
