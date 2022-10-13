@@ -23,6 +23,9 @@
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);
 				break;
+			case "new-from-clipboard":
+				APP.blankView.dispatch(event);
+				break;
 		}
 	}
 }

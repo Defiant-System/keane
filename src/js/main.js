@@ -106,8 +106,12 @@ const keane = {
 				Tabs.open(event.file, event);
 				break;
 			case "show-blank-view":
+				let str = "show-blank-view";
+				str += Tabs._stack.length ? " files-open" : "";
 				// show blank view
-				Self.els.content.addClass("show-blank-view");
+				Self.els.content.addClass(str);
+				// check clipboard for images
+				Self.blankView.dispatch({ type: "check-clipboard" });
 				break;
 
 			case "open-dialog":

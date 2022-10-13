@@ -7,8 +7,7 @@
 		this.els = {
 			el: window.find(".blank-view"),
 		};
-		// window.settings.clear();
-		
+
 		// get settings, if any
 		let xList = $.xmlFromString(`<Recents/>`);
 		let xSamples = window.bluePrint.selectSingleNode(`//Samples`);
@@ -22,15 +21,20 @@
 				}
 			}))
 			.then(() => {
+				let target = this.els.el;
+
 				// add recent files in to data-section
 				xSamples.parentNode.append(this.xRecent);
-
 				// render blank view
 				window.render({
 					template: "blank-view",
 					match: `//Data`,
-					target: this.els.el
+					target,
 				});
+				// more fast references
+				this.els.btnOpen = target.find(`.btn[data-click="open-filesystem"]`);
+				this.els.btnClipboard = target.find(`.btn[data-click="new-from-clipboard"]`);
+				this.els.btnClose = target.find(`.btn[data-click="close-view"]`);
 
 				// setTimeout(() => window.find(".sample:nth(0)").trigger("click"), 300);
 				// setTimeout(() => window.find(`.btn[data-click="new-from-clipboard"]`).trigger("click"), 200);
@@ -48,6 +52,19 @@
 			case "open-filesystem":
 				APP.dispatch({ type: "open-file" });
 				break;
+			case "check-clipboard":
+				navigator.clipboard.read().then(async clipboardItems => {
+					clipboardItems.map(clipboardItem => {
+						clipboardItem.types.map(async type => {
+							if (type.startsWith("image")) {
+								Self.els.btnClipboard.removeClass("disabled_");
+							} else {
+								Self.els.btnClipboard.addClass("disabled_");
+							}
+						});
+					});
+				});
+				break;
 			case "new-from-clipboard":
 				navigator.clipboard.read().then(async clipboardItems => {
 					clipboardItems.map(clipboardItem => {
@@ -56,11 +73,10 @@
 								let blob = await clipboardItem.getType(type),
 									file = new karaqu.File({ kind: "png" }),
 									img = new Image;
-
 								// here the image is a blob
 								file.blob = blob;
 								file.size = blob.size;
-									
+								// load blob inte temporary image to find out width/height
 								img.onload = () => {
 									APP.dispatch({
 										type: "setup-workspace",
@@ -74,6 +90,10 @@
 						});
 					});
 				});
+				break;
+			case "close-view":
+				if (Tabs._stack.length) APP.els.content.removeClass("show-blank-view files-open");
+				else karaqu.shell("win -c");
 				break;
 			case "select-sample":
 				el = $(event.target);

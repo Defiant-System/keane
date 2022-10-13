@@ -26,6 +26,7 @@
 
 		&.icon-folder-open { background-image: url(~/icons/icon-folder-open.png); }
 		&.icon-clipboard   { background-image: url(~/icons/icon-clipboard.png); }
+		&.icon-cancel      { background-image: url(~/icons/icon-red-cancel.png); }
 		&.icon-file-image  { background-image: url(~/icons/icon-file-image.png); width: 30px; height: 30px; }
 	}
 
@@ -61,6 +62,7 @@
 		.btn {
 			display: inline-block;
 			background: rgba(#233,.175);
+			color: #bbb;
 			font-size: 13px;
 			margin-right: 11px;
 			padding: 9px 13px 6px;
@@ -69,22 +71,36 @@
 			cursor: pointer;
 
 			&:hover:not(.disabled_) {
+				color: #fff;
 				box-shadow: 0 0 0 3px #489bf770,
 							inset 0 0 0 2px #489bf7;
+
+				i { opacity: .5; }
 			}
 
 			&.disabled_ {
 				background: transparent;
 				opacity: .5;
 				cursor: default;
+
+				i { opacity: .125; }
+			}
+
+			&[data-click="close-view"] {
+				display: none;
 			}
 
 			i {
 				position: relative;
 				top: -2px;
-				opacity: .175;
+				opacity: .225;
 				margin-right: 5px;
 				filter: invert(100%) brightness(1.5);
+
+				&.icon-cancel {
+					background-size: 13px 13px;
+					filter: grayscale(100%) brightness(3);
+				}
 			}
 		}
 	}

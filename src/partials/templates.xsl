@@ -4,14 +4,19 @@
 	<h2>Welcome to Keane.</h2>
 
 	<div class="block-buttons">
-		<div class="btn" data-click="open-filesystem">
+		<div class="btn disabled_" data-click="open-filesystem">
 			<i class="icon-folder-open"></i>
 			Open&#8230;
 		</div>
 
-		<div class="btn" data-click="new-from-clipboard">
+		<div class="btn disabled_" data-click="new-from-clipboard">
 			<i class="icon-clipboard"></i>
 			From clipboard
+		</div>
+
+		<div class="btn" data-click="close-view">
+			<i class="icon-cancel"></i>
+			Close
 		</div>
 	</div>
 

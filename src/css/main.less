@@ -51,6 +51,12 @@ content {
 
 
 	&.show-blank-view {
+		&.files-open {
+			.blank-view .block-buttons .btn[data-click="close-view"] {
+				display: inline-block;
+			}
+		}
+
 		.blank-view { display: block; }
 
 		.tools-bar,
