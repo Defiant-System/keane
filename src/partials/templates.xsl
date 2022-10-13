@@ -9,7 +9,7 @@
 			Open&#8230;
 		</div>
 
-		<div class="btn disabled_" data-click="from-clipboard">
+		<div class="btn" data-click="new-from-clipboard">
 			<i class="icon-clipboard"></i>
 			From clipboard
 		</div>

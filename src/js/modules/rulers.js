@@ -109,7 +109,7 @@ const Rulers = {
 
 			// subscribed events
 			case "meta-key":
-				if (!File.rulers.guides.show) return;
+				if (!File || !File.rulers.guides.show) return;
 				if (event.detail.state === "down") {
 					// add DOM elements of guidelines
 					let fileGuides = File.rulers.guides,
