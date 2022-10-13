@@ -158,7 +158,35 @@
 		</Menu>
 	</Menu>
 	<Menu name="View">
+		<Menu name="Zoom In" disabled="1"/>
+		<Menu name="Zoom Out" disabled="1"/>
+		<Menu name="Fit To Area" disabled="1"/>
+		<Menu name="Pixel to Pixel" disabled="1"/>
+		<Menu name="Patter Preview" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Modes" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Extras" disabled="1"/>
+		<Menu name="Show&#8230;">
+			<Menu name="Selection" disabled="1"/>
+			<Menu name="Paths" disabled="1"/>
+			<Menu name="Guides" disabled="1"/>
+			<Menu name="Grid" disabled="1"/>
+			<Menu name="Pixel Grid" disabled="1" check-group="toggle-rulers" is-checked="1"/>
+			<Menu name="Pixel Slices" disabled="1"/>
+		</Menu>
+		<Menu type="divider"/>
 		<Menu name="Rulers" click="toggle-rulers" check-group="toggle-rulers" is-checked="1" hotkey="alt+r" />
+		<Menu type="divider"/>
+		<Menu name="Snap" disabled="1"/>
+		<Menu name="Snap To&#8230;" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Lock Guides" disabled="1"/>
+		<Menu name="Clear Guides" disabled="1"/>
+		<Menu name="Add Guides&#8230;" disabled="1"/>
+		<Menu name="Guides From Layer" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Clear Slices" disabled="1"/>
 		<Menu name="Status Bar" click="toggle-statusbar" check-group="toggle-statusbar" is-checked="1" />
 	</Menu>
 	<Menu name="Window">

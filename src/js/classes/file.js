@@ -10,16 +10,14 @@ class File {
 		this.height = opt.height || 1;
 		this.bgColor = "#000000ff";
 		this.fgColor = "#ffffffff";
-		this.lineWidth = 1;
+		// this.lineWidth = 1;
 		this.channels = "111"; // rgb
 		this.rulers = {
 			show: true,
 			guides: {
 				show: true,
-				// horizontal: [150],
-				// vertical: [150],
-				horizontal: [],
-				vertical: [],
+				horizontal: [202],
+				vertical: [298],
 			}
 		};
 

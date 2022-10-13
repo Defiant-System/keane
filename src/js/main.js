@@ -46,6 +46,9 @@ const keane = {
 		Projector.init();
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
+
+		// temp
+		setTimeout(() => Projector.file.dispatch({ type: "set-scale", scale: 4 }), 750);
 	},
 	dispatch(event) {
 		let Self = keane,

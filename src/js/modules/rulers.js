@@ -33,8 +33,8 @@ const Rulers = {
 						oY = File.oY - Projector.aY + (File.rulers.show ? Self.t : 0),
 						oX = File.oX - Projector.aX + (File.rulers.show ? Self.t : 0),
 						str = [];
-					fileGuides.horizontal.map(y => str.push(`<div class="lineH" style="top: ${oY+y}px;"></div>`));
-					fileGuides.vertical.map(x => str.push(`<div class="lineV" style="left: ${oX+x}px;"></div>`));
+					fileGuides.horizontal.map(y => str.push(`<div class="lineH" style="top: ${oY + (y * File.scale)}px;"></div>`));
+					fileGuides.vertical.map(x => str.push(`<div class="lineV" style="left: ${oX + (x * File.scale)}px;"></div>`));
 					Self.els.rg
 						.css({
 							"--line-color": Pref.guides.color,
@@ -53,10 +53,10 @@ const Rulers = {
 					lines.map(elem => {
 						if (elem.classList.contains("lineH")) {
 							let top = +elem.offsetTop - (File.oY - Projector.aY + (File.rulers.show ? Self.t : 0));
-							File.rulers.guides.horizontal.push(top);
+							File.rulers.guides.horizontal.push(top / File.scale);
 						} else {
 							let left = +elem.offsetLeft - (File.oX - Projector.aX + (File.rulers.show ? Self.t : 0));
-							File.rulers.guides.vertical.push(left);
+							File.rulers.guides.vertical.push(left / File.scale);
 						}
 					});
 					// re-render projector with updated guidelines
@@ -235,7 +235,7 @@ const Rulers = {
 		ctx.lineWidth = 1;
 		// vertical guides
 		vert.map(x => {
-			let gX = File.oX + x;
+			let gX = File.oX + (x * File.scale);
 			ctx.beginPath();
 			ctx.moveTo(gX, aY);
 			ctx.lineTo(gX, aH);
@@ -243,7 +243,7 @@ const Rulers = {
 		});
 		// horisontal guides
 		hori.map(y => {
-			let gY = File.oY + y;
+			let gY = File.oY + (y * File.scale);
 			ctx.beginPath();
 			ctx.moveTo(aX, gY);
 			ctx.lineTo(aW, gY);
