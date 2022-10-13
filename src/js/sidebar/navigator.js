@@ -145,9 +145,7 @@
 			Self = APP.sidebar.navigator,
 			Drag = Self.drag,
 			Proj = Projector,
-			File = Proj.file,
-			_max = Math.max,
-			_min = Math.min;
+			File = Proj.file;
 		switch (event.type) {
 			case "mousedown":
 				// prevent default behaviour
@@ -161,10 +159,12 @@
 					min: { x: 0, y: 0 },
 					max: {
 						x: +el.parent().prop("offsetWidth") - +el.prop("offsetWidth"),
-						y: +el.parent().prop("offsetHeight") - +el.prop("offsetHeight") - 4,
+						y: +el.parent().prop("offsetHeight") - +el.prop("offsetHeight") - 3,
 						w: Proj.aW - File.width - (File.rulers.show ? Rulers.t : 0),
 						h: Proj.aH - File.height + (File.rulers.show ? Rulers.t : 0),
-					}
+					},
+					_max: Math.max,
+					_min: Math.min,
 				};
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover");
@@ -172,8 +172,8 @@
 				Self.doc.on("mousemove mouseup", Self.pan);
 				break;
 			case "mousemove":
-				let left = _min(_max(event.clientX + Drag.clickX, Drag.min.x), Drag.max.x),
-					top = _min(_max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y);
+				let left = Drag._min(Drag._max(event.clientX + Drag.clickX, Drag.min.x), Drag.max.x),
+					top = Drag._min(Drag._max(event.clientY + Drag.clickY, Drag.min.y), Drag.max.y);
 				// moves navigator view rectangle
 				Drag.el.css({ top, left });
 				// emit pan-event
