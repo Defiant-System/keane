@@ -141,6 +141,8 @@ const keane = {
 				break;
 
 			// proxy events
+			case "toggle-quick-mask":
+				return Self.tools.marquee.dispatch(event);
 			case "toggle-guides":
 			case "toggle-rulers":
 			case "toggle-grid":
