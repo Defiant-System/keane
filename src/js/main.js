@@ -6,6 +6,7 @@
 @import "modules/misc.js"
 @import "modules/color.new.js"
 @import "modules/ui.js"
+@import "modules/mask.js"
 @import "modules/tabs.js"
 @import "modules/projector.js"
 @import "modules/rulers.js"
@@ -41,6 +42,7 @@ const keane = {
 		};
 		// init objects
 		UI.init();
+		Mask.init();
 		Tabs.init();
 		Rulers.init();
 		Filters.init();
@@ -64,6 +66,12 @@ const keane = {
 			// system events
 			case "window.init":
 				Self.dispatch({ type: "show-blank-view" });
+				break;
+			case "window.blur":
+				// Mask.ants.init(Mask);
+				break;
+			case "window.focus":
+				// Mask.ants.init(Mask, true);
 				break;
 			case "window.resize":
 				Tabs.resize(event);
@@ -142,7 +150,7 @@ const keane = {
 
 			// proxy events
 			case "toggle-quick-mask":
-				return Self.tools.marquee.dispatch(event);
+				return Mask.dispatch(event);
 			case "toggle-guides":
 			case "toggle-rulers":
 			case "toggle-grid":
