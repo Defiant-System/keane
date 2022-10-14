@@ -16,16 +16,7 @@
 
 		// temp
 		setTimeout(() => {
-			return;
-			let File = Projector.file;
-			this.cvs.prop({ width: File.width, height: File.height });
-			Projector.swap.cvs.prop({ width: File.width, height: File.height });
-
-			// this.ants.init(this);
-			// this.ctx.clear();
-			this.ctx.fillRect(110, 64, 234, 205);
-			this.ctx.fill();
-			this.ants.init(this, true);
+			this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
 		}, 900);
 	},
 	dispatch(event) {
@@ -145,7 +136,22 @@
 						break;
 				}
 				break;
+			
 			// custom events
+			case "select-rect":
+				Self.cvs.prop({ width: File.width, height: File.height });
+				Proj.swap.cvs.prop({ width: File.width, height: File.height });
+
+				// this.ants.init(this);
+				// this.ctx.clear();
+				Self.ctx.fillRect(event.rect.x, event.rect.y, event.rect.w, event.rect.h);
+				Self.ctx.fill();
+				Self.ants.init(Self, true);
+				break;
+			case "select-elliptic":
+				break;
+			case "select-polygon":
+				break;
 			case "select-with-magic-wand":
 				Self.ctx.drawImage(File.cvs[0], 0, 0);
 				let data = Self.ctx.getImageData(0, 0, File.width, File.height).data;
