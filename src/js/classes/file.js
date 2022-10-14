@@ -119,7 +119,7 @@ class File {
 			// set height & width of channel canvas
 			el.prop({ width, height });
 			// checkers background
-			Projector.drawCheckers(ctx, {
+			Rulers.drawCheckers(ctx, {
 				pX, pY,
 				w: Math.floor(tW + pX),
 				h: Math.floor(tH + pY),
@@ -165,6 +165,15 @@ class File {
 			el;
 		//console.log(event);
 		switch (event.type) {
+			// system event
+			case "window.resize":
+				this.width = this.oW * this.scale;
+				this.height = this.oH * this.scale;
+				// origo
+				this.oX = Math.round(Proj.cX - (this.width >> 1));
+				this.oY = Math.round(Proj.cY - (this.height >> 1));
+				break;
+			// custom events
 			case "resize-file":
 				// set file dimension if not set
 				this.width = event.width || this.width;

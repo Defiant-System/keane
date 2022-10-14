@@ -16,6 +16,7 @@
 
 		// temp
 		setTimeout(() => {
+			return;
 			let File = Projector.file;
 			this.cvs.prop({ width: File.width, height: File.height });
 			Projector.swap.cvs.prop({ width: File.width, height: File.height });

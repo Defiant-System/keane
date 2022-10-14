@@ -57,12 +57,17 @@ const keane = {
 	dispatch(event) {
 		let Self = keane,
 			Tools = Self.tools,
+			name,
 			el;
-		//console.log(event);
+		// console.log(event);
 		switch (event.type) {
 			// system events
 			case "window.init":
 				Self.dispatch({ type: "show-blank-view" });
+				break;
+			case "window.resize":
+				Tabs.resize(event);
+				Projector.dispatch(event);
 				break;
 			case "window.keystroke":
 				switch (event.char) {
@@ -70,6 +75,9 @@ const keane = {
 						karaqu.emit("meta-key", { state: "down" });
 						break;
 				}
+				// dispatch event to active tool object
+				name = Self.els.toolsBar.find(".active").data("content");
+				if (Self.tools[name]) Self.tools[name].dispatch(event);
 				break;
 			case "window.keyup":
 				switch (event.char) {

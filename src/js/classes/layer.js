@@ -78,7 +78,7 @@ class Layer {
 		thumbCvsEl.prop({ width, height });
 		
 		// checkers background
-		Projector.drawCheckers(tCtx, {
+		Rulers.drawCheckers(tCtx, {
 			pX, pY,
 			w: Math.floor(tW + pX),
 			h: Math.floor(tH + pY),

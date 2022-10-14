@@ -96,7 +96,7 @@
 				Self.cvs.prop({ width: Self.navWidth, height: Self.navHeight });
 				
 				// checkers background
-				Proj.drawCheckers(Self.ctx, { w: Self.navWidth * 2, h: Self.navHeight * 2, size: 4 });
+				_rulers.drawCheckers(Self.ctx, { w: Self.navWidth * 2, h: Self.navHeight * 2, size: 4 });
 
 				// paint resized image
 				opt = { resizeWidth: Self.navWidth, resizeHeight: Self.navHeight, resizeQuality: "medium" };

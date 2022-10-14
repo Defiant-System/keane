@@ -11,6 +11,9 @@ const Tabs = {
 		let ids = this._stack.map(f => f._id);
 		return Math.max.apply({}, [0, ...ids]) + 1;
 	},
+	resize(event) {
+		this._stack.map(file => file.dispatch(event));
+	},
 	open(fsFile, opt={}) {
 		if (!opt.fill) opt.fill = "transparent";
 		if (!fsFile) fsFile = new karaqu.File({ kind: "psd" });
