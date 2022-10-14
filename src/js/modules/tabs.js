@@ -12,6 +12,7 @@ const Tabs = {
 		return Math.max.apply({}, [0, ...ids]) + 1;
 	},
 	resize(event) {
+		// forward resize event to open files
 		this._stack.map(file => file.dispatch(event));
 	},
 	open(fsFile, opt={}) {
