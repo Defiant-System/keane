@@ -25,6 +25,8 @@
 	},
 	resume() {
 		this._halt = false;
+		cancelAnimationFrame(this.raf);
+		if (this.mask) this.render(true);
 	},
 	match(srcData, w, h, x, y) {
 		let alpha = this.getPixel(srcData, w, h, x, y);

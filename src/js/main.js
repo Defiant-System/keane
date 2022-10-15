@@ -68,10 +68,10 @@ const keane = {
 				Self.dispatch({ type: "show-blank-view" });
 				break;
 			case "window.blur":
-				// Mask.ants.init(Mask);
+				Mask.ants.halt();
 				break;
 			case "window.focus":
-				// Mask.ants.init(Mask, true);
+				Mask.ants.resume();
 				break;
 			case "window.resize":
 				Tabs.resize(event);
