@@ -13,10 +13,10 @@ let Mask = {
 
 		// temp
 		setTimeout(() => {
-			// return;
-			// this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
+			return;
+			this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
 			// this.dispatch({ type: "select-elliptic", rect: { x: 100, y: 50, w: 70, h: 70 } });
-			this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 160, 170, 120, 120, 60, 110 ] });
+			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 160, 170, 120, 120, 60, 110 ] });
 
 			this.dispatch({ type: "inverse-selection" });
 
@@ -36,8 +36,7 @@ let Mask = {
 	},
 	dispatch(event) {
 		let APP = keane,
-			Proj = Projector,
-			File = Proj.file,
+			File = Projector.file,
 			Self = Mask,
 			data,
 			image,
@@ -95,9 +94,11 @@ let Mask = {
 				Self.clear();
 				break;
 			case "inverse-selection":
+				// stop marching ants
+				Self.ants.halt(true);
+				// invert mask
 				Self.ctx.globalCompositeOperation = "source-out";
 				Self.ctx.fillRect(0, 0, 1e9, 1e9);
-				Self.ctx.fill();
 				// start marching ants
 				Self.ants.paint(true);
 				break;
