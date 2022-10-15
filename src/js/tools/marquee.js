@@ -22,39 +22,28 @@
 			mask,
 			image,
 			oX, oY;
-
+		// console.log(event);
 		switch (event.type) {
+			// system events
+			case "window.keystroke":
+				break;
+
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "rectangle";
 				break;
-			case "select-all":
-				// colorize mask
-				Self.ctx.fillRect(0, 0, 1e9, 1e9);
-				Self.ctx.fill();
-				// march little ants!
-				Mask.ants.paint(true);
-				break;
-			case "deselect":
-				Self.ctx.clear();
-				// halt ants
-				Mask.ants.halt();
-				break;
-			case "inverse-selection":
-				Self.ctx.globalCompositeOperation = "source-out";
-				Self.ctx.fillRect(0, 0, 1e9, 1e9);
-				Self.ctx.fill();
-				// start marching ants
-				Mask.ants.paint(true);
-				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.doMarquee);
-				// temp
-				// APP.els.content.find(".tool[data-arg='magic-wand']").trigger("click");
 				break;
 			case "disable":
 				Proj.cvs.off("mousedown", Self.doMarquee);
 				break;
+			
+			// proxy event
+			case "select-all":
+			case "deselect":
+			case "inverse-selection":
+				return Mask.dispatch(event);
 		}
 	},
 	doMarquee(event) {
@@ -80,10 +69,7 @@
 
 				Self.drag = { option, ctx, click, oX, oY, PI2 };
 				// reset selection canvas
-				Mask.cvs.prop({ width: File.width, height: File.height });
-				Projector.swap.cvs.prop({ width: File.width, height: File.height });
-				// halt ants, if marching (also clears canvas from existing ants)
-				Mask.ants.halt(true);
+				Mask.clear();
 
 				switch (Self.option) {
 					case "lasso":

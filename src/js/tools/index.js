@@ -89,6 +89,8 @@
 					if (area) {
 						Self[area].dispatch(event);
 					}
+				} else {
+					return Self[Self._active].dispatch(event);
 				}
 		}
 	},

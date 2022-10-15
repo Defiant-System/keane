@@ -159,9 +159,9 @@ const keane = {
 			case "toggle-statusbar":
 				return Self.statusbar.dispatch(event);
 			case "select-tool":
-				return Self.tools.dispatch(event)
+				return Self.tools.dispatch(event);
 			case "box-head-tab":
-				return Self.sidebar.dispatch(event)
+				return Self.sidebar.dispatch(event);
 			default:
 				el = event.el;
 				if (el) {
@@ -179,6 +179,8 @@ const keane = {
 						let name = rEl.data("dlg");
 						return Dialogs[name](event);
 					}
+				} else {
+					return Self.tools.dispatch(event);
 				}
 		}
 	},

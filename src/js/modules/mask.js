@@ -21,6 +21,17 @@ let Mask = {
 			// window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
 		}, 900);
 	},
+	clear() {
+		let Proj = Projector,
+			width = Proj.file.width,
+			height = Proj.file.height;
+		
+		// this.ctx.clear(); // <-- faster ?
+		this.cvs.prop({ width, height });
+		Proj.swap.cvs.prop({ width, height });
+		// halt ants, if marching (also clears canvas from existing ants)
+		this.ants.halt(true);
+	},
 	dispatch(event) {
 		let APP = keane,
 			Proj = Projector,
@@ -35,18 +46,14 @@ let Mask = {
 				break;
 
 			case "select-rect":
-				Self.cvs.prop({ width: File.width, height: File.height });
-				Proj.swap.cvs.prop({ width: File.width, height: File.height });
+				Self.clear();
 
-				// this.ants.paint();
-				// this.ctx.clear();
 				Self.ctx.fillRect(event.rect.x, event.rect.y, event.rect.w, event.rect.h);
 				Self.ctx.fill();
 				Self.ants.paint(true);
 				break;
 			case "select-elliptic":
-				Self.cvs.prop({ width: File.width, height: File.height });
-				Proj.swap.cvs.prop({ width: File.width, height: File.height });
+				Self.clear();
 
 				let eW = event.rect.w,
 					eH = event.rect.h,
@@ -57,8 +64,7 @@ let Mask = {
 				Self.ants.paint(true);
 				break;
 			case "select-polygon":
-				Self.cvs.prop({ width: File.width, height: File.height });
-				Proj.swap.cvs.prop({ width: File.width, height: File.height });
+				Self.clear();
 
 				Self.ctx.beginPath();
 				Self.ctx.moveTo(event.points.shift(), event.points.shift());
@@ -73,6 +79,25 @@ let Mask = {
 				Self.ants.paint(true);
 				break;
 
+			case "select-all":
+				Self.clear();
+
+				// colorize mask
+				Self.ctx.fillRect(0, 0, 1e9, 1e9);
+				Self.ctx.fill();
+				// march little ants!
+				Self.ants.paint(true);
+				break;
+			case "deselect":
+				Self.clear();
+				break;
+			case "inverse-selection":
+				Self.ctx.globalCompositeOperation = "source-out";
+				Self.ctx.fillRect(0, 0, 1e9, 1e9);
+				Self.ctx.fill();
+				// start marching ants
+				Self.ants.paint(true);
+				break;
 			case "select-with-magic-wand":
 				Self.ctx.drawImage(File.activeLayer.cvs[0], 0, 0);
 				data = Self.ctx.getImageData(0, 0, File.width, File.height).data;
@@ -93,9 +118,9 @@ let Mask = {
 				if (image.mask) Self.magicWand.gaussBlurOnlyBorder(image, null);
 
 				// apply mask to mask canvas
-				Mask.paintMask(image);
+				Self.paintMask(image);
 				// start marching ants
-				Mask.ants.paint(true);
+				Self.ants.paint(true);
 				break;
 		}
 	},

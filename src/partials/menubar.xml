@@ -83,12 +83,12 @@
 	<Menu name="Layer"></Menu>
 	<Menu name="Type"></Menu>
 	<Menu name="Select">
-		<Menu name="All" click="tool:marquee:select-all" hotkey="alt+a"/>
-		<Menu name="Deselect" click="tool:marquee:deselect" hotkey="alt+d"/>
-		<Menu name="Inverse" click="tool:marquee:inverse-selection" hotkey="alt+shift+i"/>
+		<Menu name="All" click="select-all" hotkey="alt+a"/>
+		<Menu name="Deselect" click="deselect" hotkey="alt+d"/>
+		<Menu name="Inverse" click="tinverse-selection" hotkey="alt+shift+i"/>
 		<Menu type="divider"/>
-		<Menu name="Edit in Quick Mask Mode" click="tool:quickMask:enable" hotkey="q"/>
-		<Menu name="Exit Quick Mask Mode" click="tool:quickMask:disable" hotkey="q" type="hidden"/>
+		<Menu name="Edit in Quick Mask Mode" click="quickMask-enable" hotkey="q"/>
+		<Menu name="Exit Quick Mask Mode" click="quickMask-disable" hotkey="q" type="hidden"/>
 	</Menu>
 	<Menu name="Filter">
 		<Menu name="Last Filter" disabled="1" />
