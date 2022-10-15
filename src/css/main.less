@@ -214,25 +214,31 @@ content {
 				opacity: 0.85;
 			}
 
+			&:after {
+				top: 8px;
+				left: 8px;
+				// transform: translateX(8px) translateY(8px);
+			}
+
 			&.down {
 				opacity: .85;
 				cursor: default;
 
 				&:before {
 					content: "";
-					margin-top: -1px;
+					// margin-top: -1px;
 					background: rgba(0,17,17,0.35);
 					position: absolute;
 					top: 50%;
 					left: 50%;
 					width: 25px;
 					height: 25px;
-					border-radius: 2px;
-					transform: translateY(-50%) translateX(-50%);
+					border-radius: 3px;
+					transform: translateY(-14px) translateX(-13px);
 				}
 
 				&:after {
-					margin-top: -1px;
+					// margin-top: -1px;
 				}
 			}
 		}
@@ -441,9 +447,9 @@ content {
 		&:after {
 			content: "";
 			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translateX(-50%) translateY(-50%);
+			top: 9px;
+			left: 9px;
+			// transform: translateX(-50%) translateY(-50%);
 			background-image: inherit;
 			background-size: contain;
 			background-repeat: no-repeat;
