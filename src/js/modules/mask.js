@@ -6,6 +6,9 @@ let Mask = {
 		let { cvs, ctx } = Misc.createCanvas(1, 1);
 		this.cvs = cvs;
 		this.ctx = ctx;
+		// used to draw "future" mask (used by polygon, lasso, etc)
+		this.draw = Misc.createCanvas(1, 1);
+		
 
 		// defaults
 		this.ctx.fillStyle = "#000";
@@ -36,7 +39,8 @@ let Mask = {
 	},
 	dispatch(event) {
 		let APP = keane,
-			File = Projector.file,
+			Proj = Projector,
+			File = Proj.file,
 			Self = Mask,
 			data,
 			image,
@@ -46,28 +50,51 @@ let Mask = {
 				console.log(event);
 				break;
 
+			case "draw-open-polygon":
+				Self.draw.cvs.prop({ width: window.width, height: window.height });
+				// Self.draw.ctx.clear();
+
+				data = [...event.polygon];
+
+				Self.draw.ctx.save();
+				// Self.draw.ctx.translate(-18, Proj.aY - 18);
+				Self.draw.ctx.translate(File.oX, File.oY);
+				Self.draw.ctx.strokeStyle = "#f00";
+				Self.draw.ctx.lineWidth = 2;
+
+				Self.draw.ctx.beginPath();
+				Self.draw.ctx.moveTo(data.shift(), data.shift());
+				while (data.length) {
+					Self.draw.ctx.lineTo(data.shift(), data.shift());
+				}
+				Self.draw.ctx.lineTo(event.oX, event.oY);
+				Self.draw.ctx.stroke();
+
+				Self.draw.ctx.restore();
+
+				// update projector
+				Proj.ctx.drawImage(Self.draw.cvs[0], 0, 0);
+
+				break;
+
 			case "select-rect":
 				Self.clear();
-
 				Self.ctx.fillRect(event.rect.x, event.rect.y, event.rect.w, event.rect.h);
 				Self.ctx.fill();
 				Self.ants.paint(true);
 				break;
 			case "select-elliptic":
 				Self.clear();
-
 				let eW = event.rect.w,
 					eH = event.rect.h,
 					eX = event.rect.x + eW,
 					eY = event.rect.y + eH;
 				Self.ctx.ellipse(eX, eY, eW, eH, 0, 0, Math.PI*2);
 				Self.ctx.fill();
-
 				Self.ants.paint(true);
 				break;
 			case "select-polygon":
 				Self.clear();
-
 				Self.ctx.beginPath();
 				Self.ctx.moveTo(event.points.shift(), event.points.shift());
 				while (event.points.length) {
@@ -77,7 +104,6 @@ let Mask = {
 				}
 				Self.ctx.stroke();
 				Self.ctx.fill();
-
 				Self.ants.paint(true);
 				break;
 

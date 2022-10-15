@@ -5,10 +5,13 @@
 	init() {
 		// default values
 		this.option = "rectangle";
+		this.polygon = [];
 
 		// temp
-		setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -46,6 +49,33 @@
 				return Mask.dispatch(event);
 		}
 	},
+	doPolygon(event) {
+		let APP = keane,
+			Self = APP.tools.marquee,
+			File = Projector.file,
+			oX = event.offsetX - File.oX,
+			oY = event.offsetY - File.oY;
+		switch (event.type) {
+			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
+
+				if (!Self.polygon.length) {
+					// prevent mouse from triggering mouseover
+					APP.els.content.addClass("cover");
+					// bind event handlers
+					Projector.doc.on("mousemove", Self.doPolygon);
+				}
+				// add point to array
+				Self.polygon.push(oX, oY);
+
+				break;
+			case "mousemove":
+				// draw polygon as it is on canvas
+				Mask.dispatch({ type: "draw-open-polygon", polygon: Self.polygon, oX, oY });
+				break;
+		}
+	},
 	doMarquee(event) {
 		let APP = keane,
 			Self = APP.tools.marquee,
@@ -73,10 +103,11 @@
 
 				switch (Self.option) {
 					case "lasso":
-					case "polygon":
 					case "magnetic":
 						// TODO: spacial handling
 						return;
+					case "polygon":
+						return Self.doPolygon(event);
 					case "magic-wand":
 						return Mask.dispatch({ type: "select-with-magic-wand", oX, oY });
 					case "rectangle":
