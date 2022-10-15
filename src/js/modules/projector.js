@@ -138,6 +138,13 @@ const Projector = {
 		if (File.rulers.guides.show && !opt.noGuideLines) Rule.drawGuides(this);
 		if (File.rulers.show) Rule.render(this);
 
+		if (opt.mask) {
+			this.ctx.save();
+			this.ctx.globalCompositeOperation = "source-atop";
+			this.ctx.drawImage(Mask.draw.cvs[0], oX, oY);
+			this.ctx.restore();
+		}
+
 		// console.timeEnd("Projector Render");
 
 		if (!opt.noEmit) {

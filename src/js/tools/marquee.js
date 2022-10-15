@@ -6,6 +6,7 @@
 		// default values
 		this.option = "rectangle";
 		this.polygon = [];
+		this.polyCloseDist = 5;
 
 		// temp
 		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
@@ -54,7 +55,8 @@
 			Self = APP.tools.marquee,
 			File = Projector.file,
 			oX = event.offsetX - File.oX,
-			oY = event.offsetY - File.oY;
+			oY = event.offsetY - File.oY,
+			dX, dY, dist;
 		switch (event.type) {
 			case "mousedown":
 				// prevent default behaviour
@@ -62,17 +64,39 @@
 
 				if (!Self.polygon.length) {
 					// prevent mouse from triggering mouseover
-					APP.els.content.addClass("cover");
+					APP.els.content.addClass("cover poly-open");
 					// bind event handlers
-					Projector.doc.on("mousemove", Self.doPolygon);
+					Projector.doc.on("mousedown mousemove", Self.doPolygon);
 				}
+
+				dX = Self.polygon[0] - oX;
+				dY = Self.polygon[1] - oY;
+				dist = Math.sqrt(dX*dX + dY*dY);
+				// if distance between new point and starting point is less then 4px, close the loop
+				if (dist < Self.polyCloseDist) return Self.doPolygon({ type: "close-loop" });
+
 				// add point to array
 				Self.polygon.push(oX, oY);
 
 				break;
 			case "mousemove":
+				dX = Self.polygon[0] - oX;
+				dY = Self.polygon[1] - oY;
+				dist = Math.sqrt(dX*dX + dY*dY);
+				// mouse cursor update
+				APP.els.content.toggleClass("poly-close", dist > Self.polyCloseDist);
 				// draw polygon as it is on canvas
 				Mask.dispatch({ type: "draw-open-polygon", polygon: Self.polygon, oX, oY });
+				break;
+			case "close-loop":
+				// start marching ants
+				Mask.dispatch({ type: "select-polygon", points: Self.polygon });
+				// reset polygon
+				Self.polygon = [];
+				// prevent mouse from triggering mouseover
+				APP.els.content.removeClass("cover poly-open");
+				// bind event handlers
+				Projector.doc.off("mousedown mousemove", Self.doPolygon);
 				break;
 		}
 	},

@@ -8,7 +8,6 @@ let Mask = {
 		this.ctx = ctx;
 		// used to draw "future" mask (used by polygon, lasso, etc)
 		this.draw = Misc.createCanvas(1, 1);
-		
 
 		// defaults
 		this.ctx.fillStyle = "#000";
@@ -51,17 +50,22 @@ let Mask = {
 				break;
 
 			case "draw-open-polygon":
-				Self.draw.cvs.prop({ width: window.width, height: window.height });
 				// Self.draw.ctx.clear();
+				Self.draw.cvs.prop({ width: File.width, height: File.height });
+				Self.draw.ctx.strokeStyle = "#171717";
+				Self.draw.ctx.lineWidth = 1.5;
+
+				// Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
+				Self.draw.ctx.shadowColor = "#fff"; // string
+				// Horizontal distance of the shadow, in relation to the text.
+				Self.draw.ctx.shadowOffsetX = 0; // integer
+				// Vertical distance of the shadow, in relation to the text.
+				Self.draw.ctx.shadowOffsetY = 0; // integer
+				// Blurring effect to the shadow, the larger the value, the greater the blur.
+				Self.draw.ctx.shadowBlur = 3; // integer
+
 
 				data = [...event.polygon];
-
-				Self.draw.ctx.save();
-				// Self.draw.ctx.translate(-18, Proj.aY - 18);
-				Self.draw.ctx.translate(File.oX, File.oY);
-				Self.draw.ctx.strokeStyle = "#f00";
-				Self.draw.ctx.lineWidth = 2;
-
 				Self.draw.ctx.beginPath();
 				Self.draw.ctx.moveTo(data.shift(), data.shift());
 				while (data.length) {
@@ -70,11 +74,8 @@ let Mask = {
 				Self.draw.ctx.lineTo(event.oX, event.oY);
 				Self.draw.ctx.stroke();
 
-				Self.draw.ctx.restore();
-
 				// update projector
-				Proj.ctx.drawImage(Self.draw.cvs[0], 0, 0);
-
+				Projector.render({ mask: true, noEmit: true });
 				break;
 
 			case "select-rect":
