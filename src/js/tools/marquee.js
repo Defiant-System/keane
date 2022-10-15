@@ -3,14 +3,12 @@
 
 {
 	init() {
-		// layer canvas
-		let { cvs, ctx } = Misc.createCanvas(1, 1);
-		this.cvs = cvs;
-		this.ctx = ctx;
-
-		this.ctx.fillStyle = "#000";
-		this.threshold = 0xC0;
+		// default values
 		this.option = "rectangle";
+
+		// temp
+		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -26,50 +24,88 @@
 			oX, oY;
 
 		switch (event.type) {
-			// native events
+			// custom events
+			case "select-option":
+				Self.option = event.arg || "rectangle";
+				break;
+			case "select-all":
+				// colorize mask
+				Self.ctx.fillRect(0, 0, 1e9, 1e9);
+				Self.ctx.fill();
+				// march little ants!
+				Mask.ants.paint(true);
+				break;
+			case "deselect":
+				Self.ctx.clear();
+				// halt ants
+				Mask.ants.halt();
+				break;
+			case "inverse-selection":
+				Self.ctx.globalCompositeOperation = "source-out";
+				Self.ctx.fillRect(0, 0, 1e9, 1e9);
+				Self.ctx.fill();
+				// start marching ants
+				Mask.ants.paint(true);
+				break;
+			case "enable":
+				Proj.cvs.on("mousedown", Self.doMarquee);
+				// temp
+				// APP.els.content.find(".tool[data-arg='magic-wand']").trigger("click");
+				break;
+			case "disable":
+				Proj.cvs.off("mousedown", Self.doMarquee);
+				break;
+		}
+	},
+	doMarquee(event) {
+		let APP = keane,
+			Self = APP.tools.marquee,
+			Drag = Self.drag;
+		switch (event.type) {
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
 
+				// prepare drag object
+				let option = Self.option,
+					File = Projector.file,
+					ctx = Mask.ctx,
+					click = {
+						x: event.clientX,
+						y: event.clientY,
+					},
+					oX = event.offsetX - File.oX,
+					oY = event.offsetY - File.oY,
+					PI2 = Math.PI * 2;
+
+				Self.drag = { option, ctx, click, oX, oY, PI2 };
 				// reset selection canvas
-				Self.cvs.prop({ width: File.width, height: File.height });
-				Proj.swap.cvs.prop({ width: File.width, height: File.height });
-
-				// stop marching ants, if marching
-				Self.ants.init(Self);
-
-				// mouse position
-				oX = event.offsetX - File.oX;
-				oY = event.offsetY - File.oY;
+				Mask.cvs.prop({ width: File.width, height: File.height });
+				Projector.swap.cvs.prop({ width: File.width, height: File.height });
+				// halt ants, if marching (also clears canvas from existing ants)
+				Mask.ants.halt(true);
 
 				switch (Self.option) {
 					case "lasso":
 					case "polygon":
 					case "magnetic":
-						break;
+						// TODO: spacial handling
+						return;
 					case "magic-wand":
-						Self.dispatch({ type: "select-with-magic-wand", oX, oY });
-						break;
+						return Mask.dispatch({ type: "select-with-magic-wand", oX, oY });
 					case "rectangle":
 					case "elliptic":
-						Self.drag = {
-							ctx: Self.ctx,
-							clickX: event.clientX,
-							clickY: event.clientY,
-							oX,
-							oY,
-						};
-
-						// prevent mouse from triggering mouseover
-						APP.els.content.addClass("cover");
-						// bind event handlers
-						Proj.doc.on("mousemove mouseup", Self.dispatch);
-						break;
+						/* do stuff below */
 				}
+				
+				// prevent mouse from triggering mouseover
+				APP.els.content.addClass("cover");
+				// bind event handlers
+				Projector.doc.on("mousemove mouseup", Self.doMarquee);
 				break;
 			case "mousemove":
-				Drag.oW = event.clientX - Drag.clickX;
-				Drag.oH = event.clientY - Drag.clickY;
+				Drag.oW = event.clientX - Drag.click.x;
+				Drag.oH = event.clientY - Drag.click.y;
 				
 				// clear marquee canvas (fastest way)
 				Drag.ctx.clear();
@@ -85,140 +121,23 @@
 							eY = Drag.oY + eH;
 						if (eW < 0) eW *= -1;
 						if (eH < 0) eH *= -1;
-						Drag.ctx.ellipse(eX, eY, eW, eH, 0, 0, Math.PI*2);
+						Drag.ctx.ellipse(eX, eY, eW, eH, 0, 0, Drag.PI2);
 						break;
 				}
 				// paint selected area
 		    	Drag.ctx.fill();
 
 				// paint ants but no marching
-				Self.ants.init(Self);
+				Mask.ants.paint();
 				break;
 			case "mouseup":
 				// start marching if there is selection
-				if (Drag.oW && Drag.oH) Self.ants.init(Self, true);
-
+				if (Drag.oW && Drag.oH) Mask.ants.paint(true);
 				// remove class
 				APP.els.content.removeClass("cover");
 				// unbind event handlers
-				Proj.doc.off("mousemove mouseup", Self.dispatch);
-				break;
-			
-			// system events
-			case "window.keystroke":
-				switch (event.char) {
-					case "backspace":
-						if (event.altKey) color = File.fgColor;
-						if (event.metaKey) color = File.bgColor;
-						// colorize mask
-						Self.ctx.save();
-						Self.ctx.globalCompositeOperation = "source-in";
-						Self.ctx.fillStyle = color;
-						Self.ctx.fillRect(0, 0, 1e9, 1e9);
-						Self.ctx.fill();
-						Self.ctx.restore();
-
-						if (color) {
-							Self.applyCompositeMask({ operation: "source-over" });
-						} else {
-							Self.applyCompositeMask({ operation: "xor" });
-						}
-						break;
-					case "del":
-						Self.applyCompositeMask({ operation: "xor" });
-						break;
-				}
-				break;
-			
-			// custom events
-			case "select-with-magic-wand":
-				Self.ctx.drawImage(File.cvs[0], 0, 0);
-				let data = Self.ctx.getImageData(0, 0, File.width, File.height).data;
-				// clear marquee canvas (fastest way)
-				Self.ctx.clear();
-				// prepare image data for algorithm
-				image = {
-					data,
-					ctx: Self.ctx,
-					width: File.width,
-					height: File.height,
-					threshold: 15,
-					blurRadius: 5,
-					bytes: 4,
-				};
-				// get mask
-				image.mask = Self.magicWand.floodFill(image, event.oX, event.oY, null, true);
-				if (image.mask) Self.magicWand.gaussBlurOnlyBorder(image, null);
-
-				// apply mask to mask canvas
-				Self.paintMask(image);
-				// start marching ants
-				Self.ants.init(Self, true);
-				break;
-			case "select-option":
-				Self.option = event.arg || "rectangle";
-				break;
-			case "select-all":
-				// colorize mask
-				Self.ctx.fillRect(0, 0, 1e9, 1e9);
-				Self.ctx.fill();
-				// march little ants!
-				Self.ants.init(Self, true);
-				break;
-			case "deselect":
-				Self.ctx.clear();
-				// halt ants
-				Self.ants.init(Self);
-				break;
-			case "inverse-selection":
-				Self.ctx.globalCompositeOperation = "source-out";
-				Self.ctx.fillRect(0, 0, 1e9, 1e9);
-				Self.ctx.fill();
-				// start marching ants
-				Self.ants.init(Self, true);
-				break;
-			case "enable":
-				Proj.cvs.on("mousedown", Self.dispatch);
-				// temp
-				// APP.els.content.find(".tool[data-arg='magic-wand']").trigger("click");
-				break;
-			case "disable":
-				Proj.cvs.off("mousedown", Self.dispatch);
+				Projector.doc.off("mousemove mouseup", Self.doMarquee);
 				break;
 		}
-	},
-	applyCompositeMask(opt) {
-		let Self = this,
-			File = Projector.file;
-		// stop marching ants, if marching
-		Self.ants.init(Self);
-		// applies selection to "active layer"
-		File.activeLayer.applyCompositeImage({ ...opt, image: Self.cvs[0] });
-		// Render file
-		File.render();
-	},
-	paintMask(image) {
-		// paint mask
-		let w = image.width;
-		let h = image.height;
-		let imgData = image.ctx.createImageData(w, h);
-		let res = imgData.data;
-		let data = image.mask.data;
-		let bounds = image.mask.bounds;
-		let maskW = image.mask.width;
-		let rgba = [0, 0, 0, 255];
-
-		for (let y=bounds.minY; y<=bounds.maxY; y++) {
-			for (let x=bounds.minX; x<=bounds.maxX; x++) {
-				if (data[y * maskW + x] == 0) continue;
-				let k = (y * w + x) * 4;
-				res[k] = rgba[0];
-				res[k + 1] = rgba[1];
-				res[k + 2] = rgba[2];
-				res[k + 3] = rgba[3];
-			}
-		}
-
-		image.ctx.putImageData(imgData, 0, 0);
 	}
 }

@@ -2,9 +2,9 @@
 // keane.tools.marquee.ants
 
 {
-	init(parent, march) {
-		this.ctx = parent.ctx;
-		this.threshold = parent.threshold;
+	paint(march) {
+		this.ctx = Mask.ctx;
+		this.threshold = Mask.threshold;
 		this.projector = Projector;
 		this.file = Projector.file;
 		this.w = this.file.width;
@@ -13,11 +13,18 @@
 		this.mask = this.getOutlineMask().data;
 		this.aO = 0;
 		// let marching start
-		this.halt = !march;
+		this._halt = !march;
 		// prevents choking frame
 		cancelAnimationFrame(this.raf);
 
 		this.render(march);
+	},
+	halt(clear) {
+		this._halt = true;
+		if (clear) this.paint();
+	},
+	resume() {
+		this._halt = false;
 	},
 	match(srcData, w, h, x, y) {
 		let alpha = this.getPixel(srcData, w, h, x, y);
@@ -97,7 +104,7 @@
 		// march tiny ants!
 		this.aO -= .175;
 
-		if (!this.halt) {
+		if (!this._halt) {
 			this.raf = requestAnimationFrame(this.render.bind(this));
 		}
 	}
