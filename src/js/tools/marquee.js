@@ -12,7 +12,8 @@
 		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
-		setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -59,9 +60,6 @@
 			dX, dY, dist;
 		switch (event.type) {
 			case "mousedown":
-				// prevent default behaviour
-				event.preventDefault();
-
 				if (!Self.polygon.length) {
 					// prevent mouse from triggering mouseover
 					APP.els.content.addClass("cover poly-open");
@@ -100,6 +98,60 @@
 				break;
 		}
 	},
+	doLasso(event) {
+		let APP = keane,
+			Self = APP.tools.marquee,
+			Drag = Self.drag;
+		switch (event.type) {
+			case "mousedown":
+				let File = Projector.file;
+
+				// prepare paint
+				Self.drag = {
+					scale: File.scale,
+					coX: File.oX,
+					coY: File.oY,
+					lasso: [],
+					_floor: Math.floor,
+					// Bresenham's line algorithm
+					line: (...args) => Misc.bresenhamLine(...args),
+				};
+				// prevent mouse from triggering mouseover
+				APP.els.content.addClass("no-cursor");
+				// bind event handlers
+				Projector.doc.on("mousemove mouseup", Self.doLasso);
+				break;
+			case "mousemove":
+				if (event.offsetX) {
+					Drag.mX = Drag._floor((event.offsetX - Drag.coX) / Drag.scale);
+					Drag.mY = Drag._floor((event.offsetY - Drag.coY) / Drag.scale);
+				}
+
+				Drag.line(Drag.oldX || Drag.mX, Drag.oldY || Drag.mY, Drag.mX, Drag.mY, (x, y) => {
+					let len = Drag.lasso.length;
+					if (Drag.lasso[len-2] !== 2 && Drag.lasso[len-1] !== y) {
+						Drag.lasso.push(x, y);
+						// draw polygon as it is on canvas
+						Mask.dispatch({ type: "draw-lasso", polygon: Drag.lasso });
+					}
+				});
+
+				// same mouse point
+				Drag.oldX = Drag.mX;
+				Drag.oldY = Drag.mY;
+				break;
+			case "mouseup":
+				// draw lasso as it is on canvas
+				Mask.dispatch({ type: "select-lasso", points: Drag.lasso });
+				// reset lasso
+				Self.lasso = [];
+				// remove class
+				APP.els.content.removeClass("no-cursor");
+				// unbind event handlers
+				Projector.doc.off("mousemove mouseup", Self.doLasso);
+				break;
+		}
+	},
 	doMarquee(event) {
 		let APP = keane,
 			Self = APP.tools.marquee,
@@ -126,10 +178,11 @@
 				Mask.clear();
 
 				switch (Self.option) {
-					case "lasso":
 					case "magnetic":
 						// TODO: spacial handling
 						return;
+					case "lasso":
+						return Self.doLasso(event);
 					case "polygon":
 						return Self.doPolygon(event);
 					case "magic-wand":

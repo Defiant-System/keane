@@ -35,8 +35,6 @@
 			Proj = Projector,
 			File = Proj.file,
 			Self = APP.tools.brush,
-			_floor = Math.floor,
-			_round = Math.round,
 			name,
 			size,
 			tip,
@@ -124,7 +122,7 @@
 				size = Self.preset.size;
 				angle = event.angle || Self.preset.angle;
 				roundness = event.roundness || Self.preset.roundness;
-				height = _round(size * (roundness / 100));
+				height = Math.round(size * (roundness / 100));
 
 				let y = (size - height) >> 1,
 					hS = size >> 1;
@@ -193,8 +191,6 @@
 			File = Proj.file,
 			Self = APP.tools.brush,
 			Drag = Self.drag,
-			_floor = Math.floor,
-			_round = Math.round,
 			size,
 			image;
 
@@ -211,19 +207,20 @@
 					layer: File.activeLayer,
 					ctx: Proj.swap.ctx,
 					cvs: Proj.swap.cvs[0],
-					mX: _floor((event.offsetX - File.oX) / File.scale),
-					mY: _floor((event.offsetY - File.oY) / File.scale),
+					mX: Math.floor((event.offsetX - File.oX) / File.scale),
+					mY: Math.floor((event.offsetY - File.oY) / File.scale),
 					scale: File.scale,
 					coX: File.oX,
 					coY: File.oY,
 					preset: {
 						...Self.preset,
-						oX: _floor(Self.preset.size >> 1),
-						oY: _floor(Self.preset.size >> 1),
+						oX: Math.floor(Self.preset.size >> 1),
+						oY: Math.floor(Self.preset.size >> 1),
 						image: Self.preset.tip.cvs[0],
 					},
+					_floor: Math.floor,
 					// Bresenham's line algorithm
-					line: (...args) => Misc.bresenhamLine(...args)
+					line: (...args) => Misc.bresenhamLine(...args),
 				};
 
 				// set blend mode
@@ -239,8 +236,8 @@
 				break;
 			case "mousemove":
 				if (event.offsetX) {
-					Drag.mX = _floor((event.offsetX - Drag.coX) / Drag.scale);
-					Drag.mY = _floor((event.offsetY - Drag.coY) / Drag.scale);
+					Drag.mX = Drag._floor((event.offsetX - Drag.coX) / Drag.scale);
+					Drag.mY = Drag._floor((event.offsetY - Drag.coY) / Drag.scale);
 				}
 				// center the tip
 				Drag.mX -= Drag.preset.oX;
@@ -282,8 +279,6 @@
 			File = Proj.file,
 			Self = APP.tools.brush,
 			Drag = Self.drag,
-			_floor = Math.floor,
-			_round = Math.round,
 			size,
 			image;
 		switch (event.type) {
@@ -309,11 +304,12 @@
 				Self.drag = {
 					layer: File.activeLayer,
 					brush: Self.featherTip(Self.feather.brush, opt),
-					mX: _floor((event.offsetX - File.oX) / File.scale),
-					mY: _floor((event.offsetY - File.oY) / File.scale),
+					mX: Math.floor((event.offsetX - File.oX) / File.scale),
+					mY: Math.floor((event.offsetY - File.oY) / File.scale),
 					scale: File.scale,
 					coX: File.oX,
 					coY: File.oY,
+					_floor: Math.floor,
 				};
 				// buffer layer image data before edit
 				File.activeLayer.bufferImageData();
@@ -326,8 +322,8 @@
 				break;
 			case "mousemove":
 				if (event.offsetX) {
-					Drag.mX = _floor((event.offsetX - Drag.coX) / Drag.scale);
-					Drag.mY = _floor((event.offsetY - Drag.coY) / Drag.scale);
+					Drag.mX = Drag._floor((event.offsetX - Drag.coX) / Drag.scale);
+					Drag.mY = Drag._floor((event.offsetY - Drag.coY) / Drag.scale);
 				}
 				// paint with brush
 				Drag.brush.stroke(Self.drag.mX, Self.drag.mY);

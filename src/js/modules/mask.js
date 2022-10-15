@@ -49,21 +49,15 @@ let Mask = {
 				console.log(event);
 				break;
 
+			case "draw-lasso":
 			case "draw-open-polygon":
 				// Self.draw.ctx.clear();
 				Self.draw.cvs.prop({ width: File.width, height: File.height });
+				// line styling
 				Self.draw.ctx.strokeStyle = "#171717";
 				Self.draw.ctx.lineWidth = 1.5;
-
-				// Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
-				Self.draw.ctx.shadowColor = "#fff"; // string
-				// Horizontal distance of the shadow, in relation to the text.
-				Self.draw.ctx.shadowOffsetX = 0; // integer
-				// Vertical distance of the shadow, in relation to the text.
-				Self.draw.ctx.shadowOffsetY = 0; // integer
-				// Blurring effect to the shadow, the larger the value, the greater the blur.
-				Self.draw.ctx.shadowBlur = 3; // integer
-
+				Self.draw.ctx.shadowColor = "#fff";
+				Self.draw.ctx.shadowBlur = 3;
 
 				data = [...event.polygon];
 				Self.draw.ctx.beginPath();
@@ -71,7 +65,7 @@ let Mask = {
 				while (data.length) {
 					Self.draw.ctx.lineTo(data.shift(), data.shift());
 				}
-				Self.draw.ctx.lineTo(event.oX, event.oY);
+				if (event.oX) Self.draw.ctx.lineTo(event.oX, event.oY);
 				Self.draw.ctx.stroke();
 
 				// update projector
@@ -94,6 +88,7 @@ let Mask = {
 				Self.ctx.fill();
 				Self.ants.paint(true);
 				break;
+			case "select-lasso":
 			case "select-polygon":
 				Self.clear();
 				Self.ctx.beginPath();
