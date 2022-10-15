@@ -141,10 +141,12 @@
 				Drag.oldY = Drag.mY;
 				break;
 			case "mouseup":
-				// draw lasso as it is on canvas
-				Mask.dispatch({ type: "select-lasso", points: Drag.lasso });
+				if (Drag.lasso.length > 2) {
+					// draw lasso as it is on canvas
+					Mask.dispatch({ type: "select-lasso", points: Drag.lasso });
+				}
 				// reset lasso
-				Self.lasso = [];
+				Drag.lasso = [];
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
