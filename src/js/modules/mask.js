@@ -13,10 +13,12 @@ let Mask = {
 
 		// temp
 		setTimeout(() => {
-			return;
-			this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
+			// return;
+			// this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
 			// this.dispatch({ type: "select-elliptic", rect: { x: 100, y: 50, w: 70, h: 70 } });
-			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 160, 170, 120, 120, 60, 110 ] });
+			this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 160, 170, 120, 120, 60, 110 ] });
+
+			this.dispatch({ type: "inverse-selection" });
 
 			// window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
 		}, 900);
@@ -61,6 +63,7 @@ let Mask = {
 					eY = event.rect.y + eH;
 				Self.ctx.ellipse(eX, eY, eW, eH, 0, 0, Math.PI*2);
 				Self.ctx.fill();
+
 				Self.ants.paint(true);
 				break;
 			case "select-polygon":
@@ -74,8 +77,8 @@ let Mask = {
 					Self.ctx.lineTo(x, y);
 				}
 				Self.ctx.stroke();
-
 				Self.ctx.fill();
+
 				Self.ants.paint(true);
 				break;
 
