@@ -8,21 +8,26 @@ let Mask = {
 		this.ctx = ctx;
 		// used to draw "future" mask (used by polygon, lasso, etc)
 		this.draw = Misc.createCanvas(1, 1);
+		// used as quick mask layer
+		this.qm = Misc.createCanvas(1, 1);
 
 		// defaults
+		this.quickMask = {
+			show: false,
+		};
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
 
 		// temp
 		setTimeout(() => {
-			return;
-			this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
+			// return;
+			// this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
 			// this.dispatch({ type: "select-elliptic", rect: { x: 100, y: 50, w: 70, h: 70 } });
-			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 160, 170, 120, 120, 60, 110 ] });
+			this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 160, 170, 120, 120, 60, 110 ] });
 
-			this.dispatch({ type: "inverse-selection" });
+			// this.dispatch({ type: "inverse-selection" });
 
-			// window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
+			window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
 		}, 900);
 	},
 	clear() {
@@ -46,7 +51,23 @@ let Mask = {
 			el;
 		switch (event.type) {
 			case "toggle-quick-mask":
-				console.log(event);
+				// stop marching ants
+				Self.ants.halt(true);
+
+				Self.quickMask.show = !Self.quickMask.show;
+
+				// Self.qm.ctx.save();
+				Self.qm.cvs.prop({ width: File.width, height: File.height });
+				Self.qm.ctx.globalCompositeOperation = "source-over";
+				Self.qm.ctx.drawImage(Self.cvs[0], 0, 0);
+				Self.qm.ctx.globalCompositeOperation = "source-out";
+				Self.qm.ctx.fillStyle = "#ff00007f";
+				Self.qm.ctx.fillRect(0, 0, 1e9, 1e9);
+				// Self.qm.ctx.restore();
+
+				// update projector
+				File.render({ noEmit: true });
+
 				break;
 
 			case "draw-lasso":
@@ -69,7 +90,7 @@ let Mask = {
 				Self.draw.ctx.stroke();
 
 				// update projector
-				Projector.render({ mask: true, noEmit: true });
+				Projector.render({ maskPath: true, noEmit: true });
 				break;
 
 			case "select-rect":

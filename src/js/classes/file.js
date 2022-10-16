@@ -97,6 +97,11 @@ class File {
 			}
 		});
 
+		if (Mask.quickMask.show) {
+			console.log(1);
+			this.ctx.drawImage(Mask.qm.cvs[0], 0, 0);
+		}
+
 		// render projector
 		Projector.render(opt);
 		// update channels

@@ -78,7 +78,8 @@ const Projector = {
 			w = File.width,
 			h = File.height,
 			oX = File.oX,
-			oY = File.oY;
+			oY = File.oY,
+			_mask = Mask;
 		opt.imgCvs = opt.imgCvs || File.cvs[0];
 
 		// console.time("Projector Render");
@@ -138,11 +139,10 @@ const Projector = {
 		if (File.rulers.guides.show && !opt.noGuideLines) Rule.drawGuides(this);
 		if (File.rulers.show) Rule.render(this);
 
-		if (opt.mask) {
-			this.ctx.save();
-			this.ctx.globalCompositeOperation = "source-atop";
-			this.ctx.drawImage(Mask.draw.cvs[0], oX, oY);
-			this.ctx.restore();
+		if (opt.maskPath) {
+			// this.ctx.save();
+			this.ctx.drawImage(_mask.draw.cvs[0], oX, oY);
+			// this.ctx.restore();
 		}
 
 		// console.timeEnd("Projector Render");

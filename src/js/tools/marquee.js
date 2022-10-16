@@ -13,7 +13,7 @@
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
-		setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
+		//setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -113,6 +113,8 @@
 					coY: File.oY,
 					lasso: [],
 					_floor: Math.floor,
+					// fast reference
+					maskDispatch: Mask.dispatch,
 					// Bresenham's line algorithm
 					line: (...args) => Misc.bresenhamLine(...args),
 				};
@@ -132,7 +134,7 @@
 					if (Drag.lasso[len-2] !== 2 && Drag.lasso[len-1] !== y) {
 						Drag.lasso.push(x, y);
 						// draw polygon as it is on canvas
-						Mask.dispatch({ type: "draw-lasso", polygon: Drag.lasso });
+						Drag.maskDispatch({ type: "draw-lasso", polygon: Drag.lasso });
 					}
 				});
 
