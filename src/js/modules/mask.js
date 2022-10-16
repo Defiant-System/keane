@@ -8,26 +8,27 @@ let Mask = {
 		this.ctx = ctx;
 		// used to draw "future" mask (used by polygon, lasso, etc)
 		this.draw = Misc.createCanvas(1, 1);
-		// used as quick mask layer
-		this.qm = Misc.createCanvas(1, 1);
 
 		// defaults
-		this.quickMask = {
-			show: false,
-		};
 		this.ctx.fillStyle = "#000";
 		this.threshold = 0xC0;
 
+		{
+			let { cvs, ctx } = Misc.createCanvas(1, 1);
+			this.ants.cvs = cvs;
+			this.ants.ctx = ctx;
+		}
+
 		// temp
 		setTimeout(() => {
-			return;
-			// this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
+			// return;
+			this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
 			// this.dispatch({ type: "select-elliptic", rect: { x: 100, y: 50, w: 70, h: 70 } });
-			this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 160, 170, 120, 120, 60, 110 ] });
+			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ] });
 
 			// this.dispatch({ type: "inverse-selection" });
 
-			window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
+			// window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
 		}, 900);
 	},
 	clear() {
@@ -54,22 +55,19 @@ let Mask = {
 				// stop marching ants
 				Self.ants.halt(true);
 
-				Self.quickMask.show = !Self.quickMask.show;
+				// toggle tool UI
+				event.el.toggleClass("active", File.quickMask.show);
+				// toggle file "quick mask" flag
+				File.quickMask.show = !File.quickMask.show;
 
-				Self.qm.cvs.prop({ width: File.width, height: File.height });
-				
-				if (Self.quickMask.show) {
-					Self.qm.ctx.globalCompositeOperation = "source-over";
-					Self.qm.ctx.drawImage(Self.cvs[0], 0, 0);
-					Self.qm.ctx.globalCompositeOperation = "source-out";
-					Self.qm.ctx.fillStyle = "#ff000070";
-					Self.qm.ctx.fillRect(0, 0, 1e9, 1e9);
+				if (File.quickMask.show) {
+					// File.qm.cvs.prop({ width: File.width, height: File.height });
+					File.quickMask.ctx.globalCompositeOperation = "source-over";
+					File.quickMask.ctx.drawImage(Self.cvs[0], 0, 0);
+					File.quickMask.ctx.globalCompositeOperation = "source-out";
+					File.quickMask.ctx.fillStyle = Pref.quickMask.color;
+					File.quickMask.ctx.fillRect(0, 0, 1e9, 1e9);
 				} else {
-					// Self.cvs.prop({ width: File.width, height: File.height });
-
-					// Self.ctx.drawImage(Self.qm.cvs[0], 0, 0);
-					// Self.ctx.globalCompositeOperation = "source-out";
-					// Self.ctx.fillRect(0, 0, 1e9, 1e9);
 					Self.ants.paint(true);
 				}
 

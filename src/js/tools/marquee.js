@@ -12,7 +12,7 @@
 		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
-		setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
 		//setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 	},
 	dispatch(event) {

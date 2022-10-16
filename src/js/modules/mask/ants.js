@@ -2,14 +2,16 @@
 // keane.tools.marquee.ants
 
 {
+	_halt: true,
 	paint(march) {
-		this.ctx = Mask.ctx;
+		this.mask = Mask;
 		this.threshold = Mask.threshold;
 		this.projector = Projector;
-		this.file = Projector.file;
-		this.w = this.file.width;
-		this.h = this.file.height;
-		this.cvsImg = this.file.ctx.getImageData(0, 0, this.w, this.h);
+		this.w = this.projector.file.width;
+		this.h = this.projector.file.height;
+		// clear canvas
+		this.cvs.prop({ width: this.w, height: this.h });
+		this.cvsImg = this.ctx.getImageData(0, 0, this.w, this.h);
 		this.mask = this.getOutlineMask().data;
 		this.aO = 0;
 		// let marching start
@@ -56,7 +58,7 @@
 	getOutlineMask() {
 		let w = this.w,
 			h = this.h,
-			srcImg = this.ctx.getImageData(0, 0, w, h),
+			srcImg = this.mask.ctx.getImageData(0, 0, w, h),
 			clone = new Uint8ClampedArray(srcImg.data),
 			dstImg = new ImageData(clone, w, h),
 			srcData = srcImg.data,
@@ -75,8 +77,8 @@
 		return ((5 + y + o % 10) + x) % 10 >= 5 ? 0x00 : 0xFF;
 	},
 	render(march) {
-		let Proj = this.projector,
-			mask = this.mask,
+		// let Proj = this.projector;
+		let mask = this.mask,
 			cvsImg = this.cvsImg,
 			data = this.cvsImg.data,
 			aO = this.aO,
@@ -99,10 +101,10 @@
 				data[o + 3] = 0xFF;
 			}
 		}
+		// put image data on own canvas
+		this.ctx.putImageData(cvsImg, 0, 0);
 		// update projector
-		Proj.swap.ctx.putImageData(cvsImg, 0, 0);
-		Proj.render({ imgCvs: Proj.swap.cvs[0], noEmit: true });
-		
+		Projector.render({ ants: this.cvs[0], noEmit: true });
 		// march tiny ants!
 		this.aO -= .175;
 

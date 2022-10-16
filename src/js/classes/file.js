@@ -25,6 +25,11 @@ class File {
 		let { cvs, ctx } = Misc.createCanvas(this.width, this.height);
 		this.cvs = cvs;
 		this.ctx = ctx;
+		// used as quick mask layer
+		this.quickMask = Misc.createCanvas(this.width, this.height);
+		this.quickMask.show = false;
+
+
 
 		// undo history
 		this.history = new window.History;
@@ -97,10 +102,6 @@ class File {
 					break;
 			}
 		});
-
-		if (Mask.quickMask.show) {
-			this.ctx.drawImage(Mask.qm.cvs[0], 0, 0);
-		}
 
 		// render projector
 		Projector.render(opt);
@@ -194,6 +195,8 @@ class File {
 				this.oW = event.width;
 				this.oH = event.height;
 				this.cvs.prop({ width: this.oW, height: this.oH });
+				// resize quickmask canvas
+				this.quickMask.cvs.prop({ width: this.oW, height: this.oH });
 
 				// reset projector
 				Proj.reset(this);

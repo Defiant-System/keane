@@ -137,12 +137,12 @@ const Projector = {
 		if (Pref.grid.show) Rule.drawGrid(this);
 		if (File.rulers.guides.show && !opt.noGuideLines) Rule.drawGuides(this);
 		if (File.rulers.show) Rule.render(this);
-
-		if (opt.maskPath) {
-			// this.ctx.save();
-			this.ctx.drawImage(Mask.draw.cvs[0], oX, oY);
-			// this.ctx.restore();
-		}
+		// toggles file "quick mask" mode
+		if (File.quickMask.show) this.ctx.drawImage(File.quickMask.cvs[0], oX, oY);
+		// draws potential masking paths / polygons, etc
+		if (opt.maskPath) this.ctx.drawImage(Mask.draw.cvs[0], oX, oY);
+		// marching ants
+		if (opt.ants) this.ctx.drawImage(opt.ants, oX, oY);
 
 		// console.timeEnd("Projector Render");
 

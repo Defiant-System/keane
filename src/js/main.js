@@ -28,6 +28,9 @@ let Pref = {
 		type: "square", // isometric
 		gap: 10,
 		pixelGrid: true,
+	},
+	quickMask: {
+		color: "#ff000070",
 	}
 };
 
