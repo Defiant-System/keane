@@ -12,7 +12,7 @@
 		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
 		//setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 	},
 	dispatch(event) {
@@ -71,7 +71,7 @@
 				dY = Self.polygon[1] - oY;
 				dist = Math.sqrt(dX*dX + dY*dY);
 				// if distance between new point and starting point is less then 4px, close the loop
-				if (dist < Self.polyCloseDist) return Self.doPolygon({ type: "close-loop" });
+				if (dist < Self.polyCloseDist && Self.polygon.length > 2) return Self.doPolygon({ type: "close-loop" });
 
 				// add point to array
 				Self.polygon.push(oX, oY);

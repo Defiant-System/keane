@@ -20,7 +20,7 @@ let Mask = {
 
 		// temp
 		setTimeout(() => {
-			// return;
+			return;
 			// this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
 			// this.dispatch({ type: "select-elliptic", rect: { x: 100, y: 50, w: 70, h: 70 } });
 			this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 160, 170, 120, 120, 60, 110 ] });
@@ -56,14 +56,22 @@ let Mask = {
 
 				Self.quickMask.show = !Self.quickMask.show;
 
-				// Self.qm.ctx.save();
 				Self.qm.cvs.prop({ width: File.width, height: File.height });
-				Self.qm.ctx.globalCompositeOperation = "source-over";
-				Self.qm.ctx.drawImage(Self.cvs[0], 0, 0);
-				Self.qm.ctx.globalCompositeOperation = "source-out";
-				Self.qm.ctx.fillStyle = "#ff00007f";
-				Self.qm.ctx.fillRect(0, 0, 1e9, 1e9);
-				// Self.qm.ctx.restore();
+				
+				if (Self.quickMask.show) {
+					Self.qm.ctx.globalCompositeOperation = "source-over";
+					Self.qm.ctx.drawImage(Self.cvs[0], 0, 0);
+					Self.qm.ctx.globalCompositeOperation = "source-out";
+					Self.qm.ctx.fillStyle = "#ff000070";
+					Self.qm.ctx.fillRect(0, 0, 1e9, 1e9);
+				} else {
+					// Self.cvs.prop({ width: File.width, height: File.height });
+
+					// Self.ctx.drawImage(Self.qm.cvs[0], 0, 0);
+					// Self.ctx.globalCompositeOperation = "source-out";
+					// Self.ctx.fillRect(0, 0, 1e9, 1e9);
+					Self.ants.paint(true);
+				}
 
 				// update projector
 				File.render({ noEmit: true });

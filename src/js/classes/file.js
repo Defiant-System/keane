@@ -89,6 +89,7 @@ class File {
 		// re-paints layers stack
 		this.layers.map(layer => {
 			if (!layer.visible) return;
+
 			switch (layer.type) {
 				case "layer":
 					// event object is layer - add to file canvas
@@ -98,7 +99,6 @@ class File {
 		});
 
 		if (Mask.quickMask.show) {
-			console.log(1);
 			this.ctx.drawImage(Mask.qm.cvs[0], 0, 0);
 		}
 

@@ -1346,6 +1346,7 @@
 		<path class="st1" d="M17,1683l9.8,10l0,0c-0.3,0.3-0.7,0.6-1,0.9"/>
 	</svg>
 
+	@import "cursors.svg"
 	@import "brush-presets.svg"
 
 </svg>

@@ -78,8 +78,7 @@ const Projector = {
 			w = File.width,
 			h = File.height,
 			oX = File.oX,
-			oY = File.oY,
-			_mask = Mask;
+			oY = File.oY;
 		opt.imgCvs = opt.imgCvs || File.cvs[0];
 
 		// console.time("Projector Render");
@@ -141,7 +140,7 @@ const Projector = {
 
 		if (opt.maskPath) {
 			// this.ctx.save();
-			this.ctx.drawImage(_mask.draw.cvs[0], oX, oY);
+			this.ctx.drawImage(Mask.draw.cvs[0], oX, oY);
 			// this.ctx.restore();
 		}
 
