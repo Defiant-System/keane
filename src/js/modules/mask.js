@@ -28,6 +28,7 @@ let Mask = {
 
 			// this.dispatch({ type: "inverse-selection" });
 
+			window.find(`.tool.icon-marquee-union`).trigger("click");
 			// window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
 		}, 900);
 	},

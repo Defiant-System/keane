@@ -63,6 +63,14 @@
 				// select tool option
 				Self[Self._active].dispatch({ type: "select-option", arg: event.el.data("arg") });
 				break;
+			case "select-method":
+				// tool sub-options methods
+				name = event.el.data("group");
+				event.el.parent().find(`.tool[data-group="${name}"].down`).removeClass("down");
+				event.el.addClass("down");
+				// proxy event
+				Self[Self._active].dispatch(event);
+				break;
 
 			// custom events
 			case "enable-tools":

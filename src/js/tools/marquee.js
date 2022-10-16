@@ -5,6 +5,7 @@
 	init() {
 		// default values
 		this.option = "rectangle";
+		this.method = "replace";
 		this.polygon = [];
 		this.polyCloseDist = 5;
 
@@ -36,6 +37,9 @@
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "rectangle";
+				break;
+			case "select-method":
+				Self.method = event.arg || "replace";
 				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.doMarquee);
