@@ -12,7 +12,7 @@
 		// temp
 		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
 		//setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 	},
@@ -119,8 +119,6 @@
 					_floor: Math.floor,
 					// fast reference
 					maskDispatch: Mask.dispatch,
-					// Bresenham's line algorithm
-					line: (...args) => Misc.bresenhamLine(...args),
 				};
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("no-cursor");
@@ -133,18 +131,15 @@
 					Drag.mY = Drag._floor((event.offsetY - Drag.coY) / Drag.scale);
 				}
 
-				Drag.line(Drag.oldX || Drag.mX, Drag.oldY || Drag.mY, Drag.mX, Drag.mY, (x, y) => {
-					let len = Drag.lasso.length;
-					if (Drag.lasso[len-2] !== 2 && Drag.lasso[len-1] !== y) {
-						Drag.lasso.push(x, y);
-						// draw polygon as it is on canvas
-						Drag.maskDispatch({ type: "draw-lasso", polygon: Drag.lasso });
-					}
-				});
+				if (Drag.oldX !== Drag.mX && Drag.oldY !== Drag.mY) {
+					Drag.lasso.push(Drag.mX, Drag.mY);
+					// draw polygon as it is on canvas
+					Drag.maskDispatch({ type: "draw-lasso", polygon: Drag.lasso });
 
-				// same mouse point
-				Drag.oldX = Drag.mX;
-				Drag.oldY = Drag.mY;
+					// save mouse point
+					Drag.oldX = Drag.mX;
+					Drag.oldY = Drag.mY;
+				}
 				break;
 			case "mouseup":
 				if (Drag.lasso.length > 2) {
