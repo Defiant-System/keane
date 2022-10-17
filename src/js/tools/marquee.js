@@ -66,7 +66,7 @@
 			case "mousedown":
 				if (!Self.polygon.length) {
 					// prevent mouse from triggering mouseover
-					APP.els.content.addClass("cover poly-open");
+					APP.els.content.addClass("cover cursor-poly-open");
 					// bind event handlers
 					Projector.doc.on("mousedown mousemove", Self.doPolygon);
 				}
@@ -96,7 +96,7 @@
 				// reset polygon
 				Self.polygon = [];
 				// prevent mouse from triggering mouseover
-				APP.els.content.removeClass("cover poly-open");
+				APP.els.content.removeClass("cover cursor-poly-open");
 				// bind event handlers
 				Projector.doc.off("mousedown mousemove", Self.doPolygon);
 				break;
@@ -208,7 +208,7 @@
 				}
 				
 				// prevent mouse from triggering mouseover
-				APP.els.content.addClass("cover");
+				APP.els.content.addClass("cover cursor-crosshair");
 				// bind event handlers
 				Projector.doc.on("mousemove mouseup", Self.doMarquee);
 				break;
@@ -254,7 +254,7 @@
 				// // start marching if there is selection
 				// if (Drag.oW && Drag.oH) Mask.ants.paint(true);
 				// remove class
-				APP.els.content.removeClass("cover");
+				APP.els.content.removeClass("cover cursor-crosshair");
 				// unbind event handlers
 				Projector.doc.off("mousemove mouseup", Self.doMarquee);
 				break;
