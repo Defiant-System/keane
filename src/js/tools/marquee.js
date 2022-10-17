@@ -12,7 +12,7 @@
 		// temp
 		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
-		setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
 		//setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 	},
@@ -167,18 +167,30 @@
 				// prepare drag object
 				let option = Self.option,
 					File = Projector.file,
-					ctx = Mask.ctx,
+					ctx = Mask.draw.ctx,
+					_max = Math.max,
+					_min = Math.min,
 					click = {
 						x: event.clientX,
 						y: event.clientY,
 					},
+					// oX = _min(_max(event.offsetX - File.oX, 0), File.width),
+					// oY = _min(_max(event.offsetY - File.oY, 0), File.height),
 					oX = event.offsetX - File.oX,
 					oY = event.offsetY - File.oY,
-					PI2 = Math.PI * 2;
+					min = {
+						x: -oX,
+						y: -oY,
+					},
+					max = {
+						x: File.width - oX,
+						y: File.height - oY,
+					};
 
-				Self.drag = { option, ctx, click, oX, oY, PI2 };
-				// reset selection canvas
-				Mask.clear();
+				// drag object
+				Self.drag = { option, ctx, click, oX, oY, max, min, _max, _min };
+				// reset drawing canvas
+				Mask.draw.cvs.prop({ width: File.width, height: File.height });
 
 				switch (Self.option) {
 					case "magnetic":
@@ -209,7 +221,9 @@
 
 				switch (Self.option) {
 					case "rectangle":
-						Drag.ctx.fillRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
+						Drag.oW = Drag._min(Drag._max(Drag.min.x, Drag.oW), Drag.max.x);
+						Drag.oH = Drag._min(Drag._max(Drag.min.y, Drag.oH), Drag.max.y);
+						Drag.ctx.dashedRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
 						break;
 					case "elliptic":
 						let eW = Drag.oW >> 1,
@@ -218,18 +232,27 @@
 							eY = Drag.oY + eH;
 						if (eW < 0) eW *= -1;
 						if (eH < 0) eH *= -1;
-						Drag.ctx.ellipse(eX, eY, eW, eH, 0, 0, Drag.PI2);
+						Drag.ctx.dashedEllipse(eX, eY, eW, eH);
 						break;
 				}
-				// paint selected area
-		    	Drag.ctx.fill();
 
-				// paint ants but no marching
-				Mask.ants.paint();
+				// update projector
+				Projector.render({ maskPath: true, noEmit: true });
 				break;
 			case "mouseup":
-				// start marching if there is selection
-				if (Drag.oW && Drag.oH) Mask.ants.paint(true);
+				/*
+
+				// reset selection canvas
+				Mask.clear();
+
+				// paint selected area
+				Drag.ctx.fill();
+				// paint ants but no marching
+				Mask.ants.paint();
+				*/
+
+				// // start marching if there is selection
+				// if (Drag.oW && Drag.oH) Mask.ants.paint(true);
 				// remove class
 				APP.els.content.removeClass("cover");
 				// unbind event handlers
