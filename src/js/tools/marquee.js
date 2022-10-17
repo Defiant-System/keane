@@ -170,89 +170,58 @@
 					ctx = Mask.draw.ctx,
 					_max = Math.max,
 					_min = Math.min,
+					width = File.width,
+					height = File.height,
+					offset = {
+						x: event.offsetX - File.oX,
+						y: event.offsetY - File.oY,
+					},
+					max = {
+						x: _min(width - offset.x, width),
+						y: _min(height - offset.y, height),
+					},
 					click = {
 						x: event.clientX,
 						y: event.clientY,
-					},
-					// oX = _min(_max(event.offsetX - File.oX, 0), File.width),
-					// oY = _min(_max(event.offsetY - File.oY, 0), File.height),
-					oX = event.offsetX - File.oX,
-					oY = event.offsetY - File.oY,
-					min = {
-						x: -oX,
-						y: -oY,
-					},
-					max = {
-						x: File.width - oX,
-						y: File.height - oY,
 					};
 
-				// drag object
-				Self.drag = { option, ctx, click, oX, oY, max, min, _max, _min };
-				// reset drawing canvas
-				Mask.draw.cvs.prop({ width: File.width, height: File.height });
+				if (offset.x < 0) click.x -= offset.x;
+				if (offset.y < 0) click.y -= offset.y;
+				// if (offset.x > width) click.x -= offset.x;
+				// if (offset.y > height) click.y -= offset.y;
 
-				switch (Self.option) {
-					case "magnetic":
-						// TODO: spacial handling
-						return;
-					case "lasso":
-						return Self.doLasso(event);
-					case "polygon":
-						return Self.doPolygon(event);
-					case "magic-wand":
-						return Mask.dispatch({ type: "select-with-magic-wand", oX, oY });
-					case "rectangle":
-					case "elliptic":
-						/* do stuff below */
-				}
-				
+				console.log( max );
+
+				// drag object
+				Self.drag = { option, ctx, offset, click, max, _max, _min };
+
+				// reset drawing canvas
+				Mask.draw.cvs.prop({ width, height });
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover cursor-crosshair");
 				// bind event handlers
 				Projector.doc.on("mousemove mouseup", Self.doMarquee);
 				break;
 			case "mousemove":
-				Drag.oW = event.clientX - Drag.click.x;
-				Drag.oH = event.clientY - Drag.click.y;
-				
+				let x = Drag.offset.x,
+					y = Drag.offset.y,
+					w = event.clientX - Drag.click.x,
+					h = event.clientY - Drag.click.y;
+
 				// clear marquee canvas (fastest way)
 				Drag.ctx.clear();
 
-				switch (Self.option) {
-					case "rectangle":
-						Drag.oW = Drag._min(Drag._max(Drag.min.x, Drag.oW), Drag.max.x);
-						Drag.oH = Drag._min(Drag._max(Drag.min.y, Drag.oH), Drag.max.y);
-						Drag.ctx.dashedRect(Drag.oX, Drag.oY, Drag.oW, Drag.oH);
-						break;
-					case "elliptic":
-						let eW = Drag.oW >> 1,
-							eH = Drag.oH >> 1,
-							eX = Drag.oX + eW,
-							eY = Drag.oY + eH;
-						if (eW < 0) eW *= -1;
-						if (eH < 0) eH *= -1;
-						Drag.ctx.dashedEllipse(eX, eY, eW, eH);
-						break;
-				}
+				Drag.ctx.dashedRect(
+					Drag._max(x, 0),
+					Drag._max(y, 0),
+					Drag._min(w, Drag.max.x - 1),
+					Drag._min(h, Drag.max.y - 1)
+				);
 
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
 				break;
 			case "mouseup":
-				/*
-
-				// reset selection canvas
-				Mask.clear();
-
-				// paint selected area
-				Drag.ctx.fill();
-				// paint ants but no marching
-				Mask.ants.paint();
-				*/
-
-				// // start marching if there is selection
-				// if (Drag.oW && Drag.oH) Mask.ants.paint(true);
 				// remove class
 				APP.els.content.removeClass("cover cursor-crosshair");
 				// unbind event handlers
