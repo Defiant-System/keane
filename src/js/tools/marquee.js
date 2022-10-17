@@ -10,7 +10,7 @@
 		this.polyCloseDist = 5;
 
 		// temp
-		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
@@ -190,13 +190,22 @@
 				// if (offset.x > width) click.x -= offset.x;
 				// if (offset.y > height) click.y -= offset.y;
 
-				console.log( max );
-
 				// drag object
 				Self.drag = { option, ctx, offset, click, max, _max, _min };
 
 				// reset drawing canvas
 				Mask.draw.cvs.prop({ width, height });
+
+				switch (Self.option) {
+					case "magnetic":   return; /* TODO: spacial handling */
+					case "lasso":      return Self.doLasso(event);
+					case "polygon":    return Self.doPolygon(event);
+					case "magic-wand": return Mask.dispatch({ type: "select-with-magic-wand", oX, oY });
+					case "rectangle":
+					case "elliptic":
+						/* falls through */
+				}
+
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover cursor-crosshair");
 				// bind event handlers
@@ -207,16 +216,35 @@
 					y = Drag.offset.y,
 					w = event.clientX - Drag.click.x,
 					h = event.clientY - Drag.click.y;
+				if (w < 0) {
+					w = Drag._min(-w, Drag.offset.x);
+					x = Drag.offset.x - w;
+				}
+				if (h < 0) {
+					h = Drag._min(-h, Drag.offset.y);
+					y = Drag.offset.y - h;
+				}
 
 				// clear marquee canvas (fastest way)
 				Drag.ctx.clear();
 
-				Drag.ctx.dashedRect(
-					Drag._max(x, 0),
-					Drag._max(y, 0),
-					Drag._min(w, Drag.max.x - 1),
-					Drag._min(h, Drag.max.y - 1)
-				);
+				switch (Self.option) {
+					case "rectangle":
+						Drag.ctx.dashedRect(
+							Drag._max(x, 0),
+							Drag._max(y, 0),
+							Drag._min(w, Drag.max.x - 1),
+							Drag._min(h, Drag.max.y - 1)
+						);
+						break;
+					case "elliptic":
+						let eW = w >> 1,
+							eH = h >> 1,
+							eX = x + eW,
+							eY = y + eH;
+						Drag.ctx.dashedEllipse(eX, eY, Math.abs(eW), Math.abs(eH));
+						break;
+				}
 
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
