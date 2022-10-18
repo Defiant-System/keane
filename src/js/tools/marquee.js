@@ -34,12 +34,7 @@
 
 				switch (event.char) {
 					case "esc":
-						// halt marching ants (if any) and make sure draw canvas is cleared
-						Mask.ants.halt(true);
-						// reset drawing canvas
-						Mask.draw.cvs.prop({ width: File.width, height: File.height });
-						// update projector
-						Projector.render({ maskPath: true, noEmit: true });
+						Self.dispatch({ type: "clear-selection" });
 						break;
 				}
 
@@ -51,6 +46,16 @@
 				break;
 			case "select-method":
 				Self.method = event.arg || "replace";
+				break;
+			case "clear-selection":
+				// halt marching ants (if any) and make sure draw canvas is cleared
+				Mask.ants.halt(true);
+				// reset drawing canvas
+				Mask.draw.cvs.prop({ width: File.width, height: File.height });
+				// update projector
+				Projector.render({ maskPath: true, noEmit: true });
+				// make sure mask selection buffers are cleared as well
+				Mask.dispatch({ type: "deselect" });
 				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.doMarquee);
@@ -93,13 +98,8 @@
 					APP.els.content.addClass("cover cursor-poly-open");
 					// bind event handlers
 					Projector.doc.on("mousedown mousemove", Self.doPolygon);
-
 					// halt marching ants (if any) and make sure draw canvas is cleared
-					Mask.ants.halt(true);
-					// reset drawing canvas
-					Mask.draw.cvs.prop({ width: File.width, height: File.height });
-					// update projector
-					Projector.render({ maskPath: true, noEmit: true });
+					Self.dispatch({ type: "clear-selection" });
 				}
 				dX = Self.polygon[0] - oX;
 				dY = Self.polygon[1] - oY;
@@ -153,11 +153,7 @@
 					content: APP.els.content,
 				};
 				// halt marching ants (if any) and make sure draw canvas is cleared
-				Mask.ants.halt(true);
-				// reset drawing canvas
-				Mask.draw.cvs.prop({ width: File.width, height: File.height });
-				// update projector
-				Projector.render({ maskPath: true, noEmit: true });
+				Self.dispatch({ type: "clear-selection" });
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover cursor-poly-open");
 				// bind event handlers
@@ -192,8 +188,6 @@
 					// draw lasso as it is on canvas
 					Mask.dispatch({ type: "select-lasso", points: Drag.lasso });
 				}
-				// reset lasso
-				Drag.lasso = [];
 				// remove class
 				APP.els.content.removeClass("cover");
 				// unbind event handlers
@@ -236,8 +230,8 @@
 				// drag object
 				Self.drag = { option, ctx, offset, click, max, _max, _min };
 
-				// reset drawing canvas
-				Mask.draw.cvs.prop({ width, height });
+				// halt marching ants (if any) and make sure draw canvas is cleared
+				Self.dispatch({ type: "clear-selection" });
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover cursor-crosshair");
 				// bind event handlers
@@ -313,8 +307,8 @@
 				// drag object
 				Self.drag = { option, ctx, offset, click, max, _max, _min };
 
-				// reset drawing canvas
-				Mask.draw.cvs.prop({ width, height });
+				// halt marching ants (if any) and make sure draw canvas is cleared
+				Self.dispatch({ type: "clear-selection" });
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover cursor-crosshair");
 				// bind event handlers
