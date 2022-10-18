@@ -289,25 +289,30 @@
 					max = {
 						x: Math.min(width - offset.x, width),
 						y: Math.min(height - offset.y, height),
+						w: width-1,
+						h: height-1,
 					},
 					click = {
 						x: event.clientX,
 						y: event.clientY,
 					},
-					getHoriIntersection = (x, y, rX, rY, lY) => {
-						let dX = Math.round(Math.sqrt((1 - ((lY*lY) / (rY*rY))) * (rX*rX)));
-						if (dX) {
-							return [
-								x - dX, y + lY,
-								x + dX, y + lY
-							];
-						}
+					drawHEdge = (ctx, x, y, rX, rY, yA) => {
+						yA.map(lY => {
+							let dX = Math.round(Math.sqrt((1 - ((lY*lY) / (rY*rY))) * (rX*rX)));
+							if (dX) ctx.dashedPolygon([ x - dX, y + lY, x + dX, y + lY ]);
+						});
+					},
+					drawVEdge = (ctx, x, y, rX, rY, xA) => {
+						xA.map(lX => {
+							let dY = Math.round(Math.sqrt((1 - ((lX*lX) / (rX*rX))) * (rY*rY)));
+							if (dY) ctx.dashedPolygon([ x + lX, y - dY, x + lX, y + dY ]);
+						});
 					};
 				// constraints
 				if (offset.x < 0) click.x -= offset.x;
 				if (offset.y < 0) click.y -= offset.y;
 				// drag object
-				Self.drag = { ctx, offset, click, max, _abs, getHoriIntersection };
+				Self.drag = { ctx, offset, click, max, _abs, drawHEdge, drawVEdge };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -333,8 +338,8 @@
 				Drag.ctx.dashedEllipse(x, y, rX, rY);
 
 				// draw lasso edge
-				let poly = Drag.getHoriIntersection(x, y, rX, rY, 100);
-				if (poly) Drag.ctx.dashedPolygon(poly);
+				Drag.drawHEdge(Drag.ctx, x, y, rX, rY, [-y, Drag.max.h-y]);
+				Drag.drawVEdge(Drag.ctx, x, y, rX, rY, [-x, Drag.max.w-x]);
 
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
