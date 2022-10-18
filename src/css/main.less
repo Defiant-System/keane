@@ -1697,10 +1697,22 @@ content {
 							flex: none;
 						}
 					}
+
+					.field[data-click="select-font-style"] {
+						> div {
+							cursor: pointer;
+						}
+					}
 				}
 
 				.paragraph-wrapper {
 					padding: 3px 0 13px;
+
+					.field[data-click="select-justify"] {
+						> div:not(.active) {
+							cursor: pointer;
+						}
+					}
 				}
 
 				.field {

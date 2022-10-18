@@ -10,7 +10,7 @@
 		this.polyCloseDist = 5;
 
 		// temp
-		setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
@@ -204,13 +204,15 @@
 					ctx = Mask.draw.ctx,
 					width = File.width,
 					height = File.height,
+					_max = Math.max,
+					_min = Math.min,
 					offset = {
 						x: event.offsetX - File.oX,
 						y: event.offsetY - File.oY,
 					},
 					max = {
-						x: Math.max(Math.min(width - offset.x, width), 0),
-						y: Math.max(Math.min(height - offset.y, height), 0),
+						x: _max(_min(width - offset.x, width), 0),
+						y: _max(_min(height - offset.y, height), 0),
 						w: width,
 						h: height,
 					},
@@ -224,7 +226,7 @@
 				if (offset.x > width)  { click.x -= offset.x - width;  offset.x = width; }
 				if (offset.y > height) { click.y -= offset.y - height; offset.y = height; }
 				// drag object
-				Self.drag = { ctx, offset, click, max };
+				Self.drag = { ctx, offset, click, max, _min, _max };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -248,6 +250,14 @@
 				if (y < 0) { y = 0; h = Drag.offset.y; }
 				if (x === Drag.offset.x && w > Drag.max.x) w = Drag.max.x;
 				if (y === Drag.offset.y && h > Drag.max.y) h = Drag.max.y;
+
+				if (event.shiftKey) {
+					let r = [];
+					if (w > 0) r.push(w);
+					if (h > 0) r.push(h);
+					if (r.length) w = h = Drag._min(...r);
+				}
+				
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector

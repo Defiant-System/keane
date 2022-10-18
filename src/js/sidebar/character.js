@@ -27,6 +27,11 @@
 				// broadcast event
 				karaqu.emit("set-fg-color", { hex: event.value });
 				break;
+			case "select-font-style":
+				// event.el.find("> .active").removeClass("active");
+				el = $(event.target);
+				el.toggleClass("active", el.hasClass("active"));
+				break;
 		}
 	}
 }
