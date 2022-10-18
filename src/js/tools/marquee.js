@@ -10,7 +10,7 @@
 		this.polyCloseDist = 5;
 
 		// temp
-		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
@@ -21,8 +21,6 @@
 			File = Proj.file,
 			Self = APP.tools.marquee,
 			Drag = Self.drag,
-			_max = Math.max,
-			_min = Math.min,
 			color,
 			mask,
 			image,
@@ -202,8 +200,7 @@
 		switch (event.type) {
 			case "mousedown":
 				// prepare drag object
-				let option = Self.option,
-					File = Projector.file,
+				let File = Projector.file,
 					ctx = Mask.draw.ctx,
 					width = File.width,
 					height = File.height,
@@ -221,27 +218,13 @@
 						x: event.clientX,
 						y: event.clientY,
 					};
-
-				if (offset.x < 0) {
-					click.x -= offset.x;
-					offset.x = 0;
-				}
-				if (offset.y < 0) {
-					click.y -= offset.y;
-					offset.y = 0;
-				}
-
-				if (offset.x > width) {
-					click.x -= offset.x - width;
-					offset.x = width;
-				}
-				if (offset.y > height) {
-					click.y -= offset.y - height;
-					offset.y = height;
-				}
-
+				// constraints
+				if (offset.x < 0) { click.x -= offset.x; offset.x = 0; }
+				if (offset.y < 0) { click.y -= offset.y; offset.y = 0; }
+				if (offset.x > width)  { click.x -= offset.x - width;  offset.x = width; }
+				if (offset.y > height) { click.y -= offset.y - height; offset.y = height; }
 				// drag object
-				Self.drag = { option, ctx, offset, click, max };
+				Self.drag = { ctx, offset, click, max };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -263,10 +246,8 @@
 				if (h < 0) { y += h; h *= -1; }
 				if (x < 0) { x = 0; w = Drag.offset.x; }
 				if (y < 0) { y = 0; h = Drag.offset.y; }
-
 				if (x === Drag.offset.x && w > Drag.max.x) w = Drag.max.x;
 				if (y === Drag.offset.y && h > Drag.max.y) h = Drag.max.y;
-
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector
@@ -296,33 +277,28 @@
 		switch (event.type) {
 			case "mousedown":
 				// prepare drag object
-				let option = Self.option,
-					File = Projector.file,
+				let File = Projector.file,
 					ctx = Mask.draw.ctx,
-					_max = Math.max,
-					_min = Math.min,
 					width = File.width,
 					height = File.height,
+					_abs = Math.abs,
 					offset = {
 						x: event.offsetX - File.oX,
 						y: event.offsetY - File.oY,
 					},
 					max = {
-						x: _min(width - offset.x, width),
-						y: _min(height - offset.y, height),
+						x: Math.min(width - offset.x, width),
+						y: Math.min(height - offset.y, height),
 					},
 					click = {
 						x: event.clientX,
 						y: event.clientY,
 					};
-
+				// constraints
 				if (offset.x < 0) click.x -= offset.x;
 				if (offset.y < 0) click.y -= offset.y;
-				// if (offset.x > width) click.x -= offset.x;
-				// if (offset.y > height) click.y -= offset.y;
-
 				// drag object
-				Self.drag = { option, ctx, offset, click, max, _max, _min };
+				Self.drag = { ctx, offset, click, max, _abs };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -332,27 +308,37 @@
 				Projector.doc.on("mousemove mouseup", Self.doEllipse);
 				break;
 			case "mousemove":
-				let x = Drag.offset.x,
-					y = Drag.offset.y,
-					w = event.clientX - Drag.click.x,
-					h = event.clientY - Drag.click.y;
-
+				let mX = Drag.offset.x,
+					mY = Drag.offset.y,
+					dX = event.clientX - Drag.click.x,
+					dY = event.clientY - Drag.click.y;
 				// clear marquee canvas (fastest way)
 				Drag.ctx.clear();
+				// constraints
+				let rX = dX >> 1,
+					rY = dY >> 1,
+					x = mX + rX,
+					y = mY + rY;
+				rX = Drag._abs(rX);
+				rY = Drag._abs(rY);
+				Drag.ctx.dashedEllipse(x, y, rX, rY);
 
-				// TODO: find out where shape cuts file canvas & draw lines
-				//       in order to simulate closed loop
-				let eW = w >> 1,
-					eH = h >> 1,
-					eX = x + eW,
-					eY = y + eH;
-				// console.log(eX, eY, Math.abs(eW), Math.abs(eH));
-				Drag.ctx.dashedEllipse(eX, eY, Math.abs(eW), Math.abs(eH));
+				// draw lasso as it is on canvas
+				Drag.ctx.dashedPolygon([100, 100, 200, 200]);
 
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
+				// save values for "mouseup"
+				Drag.elps = { x, y, rX, rY };
 				break;
 			case "mouseup":
+				// console.log( Drag.elps );
+				if (Drag.elps) {
+					// paint rectangle on mask canvas
+					Mask.ctx.ellipse(Drag.elps.x, Drag.elps.y, Drag.elps.rX, Drag.elps.rY, 0, 0, Math.PI*2);
+					Mask.ctx.fill();
+					Mask.ants.paint(true);
+				}
 				// remove class
 				APP.els.content.removeClass("cover cursor-crosshair");
 				// unbind event handlers
