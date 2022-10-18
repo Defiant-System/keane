@@ -293,12 +293,21 @@
 					click = {
 						x: event.clientX,
 						y: event.clientY,
+					},
+					getHoriIntersection = (x, y, rX, rY, lY) => {
+						let dX = Math.round(Math.sqrt((1 - ((lY*lY) / (rY*rY))) * (rX*rX)));
+						if (dX) {
+							return [
+								x - dX, y + lY,
+								x + dX, y + lY
+							];
+						}
 					};
 				// constraints
 				if (offset.x < 0) click.x -= offset.x;
 				if (offset.y < 0) click.y -= offset.y;
 				// drag object
-				Self.drag = { ctx, offset, click, max, _abs };
+				Self.drag = { ctx, offset, click, max, _abs, getHoriIntersection };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -323,8 +332,9 @@
 				rY = Drag._abs(rY);
 				Drag.ctx.dashedEllipse(x, y, rX, rY);
 
-				// draw lasso as it is on canvas
-				Drag.ctx.dashedPolygon([100, 100, 200, 200]);
+				// draw lasso edge
+				let poly = Drag.getHoriIntersection(x, y, rX, rY, 100);
+				if (poly) Drag.ctx.dashedPolygon(poly);
 
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
