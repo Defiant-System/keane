@@ -12,7 +12,7 @@
 		// temp
 		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
-		setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
 	},
 	dispatch(event) {
@@ -205,8 +205,6 @@
 				let option = Self.option,
 					File = Projector.file,
 					ctx = Mask.draw.ctx,
-					_max = Math.max,
-					_min = Math.min,
 					width = File.width,
 					height = File.height,
 					offset = {
@@ -214,21 +212,36 @@
 						y: event.offsetY - File.oY,
 					},
 					max = {
-						x: _min(width - offset.x, width),
-						y: _min(height - offset.y, height),
+						x: Math.max(Math.min(width - offset.x, width), 0),
+						y: Math.max(Math.min(height - offset.y, height), 0),
+						w: width,
+						h: height,
 					},
 					click = {
 						x: event.clientX,
 						y: event.clientY,
 					};
 
-				if (offset.x < 0) click.x -= offset.x;
-				if (offset.y < 0) click.y -= offset.y;
-				// if (offset.x > width) click.x -= offset.x;
-				// if (offset.y > height) click.y -= offset.y;
+				if (offset.x < 0) {
+					click.x -= offset.x;
+					offset.x = 0;
+				}
+				if (offset.y < 0) {
+					click.y -= offset.y;
+					offset.y = 0;
+				}
+
+				if (offset.x > width) {
+					click.x -= offset.x - width;
+					offset.x = width;
+				}
+				if (offset.y > height) {
+					click.y -= offset.y - height;
+					offset.y = height;
+				}
 
 				// drag object
-				Self.drag = { option, ctx, offset, click, max, _max, _min };
+				Self.drag = { option, ctx, offset, click, max };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -242,29 +255,33 @@
 					y = Drag.offset.y,
 					w = event.clientX - Drag.click.x,
 					h = event.clientY - Drag.click.y;
-
 				// clear marquee canvas (fastest way)
 				Drag.ctx.clear();
 
-				if (w < 0) {
-					w = Drag._min(-w, Drag.offset.x);
-					x = Drag.offset.x - w;
-				}
-				if (h < 0) {
-					h = Drag._min(-h, Drag.offset.y);
-					y = Drag.offset.y - h;
-				}
-				Drag.ctx.dashedRect(
-					Drag._max(x, 0),
-					Drag._max(y, 0),
-					Drag._min(w, Drag.max.x - 1),
-					Drag._min(h, Drag.max.y - 1)
-				);
+				// constraints
+				if (w < 0) { x += w; w *= -1; }
+				if (h < 0) { y += h; h *= -1; }
+				if (x < 0) { x = 0; w = Drag.offset.x; }
+				if (y < 0) { y = 0; h = Drag.offset.y; }
 
+				if (x === Drag.offset.x && w > Drag.max.x) w = Drag.max.x;
+				if (y === Drag.offset.y && h > Drag.max.y) h = Drag.max.y;
+
+				// draw rectangle lines
+				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
+				// save values for "mouseup"
+				Drag.rect = { x, y, w, h };
 				break;
 			case "mouseup":
+				// console.log( Drag.rect );
+				if (Drag.rect) {
+					// paint rectangle on mask canvas
+					Mask.ctx.fillRect(Drag.rect.x, Drag.rect.y, Drag.rect.w, Drag.rect.h);
+					Mask.ctx.fill();
+					Mask.ants.paint(true);
+				}
 				// remove class
 				APP.els.content.removeClass("cover cursor-crosshair");
 				// unbind event handlers
