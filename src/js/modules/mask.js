@@ -71,33 +71,8 @@ let Mask = {
 				} else {
 					Self.ants.paint(true);
 				}
-
 				// update projector
 				File.render({ noEmit: true });
-
-				break;
-
-			case "draw-lasso":
-			case "draw-open-polygon":
-				// Self.draw.ctx.clear();
-				Self.draw.cvs.prop({ width: File.width, height: File.height });
-				// line styling
-				Self.draw.ctx.strokeStyle = "#171717";
-				Self.draw.ctx.lineWidth = 1.5;
-				Self.draw.ctx.shadowColor = "#fff";
-				Self.draw.ctx.shadowBlur = 3;
-
-				data = [...event.polygon];
-				Self.draw.ctx.beginPath();
-				Self.draw.ctx.moveTo(data.shift(), data.shift());
-				while (data.length) {
-					Self.draw.ctx.lineTo(data.shift(), data.shift());
-				}
-				if (event.oX) Self.draw.ctx.lineTo(event.oX, event.oY);
-				Self.draw.ctx.stroke();
-
-				// update projector
-				Projector.render({ maskPath: true, noEmit: true });
 				break;
 
 			case "select-rect":
@@ -133,7 +108,6 @@ let Mask = {
 
 			case "select-all":
 				Self.clear();
-
 				// colorize mask
 				Self.ctx.fillRect(0, 0, 1e9, 1e9);
 				Self.ctx.fill();

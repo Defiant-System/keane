@@ -12,8 +12,8 @@
 		// temp
 		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
-		setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -31,6 +31,18 @@
 		switch (event.type) {
 			// system events
 			case "window.keystroke":
+
+				switch (event.char) {
+					case "esc":
+						// halt marching ants (if any) and make sure draw canvas is cleared
+						Mask.ants.halt(true);
+						// reset drawing canvas
+						Mask.draw.cvs.prop({ width: File.width, height: File.height });
+						// update projector
+						Projector.render({ maskPath: true, noEmit: true });
+						break;
+				}
+
 				break;
 
 			// custom events
@@ -106,7 +118,7 @@
 				// reset drawing canvas
 				Mask.draw.cvs.prop({ width: File.width, height: File.height });
 				// draw polygon as it is on canvas
-				Mask.draw.ctx.dashedPolygon([ ...Self.polygon, oX, oY ]);
+				Mask.draw.ctx.dashedPolygon([...Self.polygon, oX, oY]);
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
 				break;
@@ -129,7 +141,6 @@
 		switch (event.type) {
 			case "mousedown":
 				let File = Projector.file;
-
 				// prepare paint
 				Self.drag = {
 					scale: File.scale,
@@ -138,27 +149,42 @@
 					lasso: [],
 					_floor: Math.floor,
 					// fast reference
-					maskDispatch: Mask.dispatch,
+					ctx: Mask.draw.ctx,
+					content: APP.els.content,
 				};
+				// halt marching ants (if any) and make sure draw canvas is cleared
+				Mask.ants.halt(true);
+				// reset drawing canvas
+				Mask.draw.cvs.prop({ width: File.width, height: File.height });
+				// update projector
+				Projector.render({ maskPath: true, noEmit: true });
 				// prevent mouse from triggering mouseover
-				APP.els.content.addClass("no-cursor");
+				APP.els.content.addClass("cover cursor-poly-open");
 				// bind event handlers
 				Projector.doc.on("mousemove mouseup", Self.doLasso);
 				break;
 			case "mousemove":
-				if (event.offsetX) {
-					Drag.mX = Drag._floor((event.offsetX - Drag.coX) / Drag.scale);
-					Drag.mY = Drag._floor((event.offsetY - Drag.coY) / Drag.scale);
-				}
+				Drag.mX = Drag._floor((event.offsetX - Drag.coX) / Drag.scale);
+				Drag.mY = Drag._floor((event.offsetY - Drag.coY) / Drag.scale);
 
 				if (Drag.oldX !== Drag.mX && Drag.oldY !== Drag.mY) {
+					// add point to lasso array
 					Drag.lasso.push(Drag.mX, Drag.mY);
-					// draw polygon as it is on canvas
-					Drag.maskDispatch({ type: "draw-lasso", polygon: Drag.lasso });
-
+					// draw lasso as it is on canvas
+					Drag.ctx.dashedPolygon([...Drag.lasso]);
+					// update projector
+					Projector.render({ maskPath: true, noEmit: true });
 					// save mouse point
 					Drag.oldX = Drag.mX;
 					Drag.oldY = Drag.mY;
+
+					if (Drag.lasso.length > 10) {
+						let dX = Drag.lasso[0] - Drag.mX,
+							dY = Drag.lasso[1] - Drag.mY,
+							dist = Math.sqrt(dX*dX + dY*dY);
+						// mouse cursor update
+						Drag.content.toggleClass("cursor-poly-close", dist > Self.polyCloseDist);
+					}
 				}
 				break;
 			case "mouseup":
@@ -169,7 +195,7 @@
 				// reset lasso
 				Drag.lasso = [];
 				// remove class
-				APP.els.content.removeClass("no-cursor");
+				APP.els.content.removeClass("cover");
 				// unbind event handlers
 				Projector.doc.off("mousemove mouseup", Self.doLasso);
 				break;
