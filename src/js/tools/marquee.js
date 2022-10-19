@@ -13,7 +13,7 @@
 		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -85,13 +85,37 @@
 	doPolygon(event) {
 		let APP = keane,
 			Self = APP.tools.marquee,
+			Fast = Self.fast,
 			File = Projector.file,
-			oX = event.offsetX - File.oX,
-			oY = event.offsetY - File.oY,
+			mX = event.offsetX - File.oX,
+			mY = event.offsetY - File.oY,
+			[oX, oY] = event.shiftKey ? Fast.shiftForce(mX, mY) : [mX, mY],
 			dX, dY, dist;
 		switch (event.type) {
 			case "mousedown":
 				if (!Self.polygon.length) {
+					// stuff for fast reference
+					Self.fast = {
+						shiftForce: (x, y) => {
+							let l = Self.polygon.length,
+								pos = [x, y];
+							if (l > 1) {
+								let dir = ["h", "ne", "v", "nw", "h", "ne", "v", "nw", "h"],
+									lX = Self.polygon[l-2],
+									lY = Self.polygon[l-1],
+									deg = Math.round(Math.atan2(y-lY, x-lX) * 180 / Math.PI);
+								if (deg < 0) deg += 360;
+								// translate angle to direction
+								switch (dir[Math.round(deg / 45)]) {
+									case "v": pos[0] = lX; break;
+									case "h": pos[1] = lY; break;
+									case "ne": pos[0] = lX + (y - lY); break;
+									case "nw": pos[0] = lX - (y - lY); break;
+								}
+							}
+							return pos;
+						},
+					};
 					// prevent mouse from triggering mouseover
 					APP.els.content.addClass("cover cursor-poly-open");
 					// bind event handlers
@@ -251,12 +275,12 @@
 				if (x === Drag.offset.x && w > Drag.max.x) w = Drag.max.x;
 				if (y === Drag.offset.y && h > Drag.max.y) h = Drag.max.y;
 
-				if (event.shiftKey) {
-					let r = [];
-					if (w > 0) r.push(w);
-					if (h > 0) r.push(h);
-					if (r.length) w = h = Drag._min(...r);
-				}
+				// if (event.shiftKey) {
+				// 	let r = [];
+				// 	if (w > 0) r.push(w);
+				// 	if (h > 0) r.push(h);
+				// 	if (r.length) w = h = Drag._min(...r);
+				// }
 				
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
