@@ -38,8 +38,6 @@ let Mask = {
 		let Proj = Projector,
 			width = Proj.file.width,
 			height = Proj.file.height;
-		// halt ants, if marching (also clears canvas from existing ants)
-		this.ants.halt(true);
 		
 		switch (method) {
 			case "union":
@@ -57,6 +55,8 @@ let Mask = {
 				this.cvs.prop({ width, height });
 				Proj.swap.cvs.prop({ width, height });
 		}
+		// halt ants, if marching (also clears canvas from existing ants)
+		this.ants.halt(true);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -131,6 +131,7 @@ let Mask = {
 				break;
 			case "deselect":
 				Self.clear();
+				Mask.ants.halt();
 				break;
 			case "inverse-selection":
 				// stop marching ants
