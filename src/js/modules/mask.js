@@ -22,26 +22,40 @@ let Mask = {
 		// temp
 		setTimeout(() => {
 			return;
-			// this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
+			this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
+			this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "subtract" });
+			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "union" });
 			// this.dispatch({ type: "select-elliptic", rect: { x: 100, y: 50, w: 70, h: 70 } });
-			this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ] });
+			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ] });
 
 			// this.dispatch({ type: "inverse-selection" });
 
-			// window.find(`.tool.icon-marquee-union`).trigger("click");
 			// window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
 		}, 900);
 	},
-	clear() {
+	clear(method) {
 		let Proj = Projector,
 			width = Proj.file.width,
 			height = Proj.file.height;
-		
-		// this.ctx.clear(); // <-- faster ?
-		this.cvs.prop({ width, height });
-		Proj.swap.cvs.prop({ width, height });
 		// halt ants, if marching (also clears canvas from existing ants)
 		this.ants.halt(true);
+		
+		switch (method) {
+			case "union":
+				this.ctx.globalCompositeOperation = "source-over";
+				break;
+			case "subtract":
+				this.ctx.globalCompositeOperation = "destination-out";
+				break;
+			case "intersection":
+				this.ctx.globalCompositeOperation = "source-in";
+				break;
+			default:
+				// replace
+				this.ctx.globalCompositeOperation = "source-over";
+				this.cvs.prop({ width, height });
+				Proj.swap.cvs.prop({ width, height });
+		}
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -76,7 +90,7 @@ let Mask = {
 				break;
 
 			case "select-rect":
-				Self.clear();
+				Self.clear(event.method);
 				Self.ctx.fillRect(event.rect.x, event.rect.y, event.rect.w, event.rect.h);
 				Self.ctx.fill();
 				Self.ants.paint(true);

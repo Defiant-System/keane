@@ -14,6 +14,8 @@
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
+		
+		// setTimeout(() => window.find(`.tool.icon-marquee-union`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -47,13 +49,13 @@
 				break;
 			case "clear-selection":
 				// halt marching ants (if any) and make sure draw canvas is cleared
-				Mask.ants.halt(true);
+				Mask.ants.halt();
 				// reset drawing canvas
 				Mask.draw.cvs.prop({ width: File.width, height: File.height });
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
 				// make sure mask selection buffers are cleared as well
-				Mask.dispatch({ type: "deselect" });
+				// Mask.dispatch({ type: "deselect" });
 				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.doMarquee);
@@ -259,6 +261,10 @@
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
+
+				// reset drawing canvas
+				// Mask.draw.cvs.prop({ width: File.width, height: File.height });
+
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover cursor-crosshair");
 				// bind event handlers
@@ -335,8 +341,8 @@
 				}
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
-				// update projector
-				Projector.render({ maskPath: true, noEmit: true });
+				// update projector (paint halted ants)
+				Projector.render({ maskPath: true, ants: Mask.ants.cvs[0], noEmit: true });
 				// save values for "mouseup"
 				Drag.rect = { x, y, w, h };
 				break;
@@ -344,9 +350,7 @@
 				// console.log( Drag.rect );
 				if (Drag.rect) {
 					// paint rectangle on mask canvas
-					Mask.ctx.fillRect(Drag.rect.x, Drag.rect.y, Drag.rect.w, Drag.rect.h);
-					Mask.ctx.fill();
-					Mask.ants.paint(true);
+					Mask.dispatch({ type: "select-rect", rect: Drag.rect, method: Self.method });
 				}
 				// remove class
 				APP.els.content.removeClass("cover cursor-crosshair");

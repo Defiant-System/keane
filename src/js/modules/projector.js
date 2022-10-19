@@ -139,10 +139,10 @@ const Projector = {
 		if (File.rulers.show) Rule.render(this);
 		// toggles file "quick mask" mode
 		if (File.quickMask.show) this.ctx.drawImage(File.quickMask.cvs[0], oX, oY);
-		// draws potential masking paths / polygons, etc
-		if (opt.maskPath) this.ctx.drawImage(Mask.draw.cvs[0], oX, oY);
 		// marching ants
 		if (opt.ants) this.ctx.drawImage(opt.ants, oX, oY);
+		// draws potential masking paths / polygons, etc
+		if (opt.maskPath) this.ctx.drawImage(Mask.draw.cvs[0], oX, oY);
 
 		// console.timeEnd("Projector Render");
 
