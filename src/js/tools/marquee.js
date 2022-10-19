@@ -273,7 +273,6 @@
 				// clear marquee canvas (fastest way)
 				Drag.ctx.clear();
 
-
 				if (event.shiftKey) {
 					let // dist = Drag._round(Drag._sqrt(h*h + w*w)),
 						deg = Drag._round(Drag._atan2(h, w) * Drag._PI);
@@ -283,20 +282,33 @@
 
 					h = w = Drag._min(w, h);
 					switch (Drag._floor(deg / 90)) {
-						case 0: break;
-						case 1: x -= w; break;
-						case 2: x -= w;
-						case 3: y -= h; break;
+						case 0:
+							// shift key constraints
+							if (w > Drag.max.x) { h = w = Drag.max.x; }
+							if (h > Drag.max.y) { h = w = Drag.max.y; }
+							break;
+						case 1:
+							x -= w;
+							// shift key constraints
+							if (x < 0) { x = 0; h = w = Drag.offset.x; }
+							if (h > Drag.max.y) { h = w = Drag.max.y; x = Drag.offset.x - w; }
+							break;
+						case 2:
+							y -= h;
+							x -= w;
+							// shift key constraints
+							if (x < 0) { x = 0; h = w = Drag.offset.x; y = Drag.offset.y - h; }
+							if (y < 0) { y = 0; h = w = Drag.offset.y; x = Drag.offset.x - w; }
+							break;
+						case 3:
+							y -= h;
+							// shift key constraints
+							if (y < 0) { y = 0; h = w = Drag.offset.y; }
+							if (w > Drag.max.x) { h = w = Drag.max.x; y = Drag.offset.y - h; }
+							break;
 					}
 					limit = true;
-					// shift key constraints
-					if (y < 0) {
-						y = 0;
-						h = w = Drag.offset.y;
-						x = Drag.offset.x - w;
-					}
 				}
-
 				if (event.altKey) {
 					if (w < 0) w *= -1;
 					if (h < 0) h *= -1;
