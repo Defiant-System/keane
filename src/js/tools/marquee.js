@@ -230,6 +230,11 @@
 					_max = Math.max,
 					_min = Math.min,
 					_abs = Math.abs,
+					_floor = Math.floor,
+					_round = Math.round,
+					_atan2 = Math.atan2,
+					_sqrt = Math.sqrt,
+					_PI = 180 / Math.PI,
 					offset = {
 						x: event.offsetX - File.oX,
 						y: event.offsetY - File.oY,
@@ -250,7 +255,7 @@
 				if (offset.x > width)  { click.x -= offset.x - width;  offset.x = width; }
 				if (offset.y > height) { click.y -= offset.y - height; offset.y = height; }
 				// drag object
-				Self.drag = { ctx, offset, click, max, _min, _max, _abs };
+				Self.drag = { ctx, offset, click, max, _min, _max, _abs, _floor, _round, _atan2, _sqrt, _PI };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -270,7 +275,26 @@
 
 
 				if (event.shiftKey) {
-					console.log("shiftKey");
+					let // dist = Drag._round(Drag._sqrt(h*h + w*w)),
+						deg = Drag._round(Drag._atan2(h, w) * Drag._PI);
+					if (deg < 0) deg += 360;
+					if (w < 0) w *= -1;
+					if (h < 0) h *= -1;
+
+					h = w = Drag._min(w, h);
+					switch (Drag._floor(deg / 90)) {
+						case 0: break;
+						case 1: x -= w; break;
+						case 2: x -= w;
+						case 3: y -= h; break;
+					}
+					limit = true;
+					// shift key constraints
+					if (y < 0) {
+						y = 0;
+						h = w = Drag.offset.y;
+						x = Drag.offset.x - w;
+					}
 				}
 
 				if (event.altKey) {
@@ -281,7 +305,7 @@
 					w *= 2;
 					h *= 2;
 					limit = true;
-					// constraints
+					// alt key constraints
 					if (x < 0) { x = 0; w = Drag.offset.x * 2; }
 					if (y < 0) { y = 0; h = Drag.offset.y * 2; }
 					if (Drag._abs(w) >> 1 > Drag.max.x) { w = Drag.max.x * 2; x = Drag.offset.x - Drag.max.x; }
@@ -289,7 +313,7 @@
 				}
 
 				if (!limit) {
-					// constraints
+					// default constraints
 					if (w < 0) { x += w; w *= -1; }
 					if (h < 0) { y += h; h *= -1; }
 					if (x < 0) { x = 0; w = Drag.offset.x; }
