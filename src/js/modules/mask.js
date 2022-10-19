@@ -22,10 +22,11 @@ let Mask = {
 		// temp
 		setTimeout(() => {
 			return;
-			this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
-			this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "subtract" });
+			// this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
+			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "subtract" });
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "union" });
-			// this.dispatch({ type: "select-elliptic", rect: { x: 100, y: 50, w: 70, h: 70 } });
+			this.dispatch({ type: "select-elliptic", elps: { x: 100, y: 50, rX: 70, rY: 90 } });
+			this.dispatch({ type: "select-elliptic", elps: { x: 150, y: 130, rX: 100, rY: 150 }, method: "union" });
 			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ] });
 
 			// this.dispatch({ type: "inverse-selection" });
@@ -47,7 +48,7 @@ let Mask = {
 			case "subtract":
 				this.ctx.globalCompositeOperation = "destination-out";
 				break;
-			case "intersection":
+			case "intersect":
 				this.ctx.globalCompositeOperation = "source-in";
 				break;
 			default:
@@ -96,12 +97,12 @@ let Mask = {
 				Self.ants.paint(true);
 				break;
 			case "select-elliptic":
-				Self.clear();
-				let eW = event.rect.w,
-					eH = event.rect.h,
-					eX = event.rect.x + eW,
-					eY = event.rect.y + eH;
-				Self.ctx.ellipse(eX, eY, eW, eH, 0, 0, Math.PI*2);
+				Self.clear(event.method);
+				let eX = event.elps.x,
+					eY = event.elps.y,
+					rX = event.elps.rX,
+					rY = event.elps.rY;
+				Self.ctx.ellipse(eX, eY, rX, rY, 0, 0, Math.PI*2);
 				Self.ctx.fill();
 				Self.ants.paint(true);
 				break;

@@ -10,7 +10,7 @@
 		this.polyCloseDist = 5;
 
 		// temp
-		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
@@ -54,8 +54,6 @@
 				Mask.draw.cvs.prop({ width: File.width, height: File.height });
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
-				// make sure mask selection buffers are cleared as well
-				// Mask.dispatch({ type: "deselect" });
 				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.doMarquee);
@@ -227,6 +225,7 @@
 				// prepare drag object
 				let File = Projector.file,
 					ctx = Mask.draw.ctx,
+					antCvs = Mask.ants.cvs[0],
 					width = File.width,
 					height = File.height,
 					_max = Math.max,
@@ -257,14 +256,10 @@
 				if (offset.x > width)  { click.x -= offset.x - width;  offset.x = width; }
 				if (offset.y > height) { click.y -= offset.y - height; offset.y = height; }
 				// drag object
-				Self.drag = { ctx, offset, click, max, _min, _max, _abs, _floor, _round, _atan2, _sqrt, _PI };
+				Self.drag = { ctx, antCvs, offset, click, max, _min, _max, _abs, _floor, _round, _atan2, _sqrt, _PI };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
-
-				// reset drawing canvas
-				// Mask.draw.cvs.prop({ width: File.width, height: File.height });
-
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover cursor-crosshair");
 				// bind event handlers
@@ -342,7 +337,7 @@
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector (paint halted ants)
-				Projector.render({ maskPath: true, ants: Mask.ants.cvs[0], noEmit: true });
+				Projector.render({ maskPath: true, ants: Drag.antCvs, noEmit: true });
 				// save values for "mouseup"
 				Drag.rect = { x, y, w, h };
 				break;
@@ -368,6 +363,7 @@
 				// prepare drag object
 				let File = Projector.file,
 					ctx = Mask.draw.ctx,
+					antCvs = Mask.ants.cvs[0],
 					width = File.width,
 					height = File.height,
 					_abs = Math.abs,
@@ -401,7 +397,7 @@
 				if (offset.x < 0) click.x -= offset.x;
 				if (offset.y < 0) click.y -= offset.y;
 				// drag object
-				Self.drag = { ctx, offset, click, max, _abs, drawHEdge, drawVEdge };
+				Self.drag = { ctx, antCvs, offset, click, max, _abs, drawHEdge, drawVEdge };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -438,7 +434,7 @@
 				Drag.drawVEdge(Drag.ctx, x, y, rX, rY, [-x, Drag.max.w-x]);
 
 				// update projector
-				Projector.render({ maskPath: true, noEmit: true });
+				Projector.render({ maskPath: true, ants: Drag.antCvs, noEmit: true });
 				// save values for "mouseup"
 				Drag.elps = { x, y, rX, rY };
 				break;
@@ -446,9 +442,7 @@
 				// console.log( Drag.elps );
 				if (Drag.elps) {
 					// paint rectangle on mask canvas
-					Mask.ctx.ellipse(Drag.elps.x, Drag.elps.y, Drag.elps.rX, Drag.elps.rY, 0, 0, Math.PI*2);
-					Mask.ctx.fill();
-					Mask.ants.paint(true);
+					Mask.dispatch({ type: "select-elliptic", elps: Drag.elps, method: Self.method });
 				}
 				// remove class
 				APP.els.content.removeClass("cover cursor-crosshair");
