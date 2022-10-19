@@ -529,7 +529,7 @@
 			 M15.1,15.1H5.4v-3h7.4V6.5h2.3V15.1z"/>
 	</svg>
 
-	<svg id="icon-marquee-intersection" viewBox="0 0 17 17">
+	<svg id="icon-marquee-intersect" viewBox="0 0 17 17">
 		<rect x="5" y="6" fill="#333" opacity="0.4" width="7.4" height="5.7"/>
 		<path fill="#333" d="M12.8,5.6V1H1v11.1h3.5V16H16V5.6H12.8z M1.9,11.3V1.9h10.1v3.7H4.5v5.7H1.9z M11.9,6.5v4.8H5.4V6.5H11.9z
 			 M15.1,15.1H5.4v-3h7.4V6.5h2.3V15.1z"/>
