@@ -55,6 +55,8 @@
 				Mask.draw.cvs.prop({ width: File.width, height: File.height });
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
+				
+				if (Self.method === "replace") Mask.dispatch({ type: "deselect" });
 				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.doMarquee);
@@ -261,6 +263,7 @@
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
+
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover cursor-crosshair");
 				// bind event handlers
