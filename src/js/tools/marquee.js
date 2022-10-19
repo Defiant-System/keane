@@ -10,7 +10,7 @@
 		this.polyCloseDist = 5;
 
 		// temp
-		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
+		setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
@@ -229,6 +229,7 @@
 					height = File.height,
 					_max = Math.max,
 					_min = Math.min,
+					_abs = Math.abs,
 					offset = {
 						x: event.offsetX - File.oX,
 						y: event.offsetY - File.oY,
@@ -249,7 +250,7 @@
 				if (offset.x > width)  { click.x -= offset.x - width;  offset.x = width; }
 				if (offset.y > height) { click.y -= offset.y - height; offset.y = height; }
 				// drag object
-				Self.drag = { ctx, offset, click, max, _min, _max };
+				Self.drag = { ctx, offset, click, max, _min, _max, _abs };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -262,30 +263,46 @@
 				let x = Drag.offset.x,
 					y = Drag.offset.y,
 					w = event.clientX - Drag.click.x,
-					h = event.clientY - Drag.click.y;
+					h = event.clientY - Drag.click.y,
+					limit;
 				// clear marquee canvas (fastest way)
 				Drag.ctx.clear();
 
 
+				if (event.shiftKey) {
+					console.log("shiftKey");
+				}
+
 				if (event.altKey) {
+					console.log( w );
 					x -= w;
 					y -= h;
 					w *= 2;
 					h *= 2;
+					limit = true;
+
+					// constraints
+					if (x < 0) { x = 0; w = Drag.offset.x * 2; }
+					if (y < 0) { y = 0; h = Drag.offset.y * 2; }
+					if (Drag._abs(w) >> 1 > Drag.max.x) {
+						w = Drag.max.x * 2;
+						x = Drag.offset.x - Drag.max.x;
+					}
+					if (Drag._abs(h) >> 1 > Drag.max.y) {
+						h = Drag.max.y * 2;
+						y = Drag.offset.y - Drag.max.y;
+					}
 				}
-				if (event.shiftKey) {
-					console.log("shiftKey");
-				}				
 
-
-				// constraints
-				if (w < 0) { x += w; w *= -1; }
-				if (h < 0) { y += h; h *= -1; }
-				if (x < 0) { x = 0; w = Drag.offset.x; }
-				if (y < 0) { y = 0; h = Drag.offset.y; }
-				if (x === Drag.offset.x && w > Drag.max.x) w = Drag.max.x;
-				if (y === Drag.offset.y && h > Drag.max.y) h = Drag.max.y;
-				
+				if (!limit) {
+					// constraints
+					if (w < 0) { x += w; w *= -1; }
+					if (h < 0) { y += h; h *= -1; }
+					if (x < 0) { x = 0; w = Drag.offset.x; }
+					if (y < 0) { y = 0; h = Drag.offset.y; }
+					if (x === Drag.offset.x && w > Drag.max.x) w = Drag.max.x;
+					if (y === Drag.offset.y && h > Drag.max.y) h = Drag.max.y;
+				}
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector
@@ -366,6 +383,13 @@
 					dY = event.clientY - Drag.click.y;
 				// clear marquee canvas (fastest way)
 				Drag.ctx.clear();
+				// handling shift key
+				if (event.altKey) {
+					mX -= dX;
+					mY -= dY;
+					dX *= 2;
+					dY *= 2;
+				}
 				// constraints
 				let rX = dX >> 1,
 					rY = dY >> 1,
