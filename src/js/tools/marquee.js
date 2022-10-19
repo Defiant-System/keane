@@ -10,7 +10,7 @@
 		this.polyCloseDist = 5;
 
 		// temp
-		setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
@@ -274,24 +274,18 @@
 				}
 
 				if (event.altKey) {
-					console.log( w );
+					if (w < 0) w *= -1;
+					if (h < 0) h *= -1;
 					x -= w;
 					y -= h;
 					w *= 2;
 					h *= 2;
 					limit = true;
-
 					// constraints
 					if (x < 0) { x = 0; w = Drag.offset.x * 2; }
 					if (y < 0) { y = 0; h = Drag.offset.y * 2; }
-					if (Drag._abs(w) >> 1 > Drag.max.x) {
-						w = Drag.max.x * 2;
-						x = Drag.offset.x - Drag.max.x;
-					}
-					if (Drag._abs(h) >> 1 > Drag.max.y) {
-						h = Drag.max.y * 2;
-						y = Drag.offset.y - Drag.max.y;
-					}
+					if (Drag._abs(w) >> 1 > Drag.max.x) { w = Drag.max.x * 2; x = Drag.offset.x - Drag.max.x; }
+					if (Drag._abs(h) >> 1 > Drag.max.y) { h = Drag.max.y * 2; y = Drag.offset.y - Drag.max.y; }
 				}
 
 				if (!limit) {
