@@ -13,7 +13,7 @@
 		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
 		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
-		setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -85,16 +85,15 @@
 	doPolygon(event) {
 		let APP = keane,
 			Self = APP.tools.marquee,
-			Fast = Self.fast,
 			File = Projector.file,
 			mX = event.offsetX - File.oX,
 			mY = event.offsetY - File.oY,
-			[oX, oY] = event.shiftKey ? Fast.shiftForce(mX, mY) : [mX, mY],
+			[oX, oY] = event.shiftKey ? Self.fast.shiftForce(mX, mY) : [mX, mY],
 			dX, dY, dist;
 		switch (event.type) {
 			case "mousedown":
 				if (!Self.polygon.length) {
-					// stuff for fast reference
+					// stuff for fast reference (declared once at start)
 					Self.fast = {
 						shiftForce: (x, y) => {
 							let l = Self.polygon.length,
@@ -267,6 +266,18 @@
 				// clear marquee canvas (fastest way)
 				Drag.ctx.clear();
 
+
+				if (event.altKey) {
+					x -= w;
+					y -= h;
+					w *= 2;
+					h *= 2;
+				}
+				if (event.shiftKey) {
+					console.log("shiftKey");
+				}				
+
+
 				// constraints
 				if (w < 0) { x += w; w *= -1; }
 				if (h < 0) { y += h; h *= -1; }
@@ -274,13 +285,6 @@
 				if (y < 0) { y = 0; h = Drag.offset.y; }
 				if (x === Drag.offset.x && w > Drag.max.x) w = Drag.max.x;
 				if (y === Drag.offset.y && h > Drag.max.y) h = Drag.max.y;
-
-				// if (event.shiftKey) {
-				// 	let r = [];
-				// 	if (w > 0) r.push(w);
-				// 	if (h > 0) r.push(h);
-				// 	if (r.length) w = h = Drag._min(...r);
-				// }
 				
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
