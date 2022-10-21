@@ -5,21 +5,87 @@
 		<Menu name="Quit Keane" shell="win -c"/>
 	</Menu>
 	<Menu name="File">
-		<Menu name="New"/>
-		<Menu name="Open&#8230;"/>
+		<Menu name="New" disabled="1"/>
+		<Menu name="Open&#8230;" disabled="1"/>
+		<Menu name="Open &amp; Place&#8230;" disabled="1"/>
+		<Menu name="Open More&#8230;">
+			<Menu name="Open from URL" disabled="1"/>
+			<Menu name="Take a picture" disabled="1"/>
+			<Menu name="PSD Templates" disabled="1"/>
+		</Menu>
+		<Menu type="divider"/>
+		<Menu name="Save"/>
+		<Menu name="Save as PSD" disabled="1"/>
+		<Menu name="Export as&#8230;">
+			<Menu name="PNG" disabled="1"/>
+			<Menu name="JPG" disabled="1"/>
+			<Menu name="SVG" disabled="1"/>
+			<Menu name="GIF" disabled="1"/>
+			<Menu name="PDF" disabled="1"/>
+			<Menu name="More&#8230;">
+				<Menu name="WEBP" disabled="1"/>
+				<Menu name="BMP" disabled="1"/>
+				<Menu name="TIFF" disabled="1"/>
+				<Menu name="ICO" disabled="1"/>
+				<Menu name="TGA" disabled="1"/>
+				<Menu name="RAW" disabled="1"/>
+			</Menu>
+		</Menu>
+		<Menu name="Print&#8230;" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Export Layers" disabled="1"/>
+		<Menu name="Export Color Lookup" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="File Info" disabled="1"/>
 		<Menu type="divider"/>
 		<Menu name="Close" click="close-file"/>
-		<Menu name="Close All"/>
-		<Menu name="Save"/>
-		<Menu name="Save As&#8230;"/>
-		<Menu type="divider"/>
-		<Menu name="Export"/>
+		<Menu name="Close All" disabled="1"/>
 	</Menu>
 	<Menu name="Edit">
-		<Menu name="Cut"/>
-		<Menu name="Copy"/>
-		<Menu name="Paste"/>
-		<Menu name="Clear"/>
+		<Menu name="Undo/Redo" disabled="1"/>
+		<Menu name="Step Forward" disabled="1"/>
+		<Menu name="Step Backward" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Fade" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Cut" disabled="1"/>
+		<Menu name="Copy" disabled="1"/>
+		<Menu name="Copy Merged" disabled="1"/>
+		<Menu name="Paste" disabled="1"/>
+		<Menu name="Clear" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Fill" disabled="1"/>
+		<Menu name="Stroke" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Content-Aware Scale" disabled="1"/>
+		<Menu name="Puppet Warp" disabled="1"/>
+		<Menu name="Free Transform" disabled="1"/>
+		<Menu name="Transform&#8230;">
+			<Menu name="Again" disabled="1"/>
+			<Menu type="divider" disabled="1"/>
+			<Menu name="Scale" disabled="1"/>
+			<Menu name="Rotate" disabled="1"/>
+			<Menu name="Distort" disabled="1"/>
+			<Menu name="Perspective" disabled="1"/>
+			<Menu name="Warp" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Rotate 90° &#8635;" disabled="1"/>
+			<Menu name="Rotate 90° &#8634;" disabled="1"/>
+			<Menu name="Rotate 180°" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Flip Horizontally" disabled="1"/>
+			<Menu name="Flip Verticaally" disabled="1"/>
+		</Menu>
+		<Menu name="Auto Align" disabled="1"/>
+		<Menu name="Auto-Blend" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Define New&#8230;">
+			<Menu name="Pattern" disabled="1"/>
+			<Menu name="Brush" disabled="1"/>
+			<Menu name="Custom Shape" disabled="1"/>
+		</Menu>
+		<Menu name="Preset Manager" disabled="1"/>
+		<Menu name="Preferences" disabled="1"/>
 	</Menu>
 	<Menu name="Image">
 		<Menu name="Mode">
@@ -66,9 +132,10 @@
 		<Menu name="Canvas Size" disabled="1"/>
 		<Menu name="Image Size" disabled="1"/>
 		<Menu name="Transform">
-			<Menu name="Rotate 90° Clockwise" disabled="1"/>
-			<Menu name="Rotate 90° Counter Clockwise" disabled="1"/>
+			<Menu name="Rotate 90° &#8635;" disabled="1"/>
+			<Menu name="Rotate 90° &#8634;" disabled="1"/>
 			<Menu name="Rotate 180°" disabled="1"/>
+			<Menu type="divider"/>
 			<Menu name="Flip Horizontally" disabled="1"/>
 			<Menu name="Flip Verticaally" disabled="1"/>
 		</Menu>
@@ -80,28 +147,169 @@
 		<Menu type="divider"/>
 		<Menu name="Variables" disabled="1"/>
 	</Menu>
-	<Menu name="Layer"></Menu>
-	<Menu name="Type"></Menu>
+	<Menu name="Layer">
+		<Menu name="New" disabled="1"/>
+		<Menu name="Duplicate Layer" disabled="1"/>
+		<Menu name="Duplicate Info" disabled="1"/>
+		<Menu name="Delete" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Layer Style" disabled="1">
+			<Menu name="Blending Options" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Bevel &amp; Emboss" disabled="1"/>
+			<Menu name="Stroke" disabled="1"/>
+			<Menu name="Inner Shadow" disabled="1"/>
+			<Menu name="Inner Glow" disabled="1"/>
+			<Menu name="Satin" disabled="1"/>
+			<Menu name="Color Overlay" disabled="1"/>
+			<Menu name="Gradient Overlay" disabled="1"/>
+			<Menu name="Pattern Overlay" disabled="1"/>
+			<Menu name="Outer Glow" disabled="1"/>
+			<Menu name="Drop Shadow" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Layer Style">
+				<Menu name="Copy" disabled="1"/>
+				<Menu name="Paste" disabled="1"/>
+				<Menu name="Clear" disabled="1"/>
+			</Menu>
+			<Menu type="divider"/>
+			<Menu name="Scale Effects" disabled="1"/>
+			<Menu name="Create Layers" disabled="1"/>
+		</Menu>
+		<Menu type="divider"/>
+		<Menu name="New Fill Layer">
+			<Menu name="Color Fill" disabled="1"/>
+			<Menu name="Gradient Fill" disabled="1"/>
+			<Menu name="Patten Fill" disabled="1"/>
+		</Menu>
+		<Menu name="New Adjustment Layer">
+			<Menu name="Brightness / Contrast" disabled="1"/>
+			<Menu name="Levels" disabled="1"/>
+			<Menu name="Curves" disabled="1"/>
+			<Menu name="Exposure" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Vibrance" disabled="1"/>
+			<Menu name="Hue / Saturation" disabled="1"/>
+			<Menu name="Color Balance" disabled="1"/>
+			<Menu name="Black &amp; White" disabled="1"/>
+			<Menu name="Photo Filter" disabled="1"/>
+			<Menu name="Channel Mixer" disabled="1"/>
+			<Menu name="Color Lookup" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Invert" disabled="1"/>
+			<Menu name="Posterize" disabled="1"/>
+			<Menu name="Threshold" disabled="1"/>
+			<Menu name="Gradient Map" disabled="1"/>
+			<Menu name="Selective Color" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Replace Color" disabled="1"/>
+		</Menu>
+		<Menu type="divider"/>
+		<Menu name="Raster Mask">
+			<Menu name="Add (Reveal All)" disabled="1"/>
+			<Menu name="Add (Hide All)" disabled="1"/>
+			<Menu name="Reveal Selection" disabled="1"/>
+			<Menu name="Hide Selection" disabled="1"/>
+			<Menu name="From Transparency" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Delete" disabled="1"/>
+			<Menu name="Apply" disabled="1"/>
+			<Menu name="Enable/Disable" disabled="1"/>
+		</Menu>
+		<Menu name="Vector Mask">
+			<Menu name="Add (Reveal All)" disabled="1"/>
+			<Menu name="Add (Hide All)" disabled="1"/>
+			<Menu name="Current Path" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Delete" disabled="1"/>
+			<Menu name="Enable/Disable" disabled="1"/>
+		</Menu>
+		<Menu name="Clipping Mask" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Smart Object">
+			<Menu name="Convert to Smart Object" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Open (Edit Contents)" disabled="1"/>
+			<Menu name="Replace Contents" disabled="1"/>
+			<Menu name="Export Contents" disabled="1"/>
+			<Menu type="divider"/>
+			<Menu name="Stack Mode" disabled="1"/>
+			<Menu name="Turn into JPG" disabled="1"/>
+		</Menu>
+		<Menu type="divider"/>
+		<Menu name="Rasterize" disabled="1"/>
+		<Menu name="Rasterize Layer Style" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Group Layers" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Arrange">
+			<Menu name="Bring to Front" disabled="1"/>
+			<Menu name="Bring Forward" disabled="1"/>
+			<Menu name="Send Backward" disabled="1"/>
+			<Menu name="Send to Back" disabled="1"/>
+		</Menu>
+		<Menu type="divider"/>
+		<Menu name="Animation">
+			<Menu name="Make Frames" disabled="1"/>
+			<Menu name="Unmake Frames" disabled="1"/>
+			<Menu name="Merge" disabled="1"/>
+		</Menu>
+		<Menu type="divider"/>
+		<Menu name="Merge Down" disabled="1"/>
+		<Menu name="Flatten Image" disabled="1"/>
+		<Menu name="Defringe" disabled="1"/>
+	</Menu>
 	<Menu name="Select">
 		<Menu name="All" click="select-all" hotkey="alt+a"/>
-		<Menu name="Deselect" click="deselect" hotkey="alt+d"/>
-		<Menu name="Inverse" click="inverse-selection" hotkey="alt+shift+i"/>
+		<Menu name="Deselect" click="deselect" hotkey="alt+d" disabled="1"/>
+		<Menu name="Inverse" click="inverse-selection" hotkey="alt+shift+i" disabled="1"/>
 		<Menu type="divider"/>
-		<Menu name="Edit in Quick Mask Mode" click="quickMask-enable" hotkey="q"/>
-		<Menu name="Exit Quick Mask Mode" click="quickMask-disable" hotkey="q" type="hidden"/>
+		<Menu name="Color Range" disabled="1"/>
+		<Menu name="Magic Cut" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Refine Edge" disabled="1"/>
+		<Menu name="Modify">
+			<Menu name="Border" disabled="1"/>
+			<Menu name="Smooth" disabled="1"/>
+			<Menu name="Expand" disabled="1"/>
+			<Menu name="Contract" disabled="1"/>
+			<Menu name="Feather" disabled="1"/>
+		</Menu>
+		<Menu type="divider"/>
+		<Menu name="Grow" disabled="1"/>
+		<Menu name="Similar" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Transform Selection" disabled="1"/>
+		<Menu type="divider"/>
+		<Menu name="Quick Mask Mode" click="toggle-quick-mask-mode" hotkey="q"/>
+		<Menu type="divider"/>
+		<Menu name="Save Selection" disabled="1"/>
 	</Menu>
 	<Menu name="Filter">
-		<Menu name="Last Filter" disabled="1" />
+		<Menu name="Last Filter" disabled="1"/>
 		<Menu type="divider"/>
+		<Menu name="Filter Gallery" disabled="1"/>
+		<Menu name="Lens Correction" disabled="1"/>
+		<Menu name="Camera Raw" disabled="1"/>
+		<Menu name="Liquify" disabled="1"/>
+		<Menu name="Pixelator" click="open-dialog" arg="dlgPixelator"/>
+		<Menu type="divider"/>
+		<Menu name="3D">
+			<Menu name="Normal Map" disabled="1"/>
+			<Menu name="Texture Dilation" disabled="1"/>
+		</Menu>
 		<Menu name="Blur">
+			<Menu name="Avergage" disabled="1"/>
 			<Menu name="Blur" click="filter-render" arg="blur"/>
 			<Menu name="Blur More" click="filter-render" arg="gaussianBlur,2"/>
+			<Menu name="Box Blur" disabled="1"/>
 			<Menu name="Gaussian Blur" click="open-dialog" arg="dlgGaussianBlur"/>
+			<Menu name="Lens Blur" disabled="1"/>
 			<Menu name="Motion Blur" disabled="1"/>
 			<Menu name="Radial Blur" disabled="1"/>
 			<Menu name="Surface Blur" disabled="1"/>
 		</Menu>
-		<Menu name="Disort">
+		<Menu name="Distort">
 			<Menu name="Displace" disabled="1"/>
 			<Menu name="Kaleidoscope" disabled="1"/>
 			<Menu name="Pinch" disabled="1"/>
@@ -153,8 +361,17 @@
 			<Menu name="Trace Contour" disabled="1"/>
 			<Menu name="Wind" disabled="1"/>
 		</Menu>
+		<Menu type="divider"/>
 		<Menu name="Other">
+			<Menu name="High Pass" disabled="1"/>
+			<Menu name="HSB/HSL" disabled="1"/>
+			<Menu name="Maximum" disabled="1"/>
+			<Menu name="Minimum" disabled="1"/>
+			<Menu name="Offset" disabled="1"/>
+			<Menu name="Repeat" disabled="1"/>
+			<Menu name="Color to Alpha" disabled="1"/>
 			<Menu name="Dither" click="filter-render" arg="dither"/>
+			<Menu name="Particles" disabled="1"/>
 		</Menu>
 	</Menu>
 	<Menu name="View">
