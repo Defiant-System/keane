@@ -31,7 +31,9 @@ let Mask = {
 
 			// this.dispatch({ type: "inverse-selection" });
 
-			window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
+			// window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
+
+			// setTimeout(() => $(".def-desktop_").trigger("mousedown").trigger("mouseup"), 200);
 
 			// setTimeout(() => this.dispatch({ type: "select-elliptic", elps: { x: 300, y: 220, rX: 70, rY: 90 } }), 300);
 		}, 900);
@@ -69,29 +71,6 @@ let Mask = {
 			image,
 			el;
 		switch (event.type) {
-			case "toggle-quick-mask":
-				// stop marching ants
-				Self.ants.halt(true);
-
-				// toggle tool UI
-				event.el.toggleClass("active", File.quickMask.show);
-				// toggle file "quick mask" flag
-				File.quickMask.show = !File.quickMask.show;
-
-				if (File.quickMask.show) {
-					// File.qm.cvs.prop({ width: File.width, height: File.height });
-					File.quickMask.ctx.globalCompositeOperation = "source-over";
-					File.quickMask.ctx.drawImage(Self.cvs[0], 0, 0);
-					File.quickMask.ctx.globalCompositeOperation = "source-out";
-					File.quickMask.ctx.fillStyle = Pref.quickMask.color;
-					File.quickMask.ctx.fillRect(0, 0, 1e9, 1e9);
-				} else {
-					Self.ants.paint(true);
-				}
-				// update projector
-				File.render({ noEmit: true });
-				break;
-
 			case "select-rect":
 				Self.clear(event.method);
 				Self.ctx.fillRect(event.rect.x, event.rect.y, event.rect.w, event.rect.h);

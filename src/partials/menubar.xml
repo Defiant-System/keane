@@ -281,7 +281,7 @@
 		<Menu type="divider"/>
 		<Menu name="Transform Selection" disabled="1"/>
 		<Menu type="divider"/>
-		<Menu name="Quick Mask Mode" click="toggle-quick-mask-mode" hotkey="q"/>
+		<Menu name="Quick Mask Mode" click="toggle-quick-mask-mode" hotkey="q" check-group="quick-mask-mode"/>
 		<Menu type="divider"/>
 		<Menu name="Save Selection" disabled="1"/>
 	</Menu>

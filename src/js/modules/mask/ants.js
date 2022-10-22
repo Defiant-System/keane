@@ -23,7 +23,13 @@
 	},
 	halt(clear) {
 		this._halt = true;
-		if (clear) this.paint();
+		if (clear) {
+			// prevents choking frame
+			cancelAnimationFrame(this.raf);
+			// reset canvas & mask
+			this.cvs.prop({ width: this.w, height: this.h });
+			delete this.mask;
+		}
 	},
 	resume() {
 		this._halt = false;

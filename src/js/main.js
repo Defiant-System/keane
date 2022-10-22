@@ -152,8 +152,6 @@ const keane = {
 				break;
 
 			// proxy events
-			case "toggle-quick-mask":
-				return Mask.dispatch(event);
 			case "toggle-guides":
 			case "toggle-rulers":
 			case "toggle-grid":
