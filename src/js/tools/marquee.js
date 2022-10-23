@@ -365,7 +365,7 @@
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector (paint halted ants)
-				Projector.render({ maskPath: true, ants: Drag.antCvs, noEmit: true });
+				Projector.render({ maskPath: true, noEmit: true });
 				// save values for "mouseup"
 				Drag.rect = { x, y, w, h };
 				break;
@@ -462,7 +462,7 @@
 				Drag.drawVEdge(Drag.ctx, x, y, rX, rY, [-x, Drag.max.w-x]);
 
 				// update projector
-				Projector.render({ maskPath: true, ants: Drag.antCvs, noEmit: true });
+				Projector.render({ maskPath: true, noEmit: true });
 				// save values for "mouseup"
 				Drag.elps = { x, y, rX, rY };
 				break;
