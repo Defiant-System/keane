@@ -45,6 +45,20 @@ const Filters = {
 		crystallize(d, w, h, destData.data, size, color);
 		return destData;
 	},
+	pointillize(pixels, size) {
+		let color = [0, 0, 0];
+		return this.crystallize(pixels, size, color)
+	},
+	stainedGlass(pixels, size, border=4) {
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height,
+			color = [0, 0, 0],
+			destData = this.createImageData(w, h);
+		// console.log( size );
+		crystallize(d, w, h, destData.data, size, color, 0, border * .5);
+		return destData;
+	},
 	brightnessContrast(pixels, val={}) {
 		/* Brightness = min: -100   max: 100
 		 * Contrast   = min: -150   max: 150
