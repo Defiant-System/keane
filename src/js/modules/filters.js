@@ -36,6 +36,14 @@ const Filters = {
 		gaussianBlur(d, w, h, radius);
 		return pixels;
 	},
+	crystallize(pixels, size) {
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height,
+			destData = this.createImageData(w, h);
+		crystallize(d, w, h, destData.data, size);
+		return destData;
+	},
 	brightnessContrast(pixels, val={}) {
 		/* Brightness = min: -100   max: 100
 		 * Contrast   = min: -150   max: 150
