@@ -1,5 +1,5 @@
 
-function crystallize(src, width, height, dest, size) {
+function crystallize(src, width, height, dest, size, clr) {
 	let _floor = Math.floor,
 		_random = Math.random,
 		_max = Math.max,
@@ -16,8 +16,14 @@ function crystallize(src, width, height, dest, size) {
 		P = 0,
 		C = 0,
 		h = 0,
-		L = 0,
-		e = 1 / size,
+		L = 0;
+
+	if (clr) {
+		y = size * .5;
+		size = 3 + Math.round((size - 3) * .75)
+	}
+
+	let e = 1 / size,
 		M = _floor(width * e) + 1,
 		R = _floor(height * e) + 1,
 		J = [],
@@ -43,7 +49,7 @@ function crystallize(src, width, height, dest, size) {
 			for (let A = 0; A < 4; A++) n[W + A] = _max(0, _min(255, _floor(src[H + A] + (_random() - .5) * T)))
 		}
 	}
-	let Z = [0, 0, 0],
+	let Z = clr ? clr : [0, 0, 0],
 		B = M * R * 2,
 		a = [-M - 1, -M, -M + 1, -1, 0, 1, M - 1, M, M + 1];
 	for (let j = 0; j < height; j++) {
@@ -94,7 +100,7 @@ function crystallize(src, width, height, dest, size) {
 			}
 			
 			let gX = (P + C) * .5,
-				_ = 0;
+				_ = clr ? Math.max(0, gX - y) : 0;
 			O = _max(0, _min(1, .5 + gX - P - _));
 			$ = _max(0, _min(1, 1 - (.5 + gX - P) - _))
 			

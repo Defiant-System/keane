@@ -36,12 +36,13 @@ const Filters = {
 		gaussianBlur(d, w, h, radius);
 		return pixels;
 	},
-	crystallize(pixels, size) {
+	// crystallize is used by filter "pointillize" as well...with extra "color" argument
+	crystallize(pixels, size, color) {
 		let d = pixels.data,
 			w = pixels.width,
 			h = pixels.height,
 			destData = this.createImageData(w, h);
-		crystallize(d, w, h, destData.data, size);
+		crystallize(d, w, h, destData.data, size, color);
 		return destData;
 	},
 	brightnessContrast(pixels, val={}) {

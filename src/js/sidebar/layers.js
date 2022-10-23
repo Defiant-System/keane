@@ -21,12 +21,13 @@
 
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "clouds" }), 200);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "crystallize,10" }), 200);
+			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "pointillize,10" }), 200);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "invert" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "dither" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "gaussianBlur,3" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "brightness,-25" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "emboss" }), 400);
-			// return;
+			return;
 
 			// dlgBrightnessContrast
 			// dlgGaussianBlur
@@ -35,9 +36,10 @@
 			// dlgSponge
 			// dlgPixelator
 			// dlgCrystallize
+			// dlgPointillize
 			UI.doDialog({
 				type: "dlg-open",
-				name: "dlgCrystallize",
+				name: "dlgPointillize",
 				// callback: ev => console.log(ev),
 			});
 		}, 500);

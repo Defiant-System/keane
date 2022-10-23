@@ -68,15 +68,13 @@ const Dialogs = {
 				// update layer
 				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
 				break;
-			
-			// standard dialog events
-			case "dlg-open":
-			case "dlg-ok":
-			case "dlg-reset":
-			case "dlg-preview":
-			case "dlg-close":
+			default:
+				/* Falls through to "master UI"
+				 * Can be handled here if needed - just capture events:
+				 * "dlg-ok", "dlg-open", "dlg-reset", "dlg-preview", "dlg-close"
+				 */
+				// handler standard dialog events
 				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgGaussianBlur" });
-				break;
 		}
 	},
 	dlgThreshold(event) {
@@ -102,15 +100,13 @@ const Dialogs = {
 				// update layer
 				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
 				break;
-
-			// standard dialog events
-			case "dlg-open":
-			case "dlg-ok":
-			case "dlg-reset":
-			case "dlg-preview":
-			case "dlg-close":
+			default:
+				/* Falls through to "master UI"
+				 * Can be handled here if needed - just capture events:
+				 * "dlg-ok", "dlg-open", "dlg-reset", "dlg-preview", "dlg-close"
+				 */
+				// handler standard dialog events
 				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgThreshold" });
-				break;
 		}
 	},
 	dlgCrystallize(event) {
@@ -136,17 +132,50 @@ const Dialogs = {
 				// update layer
 				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
 				break;
-
-			// standard dialog events
-			case "dlg-open":
-			case "dlg-ok":
-			case "dlg-reset":
-			case "dlg-preview":
-			case "dlg-close":
+			default:
+				/* Falls through to "master UI"
+				 * Can be handled here if needed - just capture events:
+				 * "dlg-ok", "dlg-open", "dlg-reset", "dlg-preview", "dlg-close"
+				 */
+				// handler standard dialog events
 				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgCrystallize" });
-				break;
 		}
-
+	},
+	dlgPointillize(event) {
+		let APP = keane,
+			Self = Dialogs,
+			pixels,
+			copy,
+			el;
+		// console.log(event);
+		switch (event.type) {
+			// "fast events"
+			case "set-size":
+				if (Self.data.value.size === +event.value) return;
+				Self.data.value.size = +event.value;
+				// exit if "preview" is not enabled
+				if (!Self.preview) return;
+				/* falls-through */
+			case "apply-filter-data":
+				if (!Self.data.value.color) {
+					let clr = ColorLib.hexToRgb(Projector.file.fgColor);
+					Self.data.value.color = [clr.r, clr.g, clr.b];
+				}
+				// copy first, then apply filter on pixels
+				pixels = Self.data.pixels;
+				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+				copy = Filters.crystallize(copy, Self.data.value.size, Self.data.value.color);
+				// update layer
+				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
+				break;
+			default:
+				/* Falls through to "master UI"
+				 * Can be handled here if needed - just capture events:
+				 * "dlg-ok", "dlg-open", "dlg-reset", "dlg-preview", "dlg-close"
+				 */
+				// handler standard dialog events
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgPointillize" });
+		}
 	},
 	dlgMosaic(event) {
 		let APP = keane,
@@ -171,15 +200,13 @@ const Dialogs = {
 				// update layer
 				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
 				break;
-
-			// standard dialog events
-			case "dlg-open":
-			case "dlg-ok":
-			case "dlg-reset":
-			case "dlg-preview":
-			case "dlg-close":
+			default:
+				/* Falls through to "master UI"
+				 * Can be handled here if needed - just capture events:
+				 * "dlg-ok", "dlg-open", "dlg-reset", "dlg-preview", "dlg-close"
+				 */
+				// handler standard dialog events
 				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgMosaic" });
-				break;
 		}
 	},
 	dlgSponge(event) {
@@ -215,14 +242,13 @@ const Dialogs = {
 				Self.data.filter = event.type.split("-")[1];
 				break;
 
-			// standard dialog events
-			case "dlg-open":
-			case "dlg-ok":
-			case "dlg-reset":
-			case "dlg-preview":
-			case "dlg-close":
+			default:
+				/* Falls through to "master UI"
+				 * Can be handled here if needed - just capture events:
+				 * "dlg-ok", "dlg-open", "dlg-reset", "dlg-preview", "dlg-close"
+				 */
+				// handler standard dialog events
 				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgSponge" });
-				break;
 		}
 	},
 	dlgPixelator(event) {

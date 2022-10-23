@@ -330,11 +330,11 @@
 		</Menu>
 		<Menu name="Pixelate">
 			<Menu name="Color Halftone" disabled="1"/>
-			<Menu name="Crystallize" disabled="1"/>
+			<Menu name="Crystallize" click="open-dialog" arg="dlgCrystallize"/>
 			<Menu name="Fragment" disabled="1"/>
 			<Menu name="Mezzotint" disabled="1"/>
 			<Menu name="Mosaic" click="open-dialog" arg="dlgMosaic"/>
-			<Menu name="Pointillize" disabled="1"/>
+			<Menu name="Pointillize" click="open-dialog" arg="dlgPointillize"/>
 		</Menu>
 		<Menu name="Render">
 			<Menu name="Flame" disabled="1"/>
