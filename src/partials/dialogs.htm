@@ -51,6 +51,32 @@
 </div>
 
 
+<div class="dialog-box" data-dlg="dlgCrystallize">
+	<div class="dlg-content">
+		<div class="fields">
+			<h2>
+				<i class="icon-dlg-close" data-click="dlg-close"></i>
+				Crystallize
+			</h2>
+			<div class="field-row has-knob">
+				<div class="option input">
+					<span class="label">Cell Size</span>
+					<span class="value"><input type="text" name="size" value="12" data-min="5" data-max="70" data-default="10"></span>
+				</div>
+				<div class="knob" data-change="set-size"></div>
+			</div>
+		</div>
+		<div class="buttons">
+			<div class="button" data-click="dlg-ok">OK</div>
+			<div class="button" data-click="dlg-reset">Reset</div>
+			<div class="toggler" data-value="on" data-click="dlg-preview">
+				<span>Preview</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <div class="dialog-box" data-dlg="dlgSponge">
 	<div class="dlg-content">
 		<div class="fields">

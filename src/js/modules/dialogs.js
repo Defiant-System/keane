@@ -113,6 +113,41 @@ const Dialogs = {
 				break;
 		}
 	},
+	dlgCrystallize(event) {
+		let APP = keane,
+			Self = Dialogs,
+			pixels,
+			copy,
+			el;
+		// console.log(event);
+		switch (event.type) {
+			// "fast events"
+			case "set-size":
+				if (Self.data.value.size === +event.value) return;
+				Self.data.value.size = +event.value;
+				// exit if "preview" is not enabled
+				if (!Self.preview) return;
+				/* falls-through */
+			case "apply-filter-data":
+				// copy first, then apply filter on pixels
+				pixels = Self.data.pixels;
+				copy = new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height);
+				copy = Filters.crystallize(copy, Self.data.value.size);
+				// update layer
+				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
+				break;
+
+			// standard dialog events
+			case "dlg-open":
+			case "dlg-ok":
+			case "dlg-reset":
+			case "dlg-preview":
+			case "dlg-close":
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgCrystallize" });
+				break;
+		}
+
+	},
 	dlgMosaic(event) {
 		let APP = keane,
 			Self = Dialogs,
