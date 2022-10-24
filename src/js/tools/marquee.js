@@ -49,7 +49,6 @@
 			case "select-method":
 				Self.method = event.arg || "replace";
 				break;
-			case "deselect":
 			case "clear-selection":
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Mask.ants.halt();
@@ -91,7 +90,9 @@
 				break;
 			
 			// proxy event
+			case "deselect":
 			case "select-all":
+			case "select-none":
 			case "inverse-selection":
 				return Mask.dispatch(event);
 		}

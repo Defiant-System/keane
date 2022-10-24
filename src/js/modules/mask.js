@@ -21,18 +21,17 @@ let Mask = {
 
 		// temp
 		setTimeout(() => {
-			// return;
-			this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
+			return;
+			// this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "subtract" });
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "union" });
-			// this.dispatch({ type: "select-elliptic", elps: { x: 100, y: 50, rX: 70, rY: 90 } });
+			this.dispatch({ type: "select-elliptic", elps: { x: 300, y: 150, rX: 70, rY: 90 } });
 			// this.dispatch({ type: "select-elliptic", elps: { x: 150, y: 130, rX: 100, rY: 150 }, method: "union" });
 			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ] });
 
-			// setTimeout(() => keane.dispatch({ type: "edit-action", arg: "fill" }), 200);
-			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "stroke" }), 200);
+			setTimeout(() => keane.dispatch({ type: "edit-action", arg: "fill" }), 200);
+			setTimeout(() => this.dispatch({ type: "select-none" }), 220);
 
-			// this.dispatch({ type: "deselect" });
 			// this.dispatch({ type: "inverse-selection" });
 
 			// window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
@@ -113,6 +112,11 @@ let Mask = {
 				Self.ctx.fill();
 				// march little ants!
 				Self.ants.paint(true);
+				break;
+			case "select-none":
+				Self.dispatch({ type: "deselect" });
+				// update projector
+				Projector.render({ noEmit: true });
 				break;
 			case "deselect":
 				Self.clear();

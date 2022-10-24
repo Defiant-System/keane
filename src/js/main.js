@@ -51,6 +51,7 @@ const keane = {
 		Tabs.init();
 		Rulers.init();
 		Filters.init();
+		Actions.init();
 		Projector.init();
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());

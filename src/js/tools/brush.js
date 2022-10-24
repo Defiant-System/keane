@@ -58,7 +58,7 @@
 				// update content level variable
 				APP.els.content.css({ "--fg-color": File.fgColor });
 				// resize / rotate tip
-				Self.dispatch({ type: "resize-rotate-tip" });
+				// Self.dispatch({ type: "resize-rotate-tip" });
 				break;
 			case "set-bg-color":
 				// update file bg

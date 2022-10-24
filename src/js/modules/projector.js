@@ -69,6 +69,9 @@ const Projector = {
 			this.file = File;
 			// emit event
 			karaqu.emit("file-selected");
+			// broadcast event
+			karaqu.emit("set-fg-color", { hex: File.fgColor });
+			karaqu.emit("set-bg-color", { hex: File.bgColor });
 		}
 	},
 	render(opt={}) {
