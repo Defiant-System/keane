@@ -10,12 +10,14 @@
 @import "modules/tabs.js"
 @import "modules/projector.js"
 @import "modules/rulers.js"
+@import "modules/actions.js"
 @import "modules/filters.js"
 @import "modules/dialogs.js"
 
 
 @import "modules/filters/gaussian-blur.js"
 @import "modules/filters/crystallize.js"
+@import "modules/filters/stroke.js"
 @import "modules/filters/close-pixelate.js"
 
 
@@ -64,6 +66,10 @@ const keane = {
 		let Self = keane,
 			Tools = Self.tools,
 			name,
+			args,
+			layer,
+			pixels,
+			filtered,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -140,11 +146,25 @@ const keane = {
 			case "open-dialog":
 				UI.doDialog({ type: "dlg-open", name: event.arg });
 				break;
+			case "edit-action":
+				args = event.arg.split(",");
+				layer = Projector.file.activeLayer;
+				pixels = Actions.getPixels(layer.cvs[0]);
+				filtered = Actions[args[0]](pixels, ...args.slice(1));
+
+				layer.ctx.putImageData(filtered, 0, 0);
+				// update sidebar/layers thumbnail
+				layer.updateThumbnail();
+				// render file
+				Projector.file.render();
+				break;
+
 			case "filter-render":
-				let args = event.arg.split(","),
-					layer = Projector.file.activeLayer,
-					pixels = Filters.getPixels(layer.cvs[0]),
-					filtered = Filters[args[0]](pixels, ...args.slice(1));
+				args = event.arg.split(",");
+				layer = Projector.file.activeLayer;
+				pixels = Filters.getPixels(layer.cvs[0]);
+				filtered = Filters[args[0]](pixels, ...args.slice(1));
+
 				layer.ctx.putImageData(filtered, 0, 0);
 				// update sidebar/layers thumbnail
 				layer.updateThumbnail();

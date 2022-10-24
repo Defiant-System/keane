@@ -28,6 +28,17 @@ const Filters = {
 		}
 		return pixels;
 	},
+	stroke(pixels) {
+		let d = pixels.data,
+			w = pixels.width,
+			h = pixels.height,
+
+			maskPixels = Mask.ctx.getImageData(0, 0, w, h).data;
+
+		Stroke(maskPixels, d);
+
+		return pixels;
+	},
 	gaussianBlur(pixels, radius) {
 		let d = pixels.data,
 			w = pixels.width,
@@ -97,7 +108,7 @@ const Filters = {
 		// console.log(val);
 
 		let destData = this.createImageData(w, h),
-			destPixels = destData.data,
+			dest = destData.data,
 			iLUT = [],
 			rgbLUT = [];
 		
@@ -147,10 +158,10 @@ const Filters = {
 				var curMax = piC[0].val,
 					dIdx = (y * w + x) * 4;
 				
-				destPixels[dIdx] = ~~ (piC[0].r / curMax);
-				destPixels[dIdx + 1] = ~~ (piC[0].g / curMax);
-				destPixels[dIdx + 2] = ~~ (piC[0].b / curMax);
-				destPixels[dIdx + 3] = 255;
+				dest[dIdx] = ~~ (piC[0].r / curMax);
+				dest[dIdx + 1] = ~~ (piC[0].g / curMax);
+				dest[dIdx + 2] = ~~ (piC[0].b / curMax);
+				dest[dIdx + 3] = 255;
 			}
 		}
 		

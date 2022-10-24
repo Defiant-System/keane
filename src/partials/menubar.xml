@@ -54,8 +54,8 @@
 		<Menu name="Paste" disabled="1"/>
 		<Menu name="Clear" disabled="1"/>
 		<Menu type="divider"/>
-		<Menu name="Fill" disabled="1"/>
-		<Menu name="Stroke" disabled="1"/>
+		<Menu name="Fill" click="edit-action" arg="fill"/>
+		<Menu name="Stroke" click="edit-action" arg="ßtroke"/>
 		<Menu type="divider"/>
 		<Menu name="Content-Aware Scale" disabled="1"/>
 		<Menu name="Puppet Warp" disabled="1"/>

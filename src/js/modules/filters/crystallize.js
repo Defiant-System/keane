@@ -1,5 +1,5 @@
 
-function crystallize(src, width, height, dest, size, color, cryss, border) {
+function crystallize(src, width, height, dest, size, color, cryz, border) {
 	var _floor = Math.floor,
 		_random = Math.random,
 		_round = Math.round,
@@ -48,10 +48,10 @@ function crystallize(src, width, height, dest, size, color, cryss, border) {
 		R = _floor(height * e) + 1,
 		J = [],
 		n = new Uint8Array(M * R * 4),
-		r = cryss ? .5 : 1,
+		r = cryz ? .5 : 1,
 		T = color ? 64 : 0;
 	for (var j = 0; j < R; j++) {
-		var g = cryss ? .5 * (j & 1) : 0;
+		var g = cryz ? .5 * (j & 1) : 0;
 		for (var Y = 0; Y < M; Y++) {
 			var k = (Y + _random() * r + g) * size,
 				F = (j + _random() * r) * size;
@@ -63,7 +63,7 @@ function crystallize(src, width, height, dest, size, color, cryss, border) {
 			for (var A = 0; A < 4; A++) n[W + A] = _max(0, _min(255, _floor(src[H + A] + (_random() - .5) * T)));
 		}
 	}
-	var Z = color ? color : cryss ? cryss : [0, 0, 0],
+	var Z = color ? color : cryz ? cryz : [0, 0, 0],
 		B = M * R * 2,
 		a = [-M - 1, -M, -M + 1, -1, 0, 1, M - 1, M, M + 1];
 	for (var j = 0; j < height; j++) {
@@ -112,7 +112,7 @@ function crystallize(src, width, height, dest, size, color, cryss, border) {
 				C = _sqrt(v);
 				h = C - (P + C) * .5
 			}
-			if (cryss == null) {
+			if (cryz == null) {
 				var gX = (P + C) * .5,
 					_ = color ? _max(0, gX - y) : 0;
 				O = _max(0, _min(1, .5 + gX - P - _));
