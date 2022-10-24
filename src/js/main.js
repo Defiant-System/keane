@@ -17,7 +17,6 @@
 
 @import "modules/filters/gaussian-blur.js"
 @import "modules/filters/crystallize.js"
-@import "modules/filters/stroke.js"
 @import "modules/filters/close-pixelate.js"
 
 

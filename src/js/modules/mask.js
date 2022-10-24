@@ -23,15 +23,16 @@ let Mask = {
 		setTimeout(() => {
 			// return;
 			this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
-			this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "subtract" });
+			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "subtract" });
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "union" });
 			// this.dispatch({ type: "select-elliptic", elps: { x: 100, y: 50, rX: 70, rY: 90 } });
 			// this.dispatch({ type: "select-elliptic", elps: { x: 150, y: 130, rX: 100, rY: 150 }, method: "union" });
 			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ] });
 
 			// setTimeout(() => keane.dispatch({ type: "edit-action", arg: "fill" }), 200);
-			setTimeout(() => keane.dispatch({ type: "filter-render", arg: "stroke" }), 200);
+			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "stroke" }), 200);
 
+			// this.dispatch({ type: "deselect" });
 			// this.dispatch({ type: "inverse-selection" });
 
 			// window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");

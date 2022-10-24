@@ -261,8 +261,8 @@
 	</Menu>
 	<Menu name="Select">
 		<Menu name="All" click="select-all" hotkey="alt+a"/>
-		<Menu name="Deselect" click="deselect" hotkey="alt+d" disabled="1"/>
-		<Menu name="Inverse" click="inverse-selection" hotkey="alt+shift+i" disabled="1"/>
+		<Menu name="Deselect" click="deselect" hotkey="alt+d"/>
+		<Menu name="Inverse" click="inverse-selection" hotkey="alt+shift+i"/>
 		<Menu type="divider"/>
 		<Menu name="Color Range" disabled="1"/>
 		<Menu name="Magic Cut" disabled="1"/>

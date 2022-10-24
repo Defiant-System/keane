@@ -28,17 +28,6 @@ const Filters = {
 		}
 		return pixels;
 	},
-	stroke(pixels) {
-		let d = pixels.data,
-			w = pixels.width,
-			h = pixels.height,
-
-			maskPixels = Mask.ctx.getImageData(0, 0, w, h).data;
-
-		Stroke(maskPixels, d);
-
-		return pixels;
-	},
 	gaussianBlur(pixels, radius) {
 		let d = pixels.data,
 			w = pixels.width,

@@ -1,5 +1,5 @@
 
-// keane.tools.marquee.ants
+// Mask.ants
 
 {
 	_halt: true,
