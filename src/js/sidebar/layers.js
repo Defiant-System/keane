@@ -29,7 +29,7 @@
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "gaussianBlur,3" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "brightness,-25" }), 400);
 			// setTimeout(() => keane.dispatch({ type: "filter-render", arg: "emboss" }), 400);
-			return;
+			// return;
 
 			// dlgBrightnessContrast
 			// dlgGaussianBlur
@@ -39,9 +39,10 @@
 			// dlgPixelator
 			// dlgCrystallize
 			// dlgPointillize
+			// dlgStroke
 			UI.doDialog({
 				type: "dlg-open",
-				name: "dlgPointillize",
+				name: "dlgStroke",
 				// callback: ev => console.log(ev),
 			});
 		}, 500);

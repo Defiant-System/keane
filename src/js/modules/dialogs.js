@@ -8,9 +8,7 @@ const Dialogs = {
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
-			copy,
-			el;
-		// console.log(event);
+			copy;
 		switch (event.type) {
 			// "fast events"
 			case "set-contrast":
@@ -45,13 +43,29 @@ const Dialogs = {
 				break;
 		}
 	},
+	dlgStroke(event) {
+		let APP = keane,
+			Self = Dialogs,
+			pixels,
+			copy;
+		// console.log(event);
+		switch (event.type) {
+			case "apply-filter-data":
+				break;
+			default:
+				/* Falls through to "master UI"
+				 * Can be handled here if needed - just capture events:
+				 * "dlg-ok", "dlg-open", "dlg-reset", "dlg-preview", "dlg-close"
+				 */
+				// handler standard dialog events
+				UI.doDialog({ ...event, type: `${event.type}-common`, name: "dlgStroke" });
+		}
+	},
 	dlgGaussianBlur(event) {
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
-			copy,
-			el;
-		// console.log(event);
+			copy;
 		switch (event.type) {
 			// "fast events"
 			case "set-radius":
@@ -81,9 +95,7 @@ const Dialogs = {
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
-			copy,
-			el;
-		// console.log(event);
+			copy;
 		switch (event.type) {
 			// "fast events"
 			case "set-amount":
@@ -113,9 +125,7 @@ const Dialogs = {
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
-			copy,
-			el;
-		// console.log(event);
+			copy;
 		switch (event.type) {
 			// "fast events"
 			case "set-size":
@@ -145,9 +155,7 @@ const Dialogs = {
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
-			copy,
-			el;
-		// console.log(event);
+			copy;
 		switch (event.type) {
 			// "fast events"
 			case "set-size":
@@ -181,9 +189,7 @@ const Dialogs = {
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
-			copy,
-			el;
-		// console.log(event);
+			copy;
 		switch (event.type) {
 			// "fast events"
 			case "set-size":
@@ -213,9 +219,7 @@ const Dialogs = {
 		let APP = keane,
 			Self = Dialogs,
 			pixels,
-			copy,
-			el;
-		// console.log(event);
+			copy;
 		switch (event.type) {
 			// "fast events"
 			case "set-intensity":
@@ -258,7 +262,6 @@ const Dialogs = {
 			pixels,
 			copy,
 			el;
-		// console.log(event);
 		switch (event.type) {
 			// "fast events"
 			case "set-contrast":
