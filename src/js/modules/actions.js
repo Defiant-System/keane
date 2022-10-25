@@ -13,7 +13,6 @@ const Actions = {
 		return Filters.createImageData(w, h);
 	},
 	delete(pixels) {
-		// TODO: this action is not anti-aliased
 		let d = pixels.data,
 			w = pixels.width,
 			h = pixels.height,
@@ -21,11 +20,7 @@ const Actions = {
 		for (let x=0; x<w; x++) {
 			for (let y=0; y<h; y++) {
 				let o = (x + y * w) * 4;
-				if (s[o+3] !== 255) continue;
-				d[o + 0] = 255 - s[o+0];
-				d[o + 1] = 255 - s[o+1];
-				d[o + 2] = 255 - s[o+2];
-				d[o + 3] = 255 - s[o+3];
+				d[o+3] -= s[o+3];
 			}
 		}
 		return pixels;

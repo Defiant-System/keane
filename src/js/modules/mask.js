@@ -21,7 +21,7 @@ let Mask = {
 
 		// temp
 		setTimeout(() => {
-			// return;
+			return;
 			this.dispatch({ type: "select-rect", rect: { x: 100, y: 40, w: 180, h: 120 } });
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "subtract" });
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "union" });
@@ -40,7 +40,7 @@ let Mask = {
 			// setTimeout(() => $(".def-desktop_").trigger("mousedown").trigger("mouseup"), 200);
 
 			// setTimeout(() => this.dispatch({ type: "select-elliptic", elps: { x: 300, y: 220, rX: 70, rY: 90 } }), 300);
-		}, 900);
+		}, 500);
 	},
 	clear(method) {
 		let Proj = Projector,
