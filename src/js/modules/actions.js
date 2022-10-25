@@ -16,8 +16,8 @@ const Actions = {
 		this.merge(src);
 		return src;
 	},
-	fill(src) {
-		let color = ColorLib.hexToRgb(Projector.file.fgColor),
+	fill(src, hex) {
+		let color = ColorLib.hexToRgb(hex || Projector.file.fgColor),
 			width = src.width,
 			height = src.height;
 		// put masked area on temp canvas
@@ -44,7 +44,7 @@ const Actions = {
 	},
 	merge(layer1, layer2) {
 		let width = layer1.width,
-			height = layer1.height
+			height = layer1.height,
 			k = new Uint32Array(layer2.data.buffer),
 			F = new Uint32Array(layer1.data.buffer),
 			A=0;
