@@ -38,14 +38,13 @@
 						Self.dispatch({ type: "clear-selection" });
 						Mask.dispatch({ type: "deselect" });
 						break;
+					case "del":
 					case "backspace":
-						if (event.altKey) color = File.fgColor;
-						else if (event.metaKey) color = File.bgColor;
-
-						if (color) {
+						if (event.altKey || event.metaKey) {
+							color = event.altKey ? File.fgColor : File.bgColor;
 							APP.dispatch({ type: "edit-action", arg: `fill,${color}` });
 						} else {
-							console.log("delete selected area");
+							APP.dispatch({ type: "edit-action", arg: `delete` });
 						}
 						break;
 				}
