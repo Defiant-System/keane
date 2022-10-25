@@ -14,14 +14,11 @@ const Actions = {
 	},
 	delete(pixels) {
 		let d = pixels.data,
-			w = pixels.width,
-			h = pixels.height,
-			s = this.getPixels(Mask.cvs[0]).data;
-		for (let x=0; x<w; x++) {
-			for (let y=0; y<h; y++) {
-				let o = (x + y * w) * 4;
-				d[o+3] -= s[o+3];
-			}
+			s = this.getPixels(Mask.cvs[0]).data,
+			i = 0,
+			il = d.length;
+		for (; i<il; i+=4) {
+			d[i+3] -= s[i+3];
 		}
 		return pixels;
 	},
