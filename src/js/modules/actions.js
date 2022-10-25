@@ -22,26 +22,62 @@ const Actions = {
 		}
 		return pixels;
 	},
-	stroke(src, dest) {
-		this.merge(src);
-		return src;
+
+
+
+
+	stroke(pixels) {
+		let d = pixels.data,
+			masked = this.getPixels(Mask.cvs[0]).data,
+			// buf = new Uint32Array(masked.buffer),
+			buf = this.getChannel(masked),
+			i = 0,
+			il = d.length;
+
+		let oy2 = l => l + 1 + (l >>> 8) >>> 8;
+		
+		for (; i<il; i++) {
+			d[(i << 2) + 3] = oy2(d[(i << 2) + 3] * buf[i]);
+		}
+
+		return pixels;
 	},
+	getChannel(data, channel) {
+		let c = ["red", "gren", "blue"].indexOf(channel) || 0,
+			b = new Uint8Array(data.buffer),
+			il = b.length,
+			i = 0;
+		for (; i<il; i++) {
+			b[i] = data[(i << 2) + c];
+		}
+		return b;
+	},
+	/*
+	
+	o.bF = function(l, d, G) {
+		console.log( l, d, G );
+		var b = new Uint8Array(l.buffer),
+			V = Math.min(b.length / 4, d.length);
+		for (var A = 0; A < V; A++) {
+			d[A] = b[(A << 2) + G]
+		}
+	};
+
+	*/
+
+
+
 	fill(src, hex) {
 		let color = ColorLib.hexToRgb(hex || Projector.file.fgColor),
 			width = src.width,
 			height = src.height;
-		// put masked area on temp canvas
-		this.cvs.prop({ width, height });
-		this.ctx.drawImage(Mask.cvs[0], 0, 0);
 		// paint it with "fgColor"
-		let pixels = this.getPixels(this.cvs[0]),
+		let pixels = this.getPixels(Mask.cvs[0]),
 			d = pixels.data,
-			w = pixels.width,
-			h = pixels.height,
 			c = [color.r, color.g, color.b];
-		for (let x=0; x<w; x++) {
-			for (let y=0; y<h; y++) {
-				let o = (x + y * w) * 4;
+		for (let x=0; x<width; x++) {
+			for (let y=0; y<height; y++) {
+				let o = (x + y * width) * 4;
 				d[o + 0] = c[0];
 				d[o + 1] = c[1];
 				d[o + 2] = c[2];
