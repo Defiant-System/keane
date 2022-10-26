@@ -13,19 +13,9 @@ const Actions = {
 		return Filters.createImageData(w, h);
 	},
 	delete(pixels) {
-		let d = pixels.data,
-			s = this.getPixels(Mask.cvs[0]).data,
-			i = 0,
-			il = d.length;
-		for (; i<il; i+=4) {
-			d[i+3] -= s[i+3];
-		}
-		return pixels;
+		let mask = this.getPixels(Mask.cvs[0]);
+		return this.subtract(pixels, mask);
 	},
-
-
-
-
 	stroke(pixels) {
 		let d = pixels.data,
 			masked = this.getPixels(Mask.cvs[0]).data,
@@ -35,7 +25,7 @@ const Actions = {
 			il = d.length;
 
 		let oy2 = l => l + 1 + (l >>> 8) >>> 8;
-		
+
 		for (; i<il; i++) {
 			d[(i << 2) + 3] = oy2(d[(i << 2) + 3] * buf[i]);
 		}
@@ -52,21 +42,6 @@ const Actions = {
 		}
 		return b;
 	},
-	/*
-	
-	o.bF = function(l, d, G) {
-		console.log( l, d, G );
-		var b = new Uint8Array(l.buffer),
-			V = Math.min(b.length / 4, d.length);
-		for (var A = 0; A < V; A++) {
-			d[A] = b[(A << 2) + G]
-		}
-	};
-
-	*/
-
-
-
 	fill(src, hex) {
 		let color = ColorLib.hexToRgb(hex || Projector.file.fgColor),
 			width = src.width,
@@ -84,11 +59,21 @@ const Actions = {
 			}
 		}
 		// merge layers
-		this.merge(src, pixels);
+		this.add(src, pixels);
 		// return result
 		return src;
 	},
-	merge(layer1, layer2) {
+	subtract(layer1, layer2) {
+		let d = layer1.data,
+			s = layer2.data,
+			i = 0,
+			il = d.length;
+		for (; i<il; i+=4) {
+			d[i+3] -= s[i+3];
+		}
+		return layer1;
+	},
+	add(layer1, layer2) {
 		let width = layer1.width,
 			height = layer1.height,
 			k = new Uint32Array(layer2.data.buffer),
