@@ -1,4 +1,5 @@
 
+@import "classes/box.js"
 @import "classes/file.js"
 @import "classes/layer.js"
 @import "classes/simplex-noise.js"

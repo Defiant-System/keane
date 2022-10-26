@@ -7,7 +7,7 @@ class Box {
 		this.h = h;
 	}
 
-	get area() {
+	area() {
 		return this.w * this.h;
 	}
 
@@ -40,5 +40,14 @@ class Box {
 
 	isSame(box) {
 		return this.x == box.x && this.y == box.y && this.w == box.w && this.h == box.h;
+	}
+
+	cover(box) {
+		var x = Math.max(this.x, box.x),
+			y = Math.max(this.y, box.y),
+			r = Math.min(this.x + this.w, box.x + box.w),
+			b = Math.min(this.y + this.h, box.y + box.h);
+		if (r < x || b < y) return new Box;
+		else return new Box(x, y, r - x, b - y)
 	}
 }

@@ -17,18 +17,29 @@ const Actions = {
 		return this.subtract(pixels, mask);
 	},
 	stroke(pixels) {
-		let d = pixels.data,
-			masked = this.getPixels(Mask.cvs[0]).data,
-			// buf = new Uint32Array(masked.buffer),
-			buf = this.getChannel(masked),
-			i = 0,
-			il = d.length;
+		let masked = this.getPixels(Mask.cvs[0]);
+		// let L = {
+		// 		channel: this.getChannel(masked.data, "red"),
+		// 		rect: new Box(0, 0, 598, 398),
+		// 	};
 
-		let oy2 = l => l + 1 + (l >>> 8) >>> 8;
+		console.log( masked.data );
 
-		for (; i<il; i++) {
-			d[(i << 2) + 3] = oy2(d[(i << 2) + 3] * buf[i]);
-		}
+		// let { channel, rect } = stroke(L, 6, 0);
+		// let buff = new Uint8ClampedArray(channel.length * 4, rect.w, rect.h);
+		// let img = new ImageData(buff, rect.w, rect.h),
+		// 	d = img.data;
+
+		// for (let i=0, il=channel.length; i<il; i++) {
+		// 	let p = i << 2;
+		// 	d[p] = channel[i];
+		// 	d[p+3] = channel[i];
+		// }
+
+		// console.log( img );
+
+		// // merge layers
+		// this.add(pixels, img);
 
 		return pixels;
 	},

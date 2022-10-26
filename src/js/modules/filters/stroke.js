@@ -2,7 +2,7 @@
 let stroke = (() => {
 
 	let oIY = function(l, d, G, b) {
-		var Q = d.wD(b);
+		var Q = d.cover(b);
 		var t = Math.max(0, Q.x - d.x),
 			I = Math.max(0, Q.x - b.x),
 			y = Math.max(0, Q.y - d.y),
@@ -44,7 +44,7 @@ let stroke = (() => {
 	};
 
 	let ostyleLr = function(l, d, G, b, V) {
-		var Q = d.wD(b),
+		var Q = d.cover(b),
 			t = Q.m,
 			I = Q.n;
 		V += .5;
@@ -169,9 +169,9 @@ let stroke = (() => {
 	return function(l, d, G) {
 		var b = Math.max(1, Math.ceil(G)),
 			V = l.rect.clone();
-		V.rC(b, b); // expand rectangle
+		V.expand(b, b);
 
-		var Q = V.O(), // rectangle area
+		var Q = V.area(),
 			t = {
 				channel: new Uint8Array(Q),
 				rect: V
@@ -185,7 +185,9 @@ let stroke = (() => {
 
 		var y = new Uint8Array(Q);
 		ohI(I);
-		ou8(I, y);
+
+		if (d != 0) ostylestroke(I, y, t.rect, d);
+		else ou8(I, y);
 		
 		oQYwD(t.channel, y, t.channel);
 		
