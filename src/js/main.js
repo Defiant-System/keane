@@ -154,6 +154,7 @@ const keane = {
 				pixels = Actions.getPixels(layer.cvs[0]);
 				filtered = Actions[args[0]](pixels, ...args.slice(1));
 
+				return;
 				layer.ctx.putImageData(filtered, 0, 0);
 				// update sidebar/layers thumbnail
 				layer.updateThumbnail();

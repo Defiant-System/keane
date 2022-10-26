@@ -7,11 +7,11 @@ let stroke = (() => {
 			I = Math.max(0, Q.x - b.x),
 			y = Math.max(0, Q.y - d.y),
 			e = Math.max(0, Q.y - b.y),
-			M = Q.m,
-			R = Q.n;
+			M = Q.w,
+			R = Q.h;
 		for (var A = 0; A < R; A++) {
-			var J = (y + A) * d.m + t,
-				n = (e + A) * b.m + I;
+			var J = (y + A) * d.w + t,
+				n = (e + A) * b.w + I;
 			G.set(new Uint8Array(l.buffer, J, M), n)
 		}
 	};
@@ -36,8 +36,8 @@ let stroke = (() => {
 	};
 
 	let ostylestroke = function(l, d, G, b) {
-		var V = G.m,
-			Q = G.n,
+		var V = G.w,
+			Q = G.h,
 			t = new Float64Array(V * Q);
 		ostyleiU(l, t, V, Q);
 		ostyleLr(d, G, t, G, b)
@@ -45,15 +45,15 @@ let stroke = (() => {
 
 	let ostyleLr = function(l, d, G, b, V) {
 		var Q = d.cover(b),
-			t = Q.m,
-			I = Q.n;
+			t = Q.w,
+			I = Q.h;
 		V += .5;
 		var y = Q.x - d.x,
 			e = Q.y - d.y,
-			M = d.m,
+			M = d.w,
 			R = Q.x - b.x,
 			J = Q.y - b.y,
-			n = b.m;
+			n = b.w;
 		for (var r = 0; r < I; r++) {
 			var T = (r + J) * n + R,
 				j = (r + e) * M + y;
@@ -167,9 +167,9 @@ let stroke = (() => {
 	};
 
 	return function(l, d, G) {
-		var b = Math.max(1, Math.ceil(G)),
-			V = l.rect.clone();
-		V.expand(b, b);
+		// var b = Math.max(1, Math.ceil(G));
+		var V = l.rect.clone();
+		// V.expand(b, b);
 
 		var Q = V.area(),
 			t = {
@@ -178,10 +178,10 @@ let stroke = (() => {
 			},
 			I = new Uint8Array(Q);
 		
+
 		oIY(l.channel, l.rect, I, t.rect);
 		
-			// console.log( I, t.channel, t.rect, G );
-			ostylestroke(I, t.channel, t.rect, G);
+		ostylestroke(I, t.channel, t.rect, G);
 
 		var y = new Uint8Array(Q);
 		ohI(I);
