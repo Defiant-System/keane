@@ -52,6 +52,12 @@ const Dialogs = {
 		switch (event.type) {
 			case "apply-filter-data":
 				break;
+			
+			case "set-stroke-location":
+				// inside, center, outside
+				console.log(event);
+				break;
+
 			default:
 				/* Falls through to "master UI"
 				 * Can be handled here if needed - just capture events:

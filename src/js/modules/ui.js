@@ -75,6 +75,11 @@ const UI = {
 					Self[this.dataset.ui](event);
 					// handles event differently for brush menu box
 					if (this.dataset.ui === "doBrushTips") return;
+				} else if (el.parents("ul.opt-group").length) {
+					// event handling option-group
+					if (el.hasClass("active")) return;
+					el.parent().find(".active").removeClass("active");
+					el.addClass("active");
 				} else if (el.parents("[data-dlg]").length) {
 					return Self.doDialog(event);
 				} else {

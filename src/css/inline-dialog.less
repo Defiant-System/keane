@@ -497,9 +497,12 @@
 					}
 
 					.preset-value {
+						position: relative;
+
 						.icon {
-							position: relative;
-							top: -1px;
+							position: absolute;
+							top: 2px;
+							left: -21px;
 							display: inline-block;
 						}
 
@@ -529,17 +532,19 @@
 		ul.opt-group {
 			display: inline-block;
 			font-size: 0;
+			border-radius: 12px;
+			box-shadow: 0 0 0 1px rgba(0,0,0,.25);
 
 			li {
-				background: rgba(255,255,255,.175);
 				display: inline-block;
-				color: rgba(255,255,255,0.5);
+				background: rgba(255,255,255,.175);
+				color: rgba(255,255,255,.5);
 				text-shadow: 0 1px 0 rgba(0,0,0,.25);
 				text-transform: uppercase;
 				font-size: 11px;
 				padding: 2px 7px;
 				margin-right: 1px;
-				box-shadow: 0 1px 0 rgba(0,0,0,.15);
+				// box-shadow: 0 1px 0 rgba(0,0,0,.15);
 
 				&:not(.active) {
 					cursor: pointer;
@@ -559,7 +564,8 @@
 				}
 
 				&.active {
-
+					background: rgba(0,0,0,.25);
+					color: rgba(255,255,255,.75);
 				}
 			}
 		}
