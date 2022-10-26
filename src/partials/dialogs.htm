@@ -36,7 +36,7 @@
 			<div class="field-row has-knob">
 				<div class="option input">
 					<span class="label">Width</span>
-					<span class="value"><input type="text" name="size" value="12" data-min="2" data-max="100" data-default="12"></span>
+					<span class="value"><input type="text" name="size" value="12px" data-min="2" data-max="100" data-default="12" data-suffix="px"></span>
 				</div>
 				<div class="knob" data-change="set-size"></div>
 			</div>
@@ -45,9 +45,9 @@
 				<div class="option preset">
 					<span class="label">
 						Color
-						<div class="icon icon-color-preset"></div>
 					</span>
-					<span class="value">
+					<span class="preset-value">
+						<i class="icon icon-color-preset"></i>
 						<span class="value" style="background: #eb261f;"></span>
 					</span>
 				</div>
@@ -62,6 +62,23 @@
 						<li>Outside</li>
 					</ul>
 				</div>
+			</div>
+
+			<div class="field-row">
+				<div class="option">
+					<span class="label">Blend Mode</span>
+					<span class="fld-value">
+						<span class="value">Normal</span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="field-row has-knob">
+				<div class="option input">
+					<span class="label">Opacity</span>
+					<span class="value"><input type="text" name="opacity" value="100%" data-min="2" data-max="100" data-default="12" data-suffix="%"></span>
+				</div>
+				<div class="knob" data-change="set-opacity"></div>
 			</div>
 
 		</div>

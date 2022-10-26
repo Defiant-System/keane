@@ -44,6 +44,10 @@
 			.preset-head {
 				display: inline-block;
 			}
+
+			.opt-group {
+				margin-left: 11px;
+			}
 		}
 			
 		.layers {
@@ -458,27 +462,12 @@
 		}
 
 		.field-row {
+			height: 32px;
+			margin-right: 19px;
+
 			&.has-knob {
 				display: flex;
 				margin-right: 13px;
-
-				.option {
-					width: 150px;
-					padding: 6px 0 0;
-					margin-right: 1px;
-
-					.label {
-						min-width: 80px;
-					}
-
-					.value {
-						margin-right: 3px;
-
-						input {
-							cursor: default;
-						}
-					}
-				}
 
 				.knob,
 				.pan-knob {
@@ -496,17 +485,58 @@
 					opacity: 1;
 				}
 			}
+
+			.option {
+				min-width: 150px;
+				padding: 6px 0 0;
+				margin-right: 1px;
+
+				&.preset {
+					> span {
+						display: inline-block;
+					}
+
+					.preset-value {
+						.icon {
+							position: relative;
+							top: -1px;
+							display: inline-block;
+						}
+
+						.value {
+							cursor: pointer;
+							width: 73px;
+							margin-left: 3px;
+						}
+					}
+				}
+
+				.label {
+					min-width: 80px;
+				}
+
+				.value {
+					margin-right: 3px;
+
+					input {
+						cursor: default;
+						width: 53px;
+					}
+				}
+			}
 		}
 
 		ul.opt-group {
-			margin-left: 11px;
 			display: inline-block;
 			font-size: 0;
 
 			li {
 				background: rgba(255,255,255,.175);
 				display: inline-block;
-				font-size: 13px;
+				color: rgba(255,255,255,0.5);
+				text-shadow: 0 1px 0 rgba(0,0,0,.25);
+				text-transform: uppercase;
+				font-size: 11px;
 				padding: 2px 7px;
 				margin-right: 1px;
 				box-shadow: 0 1px 0 rgba(0,0,0,.15);
@@ -529,7 +559,7 @@
 				}
 
 				&.active {
-					
+
 				}
 			}
 		}
