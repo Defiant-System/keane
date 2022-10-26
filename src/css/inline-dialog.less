@@ -491,6 +491,12 @@
 				padding: 6px 0 0;
 				margin-right: 1px;
 
+				&.select {
+					.value {
+						width: 89px;
+					}
+				}
+
 				&.preset {
 					> span {
 						display: inline-block;
@@ -502,13 +508,14 @@
 						.icon {
 							position: absolute;
 							top: 2px;
-							left: -23px;
+							left: 0;
 							display: inline-block;
 						}
 
 						.value {
 							cursor: pointer;
-							width: 73px;
+							width: 66px;
+							margin-left: 23px;
 						}
 					}
 				}

@@ -140,6 +140,12 @@
 		<i g="#000000aa 0%, transparent 100%" />
 	</Gradients>
 
+	<StrokeLocations>
+		<i type="option" name="Inside"/>
+		<i type="option" name="Center"/>
+		<i type="option" name="Outside"/>
+	</StrokeLocations>
+
 	<BlendModes>
 		<i type="option" name="Normal" value="source-over"/>
 		<i type="option" name="Dissolve" value="dissolve"/>

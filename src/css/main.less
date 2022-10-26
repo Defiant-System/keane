@@ -850,6 +850,12 @@ content {
 			}
 		}
 
+		&.select {
+			.value {
+				cursor: pointer;
+			}
+		}
+
 		&.disabled {
 			.label {
 				color: rgba(#fff, .25);
@@ -859,6 +865,7 @@ content {
 			.value {
 				color: rgba(#fff, .25);
 				text-shadow: 0 0 0;
+				cursor: default;
 
 				&:before {
 					background: rgba(#fff, .25);
