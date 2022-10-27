@@ -39,7 +39,7 @@ const Actions = {
 			d = buff.data;
 
 		for (let i=0, il=channel.length; i<il; i++) {
-			let p = i << 2;
+			let p = (i << 2) - 4;
 			if (!channel[i]) continue;
 			d[p+0] = clr[0];
 			d[p+1] = clr[1];

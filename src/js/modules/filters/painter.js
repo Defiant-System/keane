@@ -168,8 +168,6 @@ let Painter = (() => {
 			},
 			buff1 = new Uint8Array(bSize),
 			buff2 = new Uint8Array(bSize);
-		// move box 1px left
-		box.move(-1, 0);
 
 		oIY(mask.channel, mask.rect, buff1, copy.rect);
 		ostylestroke(buff1, copy.channel, copy.rect, outside);
