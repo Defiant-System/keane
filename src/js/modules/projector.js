@@ -39,6 +39,7 @@ const Projector = {
 				data.left = _round(_min(_max(event.offsetX - File.oX, 0), File.width) / File.scale);
 				data.offsetY = _min(_max(event.offsetY, File.oY), File.oY + File.height) - Self.aY;
 				data.offsetX = _min(_max(event.offsetX, File.oX), File.oX + File.width) - Self.aX;
+				data.isSelection = Mask.ctx.getImageData(data.left, data.top, 1, 1).data[3] > 0;
 				data.isOnCanvas = event.offsetY >= File.oY && event.offsetY <= File.oY + File.height
 								&& event.offsetX >= File.oX && event.offsetX <= File.oX + File.width;
 

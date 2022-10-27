@@ -30,6 +30,11 @@
 			el;
 		// console.log(event);
 		switch (event.type) {
+			// subscribed events
+			case "mouse-move":
+				APP.els.content.toggleClass("cursor-move", !event.detail.isSelection);
+				break;
+
 			// system events
 			case "window.keystroke":
 
@@ -93,9 +98,13 @@
 				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.doMarquee);
+				// subscribe to events
+				karaqu.on("mouse-move", Self.dispatch);
 				break;
 			case "disable":
 				Proj.cvs.off("mousedown", Self.doMarquee);
+				// subscribe to events
+				karaqu.off("mouse-move", Self.dispatch);
 				break;
 			
 			// proxy event

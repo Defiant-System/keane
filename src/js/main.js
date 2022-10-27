@@ -182,6 +182,7 @@ const keane = {
 				return Rulers.dispatch(event);
 			case "toggle-statusbar":
 				return Self.statusbar.dispatch(event);
+			case "toggle-quick-mask-mode":
 			case "select-tool":
 				return Self.tools.dispatch(event);
 			case "box-head-tab":

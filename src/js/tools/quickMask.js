@@ -11,6 +11,10 @@
 
 		switch (event.type) {
 			// custom events
+			case "toggle-quick-mask-mode":
+				console.log(1111, event);
+				break;
+
 			case "enable":
 				Self.enabled = !Self.enabled;
 				// toggle menu item
@@ -22,8 +26,6 @@
 					window.bluePrint.selectSingleNode(`//Menu[@click="tool:quickMask:disable"]`).setAttribute("type", "hidden");
 					return Self.dispatch({ type: "disable" });
 				}
-
-				console.log(event);
 				break;
 			case "disable":
 				console.log(event);

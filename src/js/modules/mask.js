@@ -22,22 +22,23 @@ let Mask = {
 		// temp
 		setTimeout(() => {
 			// return;
-			this.dispatch({ type: "select-rect", rect: { x: 70, y: 80, w: 180, h: 210 } });
+			this.dispatch({ type: "select-rect", rect: { x: 200, y: 110, w: 130, h: 210 } });
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "subtract" });
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "union" });
 			// this.dispatch({ type: "select-elliptic", elps: { x: 300, y: 150, rX: 70, rY: 90 } });
 			// this.dispatch({ type: "select-elliptic", elps: { x: 250, y: 130, rX: 120, rY: 70 }, method: "union" });
-			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ], method: "union" });
+			this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ], method: "union" });
 
-			setTimeout(() => keane.dispatch({ type: "edit-action", arg: "stroke,#000000,center,6" }), 300);
+
+			setTimeout(() =>  window.find(`.tool[data-click="toggle-quick-mask-mode"]`).trigger("click"), 700);
+
 			return;
+			setTimeout(() => keane.dispatch({ type: "edit-action", arg: "stroke,#000000,center,6" }), 300);
 			
 			// setTimeout(() => this.dispatch({ type: "select-none" }), 220);
 			// setTimeout(() => keane.dispatch({ type: "edit-action", arg: "fill,#ff0000" }), 200);
 
 			// this.dispatch({ type: "inverse-selection" });
-
-			// window.find(`.tool[data-click="toggle-quick-mask-mode"]`).trigger("click");
 
 			// setTimeout(() => $(".def-desktop_").trigger("mousedown").trigger("mouseup"), 200);
 
