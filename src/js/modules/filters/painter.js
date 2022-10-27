@@ -1,5 +1,5 @@
 
-let stroke = (() => {
+let Painter = (() => {
 
 	let oIY = function(l, d, G, b) {
 		var Q = d.cover(b);
@@ -158,31 +158,28 @@ let stroke = (() => {
 		}
 	};
 
-	return function(mask, inside, outside) {
-		// var b = Math.max(1, Math.ceil(outside));
-		var box = mask.rect.clone();
-		// box.expand(b, b);
-
-		var boxArea = box.area(),
+	function stroke(mask, inside, outside) {
+		// var size = Math.max(1, Math.ceil(outside));
+		let box = mask.rect.clone(),
+			bSize = box.area(),
 			copy = {
-				channel: new Uint8Array(boxArea),
+				channel: new Uint8Array(bSize),
 				rect: box
 			},
-			buff1 = new Uint8Array(boxArea),
-			buff2 = new Uint8Array(boxArea);
-		
+			buff1 = new Uint8Array(bSize),
+			buff2 = new Uint8Array(bSize);
+		// move box 1px left
+		box.move(-1, 0);
 
 		oIY(mask.channel, mask.rect, buff1, copy.rect);
-		
 		ostylestroke(buff1, copy.channel, copy.rect, outside);
-
 		ohI(buff1);
-
 		ostylestroke(buff1, buff2, copy.rect, inside);
-		
 		oQYwD(copy.channel, buff2, copy.channel);
 		
 		return copy;
 	};
+
+	return { stroke };
 
 })();

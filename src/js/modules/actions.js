@@ -19,9 +19,9 @@ const Actions = {
 	stroke(pixels, hex, pos, size) {
 		let grow = [0, 0];
 		switch (pos) {
-			case "inside": grow[0] = size; break;
-			case "outside": grow[1] = size; break;
-			default: grow[0] = grow[1] = size*.5;
+			case "inside": grow[0] = +size; break;
+			case "outside": grow[1] = +size; break;
+			default: grow[0] = grow[1] = +size * .5;
 		}
 
 		let width = pixels.width,
@@ -34,7 +34,7 @@ const Actions = {
 				rect: new Box(0, 0, width, height),
 			},
 			// perform stroke
-			{ channel, rect } = stroke(mask, ...grow),
+			{ channel, rect } = Painter.stroke(mask, ...grow),
 			buff = new ImageData(new Uint8ClampedArray(channel.length*4), rect.w, rect.h),
 			d = buff.data;
 

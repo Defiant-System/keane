@@ -27,17 +27,17 @@ let Mask = {
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "union" });
 			// this.dispatch({ type: "select-elliptic", elps: { x: 300, y: 150, rX: 70, rY: 90 } });
 			// this.dispatch({ type: "select-elliptic", elps: { x: 250, y: 130, rX: 120, rY: 70 }, method: "union" });
-			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ] });
+			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ], method: "union" });
 
 			setTimeout(() => keane.dispatch({ type: "edit-action", arg: "stroke,#000000,center,6" }), 300);
 			return;
 			
-			// setTimeout(() => keane.dispatch({ type: "edit-action", arg: "fill" }), 200);
 			// setTimeout(() => this.dispatch({ type: "select-none" }), 220);
+			// setTimeout(() => keane.dispatch({ type: "edit-action", arg: "fill,#ff0000" }), 200);
 
 			// this.dispatch({ type: "inverse-selection" });
 
-			// window.find(`.tool[data-click="toggle-quick-mask"]`).trigger("click");
+			// window.find(`.tool[data-click="toggle-quick-mask-mode"]`).trigger("click");
 
 			// setTimeout(() => $(".def-desktop_").trigger("mousedown").trigger("mouseup"), 200);
 
@@ -95,7 +95,7 @@ let Mask = {
 				break;
 			case "select-lasso":
 			case "select-polygon":
-				Self.clear();
+				Self.clear(event.method);
 				Self.ctx.beginPath();
 				Self.ctx.moveTo(event.points.shift(), event.points.shift());
 				while (event.points.length) {

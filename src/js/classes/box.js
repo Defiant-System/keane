@@ -23,15 +23,20 @@ class Box {
 		return this.containsPoint(pos.x, pos.y);
 	}
 
-	expand(xSize, ySize) {
+	move(x, y) {
+		this.x -= x;
+		this.y -= y;
+	}
+
+	contract(xSize, ySize) {
 		this.x -= xSize;
 		this.y -= ySize;
 		this.w += 2 * xSize;
 		this.h += 2 * ySize;
 	}
 
-	expandDim(dim) {
-		this.expand(dim.x, dim.y);
+	contractWith(dim) {
+		this.contract(dim.x, dim.y);
 	}
 
 	intersects(box) {
