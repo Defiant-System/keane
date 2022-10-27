@@ -16,21 +16,27 @@ const Actions = {
 		let mask = this.getPixels(Mask.cvs[0]);
 		return this.subtract(pixels, mask);
 	},
-	stroke(pixels, hex, size) {
+	stroke(pixels, hex, pos, size) {
+		let grow = [0, 0];
+		switch (pos) {
+			case "inside": grow[0] = size; break;
+			case "outside": grow[1] = size; break;
+			default: grow[0] = grow[1] = size*.5;
+		}
+
 		let width = pixels.width,
 			height = pixels.height,
-			masked = this.getPixels(Mask.cvs[0]),
 			color = ColorLib.hexToRgb(hex),
 			clr = [color.r, color.g, color.b],
-			jq = {
+			masked = this.getPixels(Mask.cvs[0]),
+			mask = {
 				channel: this.getChannel(masked.data),
 				rect: new Box(0, 0, width, height),
-			};
-
-		let { channel, rect } = stroke(jq, 2, 2);
-		let buff = new Uint8ClampedArray(channel.length * 4, rect.w, rect.h);
-		let img = new ImageData(buff, rect.w, rect.h),
-			d = img.data;
+			},
+			// perform stroke
+			{ channel, rect } = stroke(mask, ...grow),
+			buff = new ImageData(new Uint8ClampedArray(channel.length*4), rect.w, rect.h),
+			d = buff.data;
 
 		for (let i=0, il=channel.length; i<il; i++) {
 			let p = i << 2;
@@ -40,10 +46,9 @@ const Actions = {
 			d[p+2] = clr[2];
 			d[p+3] = channel[i];
 		}
-
-		// merge layers
-		this.add(pixels, img);
-
+		// put result on active layer
+		this.add(pixels, buff);
+		// return result
 		return pixels;
 	},
 	getChannel(data, channel) {

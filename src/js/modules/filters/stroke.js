@@ -22,14 +22,6 @@ let stroke = (() => {
 		for (var A = 0; A < G; A++) d[A] = ~d[A]
 	};
 
-	let ou8 = function(l, d) {
-		var G = Math.min(l.buffer.byteLength, d.buffer.byteLength),
-			b = G >>> 2,
-			l = new Uint32Array(l.buffer, 0, b),
-			d = new Uint32Array(d.buffer, 0, b);
-		d.set(l)
-	};
-
 	let oQYwD = function(l, d, G) {
 		var b = 1 / 255;
 		for (var A = 0; A < l.length; A++) G[A] = l[A] * d[A] * b
@@ -166,32 +158,31 @@ let stroke = (() => {
 		}
 	};
 
-	return function(l, d, G) {
-		// var b = Math.max(1, Math.ceil(G));
-		var V = l.rect.clone();
-		// V.expand(b, b);
+	return function(mask, inside, outside) {
+		// var b = Math.max(1, Math.ceil(outside));
+		var box = mask.rect.clone();
+		// box.expand(b, b);
 
-		var Q = V.area(),
-			t = {
-				channel: new Uint8Array(Q),
-				rect: V
+		var boxArea = box.area(),
+			copy = {
+				channel: new Uint8Array(boxArea),
+				rect: box
 			},
-			I = new Uint8Array(Q);
+			buff1 = new Uint8Array(boxArea),
+			buff2 = new Uint8Array(boxArea);
 		
 
-		oIY(l.channel, l.rect, I, t.rect);
+		oIY(mask.channel, mask.rect, buff1, copy.rect);
 		
-		ostylestroke(I, t.channel, t.rect, G);
+		ostylestroke(buff1, copy.channel, copy.rect, outside);
 
-		var y = new Uint8Array(Q);
-		ohI(I);
+		ohI(buff1);
 
-		if (d != 0) ostylestroke(I, y, t.rect, d);
-		else ou8(I, y);
+		ostylestroke(buff1, buff2, copy.rect, inside);
 		
-		oQYwD(t.channel, y, t.channel);
+		oQYwD(copy.channel, buff2, copy.channel);
 		
-		return t
+		return copy;
 	};
 
 })();
