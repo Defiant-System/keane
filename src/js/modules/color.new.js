@@ -106,7 +106,7 @@ const ColorLib = {
 		let r = parseInt(hex.substr(1,2), 16),
 			g = parseInt(hex.substr(3,2), 16),
 			b = parseInt(hex.substr(5,2), 16),
-			a = parseInt(hex.substr(7,2) || "ff", 16) / 255;
+			a = parseInt(hex.substr(7,2) || "ff", 16);
 		return { r, g, b, a };
 	},
 	mixColors(hex1, hex2, p) {

@@ -89,6 +89,9 @@
 				list = event.list || Self.els.optionBar.find("[data-arg]").map(el => el.getAttribute("data-arg"));
 				list.map(name => Self.els.optionBar.find(`[data-arg="${name}"]`).addClass("disabled"));
 				break;
+			case "toggle-paint-masked-area":
+			case "enter-quick-mask-mode":
+			case "exit-quick-mask-mode":
 			case "toggle-quick-mask-mode":
 				Self.quickMask.dispatch(event);
 				break;

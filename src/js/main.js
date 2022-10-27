@@ -184,6 +184,9 @@ const keane = {
 			case "toggle-statusbar":
 				return Self.statusbar.dispatch(event);
 			case "toggle-quick-mask-mode":
+			case "toggle-paint-masked-area":
+			case "enter-quick-mask-mode":
+			case "exit-quick-mask-mode":
 			case "select-tool":
 				return Self.tools.dispatch(event);
 			case "box-head-tab":
