@@ -29,7 +29,7 @@ let Mask = {
 			this.dispatch({ type: "select-elliptic", elps: { x: 250, y: 130, rX: 120, rY: 70 }, method: "union" });
 			// this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ] });
 
-			setTimeout(() => keane.dispatch({ type: "edit-action", arg: "stroke" }), 300);
+			setTimeout(() => keane.dispatch({ type: "edit-action", arg: "stroke,#336699,size" }), 300);
 			return;
 			
 			// setTimeout(() => keane.dispatch({ type: "edit-action", arg: "fill" }), 200);
@@ -42,7 +42,7 @@ let Mask = {
 			// setTimeout(() => $(".def-desktop_").trigger("mousedown").trigger("mouseup"), 200);
 
 			// setTimeout(() => this.dispatch({ type: "select-elliptic", elps: { x: 300, y: 220, rX: 70, rY: 90 } }), 300);
-		}, 500);
+		}, 600);
 	},
 	clear(method) {
 		let Proj = Projector,

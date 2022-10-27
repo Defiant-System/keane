@@ -16,50 +16,38 @@ const Actions = {
 		let mask = this.getPixels(Mask.cvs[0]);
 		return this.subtract(pixels, mask);
 	},
-	stroke(pixels) {
-		let masked = this.getPixels(Mask.cvs[0]);
-		let jq = {
+	stroke(pixels, hex, size) {
+		let width = pixels.width,
+			height = pixels.height,
+			masked = this.getPixels(Mask.cvs[0]),
+			color = ColorLib.hexToRgb(hex),
+			clr = [color.r, color.g, color.b],
+			jq = {
 				channel: this.getChannel(masked.data),
-				rect: new Box(0, 0, 600, 400),
+				rect: new Box(0, 0, width, height),
 			};
 
-
-		// let buff = new Uint8ClampedArray(jq.channel.length * 4, jq.rect.w, jq.rect.h);
-		// let img = new ImageData(buff, jq.rect.w, jq.rect.h),
-		// 	d = img.data;
-
-		// for (let i=0, il=jq.channel.length; i<il; i++) {
-		// 	let p = i << 2;
-		// 	d[p] = jq.channel[i];
-		// 	d[p+3] = jq.channel[i];
-		// }
-
-		// Mask.ants.halt(true);
-		// Projector.ctx.putImageData(img, Projector.file.oX, Projector.file.oY);
-
-
-		let { channel, rect } = stroke(jq, 2, 0);
+		let { channel, rect } = stroke(jq, 2, 2);
 		let buff = new Uint8ClampedArray(channel.length * 4, rect.w, rect.h);
 		let img = new ImageData(buff, rect.w, rect.h),
 			d = img.data;
 
 		for (let i=0, il=channel.length; i<il; i++) {
 			let p = i << 2;
-			d[p] = channel[i];
+			if (!channel[i]) continue;
+			d[p+0] = clr[0];
+			d[p+1] = clr[1];
+			d[p+2] = clr[2];
 			d[p+3] = channel[i];
 		}
-		
-		Mask.ants.halt(true);
-		Projector.ctx.putImageData(img, Projector.file.oX, Projector.file.oY);
-
 
 		// merge layers
-		// this.add(pixels, img);
+		this.add(pixels, img);
 
 		return pixels;
 	},
 	getChannel(data, channel) {
-		let c = ["red", "gren", "blue"].indexOf(channel) || 3,
+		let c = ["red", "gren", "blue", "alpha"].indexOf(channel) || 3,
 			il = data.length / 4,
 			b = new Uint8Array(il),
 			i = 0;
