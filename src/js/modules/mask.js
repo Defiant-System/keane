@@ -21,7 +21,7 @@ let Mask = {
 
 		// temp
 		setTimeout(() => {
-			// return;
+			return;
 			this.dispatch({ type: "select-rect", rect: { x: 200, y: 110, w: 130, h: 210 } });
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "subtract" });
 			// this.dispatch({ type: "select-rect", rect: { x: 140, y: 90, w: 150, h: 220 }, method: "union" });

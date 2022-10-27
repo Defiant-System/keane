@@ -32,7 +32,9 @@
 		switch (event.type) {
 			// subscribed events
 			case "mouse-move":
-				APP.els.content.toggleClass("cursor-move", !event.detail.isSelection);
+				if (!File.quickMask.show) {
+					APP.els.content.toggleClass("cursor-move", !event.detail.isSelection);
+				}
 				break;
 
 			// system events
