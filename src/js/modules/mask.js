@@ -28,12 +28,12 @@ let Mask = {
 			// this.dispatch({ type: "select-elliptic", elps: { x: 300, y: 150, rX: 70, rY: 90 } });
 			// this.dispatch({ type: "select-elliptic", elps: { x: 250, y: 130, rX: 120, rY: 70 }, method: "union" });
 			this.dispatch({ type: "select-polygon", points: [ 50, 50, 80, 40, 190, 70, 210, 240, 160, 170, 110, 160, 30, 190 ], method: "union" });
+			// return;
 
 
 			setTimeout(() =>  window.find(`.tool[data-click="toggle-quick-mask-mode"]`).trigger("click"), 700);
 
-			return;
-			setTimeout(() => keane.dispatch({ type: "edit-action", arg: "stroke,#000000,center,6" }), 300);
+			// setTimeout(() => keane.dispatch({ type: "edit-action", arg: "stroke,#000000,center,6" }), 300);
 			
 			// setTimeout(() => this.dispatch({ type: "select-none" }), 220);
 			// setTimeout(() => keane.dispatch({ type: "edit-action", arg: "fill,#ff0000" }), 200);

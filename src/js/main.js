@@ -34,6 +34,7 @@ let Pref = {
 		pixelGrid: true,
 	},
 	quickMask: {
+		paint: "selected", // masked
 		color: "#ff000070",
 	}
 };

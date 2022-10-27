@@ -73,29 +73,6 @@
 				
 				if (Self.method === "replace") Mask.dispatch({ type: "deselect" });
 				break;
-			case "toggle-quick-mask-mode":
-				// stop marching ants
-				Mask.ants.halt(true);
-				// toggle tool UI
-				el = event.el || APP.els.toolsBar.find(".tool.icon-quick-mask");
-				el.toggleClass("active", File.quickMask.show);
-				// toggle file "quick mask" flag
-				File.quickMask.show = !File.quickMask.show;
-
-				if (File.quickMask.show) {
-					File.quickMask.ctx.save();
-					File.quickMask.ctx.globalCompositeOperation = "source-over";
-					File.quickMask.ctx.drawImage(Mask.cvs[0], 0, 0);
-					File.quickMask.ctx.globalCompositeOperation = "source-out";
-					File.quickMask.ctx.fillStyle = Pref.quickMask.color;
-					File.quickMask.ctx.fillRect(0, 0, 1e9, 1e9);
-					File.quickMask.ctx.restore();
-				} else {
-					Mask.ants.paint(true);
-				}
-				// update projector
-				File.render({ noEmit: true });
-				break;
 			case "enable":
 				Proj.cvs.on("mousedown", Self.doMarquee);
 				// subscribe to events
