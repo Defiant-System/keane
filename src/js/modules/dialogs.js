@@ -269,38 +269,24 @@ const Dialogs = {
 			copy,
 			el;
 		switch (event.type) {
-			// "fast events"
-			case "set-contrast":
-			case "set-brightness":
-				if (Self.data.value[Self.data.filter] === +event.value) return;
-				Self.data.value[Self.data.filter] = +event.value;
-				// exit if "preview" is not enabled
-				if (!Self.preview) return;
-				/* falls-through */
 			case "apply-filter-data":
 				// copy first, then apply filter on pixels
 				pixels = Self.data.pixels;
 				
-				console.time("Pixelator Filter");
 				// layers = Dialogs.dlgPixelator({ type: "preset-from-xml", id: "prst-2" });
 				layers = Self.dlgPixelator({ type: "preset-from-html" });
 
+				// console.time("Pixelator Filter");
 				copy = closePixelate({
 						copy: new ImageData(new Uint8ClampedArray(pixels.data), pixels.width, pixels.height),
 						width: pixels.width,
 						height: pixels.height,
 						layers,
 					});
-				console.timeEnd("Pixelator Filter");
+				// console.timeEnd("Pixelator Filter");
 
 				// update layer
 				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
-				break;
-
-			// slow/once events
-			case "before:set-amount":
-			case "before:set-radius":
-				Self.data.filter = event.type.split("-")[1];
 				break;
 
 			// custom dialog events
@@ -388,12 +374,16 @@ const Dialogs = {
 
 			// standard dialog events
 			case "dlg-open":
+				// click on a preset
+				requestAnimationFrame(() =>
+					event.dEl.find(`.presets li[data-id="prst-2"]`).trigger("mousedown").trigger("click"));
+
 				// render active preset layer list
-				window.render({
-					template: "pixelator-preset",
-					match: "//Pixelator/Preset[2]",
-					prepend: event.dEl.find(".list-body"),
-				});
+				// window.render({
+				// 	template: "pixelator-preset",
+				// 	match: "//Pixelator/Preset[2]",
+				// 	prepend: event.dEl.find(".list-body"),
+				// });
 			case "dlg-ok":
 			case "dlg-reset":
 			case "dlg-preview":
