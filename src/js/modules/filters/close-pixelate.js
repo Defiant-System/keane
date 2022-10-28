@@ -44,6 +44,8 @@ let closePixelate = (function() {
                     ...layer,
                 };
 
+            opt.res -= opt.res % 2;
+
             // option defaults
             var data = this.data,
                 cl = this.width / opt.res + 1,
@@ -71,12 +73,12 @@ let closePixelate = (function() {
             }
 
             for (let r=0; r<rl; r++) {
-                let y = (r - 0.5) * opt.res + offsetY;
+                let y = r * opt.res + offsetY;
                 // normalize y so shapes around edges get color
                 let pixelY = Math.max(Math.min(y, this.height-1), 0);
 
                 for (let c=0; c<cl; c++) {
-                    let x = (c - 0.5) * opt.res + offsetX,
+                    let x = c * opt.res + offsetX,
                         // normalize y so shapes around edges get color
                         pX = Math.max(Math.min(x, this.width-1), 0),
                         pI = (pX + pixelY * this.width) * 4,

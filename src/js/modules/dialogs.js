@@ -275,6 +275,8 @@ const Dialogs = {
 				
 				// layers = Dialogs.dlgPixelator({ type: "preset-from-xml", id: "prst-2" });
 				layers = Self.dlgPixelator({ type: "preset-from-html" });
+				if (!layers.length || closePixelate.working) return;
+				closePixelate.working = true;
 
 				// console.time("Pixelator Filter");
 				copy = closePixelate({
@@ -284,6 +286,9 @@ const Dialogs = {
 						layers,
 					});
 				// console.timeEnd("Pixelator Filter");
+
+				// reset flag
+				delete closePixelate.working;
 
 				// update layer
 				Self.data.layer.putImageData({ data: copy, noEmit: event.noEmit });
@@ -377,13 +382,6 @@ const Dialogs = {
 				// click on a preset
 				requestAnimationFrame(() =>
 					event.dEl.find(`.presets li[data-id="prst-2"]`).trigger("mousedown").trigger("click"));
-
-				// render active preset layer list
-				// window.render({
-				// 	template: "pixelator-preset",
-				// 	match: "//Pixelator/Preset[2]",
-				// 	prepend: event.dEl.find(".list-body"),
-				// });
 			case "dlg-ok":
 			case "dlg-reset":
 			case "dlg-preview":
