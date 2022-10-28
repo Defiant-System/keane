@@ -8,14 +8,6 @@
 		this.method = "replace";
 		this.polygon = [];
 		this.polyCloseDist = 5;
-
-		// temp
-		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
-		
-		setTimeout(() => window.find(`.tool.icon-marquee-union`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,

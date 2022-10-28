@@ -16,11 +16,6 @@
 
 		// select a tool
 		this.els.toolBar.find(".tool:nth(0)").trigger("click");
-
-		// temp
-		// setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.option .tip-icon`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-options-brush .tool-feather`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,

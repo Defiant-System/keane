@@ -20,10 +20,6 @@ const UI = {
 		// bind event handlers
 		this.content.on("click", ".option .value", this.dispatch);
 		this.content.on("mousedown mouseup", "[data-ui], [data-dlg]", this.dispatch);
-
-		// temp
-		// setTimeout(() => this.content.find(".option[data-options='pop-gradient-strips'] .value").trigger("click"), 200);
-		// setTimeout(() => this.content.find(".option[data-options='pop-brush-tips'] .value").trigger("click"), 200);
 	},
 	dispatch(event) {
 		let APP = keane,

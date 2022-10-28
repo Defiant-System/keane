@@ -3,6 +3,11 @@
 
 {
 	_halt: true,
+	init() {
+		let { cvs, ctx } = Misc.createCanvas(1, 1);
+		this.cvs = cvs;
+		this.ctx = ctx;
+	},
 	paint(march) {
 		this.mask = Mask;
 		this.threshold = Mask.threshold;

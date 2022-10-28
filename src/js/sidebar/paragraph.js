@@ -8,9 +8,6 @@
 		this.els = {
 			root,
 		};
-
-		// temp
-		// setTimeout(() => window.find(`.swatches-wrapper > div:nth(0)`).trigger("click"), 500);
 	},
 	dispatch(event) {
 		let APP = keane,

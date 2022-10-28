@@ -10,9 +10,6 @@
 
 		// subscribe to events
 		karaqu.on("set-fg-color", this.dispatch);
-
-		// temp
-		// setTimeout(() => this.els.root.find(".swatches-wrapper > div:nth(4)").trigger("click"), 300);
 	},
 	dispatch(event) {
 		let APP = keane,

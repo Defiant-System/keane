@@ -1,4 +1,7 @@
 
+@import "modules/test.js"
+
+
 @import "classes/box.js"
 @import "classes/file.js"
 @import "classes/layer.js"
@@ -14,7 +17,6 @@
 @import "modules/actions.js"
 @import "modules/filters.js"
 @import "modules/dialogs.js"
-
 
 @import "modules/filters/gaussian-blur.js"
 @import "modules/filters/crystallize.js"
@@ -59,11 +61,9 @@ const keane = {
 		// init sub objects
 		Object.keys(this).filter(i => this[i].init).map(i => this[i].init());
 
-		// temp
-		// setTimeout(() => {
-		// 	Projector.file.dispatch({ type: "set-scale", scale: 32 });
-		// 	Projector.file.dispatch({ type: "pan-canvas", top: -10300, left: -12300, noZoom: true });
-		// }, 750);
+		// DEV-ONLY-START
+		Test.init();
+		// DEV-ONLY-END
 	},
 	dispatch(event) {
 		let Self = keane,

@@ -394,8 +394,6 @@ const Dialogs = {
 					match: "//Pixelator/Preset[2]",
 					prepend: event.dEl.find(".list-body"),
 				});
-				// temp
-				// requestAnimationFrame(() => Self.dlgPixelator({ type: "preset-from-html" }));
 			case "dlg-ok":
 			case "dlg-reset":
 			case "dlg-preview":
