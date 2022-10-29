@@ -1,11 +1,12 @@
 
 let Test = {
 	init() {
-		// temp
-		// setTimeout(() => {
-		// 	Projector.file.dispatch({ type: "set-scale", scale: 32 });
-		// 	Projector.file.dispatch({ type: "pan-canvas", top: -10300, left: -12300, noZoom: true });
-		// }, 750);
+		// zoom in and pan view
+		setTimeout(() => {
+			Projector.file.dispatch({ type: "set-scale", scale: 8 });
+			Projector.file.dispatch({ type: "pan-canvas", top: -1300, left: -1300, noZoom: true });
+			window.find(`.tool[data-content="move"]`).trigger("click")
+		}, 750);
 
 
 		// UI temp
@@ -54,7 +55,7 @@ let Test = {
 
 
 		// temp
-		setTimeout(this.dialogs, 500);
+		// setTimeout(this.dialogs, 500);
 		// setTimeout(this.mask, 600);
 	},
 	dialogs() {

@@ -242,7 +242,7 @@ class File {
 						? event.top
 						: this.height > Proj.aH ? Proj.cY - (this.height >> 1) + event.y : false) || this.oY;
 				// render projector canvas
-				Proj.render();
+				Proj.render({ noEmit: event.noEmit });
 				break;
 
 			case "select-layer":

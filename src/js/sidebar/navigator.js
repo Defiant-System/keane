@@ -132,7 +132,7 @@
 				//if (isNaN(top) || isNaN(left)) return;
 
 				// forward event to canvas
-				File.dispatch({ type: "pan-canvas", top, left, noZoom: true });
+				File.dispatch({ type: "pan-canvas", top, left, noZoom: true, noEmit: true });
 				break;
 		}
 	},

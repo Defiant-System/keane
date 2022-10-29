@@ -101,7 +101,7 @@ const Projector = {
 		this.ctx.fillRect(0, 0, w, h);
 		this.ctx.restore();
 		// checkers background
-		Rule.drawCheckers(this.ctx, { w, h, oX, oY });
+		// Rule.drawCheckers(this.ctx, { w, h, oX, oY });
 
 		// render color channels
 		if (File.channels !== "111") {
