@@ -352,35 +352,26 @@ const Rulers = {
 				oX: 0, oY: 0,
 				x:  0, y:  0,
 				w: 16, h: 16,
+				cW: ctx.canvas.width,
+				cH: ctx.canvas.height,
 				...opt,
 			},
 			lX = cfg.w % cfg.size,
 			lY = cfg.h % cfg.size,
 			il = (cfg.w-lX) / cfg.size,
 			jl = (cfg.h-lY) / cfg.size;
+		
 		ctx.save();
-		if (cfg.oX < 0) {
-			cfg.pX = cfg.oX % cfg.size;
-			cfg.x = (cfg.pX - cfg.oX) / cfg.size;
-			il = (il-lX) - cfg.x;
+		ctx.translate(-cfg.oX, -cfg.oY);
+
+		ctx.fillStyle = "#f00";
+		ctx.fillRect(cfg.aX, cfg.aY, cfg.aW-10, cfg.aH-10);
+		// ctx.fillRect(18, 90, cfg.cW -18, cfg.cH - 90);
+
+		if (cfg.isProjector) {
+			console.log( cfg.aW, cfg.cW, cfg.w );
 		}
-		if (cfg.oY < 0) {
-			cfg.pY = cfg.oY % cfg.size;
-			cfg.y = (cfg.pY - cfg.oY) / cfg.size;
-			jl = (jl-lY) - cfg.y;
-		}
-		for (let i=cfg.x; i<il; i++) {
-			for (let j=cfg.y; j<jl; j++) {
-				ctx.fillStyle = ((i + j) % 2) ? "#bbb" : "#fff";
-				let x = i * cfg.size + cfg.pX,
-					y = j * cfg.size + cfg.pY,
-					w = cfg.size,
-					h = cfg.size;
-				if (i === il-1) w = lX || cfg.size;
-				if (j === jl-1) h = lY || cfg.size;
-				ctx.fillRect(x, y, w, h);
-			}
-		}
+
 		ctx.restore();
 	}
 };

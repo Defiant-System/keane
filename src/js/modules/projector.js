@@ -57,13 +57,26 @@ const Projector = {
 		// reset canvases
 		this.cvs.prop({ width: window.width, height: window.height });
 
-		this.aX = File.rulers.show ? Rulers.t : 0;
-		this.aY = this.els.toolBar.height() + this.els.optionsBar.height() + (File.rulers.show ? Rulers.t : 0);
-		this.aW = window.width - this.aX - this.els.sideBar.width() + (File.rulers.show ? Rulers.t : 0);
-		this.aH = window.height - this.aY - (File.rulers.show ? Rulers.t : 0); // - this.els.statusBar.height()
+		let rS = Rulers.t,
+			sW = this.els.sideBar.width(),
+			tH = this.els.toolBar.height(),
+			oH = this.els.optionsBar.height(),
+			sH = this.els.statusBar.height();
+
+		this.aX = File.rulers.show ? rS : 0;
+		this.aY = tH + oH + (File.rulers.show ? rS : 0);
+		this.aH = window.height - this.aY - (File.rulers.show ? rS : 0); // - this.els.statusBar.height()
+		this.aW = window.width - this.aX - sW + (File.rulers.show ? rS : 0);
+		// used for checker background
+		this.cDim = {
+			aX: this.aX,
+			aY: this.aY,
+			aW: this.aW + sW - rS,
+			aH: this.aH + rS,
+		};
 		// center
-		this.cX = (window.width + this.aX - this.els.sideBar.width()) >> 1;
-		this.cY = (window.height + this.aY - this.els.statusBar.height()) >> 1;
+		this.cX = (window.width + this.aX - sW) >> 1;
+		this.cY = (window.height + this.aY - sH) >> 1;
 
 		if (this.file !== File) {
 			// reference to displayed file
@@ -100,8 +113,11 @@ const Projector = {
 		this.ctx.shadowColor = "#292929";
 		this.ctx.fillRect(0, 0, w, h);
 		this.ctx.restore();
+
+		// console.time("Checkers");
 		// checkers background
-		// Rule.drawCheckers(this.ctx, { w, h, oX, oY });
+		Rule.drawCheckers(this.ctx, { w, h, oX, oY, ...this.cDim, isProjector: !0 });
+		// console.timeEnd("Checkers");
 
 		// render color channels
 		if (File.channels !== "111") {
@@ -140,7 +156,7 @@ const Projector = {
 		if (Pref.grid.pixelGrid && File.scale > 12) Rule.drawPixelGrid(this);
 		if (Pref.grid.show) Rule.drawGrid(this);
 		if (File.rulers.guides.show && !opt.noGuideLines) Rule.drawGuides(this);
-		if (File.rulers.show) Rule.render(this);
+		// if (File.rulers.show) Rule.render(this);
 		// toggles file "quick mask" mode
 		if (File.quickMask.show) this.ctx.drawImage(File.quickMask.cvs[0], oX, oY);
 		// marching ants
