@@ -320,8 +320,8 @@ const Rulers = {
 			aH = Math.min(aY + Proj.aH + rSize, File.height - rSize),
 			oX = scale - (aX - File.oX) % scale,
 			oY = scale - (aY - File.oY) % scale,
-			xl = Math.ceil((aW + rSize) / scale),
-			yl = Math.ceil((aH + rSize) / scale);
+			xl = Math.ceil((aW + rSize) / scale) - 3,
+			yl = Math.ceil((aH + rSize) / scale) - 3;
 
 		ctx.save();
 		ctx.translate(.5, .5);
@@ -332,7 +332,7 @@ const Rulers = {
 			let lY = aY + (y * scale) + oY;
 			ctx.beginPath();
 			ctx.moveTo(aX, lY);
-			ctx.lineTo(aX + aW + rSize, lY);
+			ctx.lineTo(aX + aW - rSize, lY);
 			ctx.stroke();
 		}
 		// vertical lines
@@ -340,7 +340,7 @@ const Rulers = {
 			let lX = aX + (x * scale) + oX;
 			ctx.beginPath();
 			ctx.moveTo(lX, aY);
-			ctx.lineTo(lX, aY + aH + rSize);
+			ctx.lineTo(lX, aY + aH - rSize);
 			ctx.stroke();
 		}
 		ctx.restore();
@@ -349,27 +349,43 @@ const Rulers = {
 		let cfg = {
 				size: 8,
 				pX: 0, pY: 0,
+				bX: 0, bY: 0,
 				oX: 0, oY: 0,
 				x:  0, y:  0,
 				w: 16, h: 16,
-				cW: ctx.canvas.width,
-				cH: ctx.canvas.height,
 				...opt,
 			},
-			lX = cfg.w % cfg.size,
-			lY = cfg.h % cfg.size,
-			il = (cfg.w-lX) / cfg.size,
-			jl = (cfg.h-lY) / cfg.size;
-		
+			x = Math.max(0, cfg.oX, -cfg.aX),
+			y = Math.max(0, cfg.oY, -cfg.aY),
+			w = Math.min(cfg.w, cfg.aW, cfg.w + cfg.oX),
+			h = Math.min(cfg.h, cfg.aH + cfg.aY - y),
+			lX = w % cfg.size,
+			lY = h % cfg.size;
+
+		if (cfg.oX > 0) cfg.bX = cfg.oX;
+		if (cfg.oY > 0) cfg.bY = cfg.oY;
+
 		ctx.save();
 		ctx.translate(-cfg.oX, -cfg.oY);
+		ctx.fillStyle = "#fff";
+		ctx.fillRect(x, y, w, h);
+		ctx.fillStyle = "#bbb";
 
-		ctx.fillStyle = "#f00";
-		ctx.fillRect(cfg.aX, cfg.aY, cfg.aW-10, cfg.aH-10);
-		// ctx.fillRect(18, 90, cfg.cW -18, cfg.cH - 90);
-
-		if (cfg.isProjector) {
-			console.log( cfg.aW, cfg.cW, cfg.w );
+		let jl = Math.ceil(h / cfg.size),
+			il = Math.ceil(w / cfg.size),
+			i = 0;
+		for (; i<il; i++) {
+			for (let j=0; j<jl; j++) {
+				if ((i + j) % 2) {
+					let bx = i * cfg.size + cfg.bX,
+						by = j * cfg.size + cfg.bY,
+						bw = cfg.size,
+						bh = cfg.size;
+					if (i === il-1) bw = lX || cfg.size;
+					if (j === jl-1) bh = lY || cfg.size;
+					ctx.fillRect(bx, by, bw, bh);
+				}
+			}
 		}
 
 		ctx.restore();

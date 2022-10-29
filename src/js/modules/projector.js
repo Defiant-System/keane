@@ -69,9 +69,10 @@ const Projector = {
 		this.aW = window.width - this.aX - sW + (File.rulers.show ? rS : 0);
 		// used for checker background
 		this.cDim = {
+			sW,
 			aX: this.aX,
 			aY: this.aY,
-			aW: this.aW + sW - rS,
+			aW: this.aW + sW,
 			aH: this.aH + rS,
 		};
 		// center
@@ -114,10 +115,10 @@ const Projector = {
 		this.ctx.fillRect(0, 0, w, h);
 		this.ctx.restore();
 
-		// console.time("Checkers");
+		console.time("Checkers");
 		// checkers background
 		Rule.drawCheckers(this.ctx, { w, h, oX, oY, ...this.cDim, isProjector: !0 });
-		// console.timeEnd("Checkers");
+		console.timeEnd("Checkers");
 
 		// render color channels
 		if (File.channels !== "111") {
@@ -156,7 +157,7 @@ const Projector = {
 		if (Pref.grid.pixelGrid && File.scale > 12) Rule.drawPixelGrid(this);
 		if (Pref.grid.show) Rule.drawGrid(this);
 		if (File.rulers.guides.show && !opt.noGuideLines) Rule.drawGuides(this);
-		// if (File.rulers.show) Rule.render(this);
+		if (File.rulers.show) Rule.render(this);
 		// toggles file "quick mask" mode
 		if (File.quickMask.show) this.ctx.drawImage(File.quickMask.cvs[0], oX, oY);
 		// marching ants
