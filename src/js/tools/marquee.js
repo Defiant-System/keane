@@ -68,11 +68,17 @@
 				if (Self.method === "replace") Mask.dispatch({ type: "deselect" });
 				break;
 			case "enable":
+				// add class
+				APP.els.content.addClass("cursor-crosshair");
+				// bind event handler
 				Proj.cvs.on("mousedown", Self.doMarquee);
 				// subscribe to events
 				karaqu.on("mouse-move", Self.dispatch);
 				break;
 			case "disable":
+				// remove class
+				APP.els.content.removeClass("cursor-crosshair");
+				// unbind event handler
 				Proj.cvs.off("mousedown", Self.doMarquee);
 				// subscribe to events
 				karaqu.off("mouse-move", Self.dispatch);
@@ -273,6 +279,7 @@
 				if (offset.y < 0) { click.y -= offset.y; offset.y = 0; }
 				if (offset.x > width)  { click.x -= offset.x - width;  offset.x = width; }
 				if (offset.y > height) { click.y -= offset.y - height; offset.y = height; }
+				if (ants.width < 2) ants = null;
 				// drag object
 				Self.drag = { ctx, proj, ants, offset, click, max, _min, _max, _abs, _floor, _round, _atan2, _sqrt, _PI };
 

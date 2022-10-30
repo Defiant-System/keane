@@ -3,6 +3,7 @@ let Test = {
 	init() {
 		// zoom in and pan view
 		setTimeout(() => {
+			return;
 			Projector.file.dispatch({ type: "set-scale", scale: 2 });
 			// Projector.file.dispatch({ type: "pan-canvas", top: -5610, left: -8763, noZoom: true });
 			Projector.file.dispatch({ type: "pan-canvas", top: 90, left: 18, noZoom: true });

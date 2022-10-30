@@ -41,7 +41,6 @@
 
 				let Proj = Projector,
 					File = Proj.file;
-
 				// dont pan if image fits available area
 				if (File.width <= Proj.aW && File.height <= Proj.aH) return;
 
@@ -53,8 +52,8 @@
 						y: Proj.aY - Proj.cY + (File.height >> 1),
 					},
 					max: {
-						x: (Proj.cX - Proj.aX - (File.width >> 1)),
-						y: (Proj.cY - Proj.aY - (File.height >> 1)) + Proj.els.statusBar.height(),
+						x: (Proj.cX - Proj.aX - (File.width >> 1)) + 1,
+						y: (Proj.cY - Proj.aY - (File.height >> 1)) + Proj.els.statusBar.height() + 1,
 					},
 					stop: true,
 					_max: Math.max,
@@ -63,7 +62,6 @@
 					file: File,
 					nav: APP.sidebar.navigator,
 				};
-
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover");
 				// bind event handlers
