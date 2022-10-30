@@ -105,7 +105,7 @@
 				break;
 
 			// custom events
-			case "pan-canvas":
+			case "pan-view-rect":
 				oX = Proj.cX - (File.width >> 1) + event.x;
 				oY = Proj.cY - (File.height >> 1) + event.y;
 				data = {
@@ -188,7 +188,7 @@
 				// moves navigator view rectangle
 				Drag.el.css({ top, left });
 				// emit pan-event
-				Self.dispatch({ type: "pan-canvas", ...Drag, top, left });
+				Self.dispatch({ ...Drag, type: "pan-canvas", top, left });
 				break;
 			case "mouseup":
 				// remove class

@@ -75,7 +75,7 @@
 				// forward event to file
 				Drag.file.dispatch({ ...Drag, type: "pan-canvas", noEmit: true });
 				// dispatch event to sidebar navigator
-				Drag.nav.dispatch({ ...Drag, type: "pan-canvas" });
+				Drag.nav.dispatch({ ...Drag, type: "pan-view-rect" });
 				break;
 			case "mouseup":
 				// remove class
