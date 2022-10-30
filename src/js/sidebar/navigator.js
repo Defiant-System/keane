@@ -43,6 +43,7 @@
 			_max = Math.max,
 			_min = Math.min,
 			data = {},
+			oX, oY,
 			opt,
 			zoom,
 			value,
@@ -104,6 +105,20 @@
 				break;
 
 			// custom events
+			case "pan-canvas":
+				oX = Proj.cX - (File.width >> 1) + event.x;
+				oY = Proj.cY - (File.height >> 1) + event.y;
+				data = {
+					top: (((Proj.aY - File.oY) / File.height) * Self.navHeight),
+					left: (((Proj.aX - File.oX) / File.width) * Self.navWidth),
+				};
+				if (data.top < 0) data.height = _min(data.height + data.top, data.height);
+				if (data.left < 0) data.width = _min(data.width + data.left, data.width);
+				data.top = _max(data.top, 0);
+				data.left = _max(data.left, 0);
+
+				Self.els.zoomRect.css(data);
+				break;
 			case "input":
 			case "file-initial-scale":
 				value = event.value || Self.els.zoomSlider.val();

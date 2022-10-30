@@ -61,6 +61,7 @@
 					_min: Math.min,
 					proj: Proj,
 					file: File,
+					nav: APP.sidebar.navigator,
 				};
 
 				// prevent mouse from triggering mouseover
@@ -72,9 +73,9 @@
 				Drag.x = Drag._max(Drag._min(event.clientX - Drag.clickX, Drag.min.x), Drag.max.x);
 				Drag.y = Drag._max(Drag._min(event.clientY - Drag.clickY, Drag.min.y), Drag.max.y);
 				// forward event to file
-				Drag.file.dispatch({ type: "pan-canvas", ...Drag, noEmit: true });
+				Drag.file.dispatch({ ...Drag, type: "pan-canvas", noEmit: true });
 				// dispatch event to sidebar navigator
-				
+				Drag.nav.dispatch({ ...Drag, type: "pan-canvas" });
 				break;
 			case "mouseup":
 				// remove class

@@ -366,7 +366,7 @@ const Rulers = {
 		// if (cfg.oX < 0) cfg.bX = (cfg.oX % cfg.size);
 		// if (cfg.oY < 0) cfg.bY += (cfg.oY % cfg.size) + cfg.size;
 
-		console.log( cfg.oX );
+		// console.log( cfg.oX );
 
 		ctx.save();
 		ctx.translate(-cfg.oX, -cfg.oY);
