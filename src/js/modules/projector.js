@@ -117,7 +117,7 @@ const Projector = {
 
 		// console.time("Checkers");
 		// checkers background
-		Rule.drawCheckers(this.ctx, { w, h, oX, oY, ...this.cDim, isProjector: !0 });
+		Rule.drawProjectorCheckers(this.ctx, { w, h, oX, oY, ...this.cDim, isProjector: !0 });
 		// console.timeEnd("Checkers");
 
 		// render color channels
