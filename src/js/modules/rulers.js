@@ -320,8 +320,8 @@ const Rulers = {
 			aH = Math.min(aY + Proj.aH + rSize, File.height - rSize),
 			oX = scale - (aX - File.oX) % scale,
 			oY = scale - (aY - File.oY) % scale,
-			xl = Math.ceil((aW + rSize) / scale) - 3,
-			yl = Math.ceil((aH + rSize) / scale) - 3;
+			xl = Math.ceil((aW + rSize) / scale) - 1,
+			yl = Math.ceil((aH + rSize) / scale) - 1;
 
 		ctx.save();
 		ctx.translate(.5, .5);
@@ -347,11 +347,10 @@ const Rulers = {
 	},
 	drawCheckers(ctx, opt) {
 		let cfg = {
-				size: 8,
-				pX: 0, pY: 0,
-				bX: 0, bY: 0,
+				size: 24,
+				aX: 0, aY: 0,
 				oX: 0, oY: 0,
-				x:  0, y:  0,
+				bX: 0, bY: 0,
 				w: 16, h: 16,
 				...opt,
 			},
@@ -364,6 +363,10 @@ const Rulers = {
 
 		if (cfg.oX > 0) cfg.bX = cfg.oX;
 		if (cfg.oY > 0) cfg.bY = cfg.oY;
+		// if (cfg.oX < 0) cfg.bX = (cfg.oX % cfg.size);
+		// if (cfg.oY < 0) cfg.bY += (cfg.oY % cfg.size) + cfg.size;
+
+		console.log( cfg.oX );
 
 		ctx.save();
 		ctx.translate(-cfg.oX, -cfg.oY);

@@ -7,18 +7,40 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Proj = Projector,
-			File = Proj.file,
+			Self = APP.tools.move;
+
+		switch (event.type) {
+			// custom events
+			case "select-option":
+				Self.option = event.arg || "move";
+				break;
+			case "enable":
+				// add class
+				APP.els.content.addClass("cursor-hand");
+				// bind event handler
+				Projector.cvs.on("mousedown", Self.doPan);
+				break;
+			case "disable":
+				// remove class
+				APP.els.content.removeClass("cursor-hand");
+				// unbind event handler
+				Projector.cvs.off("mousedown", Self.doPan);
+				break;
+		}
+	},
+	doPan(event) {
+		let APP = keane,
 			Self = APP.tools.move,
-			Drag = Self.drag,
-			_max = Math.max,
-			_min = Math.min;
+			Drag = Self.drag;
 
 		switch (event.type) {
 			// native events
 			case "mousedown":
 				// prevent default behaviour
 				event.preventDefault();
+
+				let Proj = Projector,
+					File = Proj.file;
 
 				// dont pan if image fits available area
 				if (File.width <= Proj.aW && File.height <= Proj.aH) return;
@@ -35,34 +57,30 @@
 						y: (Proj.cY - Proj.aY - (File.height >> 1)) + Proj.els.statusBar.height(),
 					},
 					stop: true,
+					_max: Math.max,
+					_min: Math.min,
+					proj: Proj,
+					file: File,
 				};
 
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover");
 				// bind event handlers
-				Proj.doc.on("mousemove mouseup", Self.dispatch);
+				Proj.doc.on("mousemove mouseup", Self.doPan);
 				break;
 			case "mousemove":
-				Drag.x = _max(_min(event.clientX - Drag.clickX, Drag.min.x), Drag.max.x);
-				Drag.y = _max(_min(event.clientY - Drag.clickY, Drag.min.y), Drag.max.y);
+				Drag.x = Drag._max(Drag._min(event.clientX - Drag.clickX, Drag.min.x), Drag.max.x);
+				Drag.y = Drag._max(Drag._min(event.clientY - Drag.clickY, Drag.min.y), Drag.max.y);
 				// forward event to file
-				File.dispatch({ type: "pan-canvas", ...Drag });
+				Drag.file.dispatch({ type: "pan-canvas", ...Drag, noEmit: true });
+				// dispatch event to sidebar navigator
+				
 				break;
 			case "mouseup":
 				// remove class
 				APP.els.content.removeClass("cover");
 				// unbind event handlers
-				Proj.doc.off("mousemove mouseup", Self.dispatch);
-				break;
-			// custom events
-			case "select-option":
-				Self.option = event.arg || "move";
-				break;
-			case "enable":
-				Proj.cvs.on("mousedown", Self.dispatch);
-				break;
-			case "disable":
-				Proj.cvs.off("mousedown", Self.dispatch);
+				Drag.proj.doc.off("mousemove mouseup", Self.doPan);
 				break;
 		}
 	}

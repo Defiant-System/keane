@@ -115,10 +115,10 @@ const Projector = {
 		this.ctx.fillRect(0, 0, w, h);
 		this.ctx.restore();
 
-		console.time("Checkers");
+		// console.time("Checkers");
 		// checkers background
 		Rule.drawCheckers(this.ctx, { w, h, oX, oY, ...this.cDim, isProjector: !0 });
-		console.timeEnd("Checkers");
+		// console.timeEnd("Checkers");
 
 		// render color channels
 		if (File.channels !== "111") {

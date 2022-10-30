@@ -235,6 +235,7 @@ class File {
 				}
 				break;
 			case "pan-canvas":
+				// console.log( event );
 				this.oX = (Number.isInteger(event.left)
 						? event.left
 						: this.width > Proj.aW ? Proj.cX - (this.width >> 1) + event.x : false) || this.oX;
