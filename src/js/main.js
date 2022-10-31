@@ -33,7 +33,7 @@ let Pref = {
 		show: false,
 		type: "square", // isometric
 		gap: 10,
-		pixelGrid: true,
+		pixelGrid: false,
 	},
 	quickMask: {
 		paint: "selected", // masked

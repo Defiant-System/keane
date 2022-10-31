@@ -252,6 +252,7 @@
 					ants = Mask.ants.cvs[0],
 					width = File.width,
 					height = File.height,
+					scale = File.scale,
 					_max = Math.max,
 					_min = Math.min,
 					_abs = Math.abs,
@@ -274,6 +275,10 @@
 						x: event.clientX,
 						y: event.clientY,
 					};
+				// scale / pixel size
+				offset.x -= offset.x % scale;
+				offset.y -= offset.y % scale;
+
 				// constraints
 				if (offset.x < 0) { click.x -= offset.x; offset.x = 0; }
 				if (offset.y < 0) { click.y -= offset.y; offset.y = 0; }
@@ -281,7 +286,7 @@
 				if (offset.y > height) { click.y -= offset.y - height; offset.y = height; }
 				if (ants.width < 2) ants = null;
 				// drag object
-				Self.drag = { ctx, proj, ants, offset, click, max, _min, _max, _abs, _floor, _round, _atan2, _sqrt, _PI };
+				Self.drag = { ctx, proj, ants, offset, click, max, scale, _min, _max, _abs, _floor, _round, _atan2, _sqrt, _PI };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -360,10 +365,15 @@
 					if (x === Drag.offset.x && w > Drag.max.x) w = Drag.max.x;
 					if (y === Drag.offset.y && h > Drag.max.y) h = Drag.max.y;
 				}
+
+				w -= w % Drag.scale;
+				h -= h % Drag.scale;
+
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector (paint halted ants)
-				Drag.proj.render({ maskPath: true, noEmit: true });
+				Drag.proj.render({ maskPath: true, ants: Drag.ants, noEmit: true });
+
 				// save values for "mouseup"
 				Drag.rect = { x, y, w, h };
 				break;
