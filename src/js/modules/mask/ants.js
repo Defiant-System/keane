@@ -12,8 +12,8 @@
 		this.mask = Mask;
 		this.threshold = Mask.threshold;
 		this.projector = Projector;
-		this.w = this.projector.file.width;
-		this.h = this.projector.file.height;
+		this.w = this.projector.file.oW;
+		this.h = this.projector.file.oH;
 		// clear canvas
 		this.cvs.prop({ width: this.w, height: this.h });
 		this.cvsImg = this.ctx.getImageData(0, 0, this.w, this.h);
@@ -88,6 +88,7 @@
 		return ((5 + y + o % 10) + x) % 10 >= 5 ? 0x00 : 0xFF;
 	},
 	render(march) {
+		// console.time("ants");
 		// let Proj = this.projector;
 		let mask = this.mask,
 			cvsImg = this.cvsImg,
@@ -122,5 +123,6 @@
 		if (!this._halt) {
 			this.raf = requestAnimationFrame(this.render.bind(this));
 		}
+		// console.timeEnd("ants");
 	}
 }

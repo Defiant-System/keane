@@ -3,14 +3,15 @@ let Test = {
 	init() {
 		// zoom in and pan view
 		setTimeout(() => {
-			return;
-			Projector.file.dispatch({ type: "set-scale", scale: 2 });
+			Projector.file.dispatch({ type: "set-scale", scale: 12 });
 			// Projector.file.dispatch({ type: "pan-canvas", top: -5610, left: -8763, noZoom: true });
-			Projector.file.dispatch({ type: "pan-canvas", top: 0, left: -20, noZoom: true });
-			window.find(`.tool[data-content="move"]`).trigger("click");
+			// Projector.file.dispatch({ type: "pan-canvas", top: 0, left: -20, noZoom: true });
+			// window.find(`.tool[data-content="move"]`).trigger("click");
+
+			// Mask.dispatch({ type: "select-rect", rect: { x: 350, y: 140, w: 130, h: 210 } });
 
 			// setTimeout(() => window.find(`.sidebar-wrapper .icon-eye-on`).trigger("click"), 600);
-		}, 750);
+		}, 450);
 
 
 		// UI temp

@@ -363,7 +363,7 @@
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector (paint halted ants)
-				Drag.proj.render({ maskPath: true, ants: Drag.ants, noEmit: true });
+				Drag.proj.render({ maskPath: true, noEmit: true });
 				// save values for "mouseup"
 				Drag.rect = { x, y, w, h };
 				break;
@@ -371,7 +371,7 @@
 				// console.log( Drag.rect );
 				if (Drag.rect) {
 					// paint rectangle on mask canvas
-					Mask.dispatch({ type: "select-rect", rect: Drag.rect, method: Self.method });
+					// Mask.dispatch({ type: "select-rect", rect: Drag.rect, method: Self.method });
 				}
 				// remove class
 				APP.els.content.removeClass("cover cursor-crosshair");

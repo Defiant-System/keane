@@ -106,15 +106,16 @@ const Projector = {
 
 		this.ctx.save();
 		this.ctx.translate(oX, oY);
-		// drop shadow
-		this.ctx.save();
-		this.ctx.shadowOffsetX = 0;
-		this.ctx.shadowOffsetY = 2;
-		this.ctx.shadowBlur = 13;
-		this.ctx.shadowColor = "#292929";
-		this.ctx.fillRect(0, 0, w, h);
-		this.ctx.restore();
-
+		if (oX > 0 && oY > 0 && w < this.aW && h < this.aH) {
+			// drop shadow
+			this.ctx.save();
+			this.ctx.shadowOffsetX = 0;
+			this.ctx.shadowOffsetY = 2;
+			this.ctx.shadowBlur = 13;
+			this.ctx.shadowColor = "#292929";
+			this.ctx.fillRect(0, 0, w, h);
+			this.ctx.restore();
+		}
 		// console.time("Checkers");
 		// checkers background
 		Rule.drawProjectorCheckers(this.ctx, { w, h, oX, oY, ...this.cDim, isProjector: !0 });

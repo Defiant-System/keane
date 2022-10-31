@@ -1,6 +1,7 @@
 
 const Rulers = {
 	t: 18, // ruler thickness
+	cache: {},
 	init() {
 		// fast references
 		this.doc = UI.doc;
@@ -392,10 +393,18 @@ const Rulers = {
 				w: 16, h: 16,
 				...opt,
 			},
-			x = Math.max(0, cfg.oX, -cfg.aX),
+			id = [cfg.w, cfg.h, cfg.oX, cfg.oY].join(",");
+
+		// use cache if already cached
+		if (this.cache[id]) return ctx.putImageData(this.cache[id], 0, 0);
+		// reset cache if "id" doesn't exist
+		this.cache = {};
+
+		let x = Math.max(0, cfg.oX, -cfg.aX),
 			y = Math.max(0, cfg.oY, -cfg.aY),
 			w = Math.min(cfg.w, cfg.aW, cfg.w + cfg.oX),
 			h = Math.min(cfg.h, cfg.aH + cfg.aY - y);
+
 		if (cfg.oX > 0) cfg.bX = cfg.oX;
 		if (cfg.oY > 0) cfg.bY = cfg.oY;
 
@@ -425,6 +434,9 @@ const Rulers = {
 				}
 			}
 		}
+		
+		this.cache[id] = ctx.getImageData(0, 0, cfg.aW, cfg.aH + 90);
+
 		ctx.restore();
 	}
 };
