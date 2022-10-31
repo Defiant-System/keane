@@ -395,23 +395,26 @@ const Rulers = {
 			x = Math.max(0, cfg.oX, -cfg.aX),
 			y = Math.max(0, cfg.oY, -cfg.aY),
 			w = Math.min(cfg.w, cfg.aW, cfg.w + cfg.oX),
-			h = Math.min(cfg.h, cfg.aH + cfg.aY - y),
-			lX = w % cfg.size,
-			lY = h % cfg.size;
-
+			h = Math.min(cfg.h, cfg.aH + cfg.aY - y);
 		if (cfg.oX > 0) cfg.bX = cfg.oX;
 		if (cfg.oY > 0) cfg.bY = cfg.oY;
-
-		if (cfg.oX < 0) cfg.bX = (cfg.oX % (cfg.size * 2));
-		if (cfg.oY < 0) cfg.bY = (cfg.oY % (cfg.size * 2));
-
+		if (cfg.oX < 0) {
+			cfg.bX = (cfg.oX % (cfg.size * 2));
+			w -= cfg.bX;
+		}
+		if (cfg.oY < 0) {
+			cfg.bY = (cfg.oY % (cfg.size * 2));
+			h -= cfg.bY;
+		}
 		ctx.save();
 		ctx.translate(-cfg.oX, -cfg.oY);
 		ctx.fillStyle = "#fff";
 		ctx.fillRect(x, y, w, h);
 		ctx.fillStyle = "#bbb";
 
-		let jl = Math.ceil(h / cfg.size),
+		let lX = w % cfg.size,
+			lY = h % cfg.size,
+			jl = Math.ceil(h / cfg.size),
 			il = Math.ceil(w / cfg.size),
 			i = 0;
 		for (; i<il; i++) {
