@@ -385,7 +385,7 @@ const Rulers = {
 	},
 	drawProjectorCheckers(ctx, opt) {
 		let cfg = {
-				size: 24,
+				size: 8,
 				aX: 0, aY: 0,
 				oX: 0, oY: 0,
 				bX: 0, bY: 0,
@@ -398,18 +398,13 @@ const Rulers = {
 			h = Math.min(cfg.h, cfg.aH + cfg.aY - y);
 		if (cfg.oX > 0) cfg.bX = cfg.oX;
 		if (cfg.oY > 0) cfg.bY = cfg.oY;
-		if (cfg.oX < 0) {
-			cfg.bX = (cfg.oX % (cfg.size * 2));
-			w -= cfg.bX;
-		}
-		if (cfg.oY < 0) {
-			cfg.bY = (cfg.oY % (cfg.size * 2));
-			h -= cfg.bY;
-		}
+
 		ctx.save();
 		ctx.translate(-cfg.oX, -cfg.oY);
 		ctx.fillStyle = "#fff";
 		ctx.fillRect(x, y, w, h);
+		if (cfg.oX < 0) { cfg.bX = (cfg.oX % (cfg.size * 2)); w -= cfg.bX; }
+		if (cfg.oY < 0) { cfg.bY = (cfg.oY % (cfg.size * 2)); h -= cfg.bY; }
 		ctx.fillStyle = "#bbb";
 
 		let lX = w % cfg.size,
@@ -430,7 +425,6 @@ const Rulers = {
 				}
 			}
 		}
-
 		ctx.restore();
 	}
 };
