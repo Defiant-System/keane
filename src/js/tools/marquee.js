@@ -61,7 +61,7 @@
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Mask.ants.halt();
 				// reset drawing canvas
-				Mask.draw.cvs.prop({ width: File.oW, height: File.oH });
+				Mask.draw.cvs.prop({ width: window.innerWidth, height: window.innerHeight });
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
 				
@@ -160,7 +160,7 @@
 				// mouse cursor update
 				APP.els.content.toggleClass("cursor-poly-close", dist > Self.polyCloseDist);
 				// reset drawing canvas
-				Mask.draw.cvs.prop({ width: File.oW, height: File.oH });
+				Mask.draw.cvs.prop({ width: window.innerWidth, height: window.innerHeight });
 				// draw polygon as it is on canvas
 				Mask.draw.ctx.dashedPolygon([...Self.polygon, oX, oY]);
 				// update projector
@@ -252,7 +252,6 @@
 					ants = Mask.ants.cvs[0],
 					width = File.width,
 					height = File.height,
-					scale = File.scale,
 					_max = Math.max,
 					_min = Math.min,
 					_abs = Math.abs,
@@ -262,8 +261,10 @@
 					_sqrt = Math.sqrt,
 					_PI = 180 / Math.PI,
 					offset = {
-						x: event.offsetX - File.oX,
-						y: event.offsetY - File.oY,
+						x: event.offsetX,
+						y: event.offsetY,
+						scale: File.scale,
+						sHalf: File.scale >> 1,
 					},
 					max = {
 						x: _max(_min(width - offset.x, width), 0),
@@ -274,10 +275,12 @@
 					click = {
 						x: event.clientX,
 						y: event.clientY,
-					};
+					},
+					snapX = (offset.x - File.oX) % offset.scale,
+					snapY = (offset.y - File.oY) % offset.scale;
 				// scale / pixel size
-				offset.x -= offset.x % scale;
-				offset.y -= offset.y % scale;
+				offset.x -= offset.sHalf < snapX ? -snapX : snapX;
+				offset.y -= offset.sHalf < snapY ? -snapY : snapY;
 
 				// constraints
 				if (offset.x < 0) { click.x -= offset.x; offset.x = 0; }
@@ -286,7 +289,7 @@
 				if (offset.y > height) { click.y -= offset.y - height; offset.y = height; }
 				if (ants.width < 2) ants = null;
 				// drag object
-				Self.drag = { ctx, proj, ants, offset, click, max, scale, _min, _max, _abs, _floor, _round, _atan2, _sqrt, _PI };
+				Self.drag = { ctx, proj, ants, offset, click, max, _min, _max, _abs, _floor, _round, _atan2, _sqrt, _PI };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
@@ -366,8 +369,10 @@
 					if (y === Drag.offset.y && h > Drag.max.y) h = Drag.max.y;
 				}
 
-				w -= w % Drag.scale;
-				h -= h % Drag.scale;
+				let sX = w % Drag.offset.scale,
+					sY = h % Drag.offset.scale;
+				w -= sX;
+				h -= sY;
 
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);

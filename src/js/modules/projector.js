@@ -102,7 +102,7 @@ const Projector = {
 			oY = File.oY;
 		opt.imgCvs = opt.imgCvs || File.cvs[0];
 
-		console.time("Projector Render");
+		// console.time("Projector Render");
 		// reset canvas
 		this.ctx.clear();
 
@@ -133,11 +133,11 @@ const Projector = {
 		// toggles file "quick mask" mode
 		if (File.quickMask.show) this.ctx.drawImage(File.quickMask.cvs[0], oX, oY);
 		// marching ants
-		// if (opt.ants) this.ctx.drawImage(opt.ants, oX, oY);
+		if (opt.ants) this.ctx.drawImage(opt.ants, oX, oY);
 		// draws potential masking paths / polygons, etc
-		if (opt.maskPath) this.ctx.drawImage(Mask.draw.cvs[0], oX, oY);
+		if (opt.maskPath) this.ctx.drawImage(Mask.draw.cvs[0], 0, 0);
 
-		console.timeEnd("Projector Render");
+		// console.timeEnd("Projector Render");
 
 		if (!opt.noEmit) {
 			// emit event
