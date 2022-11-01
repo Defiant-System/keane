@@ -11,7 +11,7 @@ class File {
 		this.bgColor = "#000000ff";
 		this.fgColor = "#ffffffff";
 		// this.lineWidth = 1;
-		this.channels = "111"; // rgb
+		this._channels = "111"; // rgb
 		this.rulers = {
 			show: true,
 			guides: {
@@ -84,13 +84,50 @@ class File {
 		return this.layers.filter(layer => !layer._ready).length === 0;
 	}
 
+	get channels() {
+		return this._channels;
+	}
+
+	set channels(val) {
+		// render color channels
+		let Proj = Projector,
+			cImg = this.ctx.getImageData(0, 0, this.oW, this.oH),
+			data = cImg.data,
+			rgb,
+			hash = {
+				"000": "000",
+				"100": "111",
+				"010": "222",
+				"001": "333",
+				"101": "103",
+				"110": "120",
+				"011": "023",
+				"111": "123",
+			},
+			ch = hash[val].split("").map(i => +i),
+			il = data.length,
+			i = 0;
+		// reset swap canvas
+		Proj.swap.cvs.prop({ width: this.oW, height: this.oH });
+
+		for (; i<il; i+=4) {
+			rgb = [0, data[i], data[i+1], data[i+2]];
+			data[i]   = rgb[ch[0]];
+			data[i+1] = rgb[ch[1]];
+			data[i+2] = rgb[ch[2]];
+		}
+		Proj.swap.ctx.putImageData(cImg, 0, 0);
+		// save value
+		this._channels = val;
+		// trigger file render
+		this.render({ imgCvs: Proj.swap.cvs[0] });
+	}
+
 	render(opt={}) {
 		// don't render if layers are not ready
 		if (!this.isReady) return;
-
 		// clear canvas
 		this.cvs.prop({ width: this.oW, height: this.oH });
-
 		// re-paints layers stack
 		this.layers.map(layer => {
 			if (!layer.visible) return;
@@ -102,7 +139,6 @@ class File {
 					break;
 			}
 		});
-
 		// render projector
 		Projector.render(opt);
 		// update channels

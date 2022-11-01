@@ -64,11 +64,10 @@
 				}
 				break;
 			case "render-file":
-				File.channels  = !Self.els.chR.find(`.icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
-				File.channels += !Self.els.chG.find(`.icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
-				File.channels += !Self.els.chB.find(`.icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
-				// trigger file render
-				File.render();
+				channels  = !Self.els.chR.find(`.icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
+				channels += !Self.els.chG.find(`.icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
+				channels += !Self.els.chB.find(`.icon-eye-on`).hasClass("icon-eye-off") ? "1" : "0";
+				File.channels = channels; // will auto-trigger render
 				break;
 		}
 	}

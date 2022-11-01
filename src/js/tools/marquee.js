@@ -61,7 +61,7 @@
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Mask.ants.halt();
 				// reset drawing canvas
-				Mask.draw.cvs.prop({ width: File.width, height: File.height });
+				Mask.draw.cvs.prop({ width: File.oW, height: File.oH });
 				// update projector
 				Projector.render({ maskPath: true, noEmit: true });
 				
@@ -160,7 +160,7 @@
 				// mouse cursor update
 				APP.els.content.toggleClass("cursor-poly-close", dist > Self.polyCloseDist);
 				// reset drawing canvas
-				Mask.draw.cvs.prop({ width: File.width, height: File.height });
+				Mask.draw.cvs.prop({ width: File.oW, height: File.oH });
 				// draw polygon as it is on canvas
 				Mask.draw.ctx.dashedPolygon([...Self.polygon, oX, oY]);
 				// update projector
@@ -292,7 +292,7 @@
 				Self.dispatch({ type: "clear-selection" });
 
 				// prevent mouse from triggering mouseover
-				APP.els.content.addClass("cover cursor-crosshair");
+				APP.els.content.addClass("cover");
 				// bind event handlers
 				Projector.doc.on("mousemove mouseup", Self.doRectangle);
 				break;
@@ -372,7 +372,7 @@
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector (paint halted ants)
-				Drag.proj.render({ maskPath: true, ants: Drag.ants, noEmit: true });
+				Drag.proj.render({ maskPath: true, ants: Drag.ants, useSnapshot: true, noEmit: true });
 
 				// save values for "mouseup"
 				Drag.rect = { x, y, w, h };
@@ -384,7 +384,7 @@
 					// Mask.dispatch({ type: "select-rect", rect: Drag.rect, method: Self.method });
 				}
 				// remove class
-				APP.els.content.removeClass("cover cursor-crosshair");
+				APP.els.content.removeClass("cover");
 				// unbind event handlers
 				Drag.proj.doc.off("mousemove mouseup", Self.doRectangle);
 				break;

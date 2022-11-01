@@ -1,30 +1,15 @@
 
 let Test = {
 	init() {
-		// zoom in and pan view
-		setTimeout(() => {
-			Projector.file.dispatch({ type: "set-scale", scale: 16 });
-			// Projector.file.dispatch({ type: "pan-canvas", top: -5610, left: -8763, noZoom: true });
-			Projector.file.dispatch({ type: "pan-canvas", top: 90, left: 18, noZoom: true });
-			// window.find(`.tool[data-content="move"]`).trigger("click");
-
-			// Mask.dispatch({ type: "select-rect", rect: { x: 350, y: 140, w: 130, h: 210 } });
-
-			// setTimeout(() => window.find(`.sidebar-wrapper .icon-eye-on`).trigger("click"), 600);
-		}, 450);
-
-
 		// UI temp
 		// setTimeout(() => UI.content.find(".option[data-options='pop-gradient-strips'] .value").trigger("click"), 200);
 		// setTimeout(() => UI.content.find(".option[data-options='pop-brush-tips'] .value").trigger("click"), 200);
 
-
-
 		// Sidebar Index
-		// this.els.root.find(`div[data-content="info"]`).trigger("click");
-		// this.els.root.find(`div[data-content="swatches"]`).trigger("click");
-		// this.els.root.find(`div[data-content="channels"]`).trigger("click");
-		// this.els.root.find(`div[data-content="paragraph"]`).trigger("click");
+		// window.find(`div[data-content="info"]`).trigger("click");
+		// window.find(`div[data-content="swatches"]`).trigger("click");
+		window.find(`div[data-content="channels"]`).trigger("click");
+		// window.find(`div[data-content="paragraph"]`).trigger("click");
 
 
 		// Sidebar box; color
@@ -62,6 +47,16 @@ let Test = {
 		// temp
 		// setTimeout(this.dialogs, 500);
 		// setTimeout(this.mask, 600);
+		// setTimeout(this.marquee, 500);
+	},
+	marquee() {
+		Projector.file.dispatch({ type: "set-scale", scale: 16 });
+		Projector.file.dispatch({ type: "pan-canvas", top: 90, left: 18, noZoom: true });
+		// window.find(`.tool[data-content="move"]`).trigger("click");
+
+		// Mask.dispatch({ type: "select-rect", rect: { x: 350, y: 140, w: 130, h: 210 } });
+
+		// setTimeout(() => window.find(`.sidebar-wrapper .icon-eye-on`).trigger("click"), 600);
 	},
 	dialogs() {
 		// root.find(`.icon[data-click="add-layer"]`).trigger("click");

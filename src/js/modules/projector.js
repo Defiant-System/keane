@@ -95,14 +95,16 @@ const Projector = {
 			File = this.file,
 			w = File.width,
 			h = File.height,
+			scale = File.scale,
+			oW = File.oW,
+			oH = File.oH,
 			oX = File.oX,
 			oY = File.oY;
 		opt.imgCvs = opt.imgCvs || File.cvs[0];
 
-		// console.time("Projector Render");
+		console.time("Projector Render");
 		// reset canvas
 		this.ctx.clear();
-		// this.cvs.attr({ width: this.cvs[0].width });
 
 		this.ctx.save();
 		this.ctx.translate(oX, oY);
@@ -116,57 +118,26 @@ const Projector = {
 			this.ctx.fillRect(0, 0, w, h);
 			this.ctx.restore();
 		}
-		// console.time("Checkers");
 		// checkers background
 		Rule.drawProjectorCheckers(this.ctx, { w, h, oX, oY, ...this.cDim, isProjector: !0 });
-		// console.timeEnd("Checkers");
-
-		// render color channels
-		if (File.channels !== "111") {
-			this.swap.cvs.prop({ width: File.oW, height: File.oH });
-			let cImg = File.ctx.getImageData(0, 0, File.oW, File.oH),
-				data = cImg.data,
-				rgb,
-				hash = {
-					"000": "000",
-					"100": "111",
-					"010": "222",
-					"001": "333",
-					"101": "103",
-					"110": "120",
-					"011": "023",
-					"111": "123",
-				},
-				val = hash[File.channels].split("").map(i => +i),
-				il = data.length,
-				i = 0;
-			for (; i<il; i+=4) {
-				rgb = [0, data[i], data[i+1], data[i+2]];
-				data[i]   = rgb[val[0]];
-				data[i+1] = rgb[val[1]];
-				data[i+2] = rgb[val[2]];
-			}
-			this.swap.ctx.putImageData(cImg, 0, 0);
-			opt.imgCvs = this.swap.cvs[0];
-		}
 
 		// file canvas
 		this.ctx.imageSmoothingEnabled = false;
 		this.ctx.drawImage(opt.imgCvs, 0, 0, w, h);
 		this.ctx.restore();
 
-		if (Pref.grid.pixelGrid && File.scale > 12) Rule.drawPixelGrid(this);
+		if (Pref.grid.pixelGrid && scale > 12) Rule.drawPixelGrid(this);
 		if (Pref.grid.show) Rule.drawGrid(this);
 		if (File.rulers.guides.show && !opt.noGuideLines) Rule.drawGuides(this);
 		if (File.rulers.show) Rule.render(this);
 		// toggles file "quick mask" mode
 		if (File.quickMask.show) this.ctx.drawImage(File.quickMask.cvs[0], oX, oY);
 		// marching ants
-		if (opt.ants) this.ctx.drawImage(opt.ants, oX, oY);
+		// if (opt.ants) this.ctx.drawImage(opt.ants, oX, oY);
 		// draws potential masking paths / polygons, etc
 		if (opt.maskPath) this.ctx.drawImage(Mask.draw.cvs[0], oX, oY);
 
-		// console.timeEnd("Projector Render");
+		console.timeEnd("Projector Render");
 
 		if (!opt.noEmit) {
 			// emit event
