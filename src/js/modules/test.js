@@ -6,7 +6,7 @@ let Test = {
 		// setTimeout(() => UI.content.find(".option[data-options='pop-brush-tips'] .value").trigger("click"), 200);
 
 		// Sidebar Index
-		// window.find(`div[data-content="info"]`).trigger("click");
+		window.find(`div[data-content="info"]`).trigger("click");
 		// window.find(`div[data-content="swatches"]`).trigger("click");
 		// window.find(`div[data-content="channels"]`).trigger("click");
 		// window.find(`div[data-content="paragraph"]`).trigger("click");
@@ -47,13 +47,14 @@ let Test = {
 		// temp
 		// setTimeout(this.dialogs, 500);
 		// setTimeout(this.mask, 600);
-		setTimeout(this.marquee, 500);
+		// setTimeout(this.marquee, 500);
 	},
 	marquee() {
 		Projector.file.dispatch({ type: "set-scale", scale: 32 });
-		Projector.file.dispatch({ type: "pan-canvas", top: -390, left: 18, noZoom: true });
+		Projector.file.dispatch({ type: "pan-canvas", top: -390, left: -180, noZoom: true });
 		// window.find(`.tool[data-content="move"]`).trigger("click");
 
+		Mask.dispatch({ type: "select-rect", rect: { x: 10, y: 20, w: 13, h: 10 } });
 		// Mask.dispatch({ type: "select-rect", rect: { x: 350, y: 140, w: 130, h: 210 } });
 
 		// setTimeout(() => window.find(`.sidebar-wrapper .icon-eye-on`).trigger("click"), 600);

@@ -378,9 +378,10 @@
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector (paint halted ants)
 				Drag.proj.render({ maskPath: true, ants: Drag.ants, useSnapshot: true, noEmit: true });
-
 				// save values for "mouseup"
 				Drag.rect = { x, y, w, h };
+				// broadcast event
+				karaqu.emit("mouse-move", { isSelecting: true, ...Drag.rect });
 				break;
 			case "mouseup":
 				// console.log( Drag.rect );

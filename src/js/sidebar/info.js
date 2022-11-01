@@ -30,6 +30,13 @@
 		switch (event.type) {
 			// subscribed events
 			case "mouse-move":
+				if (Detail.isSelecting) {
+					Self.els.mouseY.html(Detail.y || "");
+					Self.els.mouseX.html(Detail.x || "");
+					Self.els.selHeight.html(Detail.h || "");
+					Self.els.selWidth.html(Detail.w || "");
+					return;
+				}
 				isOn = Detail.isOnCanvas;
 				
 				Self.els.hslH.html(isOn ? Math.round(Detail.hsl.h) +"°" : "");
@@ -46,15 +53,23 @@
 				Self.els.mouseY.html(isOn ? Detail.top : "");
 				Self.els.mouseX.html(isOn ? Detail.left : "");
 				break;
+			case "selection-cleared":
+				Self.els.mouseY.html("");
+				Self.els.mouseX.html("");
+				Self.els.selHeight.html("");
+				Self.els.selWidth.html("");
+				break;
 			
 			// custom events
 			case "enable":
 				// subscribe to events
 				karaqu.on("mouse-move", Self.dispatch);
+				karaqu.on("selection-cleared", Self.dispatch);
 				break;
 			case "disable":
 				// unsubscribe to events
 				karaqu.off("mouse-move", Self.dispatch);
+				karaqu.off("selection-cleared", Self.dispatch);
 				break;
 		}
 	}

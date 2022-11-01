@@ -45,13 +45,18 @@ let Mask = {
 			Proj = Projector,
 			File = Proj.file,
 			Self = Mask,
+			x, y, w, h,
 			data,
 			image,
 			el;
 		switch (event.type) {
 			case "select-rect":
+				x = event.rect.x * File.scale;
+				y = event.rect.y * File.scale;
+				w = event.rect.w * File.scale;
+				h = event.rect.h * File.scale;
 				Self.clear(event.method);
-				Self.ctx.fillRect(event.rect.x, event.rect.y, event.rect.w, event.rect.h);
+				Self.ctx.fillRect(x, y, w, h);
 				Self.ctx.fill();
 				Self.ants.paint(true);
 				break;
@@ -96,6 +101,8 @@ let Mask = {
 			case "deselect":
 				Self.clear();
 				Mask.ants.halt();
+				// broadcast event
+				karaqu.emit("selection-cleared");
 				break;
 			case "inverse-selection":
 				// stop marching ants
