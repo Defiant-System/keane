@@ -6,28 +6,29 @@ let Test = {
 		// setTimeout(() => UI.content.find(".option[data-options='pop-brush-tips'] .value").trigger("click"), 200);
 
 		// Sidebar Index
-		window.find(`div[data-content="info"]`).trigger("click");
+		// window.find(`div[data-content="info"]`).trigger("click");
 		// window.find(`div[data-content="swatches"]`).trigger("click");
 		// window.find(`div[data-content="channels"]`).trigger("click");
 		// window.find(`div[data-content="paragraph"]`).trigger("click");
 
-
 		// Sidebar box; color
 		// setTimeout(() => window.find(`.swatches-wrapper > div:nth(0)`).trigger("click"), 500);
 
-
 		// Sidebar box; navigator
-		// setTimeout(() => root.find(".icon.mini").trigger("click"), 900);
-		// setTimeout(() => root.find(".icon.maxi").trigger("click"), 700);
-
+		// setTimeout(() => windo.find(".icon.mini").trigger("click"), 900);
+		// setTimeout(() => windo.find(".icon.maxi").trigger("click"), 700);
 
 		// Sidebar box; paragraph
 		// setTimeout(() => window.find(`.swatches-wrapper > div:nth(0)`).trigger("click"), 500);
-
 		
 		// Sidebar box; swatches
-		// setTimeout(() => this.els.root.find(".swatches-wrapper > div:nth(4)").trigger("click"), 300);
+		// setTimeout(() => window.find(".swatches-wrapper > div:nth(4)").trigger("click"), 300);
 
+
+		// setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);
+
+
+		// setTimeout(() => keane.dispatch({ type: "image-flipV" }), 1000);
 
 
 		// Tools index

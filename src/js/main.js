@@ -179,10 +179,15 @@ const keane = {
 			case "image-rotate-90-cw":
 			case "image-rotate-90-ccw":
 			case "image-rotate-90-cw":
-			case "image-flip-H":
-			case "image-flip-V":
 				break;
-			
+			case "image-flipV":
+			case "image-flipH":
+				layer = Projector.file.activeLayer;
+				Misc.flipLayer(layer.ctx, layer.cvs[0], event.type.split("-")[1]);
+				// render file
+				Projector.file.render();
+				break;
+
 			case "toggle-guides":
 			case "toggle-rulers":
 			case "toggle-grid":

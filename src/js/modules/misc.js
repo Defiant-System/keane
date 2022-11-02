@@ -35,37 +35,47 @@ const Misc = {
 		cvs.prop({ width, height });
 		return { cvs, ctx }
 	},
+	flipLayer(ctx, img, dir, matrix) {
+		switch (dir) {
+			case "flipH": matrix = [-1, 0, 0, 1, img.width, 0]; break;
+			case "flipV": matrix = [1, 0, 0, -1, 0, img.height]; break;
+		}
+		ctx.save();
+		ctx.setTransform(...matrix);
+		ctx.drawImage(img, 0, 0);
+		ctx.restore();
+	},
 	findBoundingBox(ctx) {
-	    let _min = Math.min,
+		let _min = Math.min,
 			_max = Math.max,
-	    	w = ctx.canvas.width,
-	    	h = ctx.canvas.height,
-	    	d = ctx.getImageData(0, 0, w, h).data,
-	    	min = {
-	    		x: w,
-	    		y: h,
-	    	},
-	    	max = {
-	    		x: 0,
-	    		y: 0,
-	    	};
-	    for (let y=0; y<h; y++) {
-	        for (let x=0; x<w; x++) {
-	            if (d[y*w*4 + x*4+3]) {
-	                min.x = _min(min.x, x);
-	                max.x = _max(max.x, x);
-	                min.y = _min(min.y, y);
-	                max.y = y;
-	                x = max.x;
-	            }
-	        }
-	    }
-	    return {
-	    	x: min.x,
-	    	y: min.y,
-	    	w: max.x - min.x,
-	    	h: max.y - min.y,
-	    };
+			w = ctx.canvas.width,
+			h = ctx.canvas.height,
+			d = ctx.getImageData(0, 0, w, h).data,
+			min = {
+				x: w,
+				y: h,
+			},
+			max = {
+				x: 0,
+				y: 0,
+			};
+		for (let y=0; y<h; y++) {
+			for (let x=0; x<w; x++) {
+				if (d[y*w*4 + x*4+3]) {
+					min.x = _min(min.x, x);
+					max.x = _max(max.x, x);
+					min.y = _min(min.y, y);
+					max.y = y;
+					x = max.x;
+				}
+			}
+		}
+		return {
+			x: min.x,
+			y: min.y,
+			w: max.x - min.x,
+			h: max.y - min.y,
+		};
 	}
 };
 
