@@ -176,16 +176,18 @@ const keane = {
 				break;
 
 			// proxy events
-			case "image-rotate-90-cw":
-			case "image-rotate-90-ccw":
-			case "image-rotate-90-cw":
+			case "file-rotate90cw":
+			case "file-rotate90ccw":
+			case "file-rotate180":
+				Projector.file.rotate(event.type.split("-")[1]);
 				break;
-			case "image-flipV":
-			case "image-flipH":
-				layer = Projector.file.activeLayer;
-				Misc.flipLayer(layer.ctx, layer.cvs[0], event.type.split("-")[1]);
-				// render file
-				Projector.file.render();
+			case "file-flipV":
+			case "file-flipH":
+				Projector.file.flip(event.type.split("-")[1]);
+				break;
+			case "layer-flipV":
+			case "layer-flipH":
+				Projector.file.activeLayer.flip(event.type.split("-")[1]);
 				break;
 
 			case "toggle-guides":

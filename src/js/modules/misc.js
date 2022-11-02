@@ -35,16 +35,6 @@ const Misc = {
 		cvs.prop({ width, height });
 		return { cvs, ctx }
 	},
-	flipLayer(ctx, img, dir, matrix) {
-		switch (dir) {
-			case "flipH": matrix = [-1, 0, 0, 1, img.width, 0]; break;
-			case "flipV": matrix = [1, 0, 0, -1, 0, img.height]; break;
-		}
-		ctx.save();
-		ctx.setTransform(...matrix);
-		ctx.drawImage(img, 0, 0);
-		ctx.restore();
-	},
 	findBoundingBox(ctx) {
 		let _min = Math.min,
 			_max = Math.max,

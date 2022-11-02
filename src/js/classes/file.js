@@ -30,7 +30,6 @@ class File {
 		this.quickMask.show = false;
 
 
-
 		// undo history
 		this.history = new window.History;
 
@@ -121,6 +120,38 @@ class File {
 		this._channels = val;
 		// trigger file render
 		this.render({ imgCvs: Proj.swap.cvs[0] });
+	}
+
+	flip(dir) {
+		this.layers.map(layer => layer.flip(dir));
+	}
+
+	rotate(dir) {
+		let nW = this.height,
+			nH = this.width,
+			img = this.cvs[0],
+			matrix;
+
+		this.cvs.prop({ width: nW, height: nH });
+		this.quickMask.cvs.prop({ width: nW, height: nH });
+		this.width = nW;
+		this.height = nH;
+
+
+		Projector.reset(this);
+		this.render();
+
+		return;
+
+		switch (dir) {
+			case "rotate90cw": matrix = [0, 1, -1, 0, img.height, 0]; break;
+			case "rotate90ccw": break;
+			case "rotate180": break;
+		}
+		this.ctx.save();
+		this.ctx.setTransform(...matrix);
+		this.ctx.drawImage(img, 0, 0);
+		this.ctx.restore();
 	}
 
 	render(opt={}) {

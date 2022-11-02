@@ -61,6 +61,21 @@ class Layer {
 		this._visible = !!value;
 	}
 
+	flip(dir) {
+		let img = this.cvs[0],
+			matrix;
+		switch (dir) {
+			case "flipH": matrix = [-1, 0, 0, 1, img.width, 0]; break;
+			case "flipV": matrix = [1, 0, 0, -1, 0, img.height]; break;
+		}
+		this.ctx.save();
+		this.ctx.setTransform(...matrix);
+		this.ctx.drawImage(img, 0, 0);
+		this.ctx.restore();
+		// render file
+		this._file.render();
+	}
+
 	updateThumbnail() {
 		// let index = this._file.activeLayerIndex;
 		let thumbCvsEl = keane.sidebar.layers.els.layerList.find(".row:nth-child(1) canvas");
