@@ -114,10 +114,15 @@ let Mask = {
 				Self.ants.paint(true);
 				break;
 			case "select-with-magic-wand":
+				// reset canvas
+				Self.cvs.prop({ width: File.width, height: File.height, });
+
 				Self.ctx.drawImage(File.activeLayer.cvs[0], 0, 0);
 				data = Self.ctx.getImageData(0, 0, File.width, File.height).data;
+
 				// clear marquee canvas (fastest way)
-				Self.ctx.clear();
+				Self.ctx.clear(event.method);
+
 				// prepare image data for algorithm
 				image = {
 					data,
@@ -150,15 +155,15 @@ let Mask = {
 	},
 	paintMask(image) {
 		// paint mask
-		let w = image.width;
-		let h = image.height;
-		let imgData = image.ctx.createImageData(w, h);
-		let res = imgData.data;
-		let data = image.mask.data;
-		let bounds = image.mask.bounds;
-		let maskW = image.mask.width;
-		let rgba = [0, 0, 0, 255];
-
+		let w = image.width,
+			h = image.height,
+			imgData = image.ctx.createImageData(w, h),
+			res = imgData.data,
+			data = image.mask.data,
+			bounds = image.mask.bounds,
+			maskW = image.mask.width,
+			rgba = [0, 0, 0, 255];
+		// loop pixel data
 		for (let y=bounds.minY; y<=bounds.maxY; y++) {
 			for (let x=bounds.minX; x<=bounds.maxX; x++) {
 				if (data[y * maskW + x] == 0) continue;
@@ -169,7 +174,15 @@ let Mask = {
 				res[k + 3] = rgba[3];
 			}
 		}
-
+		// draw masked on Mask canvas
 		image.ctx.putImageData(imgData, 0, 0);
+		// broadcast event
+		karaqu.emit("mouse-move", {
+			isSelecting: true,
+			x: bounds.minX.toString(),
+			y: bounds.minY.toString(),
+			w: bounds.maxX - bounds.minX + 1,
+			h: bounds.maxY - bounds.minY + 1,
+		});
 	}
 };

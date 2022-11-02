@@ -18,7 +18,6 @@
 			color,
 			mask,
 			image,
-			oX, oY,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -93,7 +92,10 @@
 		}
 	},
 	doMarquee(event) {
-		let Self = keane.tools.marquee;
+		let Self = keane.tools.marquee,
+			File = Projector.file,
+			oX = event.offsetX - File.oX,
+			oY = event.offsetY - File.oY;
 		// prevent default behaviour
 		event.preventDefault();
 		switch (Self.option) {
