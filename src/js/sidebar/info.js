@@ -31,6 +31,9 @@
 			// subscribed events
 			case "mouse-move":
 				if (Detail.isSelecting) {
+					// remember rectangle
+					Self.memRect = Detail;
+					// update DOM
 					Self.els.mouseY.html(Detail.y || "");
 					Self.els.mouseX.html(Detail.x || "");
 					Self.els.selHeight.html(Detail.h || "");
@@ -50,10 +53,18 @@
 				Self.els.rgbA.html(isOn ? Math.round((Detail.rgb.a / 255) * 100) +"%" : "");
 				Self.els.rgbA.parent().toggleClass("hidden", isOn && Detail.rgb.a !== 255);
 
-				Self.els.mouseY.html(isOn ? Detail.top : "");
-				Self.els.mouseX.html(isOn ? Detail.left : "");
+				Self.els.mouseY.html(isOn ? Detail.top : Self.memRect.y || "");
+				Self.els.mouseX.html(isOn ? Detail.left : Self.memRect.x || "");
+
+				if (Self.memRect.w) {
+					Self.els.selHeight.html(Self.memRect.h || "");
+					Self.els.selWidth.html(Self.memRect.w || "");
+				}
 				break;
 			case "selection-cleared":
+				// clear memory rectangle
+				Self.memRect = {};
+				// update DOM
 				Self.els.mouseY.html("");
 				Self.els.mouseX.html("");
 				Self.els.selHeight.html("");
