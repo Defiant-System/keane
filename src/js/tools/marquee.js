@@ -503,8 +503,8 @@
 					isSelecting: true,
 					x: Drag._round((mX - Drag.offset.foX) / scale),
 					y: Drag._round((mY - Drag.offset.foY) / scale),
-					w: Drag._round(dX / scale),
-					h: Drag._round(dY / scale),
+					w: Drag._round(Drag._abs(dX / scale)),
+					h: Drag._round(Drag._abs(dY / scale)),
 				});
 				break;
 			case "mouseup":
