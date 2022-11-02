@@ -132,12 +132,12 @@
 		<Menu name="Canvas Size" disabled="1"/>
 		<Menu name="Image Size" disabled="1"/>
 		<Menu name="Transform">
-			<Menu name="Rotate 90° &#8635;" disabled="1"/>
-			<Menu name="Rotate 90° &#8634;" disabled="1"/>
-			<Menu name="Rotate 180°" disabled="1"/>
+			<Menu name="Rotate 90° &#8635;" click="image-rotate-90-cw"/>
+			<Menu name="Rotate 90° &#8634;" click="image-rotate-90-ccw"/>
+			<Menu name="Rotate 180°" click="image-rotate-90-cw"/>
 			<Menu type="divider"/>
-			<Menu name="Flip Horizontally" disabled="1"/>
-			<Menu name="Flip Verticaally" disabled="1"/>
+			<Menu name="Flip Horizontally" click="image-flip-H"/>
+			<Menu name="Flip Verticaally" click="image-flip-V"/>
 		</Menu>
 		<Menu name="Crop" disabled="1"/>
 		<Menu name="Trim" disabled="1"/>

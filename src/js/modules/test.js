@@ -39,7 +39,7 @@ let Test = {
 		// temp
 		// setTimeout(this.dialogs, 500);
 		// setTimeout(this.mask, 600);
-		setTimeout(this.marquee, 500);
+		// setTimeout(this.marquee, 500);
 	},
 	marquee() {
 		// Tools Marquee

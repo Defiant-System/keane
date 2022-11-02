@@ -18,13 +18,19 @@
 			mouseY: root.find(".value.mouseY"),
 			selHeight: root.find(".value.selHeight"),
 			selWidth: root.find(".value.selWidth"),
+			fileSize: root.find(".value.fileSize"),
 		};
+		// default
+		this.memRect = {};
+		// subscribe to events
+		karaqu.on("file-selected", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = keane,
 			Self = APP.sidebar.info,
 			Detail = event.detail,
 			isOn,
+			val,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -69,6 +75,10 @@
 				Self.els.mouseX.html("");
 				Self.els.selHeight.html("");
 				Self.els.selWidth.html("");
+				break;
+			case "file-selected":
+				val = karaqu.formatBytes(event.detail.file.size);
+				Self.els.fileSize.html(val);
 				break;
 			
 			// custom events

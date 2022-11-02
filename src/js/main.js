@@ -176,6 +176,13 @@ const keane = {
 				break;
 
 			// proxy events
+			case "image-rotate-90-cw":
+			case "image-rotate-90-ccw":
+			case "image-rotate-90-cw":
+			case "image-flip-H":
+			case "image-flip-V":
+				break;
+			
 			case "toggle-guides":
 			case "toggle-rulers":
 			case "toggle-grid":
