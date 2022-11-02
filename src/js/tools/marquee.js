@@ -263,6 +263,8 @@
 					offset = {
 						x: event.offsetX,
 						y: event.offsetY,
+						foX: File.oX,
+						foY: File.oY,
 						scale: File.scale,
 						sHalf: File.scale >> 1,
 					},
@@ -300,7 +302,8 @@
 				Projector.doc.on("mousemove mouseup", Self.doRectangle);
 				break;
 			case "mousemove":
-				let x = Drag.offset.x,
+				let scale = Drag.offset.scale,
+					x = Drag.offset.x,
 					y = Drag.offset.y,
 					w = event.clientX - Drag.click.x,
 					h = event.clientY - Drag.click.y,
@@ -369,8 +372,8 @@
 					if (y === Drag.offset.y && h > Drag.max.y) h = Drag.max.y;
 				}
 
-				let sX = w % Drag.offset.scale,
-					sY = h % Drag.offset.scale;
+				let sX = w % scale,
+					sY = h % scale;
 				w -= sX;
 				h -= sY;
 
@@ -381,7 +384,13 @@
 				// save values for "mouseup"
 				Drag.rect = { x, y, w, h };
 				// broadcast event
-				karaqu.emit("mouse-move", { isSelecting: true, ...Drag.rect });
+				karaqu.emit("mouse-move", {
+					isSelecting: true,
+					x: Drag._round((x - Drag.offset.foX) / scale),
+					y: Drag._round((y - Drag.offset.foY) / scale),
+					w: Drag._round(w / scale),
+					h: Drag._round(h / scale),
+				});
 				break;
 			case "mouseup":
 				// console.log( Drag.rect );
