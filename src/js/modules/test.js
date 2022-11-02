@@ -36,25 +36,26 @@ let Test = {
 		// setTimeout(() => window.find(`.tool-options-brush .tool-feather`).trigger("click"), 500);
 
 
-		// Tools Marquee
-		// setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool.icon-marquee-union`).trigger("click"), 500);
-
-
 		// temp
 		// setTimeout(this.dialogs, 500);
 		// setTimeout(this.mask, 600);
-		// setTimeout(this.marquee, 500);
+		setTimeout(this.marquee, 500);
 	},
 	marquee() {
-		Projector.file.dispatch({ type: "set-scale", scale: 32 });
-		Projector.file.dispatch({ type: "pan-canvas", top: -390, left: -180, noZoom: true });
+		// Tools Marquee
+		setTimeout(() => window.find(`.tool-marquee-circle`).trigger("click"), 300);
+		// setTimeout(() => window.find(`.tool-wand`).trigger("click"), 300);
+		// setTimeout(() => window.find(`.tool-lasso`).trigger("click"), 300);
+		// setTimeout(() => window.find(`.tool-lasso-polygon`).trigger("click"), 300);
+		// setTimeout(() => window.find(`.tool.icon-marquee-union`).trigger("click"), 300);
+
+		
+		Projector.file.dispatch({ type: "set-scale", scale: 4 });
+		Projector.file.dispatch({ type: "pan-canvas", top: 90, left: 18 });
+		// Projector.file.dispatch({ type: "pan-canvas", top: -390, left: -180, noZoom: true });
 		// window.find(`.tool[data-content="move"]`).trigger("click");
 
-		Mask.dispatch({ type: "select-rect", rect: { x: 10, y: 20, w: 13, h: 10 } });
+		// Mask.dispatch({ type: "select-rect", rect: { x: 10, y: 20, w: 13, h: 10 } });
 		// Mask.dispatch({ type: "select-rect", rect: { x: 350, y: 140, w: 130, h: 210 } });
 
 		// setTimeout(() => window.find(`.sidebar-wrapper .icon-eye-on`).trigger("click"), 600);

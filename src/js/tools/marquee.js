@@ -295,7 +295,6 @@
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
-
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover");
 				// bind event handlers
@@ -380,7 +379,7 @@
 				// draw rectangle lines
 				Drag.ctx.dashedRect(x, y, w - 1, h - 1);
 				// update projector (paint halted ants)
-				Drag.proj.render({ maskPath: true, ants: Drag.ants, useSnapshot: true, noEmit: true });
+				Drag.proj.render({ maskPath: true, ants: Drag.ants, noEmit: true });
 				// save values for "mouseup"
 				Drag.rect = { x, y, w, h };
 				// broadcast event
@@ -418,9 +417,14 @@
 					width = File.width,
 					height = File.height,
 					_abs = Math.abs,
+					_round = Math.round,
 					offset = {
-						x: event.offsetX - File.oX,
-						y: event.offsetY - File.oY,
+						x: event.offsetX,
+						y: event.offsetY,
+						foX: File.oX,
+						foY: File.oY,
+						scale: File.scale,
+						sHalf: File.scale >> 1,
 					},
 					max = {
 						x: Math.min(width - offset.x, width),
@@ -445,25 +449,30 @@
 						});
 					};
 				// constraints
-				if (offset.x < 0) click.x -= offset.x;
-				if (offset.y < 0) click.y -= offset.y;
+				if (offset.x < 0) { click.x -= offset.x; offset.x = 0; }
+				if (offset.y < 0) { click.y -= offset.y; offset.y = 0; }
+				if (offset.x > width)  { click.x -= offset.x - width;  offset.x = width; }
+				if (offset.y > height) { click.y -= offset.y - height; offset.y = height; }
+				if (ants.width < 2) ants = null;
 				// drag object
-				Self.drag = { ctx, ants, offset, click, max, _abs, drawHEdge, drawVEdge };
+				Self.drag = { ctx, ants, offset, click, max, _abs, _round, drawHEdge, drawVEdge };
 
 				// halt marching ants (if any) and make sure draw canvas is cleared
 				Self.dispatch({ type: "clear-selection" });
 				// prevent mouse from triggering mouseover
-				APP.els.content.addClass("cover cursor-crosshair");
+				APP.els.content.addClass("cover");
 				// bind event handlers
 				Projector.doc.on("mousemove mouseup", Self.doEllipse);
 				break;
 			case "mousemove":
-				let mX = Drag.offset.x,
+				let scale = Drag.offset.scale,
+					mX = Drag.offset.x,
 					mY = Drag.offset.y,
 					dX = event.clientX - Drag.click.x,
 					dY = event.clientY - Drag.click.y;
 				// clear marquee canvas (fastest way)
 				Drag.ctx.clear();
+				
 				// handling shift key
 				if (event.altKey) {
 					mX -= dX;
@@ -471,6 +480,7 @@
 					dX *= 2;
 					dY *= 2;
 				}
+
 				// constraints
 				let rX = dX >> 1,
 					rY = dY >> 1,
@@ -488,15 +498,23 @@
 				Projector.render({ maskPath: true, ants: Drag.ants, noEmit: true });
 				// save values for "mouseup"
 				Drag.elps = { x, y, rX, rY };
+				// broadcast event
+				karaqu.emit("mouse-move", {
+					isSelecting: true,
+					x: Drag._round((mX - Drag.offset.foX) / scale),
+					y: Drag._round((mY - Drag.offset.foY) / scale),
+					w: Drag._round(dX / scale),
+					h: Drag._round(dY / scale),
+				});
 				break;
 			case "mouseup":
 				// console.log( Drag.elps );
 				if (Drag.elps) {
 					// paint rectangle on mask canvas
-					Mask.dispatch({ type: "select-elliptic", elps: Drag.elps, method: Self.method });
+					// Mask.dispatch({ type: "select-elliptic", elps: Drag.elps, method: Self.method });
 				}
 				// remove class
-				APP.els.content.removeClass("cover cursor-crosshair");
+				APP.els.content.removeClass("cover");
 				// unbind event handlers
 				Projector.doc.off("mousemove mouseup", Self.doEllipse);
 				break;
