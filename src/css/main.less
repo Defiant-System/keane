@@ -665,6 +665,12 @@ content {
 		&.icon-layer-path-brush { background-image: url(~/icons/icon-layer-path-brush.png); }
 		&.icon-layer-path-from-selection { background-image: url(~/icons/icon-layer-path-from-selection.png); }
 
+		&.icon-transparency { background-image: url(~/icons/icon-transparency.png); }
+		&.icon-pixels       { background-image: url(~/icons/icon-pixels.png); }
+		&.icon-position     { background-image: url(~/icons/icon-position.png); }
+		&.icon-all          { background-image: url(~/icons/icon-all.png); }
+
+
 		&.icon-font-size           { background-image: url(~/icons/icon-font-size.png); }
 		&.icon-line-height         { background-image: url(~/icons/icon-line-height.png); }
 		&.icon-font-kerning        { background-image: url(~/icons/icon-font-kerning.png); }
@@ -1316,6 +1322,53 @@ content {
 
 					&[data-box="layers"] {
 						border-top: 0;
+
+						.box-tools {
+							&:nth-child(1) {
+								border-bottom-color: rgba(#011, .15);
+							}
+
+							&:nth-child(2) {
+								.legend {
+									color: rgba(#fff, .75);
+									font-size: 10px;
+									text-transform: uppercase;
+									text-shadow: 0 1px 0 rgba(#000, .25);
+									padding: 5px 0 0 7px;
+								}
+
+								.options-row {
+									min-width: 133px;
+									font-size: 0;
+									padding: 0 0 0 7px;
+
+									.icon {
+										// background-color: rgba(#011, .175);
+										width: 20px;
+										height: 20px;
+										display: inline-block;
+										margin: 0 3px 0 0;
+										border-radius: 2px;
+										cursor: pointer;
+
+										&:after {
+											top: 3px;
+											left: 3px;
+											width: 15px;
+											height: 15px;
+										}
+
+										&.active {
+											background-color: rgba(#011, .2);
+
+											&:after {
+												filter: invert() brightness(2) drop-shadow(0 1px 0 rgba(0,0,0,0.4));
+											}
+										}
+									}
+								}
+							}
+						}
 
 						.row {
 							.thumbnail {
