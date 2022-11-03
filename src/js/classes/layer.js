@@ -76,6 +76,19 @@ class Layer {
 		this._file.render();
 	}
 
+	rotate(dir, nW, nH, deg) {
+		let oW = this.width,
+			oH = this.height,
+			tmp = Misc.createCanvas(oW, oH);
+		// save current canvas
+		tmp.ctx.drawImage(this.cvs[0], 0, 0);
+
+		this.cvs.prop({ width: nW, height: nH });
+		this.ctx.translate(nW/2, nH/2);
+		this.ctx.rotate(deg * Math.PI/180);
+		this.ctx.drawImage(tmp.cvs[0], -oW/2, (-oH/2));
+	}
+
 	updateThumbnail() {
 		// let index = this._file.activeLayerIndex;
 		let thumbCvsEl = keane.sidebar.layers.els.layerList.find(".row:nth-child(1) canvas");

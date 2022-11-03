@@ -36,7 +36,7 @@ class File {
 		// layers stack
 		this.layers = [];
 
-		let xStr = `<File name="${fsFile.base}" width="${this.width}" height="${this.height}" scale="${this.scale}">
+		let xStr = `<File name="${fsFile.base}">
 					<Layers/></File>`;
 		this.xData = $.xmlFromString(xStr).documentElement;
 
@@ -127,31 +127,22 @@ class File {
 	}
 
 	rotate(dir) {
-		let nW = this.height,
-			nH = this.width,
-			img = this.cvs[0],
-			matrix;
-
+		let nW, nH, deg;
+		switch(dir) {
+			case "rotate90cw":  nW = this.height; nH = this.width;  deg = 90;  break;
+			case "rotate90ccw": nW = this.height; nH = this.width;  deg = -90; break;
+			case "rotate180":   nW = this.width;  nH = this.height; deg = 180; break;
+		}
+		// signal all layers
+		this.layers.map(layer => layer.rotate(dir, nW, nH, deg));
+		// update internal dimensions
+		this.width = this.oW = nW;
+		this.height = this.oH = nH;
 		this.cvs.prop({ width: nW, height: nH });
 		this.quickMask.cvs.prop({ width: nW, height: nH });
-		this.width = nW;
-		this.height = nH;
-
-
-		Projector.reset(this);
+		// reset scale & offset position
+		this.dispatch({ type: "set-scale", scale: this.scale });
 		this.render();
-
-		return;
-
-		switch (dir) {
-			case "rotate90cw": matrix = [0, 1, -1, 0, img.height, 0]; break;
-			case "rotate90ccw": break;
-			case "rotate180": break;
-		}
-		this.ctx.save();
-		this.ctx.setTransform(...matrix);
-		this.ctx.drawImage(img, 0, 0);
-		this.ctx.restore();
 	}
 
 	render(opt={}) {
@@ -252,7 +243,7 @@ class File {
 				this.width = event.width || this.width;
 				this.height = event.height || this.height;
 
-				this.dispatch({ type: "set-canvas" });
+				this.dispatch({ ...event, type: "set-canvas" });
 				break;
 			case "set-canvas":
 				// set file dimension if not set

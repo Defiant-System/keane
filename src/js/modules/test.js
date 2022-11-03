@@ -28,7 +28,7 @@ let Test = {
 		// setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);
 
 
-		setTimeout(() => keane.dispatch({ type: "file-rotate90cw" }), 1000);
+		setTimeout(() => keane.dispatch({ type: "file-rotate90ccw" }), 1000);
 		// setTimeout(() => keane.dispatch({ type: "file-flipV" }), 1000);
 		// setTimeout(() => keane.dispatch({ type: "layer-flipV" }), 1000);
 
