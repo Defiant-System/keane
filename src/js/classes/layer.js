@@ -72,6 +72,8 @@ class Layer {
 		this.ctx.setTransform(...matrix);
 		this.ctx.drawImage(img, 0, 0);
 		this.ctx.restore();
+		// signla to update thumbnail
+		this.updateThumbnail();
 		// render file
 		this._file.render();
 	}

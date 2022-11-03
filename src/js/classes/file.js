@@ -122,26 +122,31 @@ class File {
 		this.render({ imgCvs: Proj.swap.cvs[0] });
 	}
 
-	flip(dir) {
-		this.layers.map(layer => layer.flip(dir));
+	flip(dir, active) {
+		if (active === "layer") this.activeLayer.flip(dir);
+		else this.layers.map(layer => layer.flip(dir));
 	}
 
-	rotate(dir) {
+	rotate(dir, active) {
 		let nW, nH, deg;
 		switch(dir) {
 			case "rotate90cw":  nW = this.height; nH = this.width;  deg = 90;  break;
 			case "rotate90ccw": nW = this.height; nH = this.width;  deg = -90; break;
 			case "rotate180":   nW = this.width;  nH = this.height; deg = 180; break;
 		}
-		// signal all layers
-		this.layers.map(layer => layer.rotate(dir, nW, nH, deg));
-		// update internal dimensions
-		this.width = this.oW = nW;
-		this.height = this.oH = nH;
-		this.cvs.prop({ width: nW, height: nH });
-		this.quickMask.cvs.prop({ width: nW, height: nH });
-		// reset scale & offset position
-		this.dispatch({ type: "set-scale", scale: this.scale });
+		if (active === "layer") {
+			this.activeLayer.rotate(dir, nH, nW, deg);
+		} else {
+			// signal all layers
+			this.layers.map(layer => layer.rotate(dir, nW, nH, deg));
+			// update internal dimensions
+			this.width = this.oW = nW;
+			this.height = this.oH = nH;
+			this.cvs.prop({ width: nW, height: nH });
+			this.quickMask.cvs.prop({ width: nW, height: nH });
+			// reset scale & offset position
+			this.dispatch({ type: "set-scale", scale: this.scale });
+		}
 		this.render();
 	}
 

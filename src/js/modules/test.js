@@ -28,9 +28,10 @@ let Test = {
 		// setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);
 
 
-		setTimeout(() => keane.dispatch({ type: "file-rotate90ccw" }), 1000);
+		// setTimeout(() => keane.dispatch({ type: "file-rotate90cw" }), 1000);
 		// setTimeout(() => keane.dispatch({ type: "file-flipV" }), 1000);
-		// setTimeout(() => keane.dispatch({ type: "layer-flipV" }), 1000);
+		// setTimeout(() => keane.dispatch({ type: "file-rotate90cw", arg: "layer" }), 1000);
+		// setTimeout(() => keane.dispatch({ type: "file-flipV", arg: "layer" }), 1000);
 
 
 		// Tools index
@@ -47,7 +48,7 @@ let Test = {
 	marquee() {
 		// Tools Marquee
 		// window.find(`.tool-marquee-circle`).trigger("click");
-		window.find(`.tool-wand`).trigger("click");
+		// window.find(`.tool-wand`).trigger("click");
 		// window.find(`.tool-lasso`).trigger("click");
 		// window.find(`.tool-lasso-polygon`).trigger("click");
 		// window.find(`.tool.icon-marquee-union`).trigger("click");

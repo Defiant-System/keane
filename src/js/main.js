@@ -179,15 +179,11 @@ const keane = {
 			case "file-rotate90cw":
 			case "file-rotate90ccw":
 			case "file-rotate180":
-				Projector.file.rotate(event.type.split("-")[1]);
+				Projector.file.rotate(event.type.split("-")[1], event.arg);
 				break;
 			case "file-flipV":
 			case "file-flipH":
-				Projector.file.flip(event.type.split("-")[1]);
-				break;
-			case "layer-flipV":
-			case "layer-flipH":
-				Projector.file.activeLayer.flip(event.type.split("-")[1]);
+				Projector.file.flip(event.type.split("-")[1], event.arg);
 				break;
 
 			case "toggle-guides":

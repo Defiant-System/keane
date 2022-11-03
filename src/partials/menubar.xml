@@ -69,12 +69,12 @@
 			<Menu name="Perspective" disabled="1"/>
 			<Menu name="Warp" disabled="1"/>
 			<Menu type="divider"/>
-			<Menu name="Rotate 90° &#8635;" disabled="1"/>
-			<Menu name="Rotate 90° &#8634;" disabled="1"/>
-			<Menu name="Rotate 180°" disabled="1"/>
+			<Menu name="Rotate 90° &#8635;" click="file-rotate90cw" arg="layer"/>
+			<Menu name="Rotate 90° &#8634;" click="file-rotate90ccw" arg="layer"/>
+			<Menu name="Rotate 180°" click="file-rotate180" arg="layer"/>
 			<Menu type="divider"/>
-			<Menu name="Flip Horizontally" disabled="1"/>
-			<Menu name="Flip Vertically" disabled="1"/>
+			<Menu name="Flip Horizontally" click="file-flipH" arg="layer"/>
+			<Menu name="Flip Vertically" click="file-flipV" arg="layer"/>
 		</Menu>
 		<Menu name="Auto Align" disabled="1"/>
 		<Menu name="Auto-Blend" disabled="1"/>
