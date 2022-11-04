@@ -993,6 +993,25 @@ content {
 		}
 	}
 
+	.temp-layer {
+		display: none;
+		background: rgba(255,0,0,.25);
+		position: absolute;
+		top: 227px;
+		left: 127px;
+		width: 600px;
+		height: 400px;
+		z-index: 3;
+
+		&.show {
+			display: block;
+		}
+
+		.shape {
+			position: absolute;
+		}
+	}
+
 	.cvs-wrapper {
 		height: 0;
 

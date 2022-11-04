@@ -24,6 +24,8 @@
 @import "modules/filters/close-pixelate.js"
 
 
+
+
 let Pref = {
 	guides: {
 		show: true,

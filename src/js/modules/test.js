@@ -61,6 +61,10 @@ let Test = {
 		// setTimeout(this.dialogs, 500);
 		// setTimeout(this.mask, 600);
 		// setTimeout(this.marquee, 500);
+		setTimeout(this.shapes, 500);
+	},
+	shapes() {
+		window.find(".temp-layer").addClass("show");
 	},
 	marquee() {
 		// Tools Marquee
