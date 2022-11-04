@@ -1,40 +1,45 @@
 <div class="tool-options-move hidden" data-area="move">
-	<div class="tool tool-move disabled" data-click="select-option" data-arg="move" data-group="options" data-option="main"></div>
-	<div class="tool tool-hand down" data-click="select-option" data-arg="hand" data-group="options" data-option="main"></div>
+	<div class="tool tool-move down" data-click="select-option" data-arg="move" data-group="options" data-option="main" data-subOptions="move"></div>
+	<div class="tool tool-hand" data-click="select-option" data-arg="hand" data-group="options" data-option="main" data-subOptions="hand"></div>
 	
 	<div class="divider"></div>
 
-	<div class="option check disabled">
-		<span class="value">
-			<input type="checkbox" id="marquee-anti-alias">
-			<i></i>
-		</span>
-		<label class="label" for="marquee-anti-alias">Auto-Select</label>
-	</div>
+	<span class="tool-group active" data-subName="move">
+		<div class="option check">
+			<span class="value">
+				<input type="checkbox" id="marquee-anti-alias">
+				<i></i>
+			</span>
+			<label class="label" for="marquee-anti-alias">Auto-Select</label>
+		</div>
 
-	<div class="option check disabled">
-		<span class="value">
-			<input type="checkbox" id="marquee-transform-controls">
-			<i></i>
-		</span>
-		<label class="label" for="marquee-transform-controls">Transform Controls</label>
-	</div>
+		<div class="option check">
+			<span class="value">
+				<input type="checkbox" id="marquee-transform-controls">
+				<i></i>
+			</span>
+			<label class="label" for="marquee-transform-controls">Transform Controls</label>
+		</div>
 
-	<div class="divider"></div>
+		<div class="divider"></div>
 
-	<div class="tool icon-align-top disabled"></div>
-	<div class="tool icon-align-middle disabled"></div>
-	<div class="tool icon-align-bottom disabled"></div>
+		<div class="tool icon-align-top"></div>
+		<div class="tool icon-align-middle"></div>
+		<div class="tool icon-align-bottom"></div>
 
-	<div class="divider"></div>
+		<div class="divider"></div>
 
-	<div class="tool icon-align-left disabled"></div>
-	<div class="tool icon-align-center disabled"></div>
-	<div class="tool icon-align-right disabled"></div>
+		<div class="tool icon-align-left"></div>
+		<div class="tool icon-align-center"></div>
+		<div class="tool icon-align-right"></div>
+		
+		<div class="divider"></div>
+
+		<div class="tool icon-horizontal-centers"></div>
+		<div class="tool icon-vertical-centers"></div>
+	</span>
 	
-	<div class="divider"></div>
-
-	<div class="tool icon-horizontal-centers disabled"></div>
-	<div class="tool icon-vertical-centers disabled"></div>
-	
+	<span class="tool-group" data-subName="hand">
+		<span class="tool-info">No options available for this tool</span>
+	</span>
 </div>

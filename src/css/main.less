@@ -236,6 +236,17 @@ content {
 			}
 		}
 
+		.tool-info {
+			position: relative;
+			left: 3px;
+			top: 3px;
+			color: rgba(#fff, .35);
+			font-size: 10px;
+			text-transform: uppercase;
+			text-shadow: 0 1px 0 rgba(#000, .25);
+			user-select: none;
+		}
+
 		.tool {
 			margin-right: 0;
 			transition: opacity 80ms ease-in-out;
@@ -502,8 +513,8 @@ content {
 			opacity: 0.75;
 		}
 
+		&[data-content="move"] 		{ background-image: url(~/icons/tool-move.png); }
 		&[data-content="marquee"] 	{ background-image: url(~/icons/tool-marquee-rect.png); }
-		&[data-content="move"] 		{ background-image: url(~/icons/tool-hand.png); }
 		&[data-content="pipette"] 	{ background-image: url(~/icons/tool-pipette.png); }
 		&[data-content="brush"] 	{ background-image: url(~/icons/tool-brush.png); }
 		&[data-content="gradient"] 	{ background-image: url(~/icons/tool-gradient.png); }
@@ -588,7 +599,6 @@ content {
 		&.tool-pointer              { background-image: url(~/icons/tool-pointer.png); }
 		&.tool-pointer-object       { background-image: url(~/icons/tool-pointer-object.png); }
 		&.tool-shape-rect           { background-image: url(~/icons/tool-shape-rect.png); }
-		&.tool-shape-rounded        { background-image: url(~/icons/tool-shape-rounded.png); }
 		&.tool-shape-elliptical     { background-image: url(~/icons/tool-shape-elliptical.png); }
 		&.tool-shape-polygon        { background-image: url(~/icons/tool-shape-polygon.png); }
 		&.tool-shape-star           { background-image: url(~/icons/tool-shape-star.png); }
@@ -780,6 +790,8 @@ content {
 			display: inline-block;
 
 			&.disabled {
+				pointer-events: none;
+				
 				.value {
 					input {
 						&:checked + i {
@@ -1363,6 +1375,7 @@ content {
 
 											&:after {
 												filter: invert() brightness(2) drop-shadow(0 1px 0 rgba(0,0,0,0.4));
+												opacity: .65;
 											}
 										}
 									}

@@ -33,6 +33,23 @@ let Test = {
 		// setTimeout(() => keane.dispatch({ type: "file-rotate90cw", arg: "layer" }), 1000);
 		// setTimeout(() => keane.dispatch({ type: "file-flipV", arg: "layer" }), 1000);
 
+		/*
+		move
+		marquee
+		brush
+		gradient
+		type
+		crop
+		blur
+		stamp
+		pipette
+		pen
+		shape
+		pointer
+		zoom
+		*/
+		window.find(`.tool[data-content="shape"]`).trigger("click");
+
 
 		// Tools index
 		// setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);
@@ -57,7 +74,6 @@ let Test = {
 		// Projector.file.dispatch({ type: "set-scale", scale: 4 });
 		// Projector.file.dispatch({ type: "pan-canvas", top: 90, left: 18 });
 		// Projector.file.dispatch({ type: "pan-canvas", top: -390, left: -180, noZoom: true });
-		// window.find(`.tool[data-content="move"]`).trigger("click");
 
 		Mask.dispatch({ type: "select-with-magic-wand", oX: 352, oY: 65 });
 		// Mask.dispatch({ type: "select-rect", rect: { x: 10, y: 20, w: 13, h: 10 } });
