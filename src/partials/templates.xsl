@@ -356,8 +356,8 @@
 
 
 <xsl:template name="vector">
-	<svg>
-		<xsl:attribute name="class">shape <xsl:value-of select="@class"/></xsl:attribute>
+	<svg class="shape">
+		<xsl:attribute name="data-type"><xsl:value-of select="@type"/></xsl:attribute>
 		<xsl:attribute name="viewBox">0 0
 					<xsl:text> </xsl:text>
 					<xsl:call-template name="getViewboxValue">
