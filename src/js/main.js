@@ -51,6 +51,7 @@ const keane = {
 			content: window.find("content"),
 			toolsBar: window.find(".tools-bar"),
 			blankView: window.find(".blank-view"),
+			handleBox: window.find(".handle-box"),
 		};
 		// init objects
 		UI.init();

@@ -67,7 +67,7 @@
 				if (Self.method === "replace") Mask.dispatch({ type: "deselect" });
 				break;
 			case "enable":
-				// add class
+				// set default cursor for this tool
 				APP.els.content.addClass("cursor-crosshair");
 				// bind event handler
 				Proj.cvs.on("mousedown", Self.doMarquee);
@@ -75,7 +75,7 @@
 				karaqu.on("mouse-move", Self.dispatch);
 				break;
 			case "disable":
-				// remove class
+				// unset default cursor for this tool
 				APP.els.content.removeClass("cursor-crosshair");
 				// unbind event handler
 				Proj.cvs.off("mousedown", Self.doMarquee);

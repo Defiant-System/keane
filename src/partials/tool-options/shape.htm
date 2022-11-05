@@ -1,9 +1,9 @@
 <div class="tool-options-shape hidden" data-area="shape">
-	<div class="tool tool-shape-rect down" title="Rectangle" data-click="select-option" data-arg="rect" data-group="options" data-option="main"></div>
-	<div class="tool tool-shape-elliptical" title="Ellipse" data-click="select-option" data-arg="elliptical" data-group="options" data-option="main"></div>
-	<div class="tool tool-shape-polygon" title="Parametric Shape" data-click="select-option" data-arg="polygon" data-group="options" data-option="main"></div>
-	<div class="tool tool-shape-star" title="Custom Shape" data-click="select-option" data-arg="star" data-group="options" data-option="main"></div>
-	<div class="tool tool-shape-line" title="Line" data-click="select-option" data-arg="line" data-group="options" data-option="main"></div>
+	<div class="tool tool-shape-rect down" title="Rectangle" data-click="select-option" data-arg="rectangle" data-group="options" data-option="main" data-subOptions="rectangle"></div>
+	<div class="tool tool-shape-elliptical" title="Ellipse" data-click="select-option" data-arg="elliptical" data-group="options" data-option="main" data-subOptions="elliptical"></div>
+	<div class="tool tool-shape-polygon" title="Parametric Shape" data-click="select-option" data-arg="polygon" data-group="options" data-option="main" data-subOptions="polygon"></div>
+	<div class="tool tool-shape-star" title="Custom Shape" data-click="select-option" data-arg="star" data-group="options" data-option="main" data-subOptions="star"></div>
+	<div class="tool tool-shape-line" title="Line" data-click="select-option" data-arg="line" data-group="options" data-option="main" data-subOptions="line"></div>
 
 	<div class="divider"></div>
 
@@ -29,13 +29,37 @@
 
 	<div class="divider"></div>
 
-	<div class="option input">
-		<span class="label">Width:</span>
-		<span class="value"><input type="text"></span>
-	</div>
+	<span class="tool-group active" data-subName="rectangle">
+		<div class="option input">
+			<span class="label">Width:</span>
+			<span class="value"><input type="text"></span>
+		</div>
 
-	<div class="option input">
-		<span class="label">Height:</span>
-		<span class="value"><input type="text"></span>
-	</div>
+		<div class="option input">
+			<span class="label">Height:</span>
+			<span class="value"><input type="text"></span>
+		</div>
+
+		<div class="option input">
+			<span class="label">Radius:</span>
+			<span class="value"><input type="text"></span>
+		</div>
+	</span>
+
+	<span class="tool-group" data-subName="elliptical">
+		<span class="tool-info">elliptical</span>
+	</span>
+
+	<span class="tool-group" data-subName="polygon">
+		<span class="tool-info">polygon</span>
+	</span>
+
+	<span class="tool-group" data-subName="star">
+		<span class="tool-info">star</span>
+	</span>
+
+	<span class="tool-group" data-subName="line">
+		<span class="tool-info">line</span>
+	</span>
+
 </div>
