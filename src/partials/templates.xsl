@@ -350,12 +350,12 @@
 </xsl:template>
 
 
-<xsl:template name="shapes-list-layer">
-	<xsl:for-each select="./Shape"><xsl:call-template name="shape" /></xsl:for-each>
+<xsl:template name="vector-list-layer">
+	<xsl:for-each select="./Shape"><xsl:call-template name="vector" /></xsl:for-each>
 </xsl:template>
 
 
-<xsl:template name="shape">
+<xsl:template name="vector">
 	<svg>
 		<xsl:if test="@id"><xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute></xsl:if>
 		<xsl:attribute name="class">shape <xsl:value-of select="@class"/></xsl:attribute>

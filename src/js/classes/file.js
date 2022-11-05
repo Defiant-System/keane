@@ -314,13 +314,13 @@ class File {
 				break;
 			case "add-layer":
 				id = `l${Date.now()}`;
-				content = { id, ...event.content, shapes: [] };
+				content = { id, ...event.content, vector: [] };
 				// add layer data to xml
 				xLayer = $.nodeFromString(`<i type="${content.type}" state="visible" id="${id}"/>`);
 				this.xData.selectSingleNode("Layers").appendChild(xLayer);
 
 				// temp solution for working on shapes section of the app
-				if (content.type === "shape") {
+				if (content.type === "vector") {
 					window.bluePrint.selectNodes(`//TempShapeLayer/*`).map(xShape => xLayer.appendChild(xShape));
 				}
 				layer = new Layer(this, content);

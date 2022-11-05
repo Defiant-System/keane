@@ -35,16 +35,35 @@ class Layer {
 				break;
 			case "text":
 				break;
-			case "shape":
+			case "vector":
 				// temp add above canvas - this will be rendered offscreen on canvas
-				this.vdom = window.find(".cvs-wrapper").append(`<div class="shape-layer"></div>`);
+				this.vdom = window.find(".cvs-wrapper").append(`<div class="vector-layer"></div>`);
 				// render SVG into virtual DOM node
 				window.render({
 					data: this._file.xData,
 					match: `Layers/*[@id="${this._id}"]`,
-					template: "shapes-list-layer",
+					template: "vector-list-layer",
 					target: this.vdom,
 				});
+
+				let shapes = this.vdom.find("svg");
+				shapes.map((svg, index) => {
+					let img = new Image,
+						src = "data:image/svg+xml,"+ encodeURIComponent(svg.xml),
+						w = parseInt(svg.style.width, 10),
+						h = parseInt(svg.style.height, 10),
+						x = parseInt(svg.style.left, 10),
+						y = parseInt(svg.style.top, 10);
+					// draw svg on canvas
+					img.onload = () => {
+						this.ctx.drawImage(img, x, y, w, h);
+						if (index === shapes.length-1) this._file.render();
+					};
+					img.src = src;
+				});
+
+				// this.ctx.fillStyle = "#f00";
+				// this.ctx.fillRect(20, 20, 40, 40);
 				break;
 			case "image":
 				// prevent file render
