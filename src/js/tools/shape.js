@@ -21,39 +21,83 @@
 				// set default cursor for this tool
 				APP.els.content.addClass("cursor-crosshair");
 				// bind event handler
-				APP.els.content.on("mousedown", ".vector-layer", Self.doMousedown);
-				Self.handleBox.on("mousedown", Self.doTransform);
+				APP.els.content.on("mousedown", ".vector-layer", Self.doMove);
+				Self.handleBox.on("mousedown", Self.doResize);
 				break;
 			case "disable":
 				// unset default cursor for this tool
 				APP.els.content.removeClass("cursor-crosshair");
 				// unbind event handler
-				APP.els.content.off("mousedown", ".vector-layer", Self.doMousedown);
-				Self.handleBox.off("mousedown", Self.doTransform);
+				APP.els.content.off("mousedown", ".vector-layer", Self.doMove);
+				Self.handleBox.off("mousedown", Self.doResize);
 				break;
 		}
 	},
-	doMousedown(event) {
-		let Self = keane.tools.shape,
-			File = Projector.file,
-			el = $(event.target);
-		// prevent default behaviour
-		event.preventDefault();
-		
-		if (!el.hasClass("shape")) el = el.parents(".shape");
-		if (!el.length) return Self.handleBox.removeClass("show");
+	doMove(event) {
+		let APP = keane,
+			Self = APP.tools.shape,
+			Drag = Self.drag;
+		switch (event.type) {
+			case "mousedown":
+				// prevent default behaviour
+				event.preventDefault();
 
-		console.log( el.data("type") );
+				let el = $(event.target);
+				
+				if (!el.hasClass("shape")) el = el.parents(".shape");
+				if (!el.length) return Self.handleBox.removeClass("show");
 
-		let oX = File.oX,
-			oY = File.oY,
-			top = oY + parseInt(el.css("top"), 10),
-			left = oX + parseInt(el.css("left"), 10),
-			width = parseInt(el.css("width"), 10),
-			height = parseInt(el.css("height"), 10);
-		Self.handleBox.addClass("show").css({ top, left, width, height });
+				let File = Projector.file,
+					oX = File.oX,
+					oY = File.oY,
+					oTop = parseInt(el.css("top"), 10),
+					oLeft = parseInt(el.css("left"), 10),
+					oWidth = parseInt(el.css("width"), 10),
+					oHeight = parseInt(el.css("height"), 10),
+					bEl = Self.handleBox,
+					offset = {
+						y: oTop - event.clientY,
+						x: oLeft - event.clientX,
+					};
+
+				Self.drag = { el, bEl, offset, oX, oY };
+
+				// show handle-box
+				Self.handleBox.addClass("show").css({
+					top: oY + oTop,
+					left: oX + oLeft,
+					width: oWidth,
+					height: oHeight,
+				});
+
+				// hide from layer & show SVG version
+				el.addClass("transforming");
+				// re-render layer
+				File.activeLayer.renderShapes();
+
+				// prevent mouse from triggering mouseover
+				APP.els.content.addClass("cover");
+				// bind event handlers
+				UI.doc.on("mousemove mouseup", Self.doMove);
+				break;
+			case "mousemove":
+				let top = event.clientY + Drag.offset.y,
+					left = event.clientX + Drag.offset.x;
+				Drag.el.css({ top, left });
+
+				top += Drag.oY;
+				left += Drag.oX;
+				Drag.bEl.css({ top, left });
+				break;
+			case "mouseup":
+				// uncover app UI
+				APP.els.content.removeClass("cover");
+				// unbind event handler
+				UI.doc.off("mousemove mouseup", Self.doMove);
+				break;
+		}
 	},
-	doTransform(event) {
+	doResize(event) {
 		console.log(222, event);
 	}
 }

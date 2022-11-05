@@ -294,7 +294,6 @@ class File {
 				if (!event.noRender) {
 					// render file
 					this.render();
-					// Proj.render();
 				}
 				break;
 			case "pan-canvas":

@@ -47,25 +47,7 @@ class Layer {
 					target: this.vdom,
 				});
 
-				let shapes = this.vdom.find("svg");
-				shapes.map((svg, index) => {
-					let img = new Image,
-						src = "data:image/svg+xml,"+ encodeURIComponent(svg.xml),
-						w = parseInt(svg.style.width, 10),
-						h = parseInt(svg.style.height, 10),
-						x = parseInt(svg.style.left, 10),
-						y = parseInt(svg.style.top, 10);
-					// draw svg on canvas
-					img.onload = () => {
-						this.ctx.drawImage(img, x, y, w, h);
-						if (index < shapes.length-1) return;
-						// signal to update thumbnail
-						this.updateThumbnail();
-						// update file -> projector
-						this._file.render();
-					};
-					img.src = src;
-				});
+				this.renderShapes();
 				break;
 			case "image":
 				// prevent file render
@@ -91,6 +73,32 @@ class Layer {
 	set visible(value) {
 		if (this._visible === !!value) return;
 		this._visible = !!value;
+	}
+
+	renderShapes() {
+		let shapes = this.vdom.find("svg:not(.transforming)"),
+			last = shapes.length - 1;
+		// clear canvas
+		this.ctx.clear();
+		// loop all shapes
+		shapes.map((svg, index) => {
+			let img = new Image,
+				src = "data:image/svg+xml,"+ encodeURIComponent(svg.xml),
+				w = parseInt(svg.style.width, 10),
+				h = parseInt(svg.style.height, 10),
+				x = parseInt(svg.style.left, 10),
+				y = parseInt(svg.style.top, 10);
+			// draw svg on canvas
+			img.onload = () => {
+				this.ctx.drawImage(img, x, y, w, h);
+				if (index < last) return;
+				// signal to update thumbnail
+				this.updateThumbnail();
+				// update file -> projector
+				this._file.render();
+			};
+			img.src = src;
+		});
 	}
 
 	flip(dir) {
