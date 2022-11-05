@@ -350,10 +350,8 @@
 </xsl:template>
 
 
-<xsl:template name="temp-shape-layer">
-	<div class="temp-layer">
-		<xsl:for-each select="./Shape"><xsl:call-template name="shape" /></xsl:for-each>
-	</div>
+<xsl:template name="shapes-list-layer">
+	<xsl:for-each select="./Shape"><xsl:call-template name="shape" /></xsl:for-each>
 </xsl:template>
 
 

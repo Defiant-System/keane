@@ -36,7 +36,15 @@ class Layer {
 			case "text":
 				break;
 			case "shape":
-				
+				// temp add above canvas - this will be rendered offscreen on canvas
+				this.vdom = window.find(".cvs-wrapper").append(`<div class="shape-layer"></div>`);
+				// render SVG into virtual DOM node
+				window.render({
+					data: this._file.xData,
+					match: `Layers/*[@id="${this._id}"]`,
+					template: "shapes-list-layer",
+					target: this.vdom,
+				});
 				break;
 			case "image":
 				// prevent file render
