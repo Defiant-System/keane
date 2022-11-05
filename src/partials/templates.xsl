@@ -357,11 +357,28 @@
 
 <xsl:template name="vector">
 	<svg>
-		<xsl:if test="@id"><xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute></xsl:if>
 		<xsl:attribute name="class">shape <xsl:value-of select="@class"/></xsl:attribute>
-		<xsl:attribute name="viewBox"><xsl:value-of select="@viewBox"/></xsl:attribute>
+		<xsl:attribute name="viewBox">0 0
+					<xsl:text> </xsl:text>
+					<xsl:call-template name="getViewboxValue">
+						<xsl:with-param name="text" select="@viewBox"/>
+						<xsl:with-param name="index" select="3"/>
+					</xsl:call-template>
+					<xsl:text> </xsl:text>
+					<xsl:call-template name="getViewboxValue">
+						<xsl:with-param name="text" select="@viewBox"/>
+						<xsl:with-param name="index" select="4"/>
+					</xsl:call-template></xsl:attribute>
 		<xsl:attribute name="style">
-			<xsl:value-of select="@style"/>
+			z-index: <xsl:value-of select="@z-index"/>;
+			left: <xsl:call-template name="getViewboxValue">
+						<xsl:with-param name="text" select="@viewBox"/>
+						<xsl:with-param name="index" select="1"/>
+					</xsl:call-template>px;
+			top: <xsl:call-template name="getViewboxValue">
+						<xsl:with-param name="text" select="@viewBox"/>
+						<xsl:with-param name="index" select="2"/>
+					</xsl:call-template>px;
 			width: <xsl:call-template name="getViewboxValue">
 						<xsl:with-param name="text" select="@viewBox"/>
 						<xsl:with-param name="index" select="3"/>

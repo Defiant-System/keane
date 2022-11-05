@@ -36,8 +36,9 @@ class Layer {
 			case "text":
 				break;
 			case "vector":
+				let htm = `<div class="vector-layer" style="width: ${file.oW}px; height: ${file.oH}px; top: ${file.oY}px; left: ${file.oX}px;"></div>`;
 				// temp add above canvas - this will be rendered offscreen on canvas
-				this.vdom = window.find(".cvs-wrapper").append(`<div class="vector-layer"></div>`);
+				this.vdom = window.find(".cvs-wrapper").append(htm);
 				// render SVG into virtual DOM node
 				window.render({
 					data: this._file.xData,
@@ -57,13 +58,14 @@ class Layer {
 					// draw svg on canvas
 					img.onload = () => {
 						this.ctx.drawImage(img, x, y, w, h);
-						if (index === shapes.length-1) this._file.render();
+						if (index < shapes.length-1) return;
+						// signal to update thumbnail
+						this.updateThumbnail();
+						// update file -> projector
+						this._file.render();
 					};
 					img.src = src;
 				});
-
-				// this.ctx.fillStyle = "#f00";
-				// this.ctx.fillRect(20, 20, 40, 40);
 				break;
 			case "image":
 				// prevent file render
@@ -102,7 +104,7 @@ class Layer {
 		this.ctx.setTransform(...matrix);
 		this.ctx.drawImage(img, 0, 0);
 		this.ctx.restore();
-		// signla to update thumbnail
+		// signal to update thumbnail
 		this.updateThumbnail();
 		// render file
 		this._file.render();
@@ -122,7 +124,7 @@ class Layer {
 		// update dim
 		this.width = nW;
 		this.height = nH;
-		// signla to update thumbnail
+		// signal to update thumbnail
 		this.updateThumbnail();
 	}
 
