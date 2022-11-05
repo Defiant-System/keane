@@ -35,6 +35,9 @@ class Layer {
 				break;
 			case "text":
 				break;
+			case "shape":
+				
+				break;
 			case "image":
 				// prevent file render
 				this._ready = false;

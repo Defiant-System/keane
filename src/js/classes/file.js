@@ -317,9 +317,23 @@ class File {
 				content = { uniqId, ...event.content };
 				layer = new Layer(this, content);
 				this.layers.push(layer);
+
 				// add layer data to xml
-				xLayer = $.nodeFromString(`<i type="layer" state="visible" id="${uniqId}" name="${layer.name}"/>`);
+				xLayer = $.nodeFromString(`<i type="${content.type}" state="visible" id="${uniqId}" name="${layer.name}"/>`);
 				this.xData.selectSingleNode("Layers").appendChild(xLayer);
+
+				// temp solution for working on shapes section of the app
+				if (content.type === "shape") {
+					// add new row and auto focus (make active)
+					window.render({
+						// data: window.bluePrint,
+						match: "//TempShapeLayer",
+						template: "temp-shape-layer",
+						append: window.find(".cvs-wrapper"),
+					});
+					// window.bluePrint.selectNodes(`//TempShapeLayer/*`).map(xShape => layer.addShape(xShape));
+				}
+
 				// return layer
 				return layer;
 			case "toggle-layer-visibility":

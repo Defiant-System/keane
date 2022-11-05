@@ -64,7 +64,8 @@ let Test = {
 		setTimeout(this.shapes, 500);
 	},
 	shapes() {
-		window.find(".temp-layer").addClass("show");
+		// window.find(".temp-layer").addClass("show");
+		window.find(`.sidebar-wrapper div[data-box="layers"] .icon[data-click="add-layer"]`).trigger("click");
 	},
 	marquee() {
 		// Tools Marquee

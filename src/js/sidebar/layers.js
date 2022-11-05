@@ -54,8 +54,8 @@
 				console.log(event.type);
 				break;
 			case "add-layer":
-				el = File.dispatch({ type: "add-layer", content: { name: "test", type: "fill", color: "#ffffff00" } });
-				// console.log( el );
+				el = File.dispatch({ type: "add-layer", content: { name: "test", type: "shape" } });
+				// el = File.dispatch({ type: "add-layer", content: { name: "test", type: "fill", color: "#ffffff00" } });
 
 				// add new row and auto focus (make active)
 				window.render({
