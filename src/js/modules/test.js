@@ -66,6 +66,8 @@ let Test = {
 	shapes() {
 		// window.find(".temp-layer").addClass("show");
 		window.find(`.sidebar-wrapper div[data-box="layers"] .icon[data-click="add-layer"]`).trigger("click");
+		// "select" a shape
+		window.find("svg.shape:nth(0) rect").trigger("mousedown").trigger("mouseup");
 	},
 	marquee() {
 		// Tools Marquee
