@@ -119,6 +119,10 @@ content {
 	}
 
 	&.show-rulers {
+		.cvs-wrapper .cvs-overlay {
+			top: 90px;
+			left: 18px;
+		}
 		.workspace {
 			.ruler-guides { display: block; }
 			.status-bar { left: 18px; }
@@ -1294,6 +1298,7 @@ content {
 		// display: none;
 		// background: rgba(255,0,0,.25);
 		position: absolute;
+		overflow: hidden;
 		z-index: 3;
 		--rotate: 0deg;
 
@@ -1339,6 +1344,18 @@ content {
 				// cursor: crosshair;
 				border-radius: 5px;
 			}
+		}
+
+		.cvs-overlay {
+			// background: rgba(255,0,0,.5);
+			position: absolute;
+			top: 72px;
+			left: 0;
+			right: 273px;
+			bottom: 0;
+			overflow: hidden;
+			z-index: 10;
+			pointer-events: none;
 		}
 	}
 

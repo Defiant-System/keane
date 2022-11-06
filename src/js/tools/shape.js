@@ -78,9 +78,10 @@
 				Self.handleBox.data({ type: Self.boxType[name] });
 
 				// prepare drag object
-				let File = Projector.file,
-					oX = File.oX,
-					oY = File.oY,
+				let Proj = Projector,
+					File = Proj.file,
+					oX = File.oX - Proj.aX,
+					oY = File.oY - Proj.aY,
 					oTop = parseInt(el.css("top"), 10),
 					oLeft = parseInt(el.css("left"), 10),
 					oWidth = parseInt(el.css("width"), 10),
@@ -132,6 +133,77 @@
 		}
 	},
 	doResize(event) {
-		console.log(222, event);
+		let APP = keane,
+			Self = APP.tools.shape,
+			Drag = Self.drag;
+		switch (event.type) {
+			case "mousedown":
+				// prepare values
+				let el = Self.handleBox,
+					type = event.target.className.split(" ")[1],
+					min = {
+						w: 50,
+						h: 50,
+					},
+					click = {
+						x: event.clientX,
+						y: event.clientY,
+					},
+					offset = {
+						x: parseInt(el.css("left"), 10),
+						y: parseInt(el.css("top"), 10),
+						w: parseInt(el.css("width"), 10),
+						h: parseInt(el.css("height"), 10),
+						// rx: +shape.attr("rx"),
+					};
+				// create drag object
+				Self.drag = {
+					el,
+					type,
+					min,
+					click,
+					offset,
+					_min: Math.min,
+				};
+				// cover layout
+				APP.els.content.addClass("cover");
+				// bind event
+				UI.doc.on("mousemove mouseup", Self.doResize);
+				break;
+			case "mousemove":
+				let dim = {
+						width: Drag.offset.w,
+						height: Drag.offset.h,
+					};
+				// movement: north
+				if (Drag.type.includes("n")) {
+					dim.top = event.clientY - Drag.click.y + Drag.offset.y;
+					dim.height = Drag.offset.h + Drag.click.y - event.clientY;
+				}
+				// movement: east
+				if (Drag.type.includes("e")) {
+					dim.left = event.clientX - Drag.click.x + Drag.offset.x;
+					dim.width = Drag.offset.w + Drag.click.x - event.clientX;
+				}
+				// movement: south
+				if (Drag.type.includes("s")) {
+					dim.height = event.clientY - Drag.click.y + Drag.offset.h;
+				}
+				// movement: west
+				if (Drag.type.includes("w")) {
+					dim.width = event.clientX - Drag.click.x + Drag.offset.w;
+				}
+				// apply new dimensions to element
+				if (dim.width < Drag.min.w) dim.width = Drag.min.w;
+				if (dim.height < Drag.min.h) dim.height = Drag.min.h;
+				Drag.el.css(dim);
+				break;
+			case "mouseup":
+				// uncover layout
+				APP.els.content.removeClass("cover");
+				// unbind event
+				UI.doc.off("mousemove mouseup", Self.doResize);
+				break;
+		}
 	}
 }
