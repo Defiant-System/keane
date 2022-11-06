@@ -79,6 +79,8 @@ class Layer {
 		let shapes = this.vdom.find(opt.all ? "svg" : "svg:not(.transforming)"),
 			last = shapes.length - 1,
 			finish = () => {
+				// reset svg element
+				shapes.removeClass("transforming");
 				// signal to update thumbnail
 				if (!opt.noEmit) this.updateThumbnail();
 				// update file -> projector
@@ -101,8 +103,6 @@ class Layer {
 				tY = parseInt(svg.style.top, 10) + hH;
 			// draw svg on canvas
 			img.onload = () => {
-				// reset svg element
-				svg.classList.remove("transforming");
 				// draw on canvas
 				this.ctx.save();
 				this.ctx.translate(tX, tY);
