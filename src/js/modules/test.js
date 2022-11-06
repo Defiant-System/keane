@@ -70,6 +70,8 @@ let Test = {
 		// window.find("svg.shape:nth(0) rect").trigger("mousedown").trigger("mouseup");
 		window.find("svg.shape:nth(2) path").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape:nth(3) line").trigger("mousedown").trigger("mouseup");
+
+		// window.find(`.tool[data-arg="elliptical"]`).trigger("click");
 	},
 	marquee() {
 		// Tools Marquee

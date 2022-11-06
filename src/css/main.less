@@ -594,7 +594,9 @@ content {
 		&.tool-pen-minus-anchor     { background-image: url(~/icons/tool-pen-minus-anchor.png); }
 		&.tool-pen-free             { background-image: url(~/icons/tool-pen-free.png); }
 		&.tool-pen-convert          { background-image: url(~/icons/tool-pen-convert.png); }
+		&[data-content="pipette"][data-opt="pipette"],
 		&.tool-pipette              { background-image: url(~/icons/tool-pipette.png); }
+		&[data-content="pipette"][data-opt="ruler"],
 		&.tool-ruler                { background-image: url(~/icons/tool-ruler.png); }
 		&.tool-pointer              { background-image: url(~/icons/tool-pointer.png); }
 		&.tool-pointer-object       { background-image: url(~/icons/tool-pointer-object.png); }
@@ -663,6 +665,8 @@ content {
 		&.icon-pipette          { background-image: url(~/icons/tool-pipette.png); }
 		&.icon-cursor_pos       { background-image: url(~/icons/icon-cursor-pos.png); }
 		&.icon-selection_dim    { background-image: url(~/icons/icon-selection-dim.png); }
+		&.icon-rotation-angle   { background-image: url(~/icons/icon-rotation-angle.png); }
+		&.icon-rect-radius      { background-image: url(~/icons/icon-rect-radius.png); }
 		&.icon-eye-on           { background-image: url(~/icons/icon-eye-on.png); }
 		&.icon-eye-off          { background-image: url(~/icons/icon-eye-off.png); }
 		&.icon-selection-ring   { background-image: url(~/icons/icon-selection-ring.png); }
@@ -889,6 +893,33 @@ content {
 		&.select {
 			.value {
 				cursor: pointer;
+			}
+		}
+
+		&.read-only {
+			.label {
+				margin-right: 5px;
+
+				.icon {
+					display: inline-block;
+					vertical-align: middle;
+					width: 13px;
+					height: 13px;
+
+					&:after { opacity: .85; }
+				}
+			}
+
+			.value {
+				background: transparent;
+				width: 43px;
+				padding-left: 0;
+				padding-right: 13px;
+
+				&:before,
+				&:after {
+					display: none;
+				}
 			}
 		}
 
