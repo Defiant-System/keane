@@ -1068,6 +1068,48 @@ content {
 			box-shadow: 0 0 0 1px #777;
 		}
 
+		.nav {
+			// background: rgba(255,0,0,.35);
+			position: absolute;
+			width: 23px;
+			height: 13px;
+			transform-origin: 50% 50%;
+			pointer-events: all;
+			z-index: 1;
+
+			&.ne {
+				cursor: nwse-resize;
+				top: -13px;
+				left: -19px;
+				transform: rotate(-45deg);
+				cursor: url(~/icons/cursor-ne-rotate.png) 8 8, move;
+			}
+
+			&.nw {
+				cursor: nesw-resize;
+				top: -13px;
+				right: -19px;
+				transform: rotate(45deg);
+				cursor: url(~/icons/cursor-nw-rotate.png) 8 8, move;
+			}
+
+			&.sw {
+				cursor: nwse-resize;
+				bottom: -13px;
+				right: -19px;
+				transform: rotate(-45deg);
+				cursor: url(~/icons/cursor-sw-rotate.png) 8 8, move;
+			}
+
+			&.se {
+				cursor: nesw-resize;
+				bottom: -13px;
+				left: -19px;
+				transform: rotate(45deg);
+				cursor: url(~/icons/cursor-se-rotate.png) 8 8, move;
+			}
+		}
+
 		.handle {
 			position: absolute;
 			width: 9px;
@@ -1248,9 +1290,9 @@ content {
 		--rotate: 0deg;
 
 		.shape {
-			background: rgba(255,0,0,.35);
+			// background: rgba(255,0,0,.35);
 			position: absolute;
-			opacity: 0.25;
+			opacity: 0;
 			transform: rotate( var( --rotate) );
 			overflow: visible;
 			pointer-events: none;
