@@ -75,11 +75,19 @@ class Layer {
 		this._visible = !!value;
 	}
 
-	renderShapes() {
-		let shapes = this.vdom.find("svg:not(.transforming)"),
-			last = shapes.length - 1;
+	renderShapes(opt={}) {
+		let shapes = this.vdom.find(opt.all ? "svg" : "svg:not(.transforming)"),
+			last = shapes.length - 1,
+			finish = () => {
+				// signal to update thumbnail
+				if (!opt.noEmit) this.updateThumbnail();
+				// update file -> projector
+				this._file.render(opt);
+			};
 		// clear canvas
-		this.ctx.clear();
+		this.cvs.prop({ width: this.width });
+		// nothing to paint
+		if (!shapes.length) requestAnimationFrame(finish);
 		// loop all shapes
 		shapes.map((svg, index) => {
 			let img = new Image,
@@ -90,12 +98,11 @@ class Layer {
 				y = parseInt(svg.style.top, 10);
 			// draw svg on canvas
 			img.onload = () => {
+				// reset svg element
+				svg.classList.remove("transforming");
+				// draw on canvas
 				this.ctx.drawImage(img, x, y, w, h);
-				if (index < last) return;
-				// signal to update thumbnail
-				this.updateThumbnail();
-				// update file -> projector
-				this._file.render();
+				if (index === last) requestAnimationFrame(finish);
 			};
 			img.src = src;
 		});

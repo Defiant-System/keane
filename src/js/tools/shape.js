@@ -73,7 +73,7 @@
 				// hide from layer & show SVG version
 				el.addClass("transforming");
 				// re-render layer
-				File.activeLayer.renderShapes();
+				File.activeLayer.renderShapes({ noEmit: true });
 
 				// prevent mouse from triggering mouseover
 				APP.els.content.addClass("cover");
@@ -90,6 +90,8 @@
 				Drag.bEl.css({ top, left });
 				break;
 			case "mouseup":
+				// re-render layer
+				Projector.file.activeLayer.renderShapes({ all: true });
 				// uncover app UI
 				APP.els.content.removeClass("cover");
 				// unbind event handler

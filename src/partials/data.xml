@@ -15,7 +15,7 @@
 			<rect fill="none" stroke="#336699" stroke-width="20" x="10" y="10" width="180" height="240" rx="20"/>
 		]]></Shape>
 
-		<Shape type="elliptical" viewBox="360 220 200 100" z-index="4"><![CDATA[
+		<!-- <Shape type="elliptical" viewBox="360 220 200 100" z-index="4"><![CDATA[
 			<ellipse fill="#336633" cx="100" cy="50" rx="100" ry="50" />
 		]]></Shape>
 
@@ -29,7 +29,7 @@
 				<stop offset="100%" stop-color="#336699"/>
 			</radialGradient>
 			<circle fill="url(#SVG-GR-2)" cx="50" cy="50" r="50"/>
-		]]></Shape>
+		]]></Shape> -->
 	</TempShapeLayer>
 
 
