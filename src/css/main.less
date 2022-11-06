@@ -1248,13 +1248,21 @@ content {
 		}
 
 		.gradient-tool {
+			--g-top: 11px;
+			--g-left: 51px;
+			--g-width: 80px;
+			--g-angle: 90deg;
+
 			position: absolute;
 			height: 0;
 			border-top: 1px solid rgba(255,255,255,.65);
 			filter: drop-shadow(0 0 1px rgba(0,0,0,.25));
 			transform-origin: 0 0;
-			transform: rotate(45deg);
 			z-index: 2;
+			top: var( --g-top );
+			left: var( --g-left );
+			width: var( --g-width );
+			transform: rotate( var( --g-angle ) );
 
 			&.hidden {
 				display: none;
