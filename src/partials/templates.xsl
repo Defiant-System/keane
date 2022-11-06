@@ -372,7 +372,7 @@
 						<xsl:with-param name="index" select="4"/>
 					</xsl:call-template></xsl:attribute>
 		<xsl:attribute name="style">
-			--rotate: <xsl:value-of select="@rotate"/>deg;
+			<xsl:if test="@rotate">--rotate: <xsl:value-of select="@rotate"/>deg;</xsl:if>
 			z-index: <xsl:value-of select="@z-index"/>;
 			left: <xsl:call-template name="getViewboxValue">
 						<xsl:with-param name="text" select="@viewBox"/>
