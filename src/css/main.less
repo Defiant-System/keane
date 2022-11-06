@@ -1011,13 +1011,13 @@ content {
 		}
 
 		&[data-type="line"] {
-			.handle-box { box-shadow: 0 0 0; }
+			&:before { box-shadow: 0 0 0; }
 			.handle { display: none; }
 			.handle.line { display: block; }
 		}
 
 		&[data-type="bezier"] {
-			.handle-box { box-shadow: 0 0 0; }
+			&:before { box-shadow: 0 0 0; }
 			.handle { display: none; }
 			.handle.line.ap,
 			.handle.line { display: block; }
@@ -1046,13 +1046,13 @@ content {
 			border: 1px solid #333;
 			pointer-events: all;
 
-			&.n    { cursor: ns-resize; top: -6px; left: 50%; transform: translateX(-6px); }
+			&.n    { cursor: ns-resize; top: -6px; left: 50%; transform: translateX(-4px); }
 			&.nw   { cursor: nesw-resize; top: -6px; right: -6px; }
-			&.w    { cursor: ew-resize; top: 50%; right: -6px; transform: translateY(-6px); }
+			&.w    { cursor: ew-resize; top: 50%; right: -6px; transform: translateY(-4px); }
 			&.sw   { cursor: nwse-resize; bottom: -6px; right: -6px;  }
-			&.s    { cursor: ns-resize; bottom: -6px; left: 50%; transform: translateX(-6px); }
+			&.s    { cursor: ns-resize; bottom: -6px; left: 50%; transform: translateX(-4px); }
 			&.se   { cursor: nesw-resize; bottom: -6px; left: -6px; }
-			&.e    { cursor: ew-resize; top: 50%; left: -6px; transform: translateY(-6px); }
+			&.e    { cursor: ew-resize; top: 50%; left: -6px; transform: translateY(-4px); }
 			&.ne   { cursor: nwse-resize; top: -6px; left: -6px; }
 
 			&.line {
@@ -1062,6 +1062,42 @@ content {
 				background: transparent;
 				border-color: transparent;
 				// opacity: .4;
+
+				// --top-1: 3px;
+				// --left-1: 3px;
+				// --top-2: 97px;
+				// --left-2: 97px;
+
+				--top-1: 97px;
+				--left-1: 3px;
+				--deg-1: -82deg;
+				--width-1: 151px;
+				--top-2: 3px;
+				--left-2: 97px;
+				--deg-2: 97deg;
+				--width-2: 81px;
+				
+				&[data-i="1"] {
+					transform: translateX(-4px) translateY(-4px);
+					top: var( --top-1 );
+					left: var( --left-1 );
+
+					.ap {
+						transform: rotate( var( --deg-1 ) );
+						width: var( --width-1 );
+					}
+				}
+
+				&[data-i="2"] {
+					transform: translateX(-4px) translateY(-4px);
+					top: var( --top-2 );
+					left: var( --left-2 );
+
+					.ap {
+						transform: rotate( var( --deg-2 ) );
+						width: var( --width-2 );
+					}
+				}
 
 				&[data-i="1"]:after,
 				&[data-i="2"]:after {
@@ -1087,8 +1123,6 @@ content {
 					pointer-events: none;
 					border-top: 1px solid #3583d0;
 					transform-origin: 0 0;
-					transform: rotate( var(--deg) );
-					width: var( --width );
 
 					&:after {
 						content: "";
