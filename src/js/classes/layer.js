@@ -92,16 +92,24 @@ class Layer {
 		shapes.map((svg, index) => {
 			let img = new Image,
 				src = "data:image/svg+xml,"+ encodeURIComponent(svg.xml),
+				rotate = svg.getAttribute("rotate"),
 				w = parseInt(svg.style.width, 10),
 				h = parseInt(svg.style.height, 10),
-				x = parseInt(svg.style.left, 10),
-				y = parseInt(svg.style.top, 10);
+				hW = w >> 1,
+				hH = h >> 1,
+				tX = parseInt(svg.style.left, 10) + hW,
+				tY = parseInt(svg.style.top, 10) + hH;
 			// draw svg on canvas
 			img.onload = () => {
 				// reset svg element
 				svg.classList.remove("transforming");
 				// draw on canvas
-				this.ctx.drawImage(img, x, y, w, h);
+				this.ctx.save();
+				this.ctx.translate(tX, tY);
+				this.ctx.rotate(rotate * Math.PI/180);
+				this.ctx.drawImage(img, -hW, -hH, w, h);
+				this.ctx.translate(-tX, -tY);
+				this.ctx.restore();
 				if (index === last) requestAnimationFrame(finish);
 			};
 			img.src = src;

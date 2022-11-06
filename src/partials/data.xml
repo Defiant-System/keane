@@ -1,7 +1,7 @@
 
 <Data>
 	<TempShapeLayer>
-		<Shape type="rectangle" viewBox="250 50 100 100" z-index="1"><![CDATA[
+		<Shape viewBox="250 50 100 100" rotate="32" z-index="1"><![CDATA[
 			<linearGradient id="SVG-GR-1" x1=".5" y1=".1" x2=".5" y2=".9">
 				<stop offset="0%" stop-color="#5555bb" />
 				<stop offset="45%" stop-color="#eeeeff" />
@@ -11,7 +11,7 @@
 			<rect fill="url(#SVG-GR-1)" stroke="#111111" stroke-width="4" x="2" y="2" width="96" height="96" rx="5"/>
 		]]></Shape>
 
-		<Shape type="rectangle" viewBox="20 120 200 260" z-index="2"><![CDATA[
+		<Shape viewBox="20 120 200 260" z-index="2"><![CDATA[
 			<rect fill="none" stroke="#336699" stroke-width="20" x="10" y="10" width="180" height="240" rx="20"/>
 		]]></Shape>
 

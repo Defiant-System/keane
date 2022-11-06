@@ -5,6 +5,19 @@
 	init() {
 		// fast references
 		this.handleBox = keane.els.handleBox;
+
+		this.boxType = {
+			circle: "rectangle",
+			ellipse: "rectangle",
+			rect: "rectangle",
+			polygon: "rectangle",
+			polyline: "rectangle",
+			path: "rectangle",
+			image: "rectangle",
+			line: "line",
+			bezier: "bezier",
+		};
+
 		// defaults
 		this.option = "shape";
 	},
@@ -33,6 +46,14 @@
 				break;
 		}
 	},
+	isLine(shape) {
+		let lineItem = shape.find(this.shapeTypes.join(",")),
+			name = lineItem.prop("nodeName"),
+			d = (name === "path") ? lineItem.attr("d").split(" ") : false,
+			type = name === "line" ? "line" : "shape";
+		if (d && d.length === 4) type = "line";
+		return type === "line";
+	},
 	doMove(event) {
 		let APP = keane,
 			Self = APP.tools.shape,
@@ -47,6 +68,16 @@
 				if (!el.hasClass("shape")) el = el.parents(".shape");
 				if (!el.length) return Self.handleBox.removeClass("show");
 
+				// UI update handle-box
+				let names = Object.keys(Self.boxType).join(","),
+					child = el.find(names).get(0),
+					name = child.prop("nodeName");
+				if (name === "path" && child.attr("d").split(" ").length === 4) {
+					name = "bezier";
+				}
+				Self.handleBox.data({ type: Self.boxType[name] });
+
+				// prepare drag object
 				let File = Projector.file,
 					oX = File.oX,
 					oY = File.oY,
@@ -54,12 +85,12 @@
 					oLeft = parseInt(el.css("left"), 10),
 					oWidth = parseInt(el.css("width"), 10),
 					oHeight = parseInt(el.css("height"), 10),
+					angle = el.attr("rotate") || 0,
 					bEl = Self.handleBox,
 					offset = {
 						y: oTop - event.clientY,
 						x: oLeft - event.clientX,
 					};
-
 				Self.drag = { el, bEl, offset, oX, oY };
 
 				// show handle-box
@@ -68,6 +99,7 @@
 					left: oX + oLeft,
 					width: oWidth,
 					height: oHeight,
+					transform: `rotate(${angle}deg)`,
 				});
 
 				// hide from layer & show SVG version

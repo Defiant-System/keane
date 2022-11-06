@@ -357,7 +357,9 @@
 
 <xsl:template name="vector">
 	<svg class="shape">
-		<xsl:attribute name="data-type"><xsl:value-of select="@type"/></xsl:attribute>
+		<xsl:if test="@rotate">
+			<xsl:attribute name="rotate"><xsl:value-of select="@rotate"/></xsl:attribute>
+		</xsl:if>
 		<xsl:attribute name="viewBox">0 0
 					<xsl:text> </xsl:text>
 					<xsl:call-template name="getViewboxValue">
@@ -370,6 +372,7 @@
 						<xsl:with-param name="index" select="4"/>
 					</xsl:call-template></xsl:attribute>
 		<xsl:attribute name="style">
+			--rotate: <xsl:value-of select="@rotate"/>deg;
 			z-index: <xsl:value-of select="@z-index"/>;
 			left: <xsl:call-template name="getViewboxValue">
 						<xsl:with-param name="text" select="@viewBox"/>
