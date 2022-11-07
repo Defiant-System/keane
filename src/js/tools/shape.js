@@ -5,7 +5,7 @@
 	init() {
 		// fast references
 		this.handleBox = keane.els.handleBox;
-
+		// handle-box types
 		this.boxType = {
 			circle: "box",
 			ellipse: "box",
@@ -17,7 +17,6 @@
 			line: "line",
 			bezier: "bezier",
 		};
-
 		// defaults
 		this.option = "shape";
 	},
@@ -56,7 +55,13 @@
 				Self.shape = child;
 
 				// shape has gradient
-				let fill = Self.shape.css("fill");
+				let fill = Self.shape.css("fill"),
+					stroke = Self.shape.css("stroke");
+
+				console.log( "fill color", fill );
+				console.log( "stroke color", stroke );
+				
+				
 				if (fill.startsWith("url(")) {
 					let xNode = event.el.find(fill.slice(5,-2)),
 						gradientType = xNode.prop("nodeName"),
@@ -85,7 +90,7 @@
 					// add to class names
 					cn.push("has-gradient");
 				} else {
-					console.log( "solid color", ColorLib.rgbToHex(fill) );
+					// console.log( "fill color", ColorLib.rgbToHex(fill) );
 				}
 
 				// show handle-box
@@ -280,6 +285,19 @@
 		}
 	},
 	doRotate(event) {
+		let APP = keane,
+			Self = APP.tools.shape,
+			Drag = Self.drag;
+		switch (event.type) {
+			case "mousedown":
+				break;
+			case "mousemove":
+				break;
+			case "mouseup":
+				break;
+		}
+	},
+	doGradient(event) {
 		let APP = keane,
 			Self = APP.tools.shape,
 			Drag = Self.drag;
