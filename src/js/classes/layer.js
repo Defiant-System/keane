@@ -92,16 +92,26 @@ class Layer {
 		if (!shapes.length) requestAnimationFrame(finish);
 		// loop all shapes
 		shapes.map((svg, index) => {
+			let offset = 50,
+				o2 = offset * 2,
+				rx = / viewBox="(\d{1,} \d{1,} \d{1,} \d{1,})"/,
+				dim = svg.xml.match(rx),
+				[dX, dY, dW, dH] = dim[1].split(" ").map(a => +a);
+			dX -= offset;
+			dY -= offset;
+			dW += o2;
+			dH += o2;
+
 			let img = new Image,
-				xml = svg.xml.replace(/0 0 100 100/, "-50 -50 200 200"),
+				xml = svg.xml.replace(rx, ` viewBox="${dX} ${dY} ${dW} ${dH}"`),
 				src = "data:image/svg+xml,"+ encodeURIComponent(xml),
 				rotate = svg.getAttribute("rotate"),
-				w = parseInt(svg.style.width, 10) + 100,
-				h = parseInt(svg.style.height, 10) + 100,
+				w = parseInt(svg.style.width, 10) + o2,
+				h = parseInt(svg.style.height, 10) + o2,
 				hW = w >> 1,
 				hH = h >> 1,
-				tX = parseInt(svg.style.left, 10) + hW - 50,
-				tY = parseInt(svg.style.top, 10) + hH - 50;
+				tX = parseInt(svg.style.left, 10) + hW - offset,
+				tY = parseInt(svg.style.top, 10) + hH - offset;
 			// draw svg on canvas
 			img.onload = () => {
 				// draw on canvas
