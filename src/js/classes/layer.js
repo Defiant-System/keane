@@ -93,14 +93,15 @@ class Layer {
 		// loop all shapes
 		shapes.map((svg, index) => {
 			let img = new Image,
-				src = "data:image/svg+xml,"+ encodeURIComponent(svg.xml),
+				xml = svg.xml.replace(/0 0 100 100/, "-50 -50 200 200"),
+				src = "data:image/svg+xml,"+ encodeURIComponent(xml),
 				rotate = svg.getAttribute("rotate"),
-				w = parseInt(svg.style.width, 10),
-				h = parseInt(svg.style.height, 10),
+				w = parseInt(svg.style.width, 10) + 100,
+				h = parseInt(svg.style.height, 10) + 100,
 				hW = w >> 1,
 				hH = h >> 1,
-				tX = parseInt(svg.style.left, 10) + hW,
-				tY = parseInt(svg.style.top, 10) + hH;
+				tX = parseInt(svg.style.left, 10) + hW - 50,
+				tY = parseInt(svg.style.top, 10) + hH - 50;
 			// draw svg on canvas
 			img.onload = () => {
 				// draw on canvas
