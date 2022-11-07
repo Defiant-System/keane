@@ -1073,42 +1073,68 @@ content {
 		}
 
 		.nav {
-			// background: rgba(255,0,0,.35);
+			background: rgba(255,0,0,.35);
 			position: absolute;
 			width: 23px;
-			height: 13px;
+			height: 15px;
 			transform-origin: 50% 50%;
 			pointer-events: all;
 			z-index: 1;
 
+			&.n {
+				top: -21px;
+				left: 50%;
+				width: 29px;
+				transform: translateX(-14px);
+			}
+
 			&.ne {
-				cursor: nwse-resize;
-				top: -13px;
-				left: -19px;
+				top: -15px;
+				left: -20px;
 				transform: rotate(-45deg);
 				cursor: url(~/icons/cursor-ne-rotate.png) 8 8, move;
 			}
 
+			&.e {
+				left: -21px;
+				top: 50%;
+				height: 29px;
+				width: 15px;
+				transform: translateY(-14px);
+			}
+
 			&.nw {
-				cursor: nesw-resize;
-				top: -13px;
-				right: -19px;
+				top: -15px;
+				right: -20px;
 				transform: rotate(45deg);
 				cursor: url(~/icons/cursor-nw-rotate.png) 8 8, move;
 			}
 
+			&.s {
+				bottom: -21px;
+				left: 50%;
+				width: 29px;
+				transform: translateX(-14px);
+			}
+
 			&.sw {
-				cursor: nwse-resize;
-				bottom: -13px;
-				right: -19px;
+				bottom: -15px;
+				right: -20px;
 				transform: rotate(-45deg);
 				cursor: url(~/icons/cursor-sw-rotate.png) 8 8, move;
 			}
 
+			&.w {
+				right: -21px;
+				top: 50%;
+				height: 29px;
+				width: 15px;
+				transform: translateY(-14px);
+			}
+
 			&.se {
-				cursor: nesw-resize;
-				bottom: -13px;
-				left: -19px;
+				bottom: -15px;
+				left: -20px;
 				transform: rotate(45deg);
 				cursor: url(~/icons/cursor-se-rotate.png) 8 8, move;
 			}
