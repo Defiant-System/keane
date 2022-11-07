@@ -69,14 +69,15 @@
 
 				// UI update handle-box
 				let child = el.find(names).get(0),
-					name = child.prop("nodeName");
+					name = child.prop("nodeName"),
+					rc = +Self.shape.attr("rx");
 				if (name === "path" && child.attr("d").split(" ").length === 4) {
 					name = "bezier";
 				}
-				Self.handleBox.data({ type: Self.boxType[name] });
 
 				// prepare drag object
-				let Proj = Projector,
+				let type = Self.boxType[name],
+					Proj = Projector,
 					File = Proj.file,
 					oX = File.oX - Proj.aX,
 					oY = File.oY - Proj.aY,
@@ -93,13 +94,17 @@
 				Self.drag = { el, bEl, offset, oX, oY };
 
 				// show handle-box
-				Self.handleBox.addClass("show").css({
-					top: oY + oTop,
-					left: oX + oLeft,
-					width: oWidth,
-					height: oHeight,
-					transform: `rotate(${angle}deg)`,
-				});
+				Self.handleBox
+					.data({ type })
+					.addClass("show")
+					.css({
+						top: oY + oTop,
+						left: oX + oLeft,
+						width: oWidth,
+						height: oHeight,
+						transform: `rotate(${angle}deg)`,
+						"--rc": `${rc-4}px`,
+					});
 
 				// hide from layer & show SVG version
 				el.addClass("transforming");
