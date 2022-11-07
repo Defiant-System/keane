@@ -31,12 +31,11 @@
 			case "select-option":
 				Self.option = event.arg || "shape";
 				break;
-			case "focus-shape-gradient":
+			case "focus-shape":
 				// UI update handle-box
 				let names = Object.keys(Self.boxType).join(","),
 					child = event.el.find(names).get(0),
 					name = child.prop("nodeName"),
-					type = Self.boxType[name],
 					cn = ["show"],
 					radius = +child.attr("rx"),
 					angle = event.el.attr("rotate") || 0,
@@ -52,6 +51,7 @@
 				if (name === "path" && child.attr("d").split(" ").length === 4) {
 					name = "bezier";
 				}
+
 				// reference to selected shape
 				Self.svgItem = event.el;
 				Self.shape = child;
@@ -66,7 +66,8 @@
 					let xNode = event.el.find(fill.slice(5,-2)),
 						gradientType = xNode.prop("nodeName"),
 						top, left, width,
-						dx, dy;
+						dx, dy,
+						angle;
 					switch (gradientType) {
 						case "radialGradient":
 							top = (+xNode.attr("cy") * event.oHeight) + 1;
@@ -97,23 +98,38 @@
 				// update tool options bar
 				Self.dispatch({
 					type: "update-tool-options",
+					strokeWidth: +child.attr("stroke-width"),
 					fill,
 					stroke,
-					strokeWidth: +child.attr("stroke-width"),
+					angle,
+					radius,
+					css,
 				});
 				// show handle-box
 				Self.handleBox
 					.removeClass("has-gradient")
 					.addClass(cn.join(" "))
-					.data({ type })
+					.data({ type: Self.boxType[name] })
 					.css(css);
 				break;
 			case "update-tool-options":
 				Self.rootEl.find(".fill-color").css({ "--color": event.fill });
 				Self.rootEl.find(".stroke-color").css({ "--color": event.stroke });
-
+				// stroke width
 				el = Self.rootEl.find(`.option[data-arg="stroke-width"]`);
 				el.find(`.value`).html(`${event.strokeWidth}${el.data("suffix")}`);
+
+				el = Self.rootEl.find(".shape-width");
+				el.html(`${event.css.width}${el.data("suffix")}`);
+
+				el = Self.rootEl.find(".shape-height");
+				el.html(`${event.css.height}${el.data("suffix")}`);
+
+				el = Self.rootEl.find(".shape-rotation");
+				el.html(`${event.angle}${el.data("suffix")}`);
+
+				el = Self.rootEl.find(".shape-radius");
+				el.html(`${event.radius}${el.data("suffix")}`);
 				break;
 
 			case "enable":
@@ -164,7 +180,7 @@
 				Self.drag = { el, bEl, offset, oX, oY };
 
 				Self.dispatch({
-					type: "focus-shape-gradient",
+					type: "focus-shape",
 					oTop: oY + oTop,
 					oLeft: oX + oLeft,
 					oWidth: parseInt(el.css("width"), 10),
