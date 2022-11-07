@@ -30,6 +30,45 @@
 			case "select-option":
 				Self.option = event.arg || "shape";
 				break;
+			case "focus-shape-gradient":
+				// UI update handle-box
+				let names = Object.keys(Self.boxType).join(","),
+					child = event.el.find(names).get(0),
+					name = child.prop("nodeName"),
+					type = Self.boxType[name],
+					cn = ["show"],
+					radius = +child.attr("rx"),
+					angle = event.el.attr("rotate") || 0,
+					css = {
+						top: event.oTop,
+						left: event.oLeft,
+						width: event.oWidth,
+						height: event.oHeight,
+						transform: `rotate(${angle}deg)`,
+						"--rc": `${radius-4}px`,
+					};
+				// this is temp solution
+				if (name === "path" && child.attr("d").split(" ").length === 4) {
+					name = "bezier";
+				}
+				// reference to selected shape
+				Self.svgItem = event.el;
+				Self.shape = child;
+
+				// shape has gradient
+				let fill = Self.shape.css("fill");
+				if (fill.startsWith("url(")) {
+					console.log( "gradient" );
+				} else {
+					console.log( "solid color" );
+				}
+
+				// show handle-box
+				Self.handleBox
+					.addClass(cn.join(" "))
+					.data({ type })
+					.css(css);
+				break;
 			case "enable":
 				// set default cursor for this tool
 				APP.els.content.addClass("cursor-crosshair");
@@ -55,37 +94,21 @@
 				// prevent default behaviour
 				event.preventDefault();
 
-				let el = $(event.target),
-					names = Object.keys(Self.boxType).join(",");
+				let el = $(event.target);
 				// reset reference
 				Self.svgItem = undefined;
 				Self.shape = undefined;
 				
 				if (!el.hasClass("shape")) el = el.parents(".shape");
 				if (!el.length) return Self.handleBox.removeClass("show");
-				// reference to selected shape
-				Self.svgItem = el;
-				Self.shape = el.find(names);
-
-				// UI update handle-box
-				let child = el.find(names).get(0),
-					name = child.prop("nodeName"),
-					rc = +Self.shape.attr("rx");
-				if (name === "path" && child.attr("d").split(" ").length === 4) {
-					name = "bezier";
-				}
 
 				// prepare drag object
-				let type = Self.boxType[name],
-					Proj = Projector,
+				let Proj = Projector,
 					File = Proj.file,
 					oX = File.oX - Proj.aX,
 					oY = File.oY - Proj.aY,
 					oTop = parseInt(el.css("top"), 10),
 					oLeft = parseInt(el.css("left"), 10),
-					oWidth = parseInt(el.css("width"), 10),
-					oHeight = parseInt(el.css("height"), 10),
-					angle = el.attr("rotate") || 0,
 					bEl = Self.handleBox,
 					offset = {
 						y: oTop - event.clientY,
@@ -93,18 +116,14 @@
 					};
 				Self.drag = { el, bEl, offset, oX, oY };
 
-				// show handle-box
-				Self.handleBox
-					.data({ type })
-					.addClass("show")
-					.css({
-						top: oY + oTop,
-						left: oX + oLeft,
-						width: oWidth,
-						height: oHeight,
-						transform: `rotate(${angle}deg)`,
-						"--rc": `${rc-4}px`,
-					});
+				Self.dispatch({
+					type: "focus-shape-gradient",
+					oTop: oY + oTop,
+					oLeft: oX + oLeft,
+					oWidth: parseInt(el.css("width"), 10),
+					oHeight: parseInt(el.css("height"), 10),
+					el,
+				});
 
 				// hide from layer & show SVG version
 				el.addClass("transforming");

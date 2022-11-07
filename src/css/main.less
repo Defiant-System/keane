@@ -1066,6 +1066,17 @@ content {
 		&.show {
 			display: block;
 		}
+
+		&.has-gradient {
+			--g-top: 11px;
+			--g-left: 51px;
+			--g-width: 80px;
+			--g-angle: 90deg;
+			
+			.gradient-tool {
+				display: block;
+			}
+		}
 		
 		&:before {
 			content: "";
@@ -1290,11 +1301,7 @@ content {
 		}
 
 		.gradient-tool {
-			--g-top: 11px;
-			--g-left: 51px;
-			--g-width: 80px;
-			--g-angle: 90deg;
-
+			display: none;
 			position: absolute;
 			height: 0;
 			border-top: 1px solid rgba(255,255,255,.65);
@@ -1305,10 +1312,6 @@ content {
 			left: var( --g-left );
 			width: var( --g-width );
 			transform: rotate( var( --g-angle ) );
-
-			&.hidden {
-				display: none;
-			}
 
 			.handle {
 				width: 7px;
