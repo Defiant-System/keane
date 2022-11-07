@@ -4,6 +4,7 @@
 {
 	init() {
 		// fast references
+		this.rootEl = window.find(`.tool-options-shape`);
 		this.handleBox = keane.els.handleBox;
 		// handle-box types
 		this.boxType = {
@@ -22,7 +23,8 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = APP.tools.shape;
+			Self = APP.tools.shape,
+			el;
 		// console.log(event);
 		switch (event.type) {
 			// custom events
@@ -57,10 +59,8 @@
 				// shape has gradient
 				let fill = Self.shape.css("fill"),
 					stroke = Self.shape.css("stroke");
-
-				console.log( "fill color", fill );
-				console.log( "stroke color", stroke );
-				
+				if (fill === "none") fill = "rgba(0,0,0,0)";
+				if (stroke === "none") stroke = "rgba(0,0,0,0)";
 				
 				if (fill.startsWith("url(")) {
 					let xNode = event.el.find(fill.slice(5,-2)),
@@ -89,10 +89,18 @@
 					css["--g-angle"] = `${angle}deg`;
 					// add to class names
 					cn.push("has-gradient");
-				} else {
-					// console.log( "fill color", ColorLib.rgbToHex(fill) );
-				}
 
+					fill = ColorLib.gradientToStrip(xNode);
+				} else {
+					fill = ColorLib.rgbToHex(fill);
+				}
+				// update tool options bar
+				Self.dispatch({
+					type: "update-tool-options",
+					fill,
+					stroke,
+					strokeWidth: +child.attr("stroke-width"),
+				});
 				// show handle-box
 				Self.handleBox
 					.removeClass("has-gradient")
@@ -100,6 +108,14 @@
 					.data({ type })
 					.css(css);
 				break;
+			case "update-tool-options":
+				Self.rootEl.find(".fill-color").css({ "--color": event.fill });
+				Self.rootEl.find(".stroke-color").css({ "--color": event.stroke });
+
+				el = Self.rootEl.find(`.option[data-arg="stroke-width"]`);
+				el.find(`.value`).html(`${event.strokeWidth}${el.data("suffix")}`);
+				break;
+
 			case "enable":
 				// set default cursor for this tool
 				APP.els.content.addClass("cursor-crosshair");

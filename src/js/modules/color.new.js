@@ -50,8 +50,9 @@ const ColorLib = {
 		if (typeof rgb === "string") rgb = this.parseRgb(rgb);
 		let r = this.intToHex(Math.round(rgb.r)),
 			g = this.intToHex(Math.round(rgb.g)),
-			b = this.intToHex(Math.round(rgb.b));
-		return `#${r}${g}${b}`;
+			b = this.intToHex(Math.round(rgb.b)),
+			a = this.intToHex(Math.round(rgb.a));
+		return `#${r}${g}${b}${a}`;
 	},
 	rgbToHsl(rgb) {
 		let r = rgb.r / 255,
@@ -126,10 +127,28 @@ const ColorLib = {
 	parseRgb(str) {
 		let s = str.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\.\d]+)\)$/);
 		if (!s) s = str.match(/^rgb?\((\d+),\s*(\d+),\s*(\d+)\)$/);
-		let a = Math.round((+s[4] || 1) * 255),
+		let v = +s[4],
+			a = Math.round((isNaN(v) ? 1 : v) * 255),
 			r = +s[1],
 			g = +s[2],
 			b = +s[3];
 		return { r, g, b, a };
+	},
+	gradientToStrip(xNode) {
+		let stops = this.gradientToStops(xNode);
+		return this.stopsToStrip(stops);
+	},
+	gradientToStops(xNode) {
+		return xNode.find("stop").map((x, index) => ({
+			index,
+			xNode: $(x),
+			offset: parseInt(x.getAttribute("offset"), 10),
+			color: x.getAttribute("stop-color"),
+		}));
+	},
+	stopsToStrip(stops) {
+		// gradient
+		let strip = stops.map(stop => `${stop.color} ${stop.offset}%`);
+		return `linear-gradient(to right, ${strip.join(",")})`;
 	}
 };
