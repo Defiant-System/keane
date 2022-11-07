@@ -58,13 +58,39 @@
 				// shape has gradient
 				let fill = Self.shape.css("fill");
 				if (fill.startsWith("url(")) {
-					console.log( "gradient" );
+					let xNode = event.el.find(fill.slice(5,-2)),
+						gradientType = xNode.prop("nodeName"),
+						top, left, width,
+						dx, dy;
+					switch (gradientType) {
+						case "radialGradient":
+							top = (+xNode.attr("cy") * event.oHeight) + 1;
+							left = (+xNode.attr("cx") * event.oWidth) + 1;
+							width = +xNode.attr("r") * event.oWidth;
+							angle = 45;
+							break;
+						case "linearGradient":
+							top = ((+xNode.attr("y1") || 0) * event.oHeight) + 1;
+							left = ((+xNode.attr("x1") || 0) * event.oWidth) + 1;
+							dy = (+xNode.attr("y2") * event.oHeight) - top + 1;
+							dx = (+xNode.attr("x2") * event.oWidth) - left + 1;
+							width = Math.round(Math.sqrt(dx*dx + dy*dy));
+							angle = Math.round(Math.atan2(dy, dx) * (180 / Math.PI));
+							break;
+					}
+					css["--g-top"] = `${top}px`;
+					css["--g-left"] = `${left}px`;
+					css["--g-width"] = `${width}px`;
+					css["--g-angle"] = `${angle}deg`;
+					// add to class names
+					cn.push("has-gradient");
 				} else {
-					console.log( "solid color" );
+					console.log( "solid color", ColorLib.rgbToHex(fill) );
 				}
 
 				// show handle-box
 				Self.handleBox
+					.removeClass("has-gradient")
 					.addClass(cn.join(" "))
 					.data({ type })
 					.css(css);
