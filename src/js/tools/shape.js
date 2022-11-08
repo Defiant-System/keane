@@ -174,16 +174,17 @@
 					oLeft = parseInt(el.css("left"), 10),
 					oHeight = parseInt(el.css("height"), 10),
 					oWidth = parseInt(el.css("width"), 10),
-					bEl = Self.handleBox,
+					bEl = Self.handleBox.addClass("hide"),
 					offset = {
-						el,
-						w: oWidth,
-						h: oHeight,
 						y: oTop - event.clientY,
 						x: oLeft - event.clientX,
 					},
 					guides = new Guides({
-						offset,
+						offset: {
+							el: el[0],
+							w: oWidth,
+							h: oHeight,
+						},
 						gH: File.rulers.guides.horizontal,
 						gV: File.rulers.guides.vertical,
 					});
@@ -212,9 +213,9 @@
 				break;
 			case "mousemove":
 				let pos = {
-					top: event.clientY + Drag.offset.y,
-					left: event.clientX + Drag.offset.x,
-				};
+						top: event.clientY + Drag.offset.y,
+						left: event.clientX + Drag.offset.x,
+					};
 				// "filter" position with guide lines
 				Drag.guides.snapPos(pos);
 				// move dragged object
@@ -226,6 +227,8 @@
 				Drag.bEl.css(pos);
 				break;
 			case "mouseup":
+				// show handle-box
+				Self.handleBox.removeClass("hide");
 				// re-render layer
 				Projector.file.activeLayer.renderShapes({ all: true });
 				// uncover app UI

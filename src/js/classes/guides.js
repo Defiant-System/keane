@@ -17,6 +17,8 @@ class Guides {
 				// default selector & context
 				selector: opt.selector || Guides.selector,
 				context: opt.context || Guides.context,
+				coY: 108,
+				coX: 18,
 				// offsets origo
 				x: 0,
 				y: 0,
@@ -326,12 +328,15 @@ class Guides {
 			}
 		});
 		// apply UI update
+		if (vert.left > -1) vert.left += this.opts.COX;
 		this.lines.vertical.css(vert);
+
+		if (hori.top > -1) hori.top += this.opts.coY;
 		this.lines.horizontal.css(hori);
 	}
 
 	reset() {
-		let data = { top: -99, left: -99, width: 1, height: 1 };
+		let data = { top: -9999, left: -9999, width: 1, height: 1 };
 		this.lines.vertical.css(data);
 		this.lines.horizontal.css(data);
 		this.lines.diagonal.css(data);

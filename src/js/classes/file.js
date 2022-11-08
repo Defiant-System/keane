@@ -16,8 +16,8 @@ class File {
 			show: true,
 			guides: {
 				show: true,
-				horizontal: [130],
-				vertical: [280],
+				horizontal: [],
+				vertical: [],
 			}
 		};
 
