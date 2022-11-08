@@ -119,10 +119,13 @@ content {
 	}
 
 	&.show-rulers {
-		.cvs-wrapper .cvs-overlay {
-			top: 90px;
-			left: 18px;
+		.cvs-wrapper {
+			.cvs-helpers {
+				top: 90px;
+				left: 18px;
+			}
 		}
+
 		.workspace {
 			.ruler-guides { display: block; }
 			.status-bar { left: 18px; }
@@ -1042,311 +1045,7 @@ content {
 		}
 	}
 
-	.handle-box {
-		display: none;
-		position: absolute;
-		z-index: 99;
-		pointer-events: none;
-		--rotate: 0deg;
-		transform: rotate( var( --rotate ) );
-
-		&[data-type="box"] {
-			.rot { display: block; }
-		}
-
-		&[data-type="rectangle"] {
-			--rc: 5px;
-
-			.rot,
-			.handle.rc { display: block; }
-		}
-
-		&[data-type="line"] {
-			&:before { box-shadow: 0 0 0; }
-			.handle { display: none; }
-			.handle.line { display: block; }
-		}
-
-		&[data-type="bezier"] {
-			&:before { box-shadow: 0 0 0; }
-			.handle { display: none; }
-			.handle.line.ap,
-			.handle.line { display: block; }
-		}
-
-		&.show {
-			display: block;
-		}
-
-		&.hide {
-			opacity: 0;
-		}
-
-		&.has-gradient {
-			--g-top: 11px;
-			--g-left: 51px;
-			--g-width: 80px;
-			--g-angle: 90deg;
-
-			.gradient-tool {
-				display: block;
-			}
-		}
-		
-		&:before {
-			content: "";
-			position: absolute;
-			top: -1px;
-			left: -1px;
-			right: -1px;
-			bottom: -1px;
-			box-shadow: 0 0 0 1px rgba(#000, .5),
-						0 0 0 2px rgba(#fff, .35),
-						inset 0 0 0 1px rgba(#fff, .35);
-		}
-
-		.rot {
-			// background: rgba(255,0,0,.35);
-			display: none;
-			position: absolute;
-			width: 23px;
-			height: 15px;
-			transform-origin: 50% 50%;
-			pointer-events: all;
-			z-index: 1;
-
-			&.n {
-				top: -21px;
-				left: 50%;
-				width: 29px;
-				transform: translateX(-14px);
-				cursor: url(~/icons/cursor-n-rotate.png) 9 8, move;
-			}
-
-			&.ne {
-				top: -15px;
-				left: -20px;
-				transform: rotate(-45deg);
-				cursor: url(~/icons/cursor-ne-rotate.png) 8 8, move;
-			}
-
-			&.e {
-				left: -21px;
-				top: 50%;
-				height: 29px;
-				width: 15px;
-				transform: translateY(-14px);
-				cursor: url(~/icons/cursor-e-rotate.png) 8 9, move;
-			}
-
-			&.nw {
-				top: -15px;
-				right: -20px;
-				transform: rotate(45deg);
-				cursor: url(~/icons/cursor-nw-rotate.png) 8 8, move;
-			}
-
-			&.s {
-				bottom: -21px;
-				left: 50%;
-				width: 29px;
-				transform: translateX(-14px);
-				cursor: url(~/icons/cursor-s-rotate.png) 9 8, move;
-			}
-
-			&.sw {
-				bottom: -15px;
-				right: -20px;
-				transform: rotate(-45deg);
-				cursor: url(~/icons/cursor-sw-rotate.png) 8 8, move;
-			}
-
-			&.w {
-				right: -21px;
-				top: 50%;
-				height: 29px;
-				width: 15px;
-				transform: translateY(-14px);
-				cursor: url(~/icons/cursor-w-rotate.png) 8 9, move;
-			}
-
-			&.se {
-				bottom: -15px;
-				left: -20px;
-				transform: rotate(45deg);
-				cursor: url(~/icons/cursor-se-rotate.png) 8 8, move;
-			}
-		}
-
-		.handle {
-			position: absolute;
-			width: 9px;
-			height: 9px;
-			z-index: 2;
-			background: #fff;
-			border: 1px solid #333;
-			pointer-events: all;
-
-			--top-1: 97px;
-			--left-1: 0;
-			--deg-1: -82deg;
-			--width-1: 151px;
-			--top-2: 3px;
-			--left-2: 100px;
-			--deg-2: 97deg;
-			--width-2: 81px;
-
-			&.n    { cursor: ns-resize; top: -6px; left: 50%; transform: translateX(-4px); }
-			&.nw   { cursor: nesw-resize; top: -6px; right: -6px; }
-			&.w    { cursor: ew-resize; top: 50%; right: -6px; transform: translateY(-4px); }
-			&.sw   { cursor: nwse-resize; bottom: -6px; right: -6px;  }
-			&.s    { cursor: ns-resize; bottom: -6px; left: 50%; transform: translateX(-4px); }
-			&.se   { cursor: nesw-resize; bottom: -6px; left: -6px; }
-			&.e    { cursor: ew-resize; top: 50%; left: -6px; transform: translateY(-4px); }
-			&.ne   { cursor: nwse-resize; top: -6px; left: -6px; }
-
-			&.line {
-				display: none;
-				width: 8px;
-				height: 8px;
-				background: transparent;
-				border-color: transparent;
-				// opacity: .4;
-				
-				&[data-i="1"] {
-					transform: translateX(-4px) translateY(-4px);
-					top: var( --top-1 );
-					left: var( --left-1 );
-
-					.ap {
-						transform: rotate( var( --deg-1 ) );
-						width: var( --width-1 );
-					}
-				}
-
-				&[data-i="2"] {
-					transform: translateX(-4px) translateY(-4px);
-					top: var( --top-2 );
-					left: var( --left-2 );
-
-					.ap {
-						transform: rotate( var( --deg-2 ) );
-						width: var( --width-2 );
-					}
-				}
-
-				&[data-i="1"]:after,
-				&[data-i="2"]:after {
-					content: "";
-					position: absolute;
-					top: -1px;
-					left: -1px;
-					right: -1px;
-					bottom: -1px;
-					z-index: 2;
-					background: #fff;
-					border: 1px solid rgba(0,0,0,.85);
-					cursor: crosshair;
-				}
-
-				.ap {
-					display: none;
-					position: absolute;
-					top: 3px;
-					left: 3px;
-					height: 0;
-					z-index: 1;
-					pointer-events: none;
-					border-top: 1px solid #3583d0;
-					transform-origin: 0 0;
-
-					&:after {
-						content: "";
-						position: absolute;
-						top: -5px;
-						right: -5px;
-						width: 7px;
-						height: 7px;
-						background: #fff;
-						border-radius: 50%;
-						border: 1px solid rgba(0,0,0,.85);
-						pointer-events: all;
-						cursor: crosshair;
-					}
-				}
-			}
-
-			&.rc {
-				display: none;
-				border-radius: 50%;
-				width: 8px;
-				height: 8px;
-				transform: translateX(-4px) translateY(-4px);
-				z-index: 2;
-
-				&.ne {
-					cursor: nwse-resize;
-					top: calc( var(--rc) + 4px );
-					left: calc( var(--rc) + 4px );
-				}
-
-				&.nw {
-					cursor: nesw-resize;
-					top: calc( var(--rc) + 4px );
-					right: calc( var(--rc) - 4px );
-				}
-
-				&.sw {
-					cursor: nwse-resize;
-					bottom: calc( var(--rc) - 4px );
-					right: calc( var(--rc) - 4px );
-				}
-
-				&.se {
-					cursor: nesw-resize;
-					bottom: calc( var(--rc) - 4px );
-					left: calc( var(--rc) + 4px );
-				}
-			}
-		}
-
-		.gradient-tool {
-			display: none;
-			position: absolute;
-			height: 0;
-			border-top: 1px solid rgba(255,255,255,.65);
-			filter: drop-shadow(0 0 1px rgba(0,0,0,.25));
-			transform-origin: 0 0;
-			z-index: 2;
-			top: var( --g-top );
-			left: var( --g-left );
-			width: var( --g-width );
-			transform: rotate( var( --g-angle ) );
-
-			.handle {
-				width: 7px;
-				height: 7px;
-				cursor: move;
-				border: 1px solid rgba(0,150,0,.85);
-
-				&.p1 {
-					top: -4px;
-					left: -4px;
-					border-radius: 50%;
-					cursor: url(~/icons/cursor-crosshair.png) 8 8, crosshair;
-				}
-
-				&.p2 {
-					top: -4px;
-					right: -4px;
-					cursor: url(~/icons/cursor-s-rotate.png) 9 8, move;
-				}
-			}
-		}
-	}
-
 	.vector-layer {
-		// display: none;
 		// background: rgba(255,0,0,.25);
 		position: absolute;
 		overflow: hidden;
@@ -1396,18 +1095,6 @@ content {
 				border-radius: 5px;
 			}
 		}
-
-		.cvs-overlay {
-			// background: rgba(255,0,0,.5);
-			position: absolute;
-			top: 72px;
-			left: 0;
-			right: 273px;
-			bottom: 0;
-			overflow: hidden;
-			z-index: 10;
-			pointer-events: none;
-		}
 	}
 
 	.workspace {
@@ -1427,7 +1114,6 @@ content {
 			right: 273px;
 			pointer-events: none;
 			z-index: 5;
-			--line-color: #00bff0;
 			--ruler-width: 18px;
 
 			.top-over {
@@ -1465,7 +1151,7 @@ content {
 			}
 
 			.lineH {
-				background: var( --line-color );
+				background: var( --guide-color );
 				position: absolute;
 				top: -999px;
 				left: var( --ruler-width );
@@ -1485,7 +1171,7 @@ content {
 			}
 
 			.lineV {
-				background: var( --line-color );
+				background: var( --guide-color );
 				position: absolute;
 				left: -999px;
 				top: var( --ruler-width );
@@ -2391,7 +2077,7 @@ content {
 								width: inherit;
 								height: inherit;
 								background-size: 13px 13px;
-								opacity: .6;
+								opacity: 1;
 							}
 						}
 					}
@@ -2581,6 +2267,7 @@ content {
 
 
 	// imports
+	@import "cvs-helpers";
 	@import "inline-menubox";
 	@import "inline-dialog";
 

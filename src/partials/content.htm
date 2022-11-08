@@ -1,4 +1,4 @@
-<content class="show-rulers" style="--fg-color: #3b73c7; --bg-color: #000000;">
+<content class="show-rulers">
 	<!-- shown if no file is opened -->
 	<div class="blank-view" data-section="blankView">
 		<!-- blank view HTML goes here -->
@@ -7,41 +7,7 @@
 	<!-- shown if any file or blank file is in view -->
 	<div class="cvs-wrapper">
 		<canvas class="canvas" width="1" height="1"></canvas>
-
-		<div class="cvs-overlay">
-			<div class="handle-box" data-type="bezier">
-				<span class="handle n"></span>
-				<span class="handle nw"></span>
-				<span class="handle w"></span>
-				<span class="handle sw"></span>
-				<span class="handle s"></span>
-				<span class="handle se"></span>
-				<span class="handle e"></span>
-				<span class="handle ne"></span>
-				<!-- rotation -->
-				<span class="rot n"></span>
-				<span class="rot ne"></span>
-				<span class="rot w"></span>
-				<span class="rot nw"></span>
-				<span class="rot s"></span>
-				<span class="rot se"></span>
-				<span class="rot e"></span>
-				<span class="rot sw"></span>
-				<!-- radius -->
-				<span class="handle rc ne"></span>
-				<span class="handle rc nw"></span>
-				<span class="handle rc se"></span>
-				<span class="handle rc sw"></span>
-				<!-- bezier / line anchor point + handle -->
-				<span class="handle line" data-i="1"><i class="handle line ap"></i></span>
-				<span class="handle line" data-i="2"><i class="handle line ap"></i></span>
-				<!-- gradient -->
-				<div class="gradient-tool">
-					<span class="handle p1"></span>
-					<span class="handle p2"></span>		
-				</div>
-			</div>
-		</div>
+		@import "cvs-helpers.htm"
 	</div>
 	
 	<div class="tools-bar" data-click="select-tool">

@@ -29,7 +29,7 @@
 let Pref = {
 	guides: {
 		show: true,
-		color: "#00bff0",
+		color: "#3583d0",
 	},
 	grid: {
 		show: false,

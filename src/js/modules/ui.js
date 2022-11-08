@@ -16,6 +16,8 @@ const UI = {
 			iAlpha: dlg.find(`input[name="color-opacity"]`),
 			iHex: dlg.find(`input[name="color-hex"]`),
 		};
+		// global css variables
+		this.content.css({ "--guide-color": Pref.guides.color });
 
 		// bind event handlers
 		this.content.on("click", ".option .value", this.dispatch);
