@@ -114,16 +114,19 @@
 		<xsl:attribute name="data-id"><xsl:value-of select="@id"/></xsl:attribute>
 		<xsl:choose>
 			<xsl:when test="./*[@type = 'folder']">
-				<div class="icon icon-folder"></div>
+				<i class="icon icon-folder"></i>
 			</xsl:when>
 			<xsl:when test="./*[@type = 'text']">
-				<div class="icon icon-text"></div>
+				<i class="icon icon-text"></i>
 			</xsl:when>
 			<xsl:otherwise>
 				<div class="thumbnail"><canvas></canvas></div>
 			</xsl:otherwise>
 		</xsl:choose>
-		<div class="name"><xsl:value-of select="@name"/></div>
+		<div class="name">
+			<xsl:if test="@type = 'vector'"><i class="icon icon-vector-layer"></i></xsl:if>
+			<xsl:value-of select="@name"/>
+		</div>
 		<div data-click="toggle-visibility">
 			<xsl:attribute name="class">icon
 				<xsl:if test="@state = 'hidden'"> icon-eye-off</xsl:if>

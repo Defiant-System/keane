@@ -44,7 +44,7 @@
 						left: event.oLeft,
 						width: event.oWidth,
 						height: event.oHeight,
-						transform: `rotate(${angle}deg)`,
+						"--rotate": `${angle}deg`,
 						"--rc": `${radius-4}px`,
 					};
 				// this is temp solution
@@ -322,23 +322,117 @@
 			Drag = Self.drag;
 		switch (event.type) {
 			case "mousedown":
+				// prepare values
+				let el = Self.svgItem,
+					bEl = Self.handleBox.addClass("hide"),
+					type = event.target.className.split(" ")[1],
+					angle = parseInt(bEl.cssProp("--rotate"), 10) + event.clientY;
+				// create drag object
+				Self.drag = {
+					el,
+					bEl,
+					type,
+					angle,
+				};
+
+				// hide from layer & show SVG version
+				Self.svgItem.addClass("transforming");
+				// re-render layer
+				Projector.file.activeLayer.renderShapes({ noEmit: true });
+				// cover layout
+				APP.els.content.addClass("cover no-cursor");
+				// bind event
+				UI.doc.on("mousemove mouseup", Self.doRotate);
 				break;
 			case "mousemove":
+				let rotate = event.clientY - Drag.angle;
+				Drag.el.css({ "--rotate": `${rotate}deg` });
 				break;
 			case "mouseup":
+				// reset handle-box
+				Drag.bEl.removeClass("hide");
+				// re-render layer
+				Projector.file.activeLayer.renderShapes({ all: true });
+				// uncover layout
+				APP.els.content.removeClass("cover no-cursor");
+				// unbind event
+				UI.doc.off("mousemove mouseup", Self.doRotate);
 				break;
 		}
 	},
 	doGradient(event) {
 		let APP = keane,
 			Self = APP.tools.shape,
-			Drag = Self.drag;
+			Drag = Self.drag,
+			Gradient = Self.gradient;
 		switch (event.type) {
 			case "mousedown":
+				let el = $(event.target).parent(),
+					type = event.target.className.split(" ")[1],
+					[a, b] = el.css("transform").split("(")[1].split(")")[0].split(","),
+					rad = Math.atan2(a, b),
+					x = +el.prop("offsetLeft"),
+					y = +el.prop("offsetTop"),
+					r = +el.prop("offsetWidth"),
+					width = parseInt(Self.shape.css("width"), 10),
+					height = parseInt(Self.shape.css("height"), 10);
+				// create drag object
+				Self.drag = {
+					el,
+					type,
+					origo: { x, y, r },
+					click: {
+						x: event.clientX,
+						y: event.clientY,
+					},
+					offset: {
+						width,
+						height,
+						y: y + r * Math.cos(rad),
+						x: x + r * Math.sin(rad),
+					},
+					_round: Math.round,
+					_sqrt: Math.sqrt,
+					_atan2: Math.atan2,
+					_PI: 180 / Math.PI,
+				};
+				// prevent mouse from triggering mouseover
+				APP.els.content.addClass("cover no-cursor");
+				// bind event handlers
+				UI.doc.on("mousemove mouseup", Self.doGradient);
 				break;
 			case "mousemove":
+				if (Drag.type === "p1") {
+					let dY = event.clientY - Drag.click.y,
+						dX = event.clientX - Drag.click.x,
+						top = dY + Drag.origo.y,
+						left = dX + Drag.origo.x,
+						y2 = dY + Drag.offset.y,
+						x2 = dX + Drag.offset.x,
+						oW = Drag.offset.width,
+						oH = Drag.offset.height;
+					Drag.el.css({ top, left });
+					// UI change gradient
+					// Gradient.moveP1(left/oW, top/oH, x2/oW, y2/oH);
+				} else {
+					// rotate
+					let y = event.clientY - Drag.click.y + Drag.offset.y - Drag.origo.y,
+						x = event.clientX - Drag.click.x + Drag.offset.x - Drag.origo.x,
+						deg = Drag._round(Drag._atan2(y, x) * Drag._PI),
+						width = Drag._sqrt(y*y + x*x),
+						oW = Drag.offset.width,
+						oH = Drag.offset.height;
+					if (deg < 0) deg += 360;
+					Drag.el.css({ width, transform: `rotate(${deg}deg)` });
+					// UI change gradient
+					// Gradient.moveP2((Drag.origo.x+x)/oW, (Drag.origo.y+y)/oH, width/oW);
+				}
 				break;
 			case "mouseup":
+				// uncover app UI
+				APP.els.content.removeClass("cover no-cursor");
+				// unbind event handler
+				UI.doc.off("mousemove mouseup", Self.doGradient);
 				break;
 		}
 	},
@@ -355,6 +449,7 @@
 				// proxy event, if needed
 				if (el.hasClass("rc")) return Self.doRadius(event);
 				if (el.hasClass("rot")) return Self.doRotate(event);
+				if (el.parent().hasClass("gradient-tool")) return Self.doGradient(event);
 
 				// prepare values
 				let bEl = Self.handleBox,
@@ -384,7 +479,7 @@
 					_min: Math.min,
 				};
 				// cover layout
-				APP.els.content.addClass("cover");
+				APP.els.content.addClass("cover no-cursor");
 				// bind event
 				UI.doc.on("mousemove mouseup", Self.doResize);
 				break;
@@ -418,7 +513,7 @@
 				break;
 			case "mouseup":
 				// uncover layout
-				APP.els.content.removeClass("cover");
+				APP.els.content.removeClass("cover no-cursor");
 				// unbind event
 				UI.doc.off("mousemove mouseup", Self.doResize);
 				break;

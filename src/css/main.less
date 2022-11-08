@@ -673,6 +673,7 @@ content {
 		&.icon-rect-radius      { background-image: url(~/icons/icon-rect-radius.png); }
 		&.icon-eye-on           { background-image: url(~/icons/icon-eye-on.png); }
 		&.icon-eye-off          { background-image: url(~/icons/icon-eye-off.png); }
+		&.icon-vector-layer     { background-image: url(~/icons/icon-vector-layer.png); }
 		&.icon-selection-ring   { background-image: url(~/icons/icon-selection-ring.png); }
 		&.icon-new              { background-image: url(~/icons/icon-new.png); }
 		&.icon-clipboard        { background-image: url(~/icons/icon-clipboard.png); }
@@ -1046,6 +1047,8 @@ content {
 		position: absolute;
 		z-index: 99;
 		pointer-events: none;
+		--rotate: 0deg;
+		transform: rotate( var( --rotate ) );
 
 		&[data-type="box"] {
 			.rot { display: block; }
@@ -1073,6 +1076,10 @@ content {
 
 		&.show {
 			display: block;
+		}
+
+		&.hide {
+			opacity: 0;
 		}
 
 		&.has-gradient {
@@ -1323,16 +1330,16 @@ content {
 				border: 1px solid rgba(0,150,0,.85);
 
 				&.p1 {
-					cursor: move;
 					top: -4px;
 					left: -4px;
 					border-radius: 50%;
+					cursor: url(~/icons/cursor-crosshair.png) 8 8, crosshair;
 				}
 
 				&.p2 {
 					top: -4px;
 					right: -4px;
-					cursor: ns-resize;
+					cursor: url(~/icons/cursor-s-rotate.png) 9 8, move;
 				}
 			}
 		}
@@ -2372,6 +2379,21 @@ content {
 					.name {
 						flex: 1;
 						padding: 8px 0 0 7px;
+
+						.icon-vector-layer {
+							width: 13px;
+							height: 13px;
+							margin: 0 11px 0 5px;
+
+							&:after {
+								top: 2px;
+								left: -5px;
+								width: inherit;
+								height: inherit;
+								background-size: 13px 13px;
+								opacity: .6;
+							}
+						}
 					}
 
 					.thumbnail {
