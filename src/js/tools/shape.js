@@ -184,6 +184,8 @@
 							el: el[0],
 							w: oWidth,
 							h: oHeight,
+							coY: oY,
+							coX: oX,
 						},
 						gH: File.rulers.guides.horizontal,
 						gV: File.rulers.guides.vertical,
@@ -227,6 +229,8 @@
 				Drag.bEl.css(pos);
 				break;
 			case "mouseup":
+				// hide guides
+				Drag.guides.reset();
 				// show handle-box
 				Self.handleBox.removeClass("hide");
 				// re-render layer

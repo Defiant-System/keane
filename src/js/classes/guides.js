@@ -17,8 +17,8 @@ class Guides {
 				// default selector & context
 				selector: opt.selector || Guides.selector,
 				context: opt.context || Guides.context,
-				coY: 108,
-				coX: 18,
+				coY: 0,
+				coX: 0,
 				// offsets origo
 				x: 0,
 				y: 0,
@@ -44,12 +44,6 @@ class Guides {
 					h = parseInt(el.css("height"), 10),
 					mh = h >> 1,
 					mw = w >> 1;
-				if (el.hasClass("xl-table")) {
-					w += 1;
-					h += 1;
-					mh = h >> 1;
-					mw = w >> 1;
-				}
 				if (!isNaN(y) && !isNaN(x) && elem !== opts.el) {
 					this.els.push({ y, x, w, h, mh, mw });
 				}
@@ -328,10 +322,11 @@ class Guides {
 			}
 		});
 		// apply UI update
-		if (vert.left > -1) vert.left += this.opts.COX;
+		if (vert.top > -1) vert.top += o.coY;
+		if (vert.left > -1) vert.left += o.coX;
 		this.lines.vertical.css(vert);
-
-		if (hori.top > -1) hori.top += this.opts.coY;
+		if (hori.top > -1) hori.top += o.coY;
+		if (hori.left > -1) hori.left += o.coX;
 		this.lines.horizontal.css(hori);
 	}
 
