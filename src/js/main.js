@@ -5,6 +5,7 @@
 @import "classes/box.js"
 @import "classes/file.js"
 @import "classes/layer.js"
+@import "classes/guides.js"
 @import "classes/simplex-noise.js"
 
 @import "modules/misc.js"
@@ -25,11 +26,11 @@
 
 
 
-
 let Pref = {
 	guides: {
 		show: true,
 		color: "#3583d0",
+		sensitivity: 10,
 	},
 	grid: {
 		show: false,
@@ -44,8 +45,11 @@ let Pref = {
 };
 
 
+
 const keane = {
 	init() {
+		// get settings or use default settings
+		this.Settings = window.settings.getItem("settings") || Pref;
 		// fast references
 		this.els = {
 			content: window.find("content"),

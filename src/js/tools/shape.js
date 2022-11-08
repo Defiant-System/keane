@@ -172,13 +172,25 @@
 					oY = File.oY - Proj.aY,
 					oTop = parseInt(el.css("top"), 10),
 					oLeft = parseInt(el.css("left"), 10),
+					oHeight = parseInt(el.css("height"), 10),
+					oWidth = parseInt(el.css("width"), 10),
 					bEl = Self.handleBox,
 					offset = {
+						el,
+						w: oWidth,
+						h: oHeight,
 						y: oTop - event.clientY,
 						x: oLeft - event.clientX,
-					};
-				Self.drag = { el, bEl, offset, oX, oY };
+					},
+					guides = new Guides({
+						offset,
+						gH: File.rulers.guides.horizontal,
+						gV: File.rulers.guides.vertical,
+					});
+				// drag object
+				Self.drag = { el, bEl, offset, oX, oY, guides };
 
+				// trigger focus event
 				Self.dispatch({
 					type: "focus-shape",
 					oTop: oY + oTop,
@@ -199,13 +211,19 @@
 				UI.doc.on("mousemove mouseup", Self.doMove);
 				break;
 			case "mousemove":
-				let top = event.clientY + Drag.offset.y,
-					left = event.clientX + Drag.offset.x;
-				Drag.el.css({ top, left });
+				let pos = {
+					top: event.clientY + Drag.offset.y,
+					left: event.clientX + Drag.offset.x,
+				};
+				// "filter" position with guide lines
+				Drag.guides.snapPos(pos);
+				// move dragged object
+				Drag.el.css(pos);
 
-				top += Drag.oY;
-				left += Drag.oX;
-				Drag.bEl.css({ top, left });
+				// move "handle-box"
+				pos.top += Drag.oY;
+				pos.left += Drag.oX;
+				Drag.bEl.css(pos);
 				break;
 			case "mouseup":
 				// re-render layer
