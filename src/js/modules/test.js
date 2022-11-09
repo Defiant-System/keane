@@ -67,7 +67,8 @@ let Test = {
 		// window.find(".temp-layer").addClass("show");
 		window.find(`.sidebar-wrapper div[data-box="layers"] .icon[data-click="add-layer"]`).trigger("click");
 		// "select" a shape
-		window.find("svg.shape:nth(0) ellipse").trigger("mousedown").trigger("mouseup");
+		window.find("svg.shape:nth(0) rect").trigger("mousedown").trigger("mouseup");
+		// window.find("svg.shape:nth(1) ellipse").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape:nth(4) polygon").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape:nth(2) path").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape:nth(3) line").trigger("mousedown").trigger("mouseup");

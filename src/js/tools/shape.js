@@ -315,7 +315,8 @@
 						return min(Math.max(o.r-v, 0), o.r);
 					},
 				};
-
+				// hide handle-box while changing radius
+				Self.handleBox.addClass("focus-radius");
 				// hide from layer & show SVG version
 				Self.svgItem.addClass("transforming");
 				// re-render layer
@@ -334,6 +335,8 @@
 				Drag.shape.attr({ rx: rx });
 				break;
 			case "mouseup":
+				// unhide handle-box while changing radius
+				Self.handleBox.removeClass("focus-radius");
 				// re-render layer
 				Projector.file.activeLayer.renderShapes({ all: true });
 				// uncover layout
@@ -479,7 +482,7 @@
 				if (el.parent().hasClass("gradient-tool")) return Self.doGradient(event);
 
 				// prepare values
-				let bEl = Self.handleBox,
+				let bEl = Self.handleBox.addClass("hide"),
 					type = event.target.className.split(" ")[1],
 					min = {
 						w: 50,
@@ -498,6 +501,7 @@
 					};
 				// create drag object
 				Self.drag = {
+					el,
 					bEl,
 					type,
 					min,

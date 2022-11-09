@@ -126,6 +126,13 @@
 			opacity: 0;
 		}
 
+		&.focus-radius {
+			&:before,
+			.handle:not(.rc) {
+				display: none;
+			}
+		}
+
 		&.has-gradient {
 			--g-top: 11px;
 			--g-left: 51px;
