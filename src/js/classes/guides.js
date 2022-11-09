@@ -17,6 +17,11 @@ class Guides {
 				// default selector & context
 				selector: opt.selector || Guides.selector,
 				context: opt.context || Guides.context,
+				gl: {
+					v: [],
+					h: [],
+					...opt.gl,
+				},
 				coY: 0,
 				coX: 0,
 				// offsets origo
@@ -282,6 +287,35 @@ class Guides {
 				case "nw": m.left = o.l - (m.top - o.t); break;
 			}
 		}
+
+		// snaps to vertical guidelines
+		this.opts.gl.h.map(gY => {
+			let g = { y: gY, x: 0, w: 0 },
+				dy = t - g.y,
+				ohy = dy + o.h,
+				oh1 = dy + o.mh;
+			// vertical comparisons
+			switch (true) {
+				case (dy  < s && dy  > -s): hori = calcH(g,  dy); break;
+				case (ohy < s && ohy > -s): hori = calcH(g, ohy); break;
+				case (oh1 < s && oh1 > -s): hori = calcH(g, oh1); break;
+			}
+		});
+
+		// snaps to horizontal guidelines
+		this.opts.gl.v.map(gX => {
+			let g = { x: gX, y: 0, h: 0 },
+				dx = l - g.x,
+				owx = dx + o.w,
+				ow1 = dx + o.mw;
+			// horizontal comparisons
+			switch (true) {
+				case (dx  < s && dx  > -s): vert = calcV(g,  dx); break;
+				case (owx < s && owx > -s): vert = calcV(g, owx); break;
+				case (ow1 < s && ow1 > -s): vert = calcV(g, ow1); break;
+			}
+		});
+
 		// iterate guide lines
 		this.els.map(g => {
 			let dy = t - g.y,
@@ -299,7 +333,7 @@ class Guides {
 				ogw = owx - g.w,
 				oxm = owx - g.mw - o.mw,
 				_hd = hori.top !== -1,
-				_vd = vert.top !== -1;
+				_vd = vert.left !== -1;
 			// vertical comparisons
 			switch (true) {
 				case (!_hd && dy  < s && dy  > -s): hori = calcH(g, dy);                break;

@@ -187,8 +187,10 @@
 							coY: oY,
 							coX: oX,
 						},
-						gH: File.rulers.guides.horizontal,
-						gV: File.rulers.guides.vertical,
+						gl: {
+							h: File.rulers.guides.horizontal,
+							v: File.rulers.guides.vertical,
+						},
 					});
 				// drag object
 				Self.drag = { el, bEl, offset, oX, oY, guides };
