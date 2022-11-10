@@ -68,6 +68,7 @@
 				// reference to selected shape
 				Self.svgItem = event.el;
 				Self.shape = child;
+				Self.shapeName = name;
 
 				// shape has gradient
 				let fill = Self.shape.css("fill"),
@@ -488,14 +489,15 @@
 				// prevent default behaviour
 				event.preventDefault();
 
-				let el = $(event.target);
+				let hEl = $(event.target);
 				// proxy event, if needed
-				if (el.hasClass("rc")) return Self.doRadius(event);
-				if (el.hasClass("rot")) return Self.doRotate(event);
-				if (el.parent().hasClass("gradient-tool")) return Self.doGradient(event);
+				if (hEl.hasClass("rc")) return Self.doRadius(event);
+				if (hEl.hasClass("rot")) return Self.doRotate(event);
+				if (hEl.parent().hasClass("gradient-tool")) return Self.doGradient(event);
 
 				// prepare values
-				let bEl = Self.handleBox.addClass("hide"),
+				let el = Self.svgItem,
+					bEl = Self.handleBox.addClass("hide"),
 					type = event.target.className.split(" ")[1],
 					min = {
 						w: 50,
@@ -506,11 +508,10 @@
 						y: event.clientY,
 					},
 					offset = {
-						x: parseInt(bEl.css("left"), 10),
-						y: parseInt(bEl.css("top"), 10),
-						w: parseInt(bEl.css("width"), 10),
-						h: parseInt(bEl.css("height"), 10),
-						// rx: +shape.attr("rx"),
+						x: parseInt(el.css("left"), 10),
+						y: parseInt(el.css("top"), 10),
+						w: parseInt(el.css("width"), 10),
+						h: parseInt(el.css("height"), 10),
 					};
 				// create drag object
 				Self.drag = {
@@ -520,12 +521,12 @@
 					min,
 					click,
 					offset,
-					scale: Self.scale.rect,
+					scale: Self.scale[Self.shapeName],
 					_min: Math.min,
 				};
 
 				// hide from layer & show SVG version
-				Self.svgItem.addClass("transforming");
+				el.addClass("transforming");
 				// re-render layer
 				Projector.file.activeLayer.renderShapes({ noEmit: true });
 
@@ -590,7 +591,8 @@
 			});
 		},
 		ellipse(xSvg, xShape, dim) {
-
+			// reszie svg element / viewbox
+			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
 		},
 		line(xSvg, xShape, dim) {
 
