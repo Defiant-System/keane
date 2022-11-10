@@ -8,6 +8,7 @@
 @import "classes/guides.js"
 @import "classes/simplex-noise.js"
 
+@import "ext/pathseg.js"
 @import "modules/misc.js"
 @import "modules/color.new.js"
 @import "modules/ui.js"

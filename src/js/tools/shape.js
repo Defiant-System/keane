@@ -10,6 +10,23 @@
 		this.shapes = "circle ellipse rect polygon polyline path image line bezier".split(" ");
 		// defaults
 		this.option = "shape";
+
+		let d = "M 0,100 C 20,-50 90,80 100,0";
+		let path = d
+					// .replace(/(\w) (\d+)/ig, "$1$2")
+					.replace(/, /g, ",")
+					.replace(/\t|\n/g, "")
+					.split(" ")
+					// .map(pos => {
+						// let p = pos.split(","),
+						// 	c = p[0].charAt(0),
+						// 	x = p[0],
+						// 	y = p[1];
+						// if (isNaN(p[0].charAt(0))) x = x.slice(1);
+						// else c = "";
+						// return c.toLowerCase() === "z" ? { c } : { c, x: +x, y: +y };
+					// });
+		console.log(path);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -513,6 +530,7 @@
 				}
 				// process path, if any
 				if (path) {
+					console.log( Self.shape[0].pathSegList );
 					path = path.replace(/(\w) (\d+)/ig, "$1$2")
 								.replace(/, /g, ",")
 								.replace(/\t|\n/g, "")
@@ -526,6 +544,7 @@
 									else c = "";
 									return c.toLowerCase() === "z" ? { c } : { c, x: +x, y: +y };
 								});
+					return console.log( path );
 				}
 				// create drag object
 				Self.drag = {
@@ -684,7 +703,7 @@
 					let newPos = this.multiplyMatrices(scale, [[p.x], [p.y], [1]]);
 					return p.c.toLowerCase() === "z" ? p.c : [p.c + Math.round(newPos[0]), Math.round(newPos[1])].join(",");
 				}).join(" ");
-			console.log( d );
+			// console.log( d );
 			// xShape.attr({ d });
 		}
 	}
