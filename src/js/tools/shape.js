@@ -512,7 +512,12 @@
 						y: parseInt(el.css("top"), 10),
 						w: parseInt(el.css("width"), 10),
 						h: parseInt(el.css("height"), 10),
-					};
+					},
+					points = Self.shape.attr("points");
+				// process points, if any
+				if (points) {
+					points = points.split(" ").map(p => p.split(",").map(i => +i));
+				}
 				// create drag object
 				Self.drag = {
 					el,
@@ -521,7 +526,9 @@
 					min,
 					click,
 					offset,
+					points,
 					scale: Self.scale[Self.shapeName],
+					multiplyMatrices: Misc.multiplyMatrices,
 					_min: Math.min,
 				};
 
@@ -561,8 +568,14 @@
 				// apply new dimensions to element
 				if (dim.width < Drag.min.w) dim.width = Drag.min.w;
 				if (dim.height < Drag.min.h) dim.height = Drag.min.h;
+				// Drag.bEl.css(dim);
+
+				let scale = {
+						x: dim.width / Drag.offset.w,
+						y: dim.height / Drag.offset.h,
+					};
 				// resize focus shape
-				Drag.scale(Self.svgItem, Self.shape, dim);
+				Drag.scale(Self.svgItem, Self.shape, { ...dim, scale, points: Drag.points });
 				break;
 			case "mouseup":
 				// update handle box dim
@@ -612,21 +625,28 @@
 			// else cy -= cy - cx;
 			xShape.attr({ cx, cy, r });
 		},
-		line(xSvg, xShape, dim) {
-
-		},
 		polygon(xSvg, xShape, dim) {
 			// reszie svg element / viewbox
 			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
+			// scale transform matrix points
+			let matrix = (x, y) => [[x, 0, 0],
+									[0, y, 0],
+									[0, 0, 1]],
+				scale = matrix(dim.scale.x, dim.scale.y),
+				points = dim.points.map(p => {
+					let newPos = this.multiplyMatrices(scale, [[p[0]], [p[1]], [1]]);
+					return [newPos[0], newPos[1]].join(",");
+				}).join(" ");
+			xShape.attr({ points });
+		},
+		line(xSvg, xShape, dim) {
 
 		},
 		polyline(xSvg, xShape, dim) {
 
 		},
 		path(xSvg, xShape, dim) {
-			// reszie svg element / viewbox
-			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
-
+			
 		}
 	}
 }

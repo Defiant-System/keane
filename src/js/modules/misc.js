@@ -35,6 +35,22 @@ const Misc = {
 		cvs.prop({ width, height });
 		return { cvs, ctx }
 	},
+	multiplyMatrices(mA, mB) {
+		let maL = mA.length,
+			m0L = mA[0].length,
+			b0L = mB[0].length,
+			mNew = new Array(maL);
+		for (let r=0; r<maL; ++r) {
+			mNew[r] = new Array(b0L);
+			for (let c=0; c<b0L; ++c) {
+				mNew[r][c] = 0;
+				for (let i=0; i<m0L; ++i) {
+					mNew[r][c] += mA[r][i] * mB[i][c];
+				}
+			}
+		}
+		return mNew;
+	},
 	findBoundingBox(ctx) {
 		let _min = Math.min,
 			_max = Math.max,
