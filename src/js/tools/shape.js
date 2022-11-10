@@ -616,6 +616,8 @@
 
 		},
 		polygon(xSvg, xShape, dim) {
+			// reszie svg element / viewbox
+			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
 
 		},
 		polyline(xSvg, xShape, dim) {
