@@ -7,17 +7,7 @@
 		this.rootEl = window.find(`.tool-options-shape`);
 		this.handleBox = keane.els.handleBox;
 		// handle-box types
-		this.boxType = {
-			circle: "box",
-			ellipse: "box",
-			rect: "rectangle",
-			polygon: "box",
-			polyline: "line",
-			path: "box",
-			image: "box",
-			line: "line",
-			bezier: "bezier",
-		};
+		this.shapes = "circle ellipse rect polygon polyline path image line bezier".split(" ");
 		// defaults
 		this.option = "shape";
 	},
@@ -46,7 +36,7 @@
 				break;
 			case "focus-shape":
 				// UI update handle-box
-				let names = Object.keys(Self.boxType).join(","),
+				let names = Self.shapes.join(","),
 					child = event.el.find(names).get(0),
 					name = child.prop("nodeName"),
 					cn = ["show"],
@@ -61,9 +51,9 @@
 						"--rc": `${radius-4}px`,
 					};
 				// this is temp solution
-				if (name === "path" && child.attr("d").split(" ").length === 4) {
-					name = "bezier";
-				}
+				// if (name === "path" && child.attr("d").split(" ").length === 4) {
+				// 	name = "bezier";
+				// }
 
 				// reference to selected shape
 				Self.svgItem = event.el;
@@ -123,7 +113,7 @@
 				Self.handleBox
 					.removeClass("has-gradient")
 					.addClass(cn.join(" "))
-					.data({ type: Self.boxType[name] })
+					.data({ type: name })
 					.css(css);
 				break;
 			case "update-tool-options":
@@ -516,7 +506,7 @@
 					points = Self.shape.attr("points");
 				// process points, if any
 				if (points) {
-					points = points.split(" ").map(p => p.split(",").map(i => +i));
+					points = points.replace(/, /g, ",").split(" ").map(p => p.split(",").map(i => +i.trim()));
 				}
 				// create drag object
 				Self.drag = {
@@ -574,6 +564,8 @@
 						x: dim.width / Drag.offset.w,
 						y: dim.height / Drag.offset.h,
 					};
+				// reszie svg element / viewbox
+				Self.svgItem.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
 				// resize focus shape
 				Drag.scale(Self.svgItem, Self.shape, { ...dim, scale, points: Drag.points });
 				break;
@@ -592,9 +584,16 @@
 		}
 	},
 	scale: {
+		line(xSvg, xShape, dim) {
+			// scale line
+			xShape.attr({
+				x1: 0,
+				y1: 0,
+				x2: dim.width,
+				y2: dim.height,
+			});
+		},
 		rect(xSvg, xShape, dim) {
-			// reszie svg element / viewbox
-			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
 			// resize element
 			xShape.attr({
 				x: 0,
@@ -604,8 +603,6 @@
 			});
 		},
 		ellipse(xSvg, xShape, dim) {
-			// reszie svg element / viewbox
-			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
 			// resize element
 			xShape.attr({
 				cx: dim.width * .5,
@@ -615,8 +612,6 @@
 			});
 		},
 		circle(xSvg, xShape, dim) {
-			// reszie svg element / viewbox
-			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
 			// resize element
 			let r = Math.min(dim.width, dim.height) >> 1,
 				cx = dim.width * .5,
@@ -626,8 +621,6 @@
 			xShape.attr({ cx, cy, r });
 		},
 		polygon(xSvg, xShape, dim) {
-			// reszie svg element / viewbox
-			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
 			// scale transform matrix points
 			let matrix = (x, y) => [[x, 0, 0],
 									[0, y, 0],
@@ -639,11 +632,17 @@
 				}).join(" ");
 			xShape.attr({ points });
 		},
-		line(xSvg, xShape, dim) {
-
-		},
 		polyline(xSvg, xShape, dim) {
-
+			// scale transform matrix points
+			let matrix = (x, y) => [[x, 0, 0],
+									[0, y, 0],
+									[0, 0, 1]],
+				scale = matrix(dim.scale.x, dim.scale.y),
+				points = dim.points.map(p => {
+					let newPos = this.multiplyMatrices(scale, [[p[0]], [p[1]], [1]]);
+					return [newPos[0], newPos[1]].join(",");
+				}).join(" ");
+			xShape.attr({ points });
 		},
 		path(xSvg, xShape, dim) {
 			

@@ -98,25 +98,25 @@
 			.rot { display: block; }
 		}
 
-		&[data-type="rectangle"] {
+		&[data-type="rect"] {
 			--rc: 5px;
 
 			.rot,
 			.handle.rc { display: block; }
 		}
 
-		&[data-type="line"] {
-			&:before { box-shadow: 0 0 0; }
-			.handle { display: none; }
-			.handle.line { display: block; }
-		}
+		// &[data-type="line"] {
+		// 	&:before { box-shadow: 0 0 0; }
+		// 	.handle { display: none; }
+		// 	.handle.line { display: block; }
+		// }
 
-		&[data-type="bezier"] {
-			&:before { box-shadow: 0 0 0; }
-			.handle { display: none; }
-			.handle.line.ap,
-			.handle.line { display: block; }
-		}
+		// &[data-type="bezier"] {
+		// 	&:before { box-shadow: 0 0 0; }
+		// 	.handle { display: none; }
+		// 	.handle.line.ap,
+		// 	.handle.line { display: block; }
+		// }
 
 		&.show {
 			display: block;
