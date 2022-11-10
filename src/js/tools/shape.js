@@ -500,8 +500,8 @@
 					bEl = Self.handleBox.addClass("hide"),
 					type = event.target.className.split(" ")[1],
 					min = {
-						w: 50,
-						h: 50,
+						w: 15,
+						h: 15,
 					},
 					click = {
 						x: event.clientX,
@@ -593,6 +593,24 @@
 		ellipse(xSvg, xShape, dim) {
 			// reszie svg element / viewbox
 			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
+			// resize element
+			xShape.attr({
+				cx: dim.width * .5,
+				cy: dim.height * .5,
+				rx: dim.width * .5,
+				ry: dim.height * .5,
+			});
+		},
+		circle(xSvg, xShape, dim) {
+			// reszie svg element / viewbox
+			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
+			// resize element
+			let r = Math.min(dim.width, dim.height) >> 1,
+				cx = dim.width * .5,
+				cy = dim.height * .5;
+			// if (cy < cx) cx -= cx - cy;
+			// else cy -= cy - cx;
+			xShape.attr({ cx, cy, r });
 		},
 		line(xSvg, xShape, dim) {
 
@@ -604,6 +622,8 @@
 
 		},
 		path(xSvg, xShape, dim) {
+			// reszie svg element / viewbox
+			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
 
 		}
 	}
