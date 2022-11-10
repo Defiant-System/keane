@@ -113,7 +113,7 @@
 				Self.handleBox
 					.removeClass("has-gradient")
 					.addClass(cn.join(" "))
-					.data({ type: name })
+					.data({ type: name === "rect" ? "rect" : "box" })
 					.css(css);
 				break;
 			case "update-tool-options":
@@ -503,10 +503,29 @@
 						w: parseInt(el.css("width"), 10),
 						h: parseInt(el.css("height"), 10),
 					},
-					points = Self.shape.attr("points");
+					points = Self.shape.attr("points"),
+					path = Self.shapeName === "path" ? Self.shape.attr("d") : false;
 				// process points, if any
 				if (points) {
-					points = points.replace(/, /g, ",").split(" ").map(p => p.split(",").map(i => +i.trim()));
+					points = points.replace(/, /g, ",")
+									.replace(/\t|\n/g, "")
+									.split(" ").map(p => p.split(",").map(i => +i.trim()));
+				}
+				// process path, if any
+				if (path) {
+					path = path.replace(/(\w) (\d+)/ig, "$1$2")
+								.replace(/, /g, ",")
+								.replace(/\t|\n/g, "")
+								.split(" ")
+								.map(pos => {
+									let p = pos.split(","),
+										c = p[0].charAt(0),
+										x = p[0],
+										y = p[1];
+									if (isNaN(p[0].charAt(0))) x = x.slice(1);
+									else c = "";
+									return c.toLowerCase() === "z" ? { c } : { c, x: +x, y: +y };
+								});
 				}
 				// create drag object
 				Self.drag = {
@@ -517,6 +536,7 @@
 					click,
 					offset,
 					points,
+					path,
 					scale: Self.scale[Self.shapeName],
 					multiplyMatrices: Misc.multiplyMatrices,
 					_min: Math.min,
@@ -567,7 +587,7 @@
 				// reszie svg element / viewbox
 				Self.svgItem.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
 				// resize focus shape
-				Drag.scale(Self.svgItem, Self.shape, { ...dim, scale, points: Drag.points });
+				Drag.scale(Self.shape, { ...dim, scale, points: Drag.path || Drag.points });
 				break;
 			case "mouseup":
 				// update handle box dim
@@ -583,8 +603,18 @@
 				break;
 		}
 	},
+	/* TRANSLATE matrix
+		1  0  tx
+		0  1  ty
+		0  0  1
+	*/
+	/* ROTATE matrix
+		cos(a)  -sin(a)  0
+		sin(a)   cos(a)  0
+		0        0       1
+	*/
 	scale: {
-		line(xSvg, xShape, dim) {
+		line(xShape, dim) {
 			// scale line
 			xShape.attr({
 				x1: 0,
@@ -593,7 +623,7 @@
 				y2: dim.height,
 			});
 		},
-		rect(xSvg, xShape, dim) {
+		rect(xShape, dim) {
 			// resize element
 			xShape.attr({
 				x: 0,
@@ -602,7 +632,7 @@
 				height: dim.height,
 			});
 		},
-		ellipse(xSvg, xShape, dim) {
+		ellipse(xShape, dim) {
 			// resize element
 			xShape.attr({
 				cx: dim.width * .5,
@@ -611,7 +641,7 @@
 				ry: dim.height * .5,
 			});
 		},
-		circle(xSvg, xShape, dim) {
+		circle(xShape, dim) {
 			// resize element
 			let r = Math.min(dim.width, dim.height) >> 1,
 				cx = dim.width * .5,
@@ -620,7 +650,7 @@
 			// else cy -= cy - cx;
 			xShape.attr({ cx, cy, r });
 		},
-		polygon(xSvg, xShape, dim) {
+		polygon(xShape, dim) {
 			// scale transform matrix points
 			let matrix = (x, y) => [[x, 0, 0],
 									[0, y, 0],
@@ -632,7 +662,7 @@
 				}).join(" ");
 			xShape.attr({ points });
 		},
-		polyline(xSvg, xShape, dim) {
+		polyline(xShape, dim) {
 			// scale transform matrix points
 			let matrix = (x, y) => [[x, 0, 0],
 									[0, y, 0],
@@ -644,8 +674,18 @@
 				}).join(" ");
 			xShape.attr({ points });
 		},
-		path(xSvg, xShape, dim) {
-			
+		path(xShape, dim) {
+			// scale transform matrix points
+			let matrix = (x, y) => [[x, 0, 0],
+									[0, y, 0],
+									[0, 0, 1]],
+				scale = matrix(dim.scale.x, dim.scale.y),
+				d = dim.points.map(p => {
+					let newPos = this.multiplyMatrices(scale, [[p.x], [p.y], [1]]);
+					return p.c.toLowerCase() === "z" ? p.c : [p.c + Math.round(newPos[0]), Math.round(newPos[1])].join(",");
+				}).join(" ");
+			console.log( d );
+			// xShape.attr({ d });
 		}
 	}
 }
