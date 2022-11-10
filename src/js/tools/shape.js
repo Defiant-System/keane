@@ -10,23 +10,6 @@
 		this.shapes = "circle ellipse rect polygon polyline path image line bezier".split(" ");
 		// defaults
 		this.option = "shape";
-
-		let d = "M 0,100 C 20,-50 90,80 100,0";
-		let path = d
-					// .replace(/(\w) (\d+)/ig, "$1$2")
-					.replace(/, /g, ",")
-					.replace(/\t|\n/g, "")
-					.split(" ")
-					// .map(pos => {
-						// let p = pos.split(","),
-						// 	c = p[0].charAt(0),
-						// 	x = p[0],
-						// 	y = p[1];
-						// if (isNaN(p[0].charAt(0))) x = x.slice(1);
-						// else c = "";
-						// return c.toLowerCase() === "z" ? { c } : { c, x: +x, y: +y };
-					// });
-		console.log(path);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -520,31 +503,16 @@
 						w: parseInt(el.css("width"), 10),
 						h: parseInt(el.css("height"), 10),
 					},
-					points = Self.shape.attr("points"),
-					path = Self.shapeName === "path" ? Self.shape.attr("d") : false;
+					points = Self.shape.attr("points");
 				// process points, if any
 				if (points) {
 					points = points.replace(/, /g, ",")
 									.replace(/\t|\n/g, "")
 									.split(" ").map(p => p.split(",").map(i => +i.trim()));
 				}
-				// process path, if any
-				if (path) {
-					console.log( Self.shape[0].pathSegList );
-					path = path.replace(/(\w) (\d+)/ig, "$1$2")
-								.replace(/, /g, ",")
-								.replace(/\t|\n/g, "")
-								.split(" ")
-								.map(pos => {
-									let p = pos.split(","),
-										c = p[0].charAt(0),
-										x = p[0],
-										y = p[1];
-									if (isNaN(p[0].charAt(0))) x = x.slice(1);
-									else c = "";
-									return c.toLowerCase() === "z" ? { c } : { c, x: +x, y: +y };
-								});
-					return console.log( path );
+				if (Self.shapeName === "path") {
+					points = Self.shape.attr("d");
+					Self.shape[0].pathSegList._list.map(e => console.log(e));
 				}
 				// create drag object
 				Self.drag = {
@@ -555,7 +523,6 @@
 					click,
 					offset,
 					points,
-					path,
 					scale: Self.scale[Self.shapeName],
 					multiplyMatrices: Misc.multiplyMatrices,
 					_min: Math.min,
@@ -606,7 +573,7 @@
 				// reszie svg element / viewbox
 				Self.svgItem.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
 				// resize focus shape
-				Drag.scale(Self.shape, { ...dim, scale, points: Drag.path || Drag.points });
+				Drag.scale(Self.shape, { ...dim, scale, points: Drag.points });
 				break;
 			case "mouseup":
 				// update handle box dim
@@ -698,12 +665,17 @@
 			let matrix = (x, y) => [[x, 0, 0],
 									[0, y, 0],
 									[0, 0, 1]],
-				scale = matrix(dim.scale.x, dim.scale.y),
-				d = dim.points.map(p => {
-					let newPos = this.multiplyMatrices(scale, [[p.x], [p.y], [1]]);
-					return p.c.toLowerCase() === "z" ? p.c : [p.c + Math.round(newPos[0]), Math.round(newPos[1])].join(",");
-				}).join(" ");
-			// console.log( d );
+				scale = matrix(dim.scale.x, dim.scale.y);
+			
+			xShape.attr({ d: dim.points });
+
+			xShape[0].pathSegList._list.map(p => {
+				let newPos = this.multiplyMatrices(scale, [[p.x], [p.y], [1]]);
+				// console.log( p.x, p.y );
+				// console.log( newPos );
+				// p.x = newPos[0];
+				// p.y = newPos[1];
+			});
 			// xShape.attr({ d });
 		}
 	}
