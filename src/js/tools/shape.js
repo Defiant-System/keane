@@ -23,6 +23,8 @@
 	},
 	dispatch(event) {
 		let APP = keane,
+			Proj = Projector,
+			File = Proj.file,
 			Self = APP.tools.shape,
 			el;
 		// console.log(event);
@@ -30,6 +32,17 @@
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "shape";
+				break;
+			case "re-focus-shape":
+				el = Self.svgItem;
+				Self.dispatch({
+					type: "focus-shape",
+					oTop: File.oY - Proj.aY + parseInt(el.css("top"), 10),
+					oLeft: File.oX - Proj.aX + parseInt(el.css("left"), 10),
+					oWidth: parseInt(el.css("width"), 10),
+					oHeight: parseInt(el.css("height"), 10),
+					el,
+				});
 				break;
 			case "focus-shape":
 				// UI update handle-box
@@ -507,8 +520,15 @@
 					min,
 					click,
 					offset,
+					scale: Self.scale.rect,
 					_min: Math.min,
 				};
+
+				// hide from layer & show SVG version
+				Self.svgItem.addClass("transforming");
+				// re-render layer
+				Projector.file.activeLayer.renderShapes({ noEmit: true });
+
 				// cover layout
 				APP.els.content.addClass("cover no-cursor");
 				// bind event
@@ -540,14 +560,49 @@
 				// apply new dimensions to element
 				if (dim.width < Drag.min.w) dim.width = Drag.min.w;
 				if (dim.height < Drag.min.h) dim.height = Drag.min.h;
-				Drag.bEl.css(dim);
+				// resize focus shape
+				Drag.scale(Self.svgItem, Self.shape, dim);
 				break;
 			case "mouseup":
+				// update handle box dim
+				Self.dispatch({ type: "re-focus-shape" });
+				// show handle-box
+				Self.handleBox.removeClass("hide");
+				// re-render layer
+				Projector.file.activeLayer.renderShapes({ all: true });
 				// uncover layout
 				APP.els.content.removeClass("cover no-cursor");
 				// unbind event
 				UI.doc.off("mousemove mouseup", Self.doResize);
 				break;
+		}
+	},
+	scale: {
+		rect(xSvg, xShape, dim) {
+			// reszie svg element / viewbox
+			xSvg.css(dim).attr({ viewBox: `0 0 ${dim.width} ${dim.height}` });
+			// resize element
+			xShape.attr({
+				x: 0,
+				y: 0,
+				width: dim.width,
+				height: dim.height,
+			});
+		},
+		ellipse(xSvg, xShape, dim) {
+
+		},
+		line(xSvg, xShape, dim) {
+
+		},
+		polygon(xSvg, xShape, dim) {
+
+		},
+		polyline(xSvg, xShape, dim) {
+
+		},
+		path(xSvg, xShape, dim) {
+
 		}
 	}
 }
