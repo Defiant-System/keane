@@ -58,7 +58,7 @@
 					w = +box.prop("offsetHeight"),
 					left = w * hsv.s,
 					top = w * (1-hsv.v),
-					boxHex = ColorLib.hslToHex({ ...hsl, s: 1, l: .5 });
+					boxHex = ColorLib.hslToHex({ ...hsl, s: 1, l: .5, a: 1 });
 				box.css({ "background-color": boxHex });
 
 				Self.els.colorWheel.find(".box-cursor").css({ top, left });

@@ -9,7 +9,7 @@ const ColorLib = {
 			h = hsl.h,
 			s = hsl.s,
 			l = hsl.l,
-			a = hsl.a || 1,
+			a = _round((hsl.a || 1) * 255),
 			c = s * _min(l, 1-l),
 			f = (n, k = (n + h / 30) % 12) => l - c * _max(_min(k - 3, 9 - k, 1), -1),
 			r = _round(f(0) * 255),

@@ -84,7 +84,7 @@ const UI = {
 					// clean up
 					Self.menu.remove();
 				}
-				Self.srcEl.removeClass("opened");
+				if (Self.srcEl) Self.srcEl.removeClass("opened");
 				// uncover app UI
 				APP.els.content.removeClass("cover");
 				// unbind event handler
