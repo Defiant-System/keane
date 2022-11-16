@@ -360,14 +360,10 @@
 				let el = Self.svgItem,
 					bEl = Self.handleBox.addClass("hide"),
 					type = event.target.className.split(" ")[1],
-					angle = parseInt(bEl.cssProp("--rotate"), 10) + event.clientY;
+					angle = parseInt(el.cssProp("--rotate"), 10),
+					clickY = event.clientY;
 				// create drag object
-				Self.drag = {
-					el,
-					bEl,
-					type,
-					angle,
-				};
+				Self.drag = { el, bEl, type, angle, clickY };
 
 				// hide from layer & show SVG version
 				Self.svgItem.addClass("transforming");
@@ -379,12 +375,15 @@
 				UI.doc.on("mousemove mouseup", Self.doRotate);
 				break;
 			case "mousemove":
-				let rotate = event.clientY - Drag.angle;
-				Drag.el.css({ "--rotate": `${rotate}deg` });
+				Drag.newAngle = Drag.angle + event.clientY - Drag.clickY;
+				Drag.el.css({ "--rotate": `${Drag.newAngle}deg` });
 				break;
 			case "mouseup":
+				// apply rotation matrix
+				Self.rotate[Self.shapeName](Self.shape, Drag);
+
 				// reset handle-box
-				Drag.bEl.removeClass("hide");
+				// Drag.bEl.removeClass("hide");
 				// re-render layer
 				Projector.file.activeLayer.renderShapes({ all: true });
 				// uncover layout
@@ -510,8 +509,16 @@
 									.replace(/\t|\n/g, "")
 									.split(" ").map(p => p.split(",").map(i => +i.trim()));
 				}
-				if (Self.shapeName === "path") {
-					points = Self.shape[0].pathSegList._list;
+				switch (Self.shapeName) {
+					case "line":
+						points = [
+							{ x: +Self.shape.attr("x1"), y: +Self.shape.attr("y1") },
+							{ x: +Self.shape.attr("x2"), y: +Self.shape.attr("y2") }
+						];
+						break;
+					case "path":
+						points = Self.shape[0].pathSegList._list;
+						break;
 				}
 				// create drag object
 				Self.drag = {
@@ -599,8 +606,18 @@
 		sin(a)   cos(a)  0
 		0        0       1
 	*/
+	/* SCALE matrix
+		sx  0  0
+		0  sy  0
+		0   0  1
+	*/
 	rotate: {
-		line(xShape, dim) {},
+		matrix: a => [[Math.cos(a), -Math.sin(a), 0],
+					  [Math.sin(a),  Math.cos(a), 0],
+					  [0,            0,           1]],
+		line(xShape, dim) {
+			console.log( 111, xShape, dim );
+		},
 		rect(xShape, dim) {},
 		ellipse(xShape, dim) {},
 		circle(xShape, dim) {},
@@ -609,17 +626,16 @@
 		path(xShape, dim) {}
 	},
 	scale: {
-		matrix: (x, y) => [[x, 0, 0],
+		matrix: (x, y) =>  [[x, 0, 0],
 							[0, y, 0],
 							[0, 0, 1]],
 		line(xShape, dim) {
+			// console.log( dim.points );
+			let scale = dim.matrix(dim.scale.x, dim.scale.y),
+				[x1, y1] = this.multiplyMatrices(scale, [[dim.points[0].x], [dim.points[0].y], [1]]),
+				[x2, y2] = this.multiplyMatrices(scale, [[dim.points[1].x], [dim.points[1].y], [1]]);
 			// scale line
-			xShape.attr({
-				x1: 0,
-				y1: 0,
-				x2: dim.width,
-				y2: dim.height,
-			});
+			xShape.attr({ x1, y1, x2, y2 });
 		},
 		rect(xShape, dim) {
 			// resize element
@@ -644,8 +660,6 @@
 			let r = Math.min(dim.width, dim.height) >> 1,
 				cx = dim.width * .5,
 				cy = dim.height * .5;
-			// if (cy < cx) cx -= cx - cy;
-			// else cy -= cy - cx;
 			xShape.attr({ cx, cy, r });
 		},
 		polygon(xShape, dim) {
