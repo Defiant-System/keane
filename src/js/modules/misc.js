@@ -14,6 +14,7 @@ const ZOOM =   [{ level: 12.5, rG: [200, 100, 50] },
 				{ level: 3200, rG: [2,   1,   0 ] },
 				{ level: 6400, rG: [1,   1,   0 ] }];
 
+
 const Misc = {
 	bresenhamLine(x0, y0, x1, y1, cb) {
 		let dx = Math.abs(x1 - x0),
@@ -46,6 +47,7 @@ const Misc = {
 				mNew[r][c] = 0;
 				for (let i=0; i<m0L; ++i) {
 					mNew[r][c] += mA[r][i] * mB[i][c];
+					mNew[r][c] = parseFloat(mNew[r][c].toFixed(2));
 				}
 			}
 		}

@@ -7,6 +7,7 @@
 		this.rootEl = window.find(`.tool-options-shape`);
 		this.handleBox = keane.els.handleBox;
 		// handle-box types
+		this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		this.shapes = "circle ellipse rect polygon polyline path image line bezier".split(" ");
 		// defaults
 		this.option = "shape";
@@ -511,8 +512,8 @@
 									.split(" ").map(p => p.split(",").map(i => +i.trim()));
 				}
 				if (Self.shapeName === "path") {
-					points = Self.shape.attr("d");
-					Self.shape[0].pathSegList._list.map(e => console.log(e));
+					Self.svg.appendChild(Self.shape[0].cloneNode(true));
+					points = Self.svg.firstChild.pathSegList._list;
 				}
 				// create drag object
 				Self.drag = {
@@ -667,16 +668,68 @@
 									[0, 0, 1]],
 				scale = matrix(dim.scale.x, dim.scale.y);
 			
-			xShape.attr({ d: dim.points });
+			let dstr = "",
+				pathMap = [0, "z", "M", "m", "L", "l", "C", "c", "Q", "q", "A", "a", "H", "h", "V", "v", "S", "s", "T", "t"],
+				dArr = [];
+			dim.points.map(seg => {
+				let type = seg.pathSegType,
+					pC = pathMap[type],
+					p, p1, p2, r1, r2;
+				
+				switch (type) {
+					case 13: // relative horizontal line (h)
+					case 12:
+						// absolute horizontal line (H)
+						dstr += seg.x + " ";
+						break;
+					case 15: // relative vertical line (v)
+					case 14:
+						// absolute vertical line (V)
+						dstr += seg.y + " ";
+						break;
+					case 3:  // relative move (m)
+					case 5:  // relative line (l)
+					case 19: // relative smooth quad (t)
+					case 2:  // absolute move (M)
+					case 4:  // absolute line (L)
+					case 18:
+						// absolute smooth quad (T)
+						dstr += seg.x + "," + seg.y + " ";
 
-			xShape[0].pathSegList._list.map(p => {
-				let newPos = this.multiplyMatrices(scale, [[p.x], [p.y], [1]]);
-				// console.log( p.x, p.y );
-				// console.log( newPos );
-				// p.x = newPos[0];
-				// p.y = newPos[1];
+						p = this.multiplyMatrices(scale, [[seg.x], [seg.y], [1]]);
+						dArr.push(`${pC}${p[0]},${p[1]} `);
+						break;
+					case 7: // relative cubic (c)
+					case 6:
+						// absolute cubic (C)
+						dstr += seg.x1 + "," + seg.y1 + " " + seg.x2 + "," + seg.y2 + " " + seg.x + "," + seg.y + " ";
+						
+						p = this.multiplyMatrices(scale, [[seg.x], [seg.y], [1]]);
+						p1 = this.multiplyMatrices(scale, [[seg.x1], [seg.y1], [1]]);
+						p2 = this.multiplyMatrices(scale, [[seg.x2], [seg.y2], [1]]);
+						dArr.push(`${pC}${p1[0]},${p1[1]} ${p2[0]},${p2[1]} ${p[0]},${p[1]} `);
+						break;
+					case 9: // relative quad (q)
+					case 8:
+						// absolute quad (Q)
+						dstr += seg.x1 + "," + seg.y1 + " " + seg.x + "," + seg.y + " ";
+						break;
+					case 11: // relative elliptical arc (a)
+					case 10:
+						// absolute elliptical arc (A)
+						dstr += seg.r1 + "," + seg.r2 + " " + seg.angle + " " + Number(seg.largeArcFlag) + " " + Number(seg.sweepFlag) + " " + seg.x + "," + seg.y + " ";
+						break;
+					case 17: // relative smooth cubic (s)
+					case 16:
+						// absolute smooth cubic (S)
+						dstr += seg.x2 + "," + seg.y2 + " " + seg.x + "," + seg.y + " ";
+						break;
+				}
+
 			});
-			// xShape.attr({ d });
+			
+			// console.log( dArr.join(" ") );
+			xShape.attr({ d: dArr.join(" ") });
 		}
 	}
 }
