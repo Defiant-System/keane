@@ -14,10 +14,10 @@
 		<Shape viewBox="230 100 140 80" z-index="5"><![CDATA[
 			<rect fill="#339999" x="0" y="0" width="140" height="80" rx="8"/>
 		]]></Shape> -->
-<Shape viewBox="430 160 200 100" z-index="5"><![CDATA[
+
+		<!-- <Shape viewBox="430 160 200 100" z-index="5"><![CDATA[
 			<ellipse fill="#336633" cx="100" cy="50" rx="100" ry="50" />
 		]]></Shape>
-		<!-- 
 
 		<Shape viewBox="290 310 100 100" z-index="7"><![CDATA[
 			<radialGradient id="SVG-GR-2" cx="0.25" cy="0.25" r="0.75">

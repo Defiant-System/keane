@@ -14,6 +14,7 @@
 @import "modules/ui.js"
 @import "modules/mask.js"
 @import "modules/tabs.js"
+@import "modules/svg.js"
 @import "modules/projector.js"
 @import "modules/rulers.js"
 @import "modules/actions.js"
@@ -60,6 +61,7 @@ const keane = {
 		};
 		// init objects
 		UI.init();
+		Svg.init();
 		Mask.init();
 		Tabs.init();
 		Rulers.init();

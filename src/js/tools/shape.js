@@ -361,9 +361,20 @@
 					bEl = Self.handleBox.addClass("hide"),
 					type = event.target.className.split(" ")[1],
 					angle = parseInt(el.cssProp("--rotate"), 10),
-					clickY = event.clientY;
+					clickY = event.clientY,
+					points;
+
+				switch (Self.shapeName) {
+					case "line":
+						points = [
+							{ x: +Self.shape.attr("x1"), y: +Self.shape.attr("y1") },
+							{ x: +Self.shape.attr("x2"), y: +Self.shape.attr("y2") }
+						];
+						break;
+				}
+
 				// create drag object
-				Self.drag = { el, bEl, type, angle, clickY };
+				Self.drag = { el, bEl, type, angle, points, clickY };
 
 				// hide from layer & show SVG version
 				Self.svgItem.addClass("transforming");
@@ -379,8 +390,9 @@
 				Drag.el.css({ "--rotate": `${Drag.newAngle}deg` });
 				break;
 			case "mouseup":
+
 				// apply rotation matrix
-				Self.rotate[Self.shapeName](Self.shape, Drag);
+				Svg.rotate[Self.shapeName](Self.shape, Drag);
 
 				// reset handle-box
 				// Drag.bEl.removeClass("hide");
@@ -524,14 +536,14 @@
 				Self.drag = {
 					el,
 					bEl,
-					type,
 					min,
+					type,
 					click,
 					offset,
 					points,
-					matrix: Self.scale.matrix,
-					scale: Self.scale[Self.shapeName],
-					multiplyMatrices: Misc.multiplyMatrices,
+					matrix: Svg.scale.matrix,
+					scale: Svg.scale[Self.shapeName],
+					matrixDot: Svg.matrixDot,
 					_min: Math.min,
 				};
 
@@ -594,153 +606,6 @@
 				// unbind event
 				UI.doc.off("mousemove mouseup", Self.doResize);
 				break;
-		}
-	},
-	/* TRANSLATE matrix
-		1  0  tx
-		0  1  ty
-		0  0  1
-	*/
-	/* ROTATE matrix
-		cos(a)  -sin(a)  0
-		sin(a)   cos(a)  0
-		0        0       1
-	*/
-	/* SCALE matrix
-		sx  0  0
-		0  sy  0
-		0   0  1
-	*/
-	rotate: {
-		matrix: a => [[Math.cos(a), -Math.sin(a), 0],
-					  [Math.sin(a),  Math.cos(a), 0],
-					  [0,            0,           1]],
-		line(xShape, dim) {
-			console.log( 111, xShape, dim );
-		},
-		rect(xShape, dim) {},
-		ellipse(xShape, dim) {},
-		circle(xShape, dim) {},
-		polygon(xShape, dim) {},
-		polyline(xShape, dim) {},
-		path(xShape, dim) {}
-	},
-	scale: {
-		matrix: (x, y) =>  [[x, 0, 0],
-							[0, y, 0],
-							[0, 0, 1]],
-		line(xShape, dim) {
-			// console.log( dim.points );
-			let scale = dim.matrix(dim.scale.x, dim.scale.y),
-				[x1, y1] = this.multiplyMatrices(scale, [[dim.points[0].x], [dim.points[0].y], [1]]),
-				[x2, y2] = this.multiplyMatrices(scale, [[dim.points[1].x], [dim.points[1].y], [1]]);
-			// scale line
-			xShape.attr({ x1, y1, x2, y2 });
-		},
-		rect(xShape, dim) {
-			// resize element
-			xShape.attr({
-				x: 0,
-				y: 0,
-				width: dim.width,
-				height: dim.height,
-			});
-		},
-		ellipse(xShape, dim) {
-			// resize element
-			xShape.attr({
-				cx: dim.width * .5,
-				cy: dim.height * .5,
-				rx: dim.width * .5,
-				ry: dim.height * .5,
-			});
-		},
-		circle(xShape, dim) {
-			// resize element
-			let r = Math.min(dim.width, dim.height) >> 1,
-				cx = dim.width * .5,
-				cy = dim.height * .5;
-			xShape.attr({ cx, cy, r });
-		},
-		polygon(xShape, dim) {
-			// scale transform matrix points
-			let scale = dim.matrix(dim.scale.x, dim.scale.y),
-				points = dim.points.map(p => {
-					let newPos = this.multiplyMatrices(scale, [[p[0]], [p[1]], [1]]);
-					return [newPos[0], newPos[1]].join(",");
-				}).join(" ");
-			xShape.attr({ points });
-		},
-		polyline(xShape, dim) {
-			// scale transform matrix points
-			let scale = dim.matrix(dim.scale.x, dim.scale.y),
-				points = dim.points.map(p => {
-					let newPos = this.multiplyMatrices(scale, [[p[0]], [p[1]], [1]]);
-					return [newPos[0], newPos[1]].join(",");
-				}).join(" ");
-			xShape.attr({ points });
-		},
-		path(xShape, dim) {
-			// scale transform matrix points
-			let scale = dim.matrix(dim.scale.x, dim.scale.y),
-				pathMap = [0, "z", "M", "m", "L", "l", "C", "c", "Q", "q", "A", "a", "H", "h", "V", "v", "S", "s", "T", "t"],
-				dArr = [];
-			// loop points
-			dim.points.map(seg => {
-				let type = seg.pathSegType,
-					pC = pathMap[type],
-					p, p1, p2, r,
-					res = {};
-				
-				switch (type) {
-					case 13: // relative horizontal line (h)
-					case 12: // absolute horizontal line (H)
-						p = this.multiplyMatrices(scale, [[seg.x], [1], [1]]);
-						dArr.push(`${pC}${p[0]} `);
-						break;
-					case 15: // relative vertical line (v)
-					case 14: // absolute vertical line (V)
-						p = this.multiplyMatrices(scale, [[1], [seg.y], [1]]);
-						dArr.push(`${pC}${p[1]} `);
-						break;
-					case 3:  // relative move (m)
-					case 5:  // relative line (l)
-					case 19: // relative smooth quad (t)
-					case 2:  // absolute move (M)
-					case 4:  // absolute line (L)
-					case 18: // absolute smooth quad (T)
-						p = this.multiplyMatrices(scale, [[seg.x], [seg.y], [1]]);
-						dArr.push(`${pC}${p[0]},${p[1]} `);
-						break;
-					case 7: // relative cubic (c)
-					case 6: // absolute cubic (C)
-						p = this.multiplyMatrices(scale, [[seg.x], [seg.y], [1]]);
-						p1 = this.multiplyMatrices(scale, [[seg.x1], [seg.y1], [1]]);
-						p2 = this.multiplyMatrices(scale, [[seg.x2], [seg.y2], [1]]);
-						dArr.push(`${pC}${p1[0]},${p1[1]} ${p2[0]},${p2[1]} ${p[0]},${p[1]} `);
-						break;
-					case 9: // relative quad (q)
-					case 8: // absolute quad (Q)
-						p = this.multiplyMatrices(scale, [[seg.x], [seg.y], [1]]);
-						p1 = this.multiplyMatrices(scale, [[seg.x1], [seg.y1], [1]]);
-						dArr.push(`${pC}${p1[0]},${p1[1]} ${p[0]},${p[1]} `);
-						break;
-					case 11: // relative elliptical arc (a)
-					case 10: // absolute elliptical arc (A)
-						p = this.multiplyMatrices(scale, [[seg.x], [seg.y], [1]]);
-						r = this.multiplyMatrices(scale, [[seg.r1], [seg.r2], [1]]);
-						dArr.push(`${pC}${r[0]},${r[1]} ${seg.angle} ${ Number(seg.largeArcFlag)} ${Number(seg.sweepFlag)} ${p[0]},${p[1]} `);
-						break;
-					case 17: // relative smooth cubic (s)
-					case 16: // absolute smooth cubic (S)
-						p = this.multiplyMatrices(scale, [[seg.x], [seg.y], [1]]);
-						p2 = this.multiplyMatrices(scale, [[seg.x2], [seg.y2], [1]]);
-						dArr.push(`${pC}${p2[0]},${p2[1]} ${p[0]},${p[1]} `);
-						break;
-				}
-			});
-			// update "d" attribute
-			xShape.attr({ d: dArr.join(" ") });
 		}
 	}
 }
