@@ -5,6 +5,28 @@ const Svg = {
 		// 	arr2 = [[1, 2, 3], [4, 6, 8]];
 		// console.log( this.matrixDot(arr1, arr2) );
 	},
+	fitTranslate(svg) {
+		let dim = [...svg[0].children].filter(el => el.getBBox).reduce((acc, el) => {
+					let { x, y, width, height } = el.getBBox();
+					if (!acc.min.x || x < acc.min.x) acc.min.x = x;
+					if (!acc.max.x || x + width > acc.max.x) acc.max.x = x + width;
+					if (!acc.min.y || y < acc.min.y) acc.min.y = y;
+					if (!acc.max.y || y + height > acc.max.y) acc.max.y = y + height;
+					return acc;
+				}, { min: {}, max: {} }),
+			_ceil = Math.ceil,
+			width = _ceil(dim.max.x),
+			height = _ceil(dim.max.y),
+			viewBox = `0 0 ${width} ${height}`,
+			css = {
+				top: parseInt(svg.css("top"), 10) - _ceil(dim.min.y),
+				left: parseInt(svg.css("left"), 10) - _ceil(dim.min.x),
+				height,
+				width,
+			};
+		// update element
+		svg.attr({ viewBox }).css(css);
+	},
 	matrixDot(A, B) {
 		let result = new Array(A.length).fill(0).map(row => new Array(B[0].length).fill(0));
 		return result.map((row, i) =>

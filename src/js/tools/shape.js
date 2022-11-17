@@ -400,6 +400,7 @@
 				break;
 			case "mouseup":
 
+				Svg.fitTranslate(Drag.el);
 				// apply rotation matrix
 				// Svg.rotate[Self.shapeName](Self.shape, Drag);
 
