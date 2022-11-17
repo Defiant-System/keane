@@ -396,22 +396,18 @@
 
 				// apply rotation matrix
 				Svg.rotate[Self.shapeName](Self.shape, Drag);
-
 				break;
 			case "mouseup":
-
-				Svg.fitTranslate(Drag.el);
-				// apply rotation matrix
-				// Svg.rotate[Self.shapeName](Self.shape, Drag);
-
-				// reset handle-box
-				// Drag.bEl.removeClass("hide");
+				// re-fit SVG + translate post-rotate
+				Svg.fitTranslate(Drag);
 				// re-render layer
 				Projector.file.activeLayer.renderShapes({ all: true });
 				// uncover layout
 				APP.els.content.removeClass("cover no-cursor");
 				// unbind event
 				UI.doc.off("mousemove mouseup", Self.doRotate);
+				// re-focus on shape
+				Self.shape.trigger("mousedown").trigger("mouseup");
 				break;
 		}
 	},

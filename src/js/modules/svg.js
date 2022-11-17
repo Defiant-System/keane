@@ -5,27 +5,20 @@ const Svg = {
 		// 	arr2 = [[1, 2, 3], [4, 6, 8]];
 		// console.log( this.matrixDot(arr1, arr2) );
 	},
-	fitTranslate(svg) {
-		let dim = [...svg[0].children].filter(el => el.getBBox).reduce((acc, el) => {
-					let { x, y, width, height } = el.getBBox();
-					if (!acc.min.x || x < acc.min.x) acc.min.x = x;
-					if (!acc.max.x || x + width > acc.max.x) acc.max.x = x + width;
-					if (!acc.min.y || y < acc.min.y) acc.min.y = y;
-					if (!acc.max.y || y + height > acc.max.y) acc.max.y = y + height;
-					return acc;
-				}, { min: {}, max: {} }),
-			_ceil = Math.ceil,
-			width = _ceil(dim.max.x),
-			height = _ceil(dim.max.y),
+	fitTranslate(Drag) {
+		let width = Drag.viewBox.w,
+			height = Drag.viewBox.h,
 			viewBox = `0 0 ${width} ${height}`,
 			css = {
-				top: parseInt(svg.css("top"), 10) - _ceil(dim.min.y),
-				left: parseInt(svg.css("left"), 10) - _ceil(dim.min.x),
+				top: parseInt(Drag.el.css("top"), 10) + Math.floor(Drag.viewBox.min.y),
+				left: parseInt(Drag.el.css("left"), 10) + Math.floor(Drag.viewBox.min.x),
 				height,
 				width,
 			};
 		// update element
-		svg.attr({ viewBox }).css(css);
+		Drag.el.attr({ viewBox }).css(css);
+		// final call
+		if (typeof Drag.final === "function") Drag.final();
 	},
 	matrixDot(A, B) {
 		let result = new Array(A.length).fill(0).map(row => new Array(B[0].length).fill(0));
@@ -59,10 +52,36 @@ const Svg = {
 		},
 		line(xShape, dim) {
 			let mtxRotate = this.matrix(dim.radians, dim.origo),
-				[x1, y1] = Svg.matrixDot(mtxRotate, [[dim.points[0].x], [dim.points[0].y], [1]]),
-				[x2, y2] = Svg.matrixDot(mtxRotate, [[dim.points[1].x], [dim.points[1].y], [1]]);
+				p1 = Svg.matrixDot(mtxRotate, [[dim.points[0].x], [dim.points[0].y], [1]]),
+				p2 = Svg.matrixDot(mtxRotate, [[dim.points[1].x], [dim.points[1].y], [1]]),
+				a = {
+					x1: p1[0][0],
+					y1: p1[1][0],
+					x2: p2[0][0],
+					y2: p2[1][0],
+				};
 			// line rotated
-			xShape.attr({ x1, y1, x2, y2 });
+			xShape.attr(a);
+			// calculate viewBox
+			let min = {
+					x: a.x1 < a.x2 ? a.x1 : a.x2,
+					y: a.y1 < a.y2 ? a.y1 : a.y2,
+				},
+				max = {
+					x: a.x1 > a.x2 ? a.x1 : a.x2,
+					y: a.y1 > a.y2 ? a.y1 : a.y2,
+				},
+				w = Math.ceil(max.x - min.x),
+				h = Math.ceil(max.y - min.y);
+			dim.viewBox = { min, max, w, h, a };
+			// final method to update element attribute
+			dim.final = () => {
+				a.x1 -= min.x;
+				a.y1 -= min.y;
+				a.x2 -= min.x;
+				a.y2 -= min.y;
+				xShape.attr(a);
+			};
 		},
 		rect(xShape, dim) {},
 		ellipse(xShape, dim) {},
