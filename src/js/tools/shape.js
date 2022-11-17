@@ -484,7 +484,7 @@
 				break;
 			case "mouseup":
 				// re-fit SVG + translate post-rotate
-				Svg.fitTranslate(Drag);
+				if (Drag.viewBox) Svg.fitTranslate(Drag);
 				// re-render layer
 				Projector.file.activeLayer.renderShapes({ all: true });
 				// uncover layout

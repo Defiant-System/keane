@@ -1,9 +1,32 @@
 
+/* TRANSLATE matrix
+	1  0  tx
+	0  1  ty
+	0  0  1
+*/
+/* ROTATE matrix
+	cos(a)  -sin(a)  0
+	sin(a)   cos(a)  0
+	0        0       1
+*/
+/* SCALE matrix
+	sx  0  0
+	0  sy  0
+	0   0  1
+*/
+
 const Svg = {
 	init() {
 		// let arr1 = [[8, 3], [2, 4], [3, 6]],
 		// 	arr2 = [[1, 2, 3], [4, 6, 8]];
 		// console.log( this.matrixDot(arr1, arr2) );
+	},
+	matrixDot(A, B) {
+		let result = new Array(A.length).fill(0).map(row => new Array(B[0].length).fill(0));
+		return result.map((row, i) =>
+			row.map((val, j) =>
+				A[i].reduce((sum, elm, k) =>
+					parseFloat((sum + (elm * B[k][j])).toFixed(3)), 0)))
 	},
 	fitTranslate(Drag) {
 		let width = Drag.viewBox.w,
@@ -20,28 +43,6 @@ const Svg = {
 		// final call
 		if (typeof Drag.final === "function") Drag.final();
 	},
-	matrixDot(A, B) {
-		let result = new Array(A.length).fill(0).map(row => new Array(B[0].length).fill(0));
-		return result.map((row, i) =>
-			row.map((val, j) =>
-				A[i].reduce((sum, elm, k) =>
-					parseFloat((sum + (elm * B[k][j])).toFixed(3)), 0)))
-	},
-	/* TRANSLATE matrix
-		1  0  tx
-		0  1  ty
-		0  0  1
-	*/
-	/* ROTATE matrix
-		cos(a)  -sin(a)  0
-		sin(a)   cos(a)  0
-		0        0       1
-	*/
-	/* SCALE matrix
-		sx  0  0
-		0  sy  0
-		0   0  1
-	*/
 	rotate: {
 		matrix: (a, c) => {
 			let _cos = Math.cos,
@@ -84,17 +85,35 @@ const Svg = {
 			};
 		},
 		polyline(xShape, dim) {
-			let mtxRotate = this.matrix(dim.radians, dim.origo),
+			let arr = { x: [], y: [] },
+				min = { x: 0, y: 0 },
+				max = { x: 0, y: 0 },
+				w, h,
+				pnt = [],
+				mtxRotate = this.matrix(dim.radians, dim.origo),
 				points = dim.points.map(p => {
 					let [x, y] = Svg.matrixDot(mtxRotate, [[p[0]], [p[1]], [1]]);
+					arr.x.push(x);
+					arr.y.push(y);
+					pnt.push([x, y]);
 					return `${x},${y}`;
 				}).join(" ");
 			// polyline rotated
 			xShape.attr({ points });
 			// calculate viewBox
+			min.x = Math.min(...arr.x);
+			min.y = Math.min(...arr.y);
+			max.x = Math.max(...arr.x);
+			max.y = Math.max(...arr.y);
+			w = Math.ceil(max.x - min.x);
+			h = Math.ceil(max.y - min.y);
+			dim.viewBox = { min, max, w, h, pnt };
 
 			// final method to update element attribute
-
+			dim.final = () => {
+				let points = dim.viewBox.pnt.map(p => `${p[0]-min.x},${p[1]-min.y}`).join(" ");
+				xShape.attr({ points });
+			};
 		},
 		rect(xShape, dim) {},
 		ellipse(xShape, dim) {},
