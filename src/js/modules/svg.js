@@ -28,15 +28,19 @@ const Svg = {
 		0   0  1
 	*/
 	rotate: {
-		matrix: a => [[Math.cos(a), -Math.sin(a), 0],
-					  [Math.sin(a),  Math.cos(a), 0],
-					  [0,            0,           1]],
+		matrix: (a, c) => {
+			let _cos = Math.cos,
+				_sin = Math.sin;
+			return [[_cos(a), -_sin(a), -c.x * _cos(a) + c.y * _sin(a) + c.x],
+					[_sin(a),  _cos(a), -c.x * _sin(a) - c.y * _cos(a) + c.y],
+					[0, 0, 1]];
+		},
 		line(xShape, dim) {
-			let mtxRotate = Svg.rotate.matrix(dim.newAngle),
+			let mtxRotate = this.matrix(dim.radians, dim.origo),
 				[x1, y1] = Svg.matrixDot(mtxRotate, [[dim.points[0].x], [dim.points[0].y], [1]]),
 				[x2, y2] = Svg.matrixDot(mtxRotate, [[dim.points[1].x], [dim.points[1].y], [1]]);
-			console.log( x1, y1 );
-			console.log( x2, y2 );
+			// line rotated
+			xShape.attr({ x1, y1, x2, y2 });
 		},
 		rect(xShape, dim) {},
 		ellipse(xShape, dim) {},
@@ -85,8 +89,8 @@ const Svg = {
 			// scale transform matrix points
 			let mtxScale = dim.matrix(dim.scale.x, dim.scale.y),
 				points = dim.points.map(p => {
-					let newPos = this.matrixDot(mtxScale, [[p[0]], [p[1]], [1]]);
-					return [newPos[0], newPos[1]].join(",");
+					let [x, y] = this.matrixDot(mtxScale, [[p[0]], [p[1]], [1]]);
+					return `${x},${y}`;
 				}).join(" ");
 			xShape.attr({ points });
 		},
@@ -94,8 +98,8 @@ const Svg = {
 			// scale transform matrix points
 			let mtxScale = dim.matrix(dim.scale.x, dim.scale.y),
 				points = dim.points.map(p => {
-					let newPos = this.matrixDot(mtxScale, [[p[0]], [p[1]], [1]]);
-					return [newPos[0], newPos[1]].join(",");
+					let [x, y] = this.matrixDot(mtxScale, [[p[0]], [p[1]], [1]]);
+					return `${x},${y}`;
 				}).join(" ");
 			xShape.attr({ points });
 		},

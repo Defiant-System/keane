@@ -360,8 +360,12 @@
 				let el = Self.svgItem,
 					bEl = Self.handleBox.addClass("hide"),
 					type = event.target.className.split(" ")[1],
-					angle = parseInt(el.cssProp("--rotate"), 10),
 					clickY = event.clientY,
+					origo = {
+						x: parseInt(el.css("width"), 10) >> 1,
+						y: parseInt(el.css("height"), 10) >> 1,
+					},
+					pi2 = Math.PI / 180,
 					points;
 
 				switch (Self.shapeName) {
@@ -374,7 +378,7 @@
 				}
 
 				// create drag object
-				Self.drag = { el, bEl, type, angle, points, clickY };
+				Self.drag = { el, bEl, type, points, origo, pi2, clickY };
 
 				// hide from layer & show SVG version
 				Self.svgItem.addClass("transforming");
@@ -386,13 +390,18 @@
 				UI.doc.on("mousemove mouseup", Self.doRotate);
 				break;
 			case "mousemove":
-				Drag.newAngle = Drag.angle + event.clientY - Drag.clickY;
-				Drag.el.css({ "--rotate": `${Drag.newAngle}deg` });
+				Drag.angle = event.clientY - Drag.clickY;
+				Drag.radians = Drag.angle * Drag.pi2;
+				// Drag.el.css({ "--rotate": `${Drag.newAngle}deg` });
+
+				// apply rotation matrix
+				Svg.rotate[Self.shapeName](Self.shape, Drag);
+
 				break;
 			case "mouseup":
 
 				// apply rotation matrix
-				Svg.rotate[Self.shapeName](Self.shape, Drag);
+				// Svg.rotate[Self.shapeName](Self.shape, Drag);
 
 				// reset handle-box
 				// Drag.bEl.removeClass("hide");
