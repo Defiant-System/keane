@@ -10,8 +10,8 @@ const Svg = {
 			height = Drag.viewBox.h,
 			viewBox = `0 0 ${width} ${height}`,
 			css = {
-				top: parseInt(Drag.el.css("top"), 10) + Math.floor(Drag.viewBox.min.y),
-				left: parseInt(Drag.el.css("left"), 10) + Math.floor(Drag.viewBox.min.x),
+				top: Math.floor(Drag.offset.y + Drag.viewBox.min.y),
+				left: Math.floor(Drag.offset.x + Drag.viewBox.min.x),
 				height,
 				width,
 			};
@@ -83,11 +83,23 @@ const Svg = {
 				xShape.attr(a);
 			};
 		},
+		polyline(xShape, dim) {
+			let mtxRotate = this.matrix(dim.radians, dim.origo),
+				points = dim.points.map(p => {
+					let [x, y] = Svg.matrixDot(mtxRotate, [[p[0]], [p[1]], [1]]);
+					return `${x},${y}`;
+				}).join(" ");
+			// polyline rotated
+			xShape.attr({ points });
+			// calculate viewBox
+
+			// final method to update element attribute
+
+		},
 		rect(xShape, dim) {},
 		ellipse(xShape, dim) {},
 		circle(xShape, dim) {},
 		polygon(xShape, dim) {},
-		polyline(xShape, dim) {},
 		path(xShape, dim) {}
 	},
 	scale: {

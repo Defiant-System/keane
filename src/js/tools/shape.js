@@ -152,6 +152,82 @@
 				break;
 		}
 	},
+	doGradient(event) {
+		let APP = keane,
+			Self = APP.tools.shape,
+			Drag = Self.drag,
+			Gradient = Self.gradient;
+		switch (event.type) {
+			case "mousedown":
+				let el = $(event.target).parent(),
+					type = event.target.className.split(" ")[1],
+					[a, b] = el.css("transform").split("(")[1].split(")")[0].split(","),
+					rad = Math.atan2(a, b),
+					x = +el.prop("offsetLeft"),
+					y = +el.prop("offsetTop"),
+					r = +el.prop("offsetWidth"),
+					width = parseInt(Self.shape.css("width"), 10),
+					height = parseInt(Self.shape.css("height"), 10);
+				// create drag object
+				Self.drag = {
+					el,
+					type,
+					origo: { x, y, r },
+					click: {
+						x: event.clientX,
+						y: event.clientY,
+					},
+					offset: {
+						width,
+						height,
+						y: y + r * Math.cos(rad),
+						x: x + r * Math.sin(rad),
+					},
+					_round: Math.round,
+					_sqrt: Math.sqrt,
+					_atan2: Math.atan2,
+					_PI: 180 / Math.PI,
+				};
+				// prevent mouse from triggering mouseover
+				APP.els.content.addClass("cover no-cursor");
+				// bind event handlers
+				UI.doc.on("mousemove mouseup", Self.doGradient);
+				break;
+			case "mousemove":
+				if (Drag.type === "p1") {
+					let dY = event.clientY - Drag.click.y,
+						dX = event.clientX - Drag.click.x,
+						top = dY + Drag.origo.y,
+						left = dX + Drag.origo.x,
+						y2 = dY + Drag.offset.y,
+						x2 = dX + Drag.offset.x,
+						oW = Drag.offset.width,
+						oH = Drag.offset.height;
+					Drag.el.css({ top, left });
+					// UI change gradient
+					// Gradient.moveP1(left/oW, top/oH, x2/oW, y2/oH);
+				} else {
+					// rotate
+					let y = event.clientY - Drag.click.y + Drag.offset.y - Drag.origo.y,
+						x = event.clientX - Drag.click.x + Drag.offset.x - Drag.origo.x,
+						deg = Drag._round(Drag._atan2(y, x) * Drag._PI),
+						width = Drag._sqrt(y*y + x*x),
+						oW = Drag.offset.width,
+						oH = Drag.offset.height;
+					if (deg < 0) deg += 360;
+					Drag.el.css({ width, transform: `rotate(${deg}deg)` });
+					// UI change gradient
+					// Gradient.moveP2((Drag.origo.x+x)/oW, (Drag.origo.y+y)/oH, width/oW);
+				}
+				break;
+			case "mouseup":
+				// uncover app UI
+				APP.els.content.removeClass("cover no-cursor");
+				// unbind event handler
+				UI.doc.off("mousemove mouseup", Self.doGradient);
+				break;
+		}
+	},
 	doMove(event) {
 		let APP = keane,
 			Self = APP.tools.shape,
@@ -361,13 +437,23 @@
 					bEl = Self.handleBox.addClass("hide"),
 					type = event.target.className.split(" ")[1],
 					clickY = event.clientY,
+					offset = {
+						y: parseInt(Drag.el.css("top"), 10),
+						x: parseInt(Drag.el.css("left"), 10),
+					},
 					origo = {
 						x: parseInt(el.css("width"), 10) >> 1,
 						y: parseInt(el.css("height"), 10) >> 1,
 					},
 					pi2 = Math.PI / 180,
-					points;
-
+					points = Self.shape.attr("points");
+				// process points, if any
+				if (points) {
+					points = points.replace(/, /g, ",")
+									.replace(/\t|\n/g, "")
+									.split(" ").map(p => p.split(",").map(i => +i.trim()));
+				}
+				// special cases
 				switch (Self.shapeName) {
 					case "line":
 						points = [
@@ -376,9 +462,8 @@
 						];
 						break;
 				}
-
 				// create drag object
-				Self.drag = { el, bEl, type, points, origo, pi2, clickY };
+				Self.drag = { el, bEl, type, points, offset, origo, pi2, clickY };
 
 				// hide from layer & show SVG version
 				Self.svgItem.addClass("transforming");
@@ -408,82 +493,6 @@
 				UI.doc.off("mousemove mouseup", Self.doRotate);
 				// re-focus on shape
 				Self.shape.trigger("mousedown").trigger("mouseup");
-				break;
-		}
-	},
-	doGradient(event) {
-		let APP = keane,
-			Self = APP.tools.shape,
-			Drag = Self.drag,
-			Gradient = Self.gradient;
-		switch (event.type) {
-			case "mousedown":
-				let el = $(event.target).parent(),
-					type = event.target.className.split(" ")[1],
-					[a, b] = el.css("transform").split("(")[1].split(")")[0].split(","),
-					rad = Math.atan2(a, b),
-					x = +el.prop("offsetLeft"),
-					y = +el.prop("offsetTop"),
-					r = +el.prop("offsetWidth"),
-					width = parseInt(Self.shape.css("width"), 10),
-					height = parseInt(Self.shape.css("height"), 10);
-				// create drag object
-				Self.drag = {
-					el,
-					type,
-					origo: { x, y, r },
-					click: {
-						x: event.clientX,
-						y: event.clientY,
-					},
-					offset: {
-						width,
-						height,
-						y: y + r * Math.cos(rad),
-						x: x + r * Math.sin(rad),
-					},
-					_round: Math.round,
-					_sqrt: Math.sqrt,
-					_atan2: Math.atan2,
-					_PI: 180 / Math.PI,
-				};
-				// prevent mouse from triggering mouseover
-				APP.els.content.addClass("cover no-cursor");
-				// bind event handlers
-				UI.doc.on("mousemove mouseup", Self.doGradient);
-				break;
-			case "mousemove":
-				if (Drag.type === "p1") {
-					let dY = event.clientY - Drag.click.y,
-						dX = event.clientX - Drag.click.x,
-						top = dY + Drag.origo.y,
-						left = dX + Drag.origo.x,
-						y2 = dY + Drag.offset.y,
-						x2 = dX + Drag.offset.x,
-						oW = Drag.offset.width,
-						oH = Drag.offset.height;
-					Drag.el.css({ top, left });
-					// UI change gradient
-					// Gradient.moveP1(left/oW, top/oH, x2/oW, y2/oH);
-				} else {
-					// rotate
-					let y = event.clientY - Drag.click.y + Drag.offset.y - Drag.origo.y,
-						x = event.clientX - Drag.click.x + Drag.offset.x - Drag.origo.x,
-						deg = Drag._round(Drag._atan2(y, x) * Drag._PI),
-						width = Drag._sqrt(y*y + x*x),
-						oW = Drag.offset.width,
-						oH = Drag.offset.height;
-					if (deg < 0) deg += 360;
-					Drag.el.css({ width, transform: `rotate(${deg}deg)` });
-					// UI change gradient
-					// Gradient.moveP2((Drag.origo.x+x)/oW, (Drag.origo.y+y)/oH, width/oW);
-				}
-				break;
-			case "mouseup":
-				// uncover app UI
-				APP.els.content.removeClass("cover no-cursor");
-				// unbind event handler
-				UI.doc.off("mousemove mouseup", Self.doGradient);
 				break;
 		}
 	},
@@ -527,6 +536,7 @@
 									.replace(/\t|\n/g, "")
 									.split(" ").map(p => p.split(",").map(i => +i.trim()));
 				}
+				// special cases
 				switch (Self.shapeName) {
 					case "line":
 						points = [

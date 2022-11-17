@@ -72,9 +72,9 @@ let Test = {
 		// window.find("svg.shape:nth(2) circle").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape:nth(4) polygon").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape:nth(3) polygon").trigger("mousedown").trigger("mouseup");
-		// window.find("svg.shape polyline").trigger("mousedown").trigger("mouseup");
+		window.find("svg.shape polyline").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape path").trigger("mousedown").trigger("mouseup");
-		window.find("svg.shape line").trigger("mousedown").trigger("mouseup");
+		// window.find("svg.shape line").trigger("mousedown").trigger("mouseup");
 
 		// window.find(`.tool[data-arg="elliptical"]`).trigger("click");
 	},
