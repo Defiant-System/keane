@@ -33,6 +33,24 @@ let Test = {
 		// setTimeout(() => keane.dispatch({ type: "file-rotate90cw", arg: "layer" }), 1000);
 		// setTimeout(() => keane.dispatch({ type: "file-flipV", arg: "layer" }), 1000);
 
+
+		// Tools index
+		// setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.option .tip-icon`).trigger("click"), 500);
+		// setTimeout(() => window.find(`.tool-options-brush .tool-feather`).trigger("click"), 500);
+
+
+		// temp
+		// setTimeout(this.dialogs, 500);
+		// setTimeout(this.mask, 600);
+		// setTimeout(this.marquee, 500);
+		// setTimeout(this.shapes, 500);
+		setTimeout(this.blankView, 200);
+	},
+	blankView() {
+		// window.find(`.recent-file:nth(0)`).trigger("click");
+	},
+	shapes() {
 		/*
 		move
 		marquee
@@ -50,29 +68,15 @@ let Test = {
 		*/
 		window.find(`.tool[data-content="shape"]`).trigger("click");
 
-
-		// Tools index
-		// setTimeout(() => window.find(`.fg-color`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.option .tip-icon`).trigger("click"), 500);
-		// setTimeout(() => window.find(`.tool-options-brush .tool-feather`).trigger("click"), 500);
-
-
-		// temp
-		// setTimeout(this.dialogs, 500);
-		// setTimeout(this.mask, 600);
-		// setTimeout(this.marquee, 500);
-		setTimeout(this.shapes, 500);
-	},
-	shapes() {
 		// window.find(".temp-layer").addClass("show");
 		window.find(`.sidebar-wrapper div[data-box="layers"] .icon[data-click="add-layer"]`).trigger("click");
 		// "select" a shape
-		// window.find("svg.shape:nth(0) rect").trigger("mousedown").trigger("mouseup");
+		window.find("svg.shape:nth(0) rect").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape:nth(1) ellipse").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape:nth(2) circle").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape:nth(4) polygon").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape:nth(3) polygon").trigger("mousedown").trigger("mouseup");
-		window.find("svg.shape polyline").trigger("mousedown").trigger("mouseup");
+		// window.find("svg.shape polyline").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape path").trigger("mousedown").trigger("mouseup");
 		// window.find("svg.shape line").trigger("mousedown").trigger("mouseup");
 

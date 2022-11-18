@@ -440,6 +440,8 @@
 					offset = {
 						y: parseInt(Drag.el.css("top"), 10),
 						x: parseInt(Drag.el.css("left"), 10),
+						h: parseInt(Drag.el.css("height"), 10),
+						w: parseInt(Drag.el.css("width"), 10),
 					},
 					origo = {
 						x: parseInt(el.css("width"), 10) >> 1,

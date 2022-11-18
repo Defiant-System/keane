@@ -6,6 +6,7 @@
 		// fast references
 		this.els = {
 			el: window.find(".blank-view"),
+			content: window.find(".blank-view .blank-content"),
 		};
 
 		// get settings, if any
@@ -21,7 +22,7 @@
 				}
 			}))
 			.then(() => {
-				let target = this.els.el;
+				let target = this.els.content;
 
 				// add recent files in to data-section
 				xSamples.parentNode.append(this.xRecent);
@@ -44,8 +45,6 @@
 		let APP = keane,
 			Self = APP.blankView,
 			file,
-			name,
-			value,
 			el;
 		// console.log(event);
 		switch (event.type) {
@@ -53,17 +52,19 @@
 				APP.dispatch({ type: "open-file" });
 				break;
 			case "check-clipboard":
-				navigator.clipboard.read().then(async clipboardItems => {
-					clipboardItems.map(clipboardItem => {
-						clipboardItem.types.map(async type => {
-							if (type.startsWith("image")) {
-								Self.els.btnClipboard.removeClass("disabled_");
-							} else {
-								Self.els.btnClipboard.addClass("disabled_");
-							}
-						});
-					});
-				});
+				Self.els.btnClipboard.removeClass("disabled_");
+				
+				// navigator.clipboard.read().then(async clipboardItems => {
+				// 	clipboardItems.map(clipboardItem => {
+				// 		clipboardItem.types.map(async type => {
+				// 			if (type.startsWith("image")) {
+				// 				Self.els.btnClipboard.removeClass("disabled_");
+				// 			} else {
+				// 				Self.els.btnClipboard.addClass("disabled_");
+				// 			}
+				// 		});
+				// 	});
+				// });
 				break;
 			case "new-from-clipboard":
 				navigator.clipboard.read().then(async clipboardItems => {
@@ -98,24 +99,50 @@
 			case "select-sample":
 				el = $(event.target);
 				if (!el.hasClass("sample")) return;
-
-				name = el.data("url");
-				APP.dispatch({ type: "load-samples", names: [name.slice(name.lastIndexOf("/")+1)] });
+				// animation sequence
+				Self.dispatch({
+					type: "anim-hide-view",
+					callback: () => {
+						let name = el.data("url");
+						APP.dispatch({ type: "load-samples", names: [name.slice(name.lastIndexOf("/")+1)] });
+					}
+				});
 				break;
 			case "select-preset":
 				el = $(event.target);
-
-				let width = +el.data("width"),
-					height = +el.data("height");
-				// set up workspace
-				APP.dispatch({ type: "setup-workspace", width, height });
+				// animation sequence
+				Self.dispatch({
+					type: "anim-hide-view",
+					callback: () => {
+						let width = +el.data("width"),
+							height = +el.data("height");
+						// set up workspace
+						APP.dispatch({ type: "setup-workspace", width, height });
+					}
+				});
 				break;
 			case "select-recent-file":
 				el = $(event.target);
 				if (!el.hasClass("recent-file")) return;
-				
-				karaqu.shell(`fs -o '${el.data("file")}' null`)
-					.then(exec => APP.dispatch(exec.result));
+				// animation sequence
+				Self.dispatch({
+					type: "anim-hide-view",
+					callback: () =>
+						karaqu.shell(`fs -o '${el.data("file")}' null`)
+							.then(exec => APP.dispatch(exec.result))
+				});
+				break;
+
+			case "anim-hide-view":
+				APP.els.content.cssSequence("seq-hide-blank-view", "transitionend", sEl => {
+					if (sEl.hasClass("status-bar")) {
+						APP.els.content.removeClass("show-blank-view seq-hide-blank-view");
+						if (typeof event.callback === "function") event.callback();
+					}
+				});
+				break;
+			case "anim-show-view":
+
 				break;
 			case "add-recent-file":
 				if (!event.file.path) return;

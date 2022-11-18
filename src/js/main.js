@@ -118,8 +118,19 @@ const keane = {
 				}
 				break;
 			case "open.file":
-				event.open({ responseType: "blob" })
-					.then(file => Self.dispatch({ type: "prepare-file", file }));
+				let callback = () => event.open({ responseType: "blob" })
+											.then(file => Self.dispatch({ type: "prepare-file", file }));
+				
+				if (Self.els.content.hasClass("show-blank-view")) Self.blankView.dispatch({ type: "anim-hide-view", callback });
+				else callback();
+				break;
+			case "open-file":
+				// show FS dialog
+				window.dialog.open({
+					jpg: item => Self.dispatch(item),
+					jpeg: item => Self.dispatch(item),
+					png: item => Self.dispatch(item),
+				});
 				break;
 			
 			// custom events

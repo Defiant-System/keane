@@ -108,14 +108,18 @@ const Svg = {
 			w = Math.ceil(max.x - min.x);
 			h = Math.ceil(max.y - min.y);
 			dim.viewBox = { min, max, w, h, pnt };
-
 			// final method to update element attribute
 			dim.final = () => {
 				let points = dim.viewBox.pnt.map(p => `${p[0]-min.x},${p[1]-min.y}`).join(" ");
 				xShape.attr({ points });
 			};
 		},
-		rect(xShape, dim) {},
+		rect(xShape, dim) {
+			let mtxRotate = this.matrix(dim.radians, dim.origo),
+				p1 = Svg.matrixDot(mtxRotate, [[dim.offset.w], [dim.offset.h], [1]]),
+				p2 = Svg.matrixDot(mtxRotate, [[dim.offset.w], [dim.offset.h], [1]]);
+			console.log( dim );
+		},
 		ellipse(xShape, dim) {},
 		circle(xShape, dim) {},
 		polygon(xShape, dim) {},

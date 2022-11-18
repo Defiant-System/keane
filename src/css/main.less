@@ -1,6 +1,7 @@
 
 // Keane
 @backgrop-blur: 21px;
+@blankViewAnim: 250ms;
 
 
 // applies to window body (for blurred window)
@@ -51,25 +52,80 @@ content {
 
 
 	&.show-blank-view {
+		overflow: hidden;
+
 		&.files-open {
 			.blank-view .block-buttons .btn[data-click="close-view"] {
 				display: inline-block;
 			}
 		}
 
-		.blank-view { display: block; }
+		.blank-view {
+			display: block;
+
+			.blank-content {
+				opacity: 1;
+				transition: opacity @blankViewAnim ease-in-out;
+			}
+		}
 
 		.tools-bar,
 		.tools-options-bar {
-			display: none;
+			top: -73px;
+			transition: top 250ms @blankViewAnim ease-in-out;
 		}
 
-		.workspace,
 		.cvs-wrapper {
 			visibility: hidden;
 			opacity: 0;
 		}
+			
+		.workspace {
+			visibility: hidden;
+
+			.sidebar-wrapper {
+				right: -273px;
+			}
+
+			.status-bar {
+				bottom: -25px;
+			}
+		}
 	}
+
+	&.seq-hide-blank-view {
+		.blank-view {
+			.blank-content {
+				opacity: 0;
+			}
+		}
+
+		.tools-bar,
+		.tools-options-bar {
+			top: 0;
+		}
+
+		.cvs-wrapper {
+			visibility: visible;
+			opacity: 1;
+			transition: opacity @blankViewAnim @blankViewAnim ease-in-out;
+		}
+
+		.workspace {
+			visibility: visible;
+
+			.sidebar-wrapper {
+				right: 0;
+				transition: right @blankViewAnim @blankViewAnim ease-in-out;
+			}
+
+			.status-bar {
+				bottom: 0;
+				transition: bottom calc( @blankViewAnim + 25ms ) @blankViewAnim ease-in-out;
+			}
+		}
+	}
+
 
 	&.cursor-crosshair.cover,
 	&.cursor-crosshair .canvas {
@@ -1054,8 +1110,8 @@ content {
 
 		.shape {
 			opacity: 0;
-			// background: rgba(255,0,0,.75);
-			// opacity: 0.25;
+			background: rgba(255,0,0,.75);
+			opacity: 0.25;
 			position: absolute;
 			transform: rotate( var( --rotate) );
 			overflow: visible;
