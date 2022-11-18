@@ -51,6 +51,41 @@ content {
 	@import "blank-view";
 
 
+	// transitions for blank view / work view
+	.tools-bar,
+	.tools-options-bar {
+		top: 0;
+		transition: top @blankViewAnim ease-in-out;
+	}
+
+	.blank-view {
+		.blank-content {
+			opacity: 0;
+			transition: opacity @blankViewAnim ease-in-out;
+		}
+	}
+
+	.cvs-wrapper {
+		opacity: 1;
+		transition: opacity @blankViewAnim ease-in-out;
+	}
+
+	.workspace {
+		.sidebar-wrapper {
+			right: 0;
+			transition: right @blankViewAnim ease-in-out;
+		}
+
+		.status-bar {
+			bottom: 0;
+			transition: bottom @blankViewAnim ease-in-out;
+		}
+	}
+
+
+
+
+
 	&.show-blank-view {
 		overflow: hidden;
 
@@ -65,14 +100,13 @@ content {
 
 			.blank-content {
 				opacity: 1;
-				transition: opacity @blankViewAnim ease-in-out;
 			}
 		}
 
 		.tools-bar,
 		.tools-options-bar {
+			transition-delay: 250ms;
 			top: -73px;
-			transition: top 250ms @blankViewAnim ease-in-out;
 		}
 
 		.cvs-wrapper {
@@ -83,6 +117,42 @@ content {
 		.workspace {
 			visibility: hidden;
 
+			.sidebar-wrapper {
+				right: -273px;
+			}
+
+			.status-bar {
+				bottom: -25px;
+			}
+		}
+	}
+
+	&.prepare-seq-show-blank-view {
+		.blank-view {
+			display: block;
+		}
+	}
+
+	&.seq-show-blank-view {
+		overflow: hidden;
+
+		.blank-view {
+			.blank-content {
+				opacity: 1;
+				transition-delay: @blankViewAnim * 1.25;
+			}
+		}
+
+		.tools-bar,
+		.tools-options-bar {
+			top: -73px;
+		}
+
+		.cvs-wrapper {
+			opacity: 0;
+		}
+
+		.workspace {
 			.sidebar-wrapper {
 				right: -273px;
 			}
@@ -108,7 +178,7 @@ content {
 		.cvs-wrapper {
 			visibility: visible;
 			opacity: 1;
-			transition: opacity @blankViewAnim @blankViewAnim ease-in-out;
+			transition-delay: @blankViewAnim;
 		}
 
 		.workspace {
@@ -116,12 +186,12 @@ content {
 
 			.sidebar-wrapper {
 				right: 0;
-				transition: right @blankViewAnim @blankViewAnim ease-in-out;
+				transition-delay: @blankViewAnim;
 			}
 
 			.status-bar {
 				bottom: 0;
-				transition: bottom calc( @blankViewAnim + 25ms ) @blankViewAnim ease-in-out;
+				transition-delay: @blankViewAnim + 25ms;
 			}
 		}
 	}

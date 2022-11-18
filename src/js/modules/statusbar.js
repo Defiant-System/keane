@@ -18,7 +18,10 @@
 				Tabs.select(event.arg);
 				break;
 			case "close-file":
-				Tabs.close(event.el.parent().data("arg"));
+				APP.blankView.dispatch({
+					type: "anim-show-view",
+					callback: () => Tabs.close(event.el.parent().data("arg")),
+				});
 				break;
 			case "toggle-statusbar":
 				Self.els.statusBar.toggleClass("hidden", event.checked === 1);

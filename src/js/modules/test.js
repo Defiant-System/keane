@@ -45,10 +45,14 @@ let Test = {
 		// setTimeout(this.mask, 600);
 		// setTimeout(this.marquee, 500);
 		// setTimeout(this.shapes, 500);
-		setTimeout(this.blankView, 200);
+		setTimeout(this.blankView, 1000);
 	},
 	blankView() {
 		// window.find(`.recent-file:nth(0)`).trigger("click");
+
+		window.find(`.status-bar .file.active .close`).trigger("click");
+		
+		// console.log( window.find(`.icon[data-click="show-blank-view"]`) );
 	},
 	shapes() {
 		/*

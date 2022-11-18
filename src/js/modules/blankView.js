@@ -53,7 +53,7 @@
 				break;
 			case "check-clipboard":
 				Self.els.btnClipboard.removeClass("disabled_");
-				
+
 				// navigator.clipboard.read().then(async clipboardItems => {
 				// 	clipboardItems.map(clipboardItem => {
 				// 		clipboardItem.types.map(async type => {
@@ -142,7 +142,17 @@
 				});
 				break;
 			case "anim-show-view":
-
+				APP.els.content.addClass("prepare-seq-show-blank-view");
+				setTimeout(() => {
+					APP.els.content.cssSequence("seq-show-blank-view", "transitionend", sEl => {
+						if (sEl.hasClass("blank-content")) {
+							APP.els.content
+								.addClass("show-blank-view")
+								.removeClass("seq-show-blank-view prepare-seq-show-blank-view");
+							if (typeof event.callback === "function") event.callback();
+						}
+					});
+				}, 60);
 				break;
 			case "add-recent-file":
 				if (!event.file.path) return;
