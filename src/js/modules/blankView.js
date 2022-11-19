@@ -124,13 +124,9 @@
 			case "select-recent-file":
 				el = $(event.target);
 				if (!el.hasClass("recent-file")) return;
-				// animation sequence
-				Self.dispatch({
-					type: "anim-hide-view",
-					callback: () =>
-						karaqu.shell(`fs -o '${el.data("file")}' null`)
-							.then(exec => APP.dispatch(exec.result))
-				});
+
+				karaqu.shell(`fs -o '${el.data("file")}' null`)
+					.then(exec => APP.dispatch(exec.result));
 				break;
 
 			case "anim-hide-view":

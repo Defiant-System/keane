@@ -49,9 +49,9 @@ let Test = {
 	},
 	blankView() {
 		// window.find(`.recent-file:nth(0)`).trigger("click");
+		// window.find(`.block-presets .preset:nth(0)`).trigger("click");
+		// window.find(`.status-bar .file.active .close`).trigger("click");
 
-		window.find(`.status-bar .file.active .close`).trigger("click");
-		
 		// console.log( window.find(`.icon[data-click="show-blank-view"]`) );
 	},
 	shapes() {

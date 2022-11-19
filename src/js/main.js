@@ -121,8 +121,11 @@ const keane = {
 				let callback = () => event.open({ responseType: "blob" })
 											.then(file => Self.dispatch({ type: "prepare-file", file }));
 				
-				if (Self.els.content.hasClass("show-blank-view")) Self.blankView.dispatch({ type: "anim-hide-view", callback });
-				else callback();
+				if (Self.els.content.hasClass("show-blank-view")) {
+					Self.blankView.dispatch({ type: "anim-hide-view", callback });
+				} else {
+					callback();
+				}
 				break;
 			case "open-file":
 				// show FS dialog

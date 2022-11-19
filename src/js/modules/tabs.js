@@ -91,7 +91,7 @@ const Tabs = {
 
 		if (!next.length) {
 			// reset app by default - show initial view
-			APP.dispatch({ type: "show-blank-view" });
+			// APP.dispatch({ type: "show-blank-view" });
 		} else if (!next.hasClass("active")) {
 			// auto-select next file
 			this.select(next.data("arg"));
