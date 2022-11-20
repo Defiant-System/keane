@@ -36,6 +36,8 @@
 				this.els.btnOpen = target.find(`.btn[data-click="open-filesystem"]`);
 				this.els.btnClipboard = target.find(`.btn[data-click="new-from-clipboard"]`);
 				this.els.btnClose = target.find(`.btn[data-click="close-view"]`);
+				// reset content view "animations"
+				setTimeout(() => keane.els.content.removeClass("no-anim"), 100);
 
 				// setTimeout(() => window.find(".sample:nth(0)").trigger("click"), 300);
 				// setTimeout(() => window.find(`.btn[data-click="new-from-clipboard"]`).trigger("click"), 200);
@@ -93,8 +95,17 @@
 				});
 				break;
 			case "close-view":
-				if (Tabs._stack.length) APP.els.content.removeClass("show-blank-view files-open");
-				else karaqu.shell("win -c");
+				if (Tabs._stack.length) {
+					Self.dispatch({
+						type: "anim-hide-view",
+						callback: () => {
+							// reset start view
+							APP.els.content.removeClass("files-open");
+							// if has files open, focus it
+							Projector.file.render();
+						}
+					});
+				} else karaqu.shell("win -c");
 				break;
 			case "select-sample":
 				el = $(event.target);

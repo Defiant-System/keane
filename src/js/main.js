@@ -78,6 +78,7 @@ const keane = {
 	dispatch(event) {
 		let Self = keane,
 			Tools = Self.tools,
+			callback,
 			name,
 			args,
 			layer,
@@ -118,7 +119,7 @@ const keane = {
 				}
 				break;
 			case "open.file":
-				let callback = () => event.open({ responseType: "blob" })
+				callback = () => event.open({ responseType: "blob" })
 											.then(file => Self.dispatch({ type: "prepare-file", file }));
 				
 				if (Self.els.content.hasClass("show-blank-view")) {
@@ -156,19 +157,18 @@ const keane = {
 			case "setup-workspace":
 				// show blank view
 				Self.els.content.removeClass("show-blank-view");
-				// Self.els.content.addClass("no-anim");
 				// open file + prepare workspace
 				Tabs.open(event.file, event);
 				break;
 			case "show-blank-view":
 				if (Self.els.content.hasClass("show-blank-view")) return;
-
-				let str = "show-blank-view";
-				str += Tabs._stack.length ? " files-open" : "";
+				let str = Tabs._stack.length ? "files-open" : "";
 				// show blank view
 				Self.els.content.addClass(str);
 				// check clipboard for images
 				Self.blankView.dispatch({ type: "check-clipboard" });
+				
+				Self.blankView.dispatch({ type: "anim-show-view" });
 				break;
 
 			case "open-dialog":
