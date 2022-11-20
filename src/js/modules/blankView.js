@@ -37,10 +37,7 @@
 				this.els.btnClipboard = target.find(`.btn[data-click="new-from-clipboard"]`);
 				this.els.btnClose = target.find(`.btn[data-click="close-view"]`);
 				// reset content view "animations"
-				setTimeout(() => keane.els.content.removeClass("no-anim"), 100);
-
-				// setTimeout(() => window.find(".sample:nth(0)").trigger("click"), 300);
-				// setTimeout(() => window.find(`.btn[data-click="new-from-clipboard"]`).trigger("click"), 200);
+				setTimeout(() => keane.els.content.removeClass("no-anim"), 500);
 			});
 	},
 	dispatch(event) {

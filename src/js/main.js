@@ -122,7 +122,8 @@ const keane = {
 				callback = () => event.open({ responseType: "blob" })
 											.then(file => Self.dispatch({ type: "prepare-file", file }));
 				
-				if (Self.els.content.hasClass("show-blank-view")) {
+				el = Self.els.content;
+				if (el.hasClass("show-blank-view") && !el.hasClass("no-anim")) {
 					Self.blankView.dispatch({ type: "anim-hide-view", callback });
 				} else {
 					callback();
@@ -167,7 +168,7 @@ const keane = {
 				Self.els.content.addClass(str);
 				// check clipboard for images
 				Self.blankView.dispatch({ type: "check-clipboard" });
-				
+
 				Self.blankView.dispatch({ type: "anim-show-view" });
 				break;
 
