@@ -156,6 +156,7 @@ const keane = {
 			case "setup-workspace":
 				// show blank view
 				Self.els.content.removeClass("show-blank-view");
+				// Self.els.content.addClass("no-anim");
 				// open file + prepare workspace
 				Tabs.open(event.file, event);
 				break;

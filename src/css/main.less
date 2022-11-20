@@ -45,6 +45,7 @@ content {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	box-shadow: 0 0 0;
 
 	
 	// imports
@@ -82,16 +83,16 @@ content {
 		}
 	}
 
-	// &.no-anim {
-	// 	.tools-bar,
-	// 	.tools-options-bar,
-	// 	.blank-view.blank-content,
-	// 	.cvs-wrapper,
-	// 	.workspace .sidebar-wrapper,
-	// 	.workspace .status-bar {
-	// 		transition-duration: 0s;
-	// 	}
-	// }
+	&.no-anim {
+		.tools-bar,
+		.tools-options-bar,
+		.blank-view.blank-content,
+		.cvs-wrapper,
+		.workspace .sidebar-wrapper,
+		.workspace .status-bar {
+			transition-duration: 0s;
+		}
+	}
 
 	&.show-blank-view {
 		overflow: hidden;
@@ -134,20 +135,13 @@ content {
 		}
 	}
 
-	&.prepare-seq-show-blank-view {
-		.blank-view {
-			display: block;
-		}
-	}
-
 	&.seq-show-blank-view {
+		box-shadow: 0 1px 0;
+		transition-duration: @blankViewAnim * 2.1;
 		overflow: hidden;
 
 		.blank-view {
-			.blank-content {
-				opacity: 1;
-				transition-delay: @blankViewAnim * 1.25;
-			}
+			display: block;
 		}
 
 		.tools-bar,
@@ -171,6 +165,9 @@ content {
 	}
 
 	&.seq-hide-blank-view {
+		box-shadow: 0 1px 0;
+		transition-duration: @blankViewAnim * 2.1;
+
 		.blank-view {
 			.blank-content {
 				opacity: 0;
@@ -198,7 +195,7 @@ content {
 
 			.status-bar {
 				bottom: 0;
-				transition-delay: @blankViewAnim + 25ms;
+				transition-delay: @blankViewAnim;
 			}
 		}
 	}

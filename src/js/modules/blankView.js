@@ -128,27 +128,26 @@
 				karaqu.shell(`fs -o '${el.data("file")}' null`)
 					.then(exec => APP.dispatch(exec.result));
 				break;
-
 			case "anim-hide-view":
+				// temp solution - until "loading" view
+				Projector.ctx.clear();
+				// transition work view
 				APP.els.content.cssSequence("seq-hide-blank-view", "transitionend", sEl => {
-					if (sEl.hasClass("status-bar")) {
+					if (sEl[0] === APP.els.content[0]) {
 						APP.els.content.removeClass("show-blank-view seq-hide-blank-view");
 						if (typeof event.callback === "function") event.callback();
 					}
 				});
 				break;
 			case "anim-show-view":
-				APP.els.content.addClass("prepare-seq-show-blank-view");
-				setTimeout(() => {
-					APP.els.content.cssSequence("seq-show-blank-view", "transitionend", sEl => {
-						if (sEl.hasClass("blank-content")) {
-							APP.els.content
-								.addClass("show-blank-view")
-								.removeClass("seq-show-blank-view prepare-seq-show-blank-view");
-							if (typeof event.callback === "function") event.callback();
-						}
-					});
-				}, 60);
+				// transition blank view
+				APP.els.content.cssSequence("seq-show-blank-view", "transitionend", sEl => {
+					if (sEl[0] === APP.els.content[0]) {
+						sEl.addClass("show-blank-view")
+							.removeClass("seq-show-blank-view prepare-seq-show-blank-view");
+						if (typeof event.callback === "function") event.callback();
+					}
+				});
 				break;
 			case "add-recent-file":
 				if (!event.file.path) return;
