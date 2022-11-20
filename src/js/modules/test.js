@@ -45,7 +45,7 @@ let Test = {
 		// setTimeout(this.mask, 600);
 		// setTimeout(this.marquee, 500);
 		// setTimeout(this.shapes, 500);
-		setTimeout(this.blankView, 1000);
+		// setTimeout(this.blankView, 1000);
 	},
 	blankView() {
 		// window.find(`.recent-file:nth(0)`).trigger("click");

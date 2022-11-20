@@ -7,22 +7,24 @@
 	},
 	dispatch(event) {
 		let APP = keane,
-			Self = APP.tools.move;
-
+			Self = APP.tools.move,
+			el;
 		switch (event.type) {
 			// custom events
 			case "select-option":
 				Self.option = event.arg || "move";
+				// set canvas cursor
+				APP.els.content.removeClass("cursor-hand cursor-move").addClass(`cursor-${Self.option}`);
 				break;
 			case "enable":
-				// add class
-				APP.els.content.addClass("cursor-hand");
+				// set canvas cursor
+				APP.els.content.addClass(`cursor-${Self.option}`);
 				// bind event handler
 				Projector.cvs.on("mousedown", Self.doPan);
 				break;
 			case "disable":
-				// remove class
-				APP.els.content.removeClass("cursor-hand");
+				// reset canvas cursor
+				APP.els.content.removeClass("cursor-hand cursor-move");
 				// unbind event handler
 				Projector.cvs.off("mousedown", Self.doPan);
 				break;

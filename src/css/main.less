@@ -207,15 +207,20 @@ content {
 		cursor: url(~/icons/cursor-crosshair.png) 8 8, crosshair;
 	}
 
+	&.cursor-move.cover,
+	&.cursor-move .canvas {
+		cursor: url(~/icons/cursor-move.png) 1 1, default;
+	}
+
 	&.cursor-hand.cover,
 	&.cursor-hand .canvas {
 		cursor: url(~/icons/cursor-hand.png) 8 8, move;
 	}
 
-	&.cursor-move.cover,
-	&.cursor-move .canvas {
-		cursor: move;
-	}
+	// &.cursor-move.cover,
+	// &.cursor-move .canvas {
+	// 	cursor: move;
+	// }
 
 	&.cursor-poly-open.cover,
 	&.cursor-poly-open .canvas {
