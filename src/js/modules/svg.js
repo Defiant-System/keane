@@ -115,10 +115,13 @@ const Svg = {
 			};
 		},
 		rect(xShape, dim) {
-			let mtxRotate = this.matrix(dim.radians, dim.origo),
-				p1 = Svg.matrixDot(mtxRotate, [[dim.offset.w], [dim.offset.h], [1]]),
-				p2 = Svg.matrixDot(mtxRotate, [[dim.offset.w], [dim.offset.h], [1]]);
-			console.log( dim );
+			// let mtxRotate = this.matrix(dim.radians, dim.origo),
+			// 	p1 = Svg.matrixDot(mtxRotate, [[dim.offset.w], [dim.offset.h], [1]]),
+			// 	p2 = Svg.matrixDot(mtxRotate, [[dim.offset.w], [dim.offset.h], [1]]);
+			dim.el
+				.attr({ rotate: dim.angle })
+				.css({ "--rotate": `${dim.angle}deg` });
+			// TO BE CONTINUED
 		},
 		ellipse(xShape, dim) {},
 		circle(xShape, dim) {},

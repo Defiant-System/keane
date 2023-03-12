@@ -44,7 +44,7 @@ let Test = {
 		// setTimeout(this.dialogs, 500);
 		// setTimeout(this.mask, 600);
 		// setTimeout(this.marquee, 500);
-		// setTimeout(this.shapes, 500);
+		setTimeout(this.shapes, 500);
 		// setTimeout(this.blankView, 1000);
 	},
 	blankView() {
