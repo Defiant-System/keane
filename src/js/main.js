@@ -158,11 +158,16 @@ const keane = {
 			case "setup-workspace":
 				// show blank view
 				Self.els.content.removeClass("show-blank-view");
+				// reset window title handle
+				window.el.removeClass("showing-blank-view");
 				// open file + prepare workspace
 				Tabs.open(event.file, event);
 				break;
 			case "show-blank-view":
 				if (Self.els.content.hasClass("show-blank-view")) return;
+				// stretches window title handle
+				window.el.addClass("showing-blank-view");
+
 				let str = Tabs._stack.length ? "files-open" : "";
 				// show blank view
 				Self.els.content.addClass(str);
