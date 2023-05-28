@@ -230,6 +230,7 @@ class File {
 			content,
 			layer,
 			xLayer,
+			oX, oY,
 			id,
 			el;
 		//console.log(event);
@@ -298,12 +299,14 @@ class File {
 				break;
 			case "pan-canvas":
 				// console.log( event );
-				this.oX = (Number.isInteger(event.left)
-						? event.left
-						: this.width > Proj.aW ? Proj.cX - (this.width >> 1) + event.x : false) || this.oX;
-				this.oY = (Number.isInteger(event.top)
-						? event.top
-						: this.height > Proj.aH ? Proj.cY - (this.height >> 1) + event.y : false) || this.oY;
+				oX = Number.isInteger(event.left)
+					? event.left
+					: this.width > Proj.aW ? Proj.cX - (this.width >> 1) + event.x : false;
+				oY = Number.isInteger(event.top)
+					? event.top
+					: this.height > Proj.aH ? Proj.cY - (this.height >> 1) + event.y : false;
+				if (Number.isInteger(oX)) this.oX = oX;
+				if (Number.isInteger(oY)) this.oY = oY;
 				// render projector canvas
 				Proj.render({ noEmit: event.noEmit });
 				break;
