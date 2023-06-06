@@ -54,8 +54,8 @@
 				console.log(event.type);
 				break;
 			case "add-layer":
-				el = File.dispatch({ type: "add-layer", content: { name: "Test Shapes", type: "vector" } });
-				// el = File.dispatch({ type: "add-layer", content: { name: "test", type: "fill", color: "#ffffff00" } });
+				// create layer element if not provided (from Test object)
+				el = event.layerEl || File.dispatch({ type: "add-layer", content: { name: "New Layer", type: "fill", color: "#ffffff00" } });
 
 				// add new row and auto focus (make active)
 				window.render({

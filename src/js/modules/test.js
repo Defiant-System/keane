@@ -69,6 +69,10 @@ let Test = {
 		pointer
 		zoom
 		*/
+
+		let layerEl = Projector.file.dispatch({ type: "add-layer", content: { name: "Test Shapes", type: "vector" } });
+		return keane.sidebar.layers.dispatch({ type: "add-layer", layerEl });
+
 		window.find(`.tool[data-content="shape"]`).trigger("click");
 
 		// window.find(".temp-layer").addClass("show");

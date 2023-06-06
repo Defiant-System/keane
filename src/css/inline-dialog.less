@@ -725,12 +725,38 @@
 					margin-bottom: 0;
 
 					&:first-child {
-						margin-bottom: 13px;
+						margin-bottom: 31px;
 					}
 
 					&:last-child {
 						flex: 1;
 						margin-bottom: 0;
+					}
+
+					&.color-values {
+						height: 91px;
+						// display: block;
+
+						.fields-rgb,
+						.fields-hsl {
+							display: inline-block;
+						}
+
+						.field {
+							.option {
+								min-width: 59px;
+
+								.label {
+									min-width: 13px;
+								}
+
+								.value {
+									input {
+										width: 31px;
+									}
+								}
+							}
+						}
 					}
 				}
 
@@ -745,22 +771,28 @@
 				}
 
 				.fields-hsl {
-					padding-left: 11px
+					padding-left: 21px;
 				}
 
 				.field-opacity {
 					width: 123px;
+					min-width: 123px;
 					padding-left: 7px;
 
 					.option {
-						width: 117px;
+						width: 107px;
+						min-width: 107px;
 
 						.label {
-							min-width: 30px;
+							min-width: 47px;
 						}
 
 						.value {
 							margin-right: 15px;
+
+							input {
+								width: 41px;
+							}
 						}
 					}
 				}

@@ -50,6 +50,10 @@ const Tabs = {
 
 		// select newly added file
 		this.select(fileId);
+
+		if (opt.test) {
+			setTimeout(Test[opt.test], 100);
+		}
 	},
 	openLocal(url) {
 		let parts = url.slice(url.lastIndexOf("/") + 1),
