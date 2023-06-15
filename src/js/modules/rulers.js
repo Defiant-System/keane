@@ -358,8 +358,6 @@ const Rulers = {
 			lY = cfg.h % cfg.size,
 			il = (cfg.w-lX) / cfg.size,
 			jl = (cfg.h-lY) / cfg.size;
-		// if (lX === 0) il--;
-		// if (lY === 0) jl--;
 		ctx.save();
 		if (cfg.oX < 0) {
 			cfg.pX = cfg.oX % cfg.size;

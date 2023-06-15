@@ -308,11 +308,11 @@ class File {
 				if (this.width + this.oX < Proj.aW) this.oX = Proj.aW - this.width;
 				if (this.height + this.oY < Proj.aH) this.oY = Proj.aH - this.height;
 				// make sure image is centered
-				if (width < Proj.aW) this.oX = (Proj.aW - width) * .5;
-				if (height < Proj.aH) this.oY = (Proj.aH - height) * .5;
+				if (width < Proj.aW) this.oX = ((Proj.aW - width) * .5) + Proj.aX;
+				if (height < Proj.aH) this.oY = ((Proj.aH - height) * .5) + Proj.aY;
 
-				this.oX = Math.round(this.oX) + (Proj.aX * .5);
-				this.oY = Math.round(this.oY) + (Proj.aY * .5);
+				this.oX = Math.round(this.oX);
+				this.oY = Math.round(this.oY);
 
 				if (!event.noRender) {
 					// render file
