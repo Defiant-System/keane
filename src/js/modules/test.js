@@ -2,7 +2,7 @@
 let Test = {
 	init() {
 
-		setTimeout(() => Projector.file.dispatch({ type: "scale-at", scale: 2 }), 500);
+		// setTimeout(() => Projector.file.dispatch({ type: "scale-at", scale: 2 }), 500);
 
 		// UI temp
 		// setTimeout(() => UI.content.find(".option[data-options='pop-gradient-strips'] .value").trigger("click"), 200);

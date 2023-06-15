@@ -172,27 +172,22 @@ class Layer {
 			// calculate dimensions
 			tW = ratio < 1 ? (height * ratio) : width,
 			tH = ratio < 1 ? height : (width / ratio),
-			pX = (width - tW) >> 1,
-			pY = (height - tH) >> 1;
-		
+			resizeWidth = Math.ceil(tW),
+			resizeHeight = Math.ceil(tH),
+			pX = (width - resizeWidth) * .5,
+			pY = (height - resizeHeight) * .5,
+			cOpt = {
+				pX, pY,
+				w: resizeWidth,
+				h: resizeHeight,
+				size: 4
+			};
 		// reset thumbnail canvas
 		thumbCvsEl.prop({ width, height });
-		
 		// checkers background
-		Rulers.drawCheckers(tCtx, {
-			pX, pY,
-			w: Math.floor(tW + pX),
-			h: Math.floor(tH + pY),
-			size: 4
-		});
-
+		Rulers.drawCheckers(tCtx, cOpt);
 		// transfer layer image resized to thumbnail canvas
-		let opt = {
-				resizeWidth: Math.ceil(tW),
-				resizeHeight: Math.ceil(tH),
-				resizeQuality: "medium"
-			};
-		createImageBitmap(this.cvs[0], opt)
+		createImageBitmap(this.cvs[0], { resizeWidth, resizeHeight, resizeQuality: "medium" })
 			.then(img => tCtx.drawImage(img, pX, pY))
 			.catch(e => null);
 	}
