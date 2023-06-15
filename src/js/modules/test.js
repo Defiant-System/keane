@@ -1,6 +1,9 @@
 
 let Test = {
 	init() {
+
+		setTimeout(() => Projector.file.dispatch({ type: "scale-at", scale: 2 }), 500);
+
 		// UI temp
 		// setTimeout(() => UI.content.find(".option[data-options='pop-gradient-strips'] .value").trigger("click"), 200);
 		// setTimeout(() => UI.content.find(".option[data-options='pop-brush-tips'] .value").trigger("click"), 200);
@@ -98,7 +101,7 @@ let Test = {
 		// window.find(`.tool.icon-marquee-union`).trigger("click");
 
 
-		// Projector.file.dispatch({ type: "set-scale", scale: 4 });
+		// Projector.file.dispatch({ type: "scale-at", scale: 4 });
 		// Projector.file.dispatch({ type: "pan-canvas", top: 90, left: 18 });
 		// Projector.file.dispatch({ type: "pan-canvas", top: -390, left: -180, noZoom: true });
 

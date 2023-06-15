@@ -145,7 +145,7 @@ class File {
 			this.cvs.prop({ width: nW, height: nH });
 			this.quickMask.cvs.prop({ width: nW, height: nH });
 			// reset scale & offset position
-			this.dispatch({ type: "set-scale", scale: this.scale });
+			this.dispatch({ type: "scale-at", scale: this.scale });
 		}
 		this.render();
 	}
@@ -278,25 +278,61 @@ class File {
 						});
 				}
 				// auto set scale for file; fixes framing if image is larger than available dimensions
-				this.dispatch({ ...event, type: "set-scale" });
+				this.dispatch({ ...event, type: "scale-at" });
 
 				// render canvas
 				// this.render();
 				break;
-			case "set-scale":
-				// scaled dimension
-				this.scale = event.scale;
-				this.width = this.oW * this.scale;
-				this.height = this.oH * this.scale;
-				// origo
-				this.oX = Math.round(Proj.cX - (this.width >> 1));
-				this.oY = Math.round(Proj.cY - (this.height >> 1));
+			case "scale-at":
+				let newScale = event.scale,
+					scaleChange = newScale - this.scale,
+					zoomX = event.zoomX != undefined ? event.zoomX : ((Proj.aW * .5) - (this.oX || 0)),
+					zoomY = event.zoomY != undefined ? event.zoomY : ((Proj.aH * .5) - (this.oY || 0)),
+					width = Math.round(this.oW * newScale),
+					height = Math.round(this.oH * newScale);
+				
+				oX = (zoomX / this.scale) * -scaleChange;
+				oY = (zoomY / this.scale) * -scaleChange;
+
+				this.scale = event.scale || this.scale;
+				this.oX += oX;
+				this.oY += oY;
+				this.width = width;
+				this.height = height;
+				// set reference to file
+				Proj.file = this;
+
+				// constrainsts
+				if (width > Proj.aW && this.oX > 0) this.oX = 0;
+				if (height > Proj.aH && this.oY > 0) this.oY = 0;
+				if (this.width + this.oX < Proj.aW) this.oX = Proj.aW - this.width;
+				if (this.height + this.oY < Proj.aH) this.oY = Proj.aH - this.height;
+				// make sure image is centered
+				if (width < Proj.aW) this.oX = (Proj.aW - width) * .5;
+				if (height < Proj.aH) this.oY = (Proj.aH - height) * .5;
+
+				this.oX = Math.round(this.oX) + (Proj.aX * .5);
+				this.oY = Math.round(this.oY) + (Proj.aY * .5);
 
 				if (!event.noRender) {
 					// render file
 					this.render();
 				}
 				break;
+			// case "set-scale":
+			// 	// scaled dimension
+			// 	this.scale = event.scale;
+			// 	this.width = this.oW * this.scale;
+			// 	this.height = this.oH * this.scale;
+			// 	// origo
+			// 	this.oX = Math.round(Proj.cX - (this.width >> 1));
+			// 	this.oY = Math.round(Proj.cY - (this.height >> 1));
+
+			// 	if (!event.noRender) {
+			// 		// render file
+			// 		this.render();
+			// 	}
+			// 	break;
 			case "pan-canvas":
 				// console.log( event );
 				oX = Number.isInteger(event.left)

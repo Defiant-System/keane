@@ -87,9 +87,9 @@
 					}
 				});
 
-				for (let key in data) data[key] = _round(data[key]) +"px";
+				for (let key in data) data[key] = _round(data[key]);
 				Self.els.zoomRect.css(data);
-				Self.els.wrapper.css({ width: Self.navWidth +"px" });
+				Self.els.wrapper.css({ width: Self.navWidth });
 				Self.cvs.prop({ width: Self.navWidth, height: Self.navHeight });
 				
 				// checkers background
@@ -128,7 +128,7 @@
 				Self.els.zoomValue.html(Self.zoomValue + "%");
 
 				if (event.type === "input") {
-					File.dispatch({ type: "set-scale", scale: Self.zoomValue / 100 });
+					File.dispatch({ type: "scale-at", scale: Self.zoomValue / 100 });
 				} else {
 					Self.els.zoomSlider.val(event.value);
 				}
