@@ -397,7 +397,7 @@
 				// console.log( Drag.rect );
 				if (Drag.rect) {
 					// paint rectangle on mask canvas
-					// Mask.dispatch({ type: "select-rect", rect: Drag.rect, method: Self.method });
+					Mask.dispatch({ type: "select-rect", rect: Drag.rect, method: Self.method });
 				}
 				// remove class
 				APP.els.content.removeClass("cover");

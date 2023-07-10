@@ -1,7 +1,7 @@
 <Application>
 	<Head>
 		<meta name="id" value="keane"/>
-		<meta name="title" value="Keane" version="1.31"/>
+		<meta name="title" value="Keane" version="1.32"/>
 		<meta name="author" value="Hakan Bilgin" namespace="ant"/>
 		<meta name="license" value="AGPL-3.0"/>
 		<meta name="repository" value="https://github.com/Defiant-System/keane"/>

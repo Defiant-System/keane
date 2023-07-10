@@ -46,7 +46,7 @@ let Test = {
 		// temp
 		// setTimeout(this.dialogs, 500);
 		// setTimeout(this.mask, 600);
-		// setTimeout(this.marquee, 500);
+		setTimeout(this.marquee, 500);
 		// setTimeout(this.shapes, 500);
 		// setTimeout(this.blankView, 1000);
 	},
@@ -94,6 +94,7 @@ let Test = {
 	},
 	marquee() {
 		// Tools Marquee
+		// window.find(`.tool[data-content="marquee"]`).trigger("click");
 		// window.find(`.tool-marquee-circle`).trigger("click");
 		// window.find(`.tool-wand`).trigger("click");
 		// window.find(`.tool-lasso`).trigger("click");
@@ -105,9 +106,9 @@ let Test = {
 		// Projector.file.dispatch({ type: "pan-canvas", top: 90, left: 18 });
 		// Projector.file.dispatch({ type: "pan-canvas", top: -390, left: -180, noZoom: true });
 
-		Mask.dispatch({ type: "select-with-magic-wand", oX: 352, oY: 65 });
+		// Mask.dispatch({ type: "select-with-magic-wand", oX: 352, oY: 65 });
 		// Mask.dispatch({ type: "select-rect", rect: { x: 10, y: 20, w: 13, h: 10 } });
-		// Mask.dispatch({ type: "select-rect", rect: { x: 350, y: 140, w: 130, h: 210 } });
+		Mask.dispatch({ type: "select-rect", rect: { x: 350, y: 140, w: 130, h: 210 } });
 
 		// setTimeout(() => window.find(`.sidebar-wrapper .icon-eye-on`).trigger("click"), 600);
 	},
