@@ -5,8 +5,8 @@
 		<meta name="author" value="Hakan Bilgin" namespace="ant"/>
 		<meta name="license" value="AGPL-3.0"/>
 		<meta name="repository" value="https://github.com/Defiant-System/keane"/>
-		<meta name="width" value="1110" min="920"/>
-		<meta name="height" value="770" min="660"/>
+		<meta name="width" value="1180" min="920"/>
+		<meta name="height" value="840" min="660"/>
 		<meta name="top" value="140"/>
 		<meta name="left" value="90"/>
 		<meta name="headless" value="true" theme="dark"/>
