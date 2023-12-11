@@ -402,20 +402,22 @@
             enumerable: true
         });
 
-        // Add the pathSegList accessors to window.SVGPathElement.
-        // Spec: http://www.w3.org/TR/SVG11/single-page.html#paths-InterfaceSVGAnimatedPathData
-        Object.defineProperty(window.SVGPathElement.prototype, "pathSegList", {
-            get: function() {
-                if (!this._pathSegList)
-                    this._pathSegList = new window.SVGPathSegList(this);
-                return this._pathSegList;
-            },
-            enumerable: true
-        });
-        // FIXME: The following are not implemented and simply return window.SVGPathElement.pathSegList.
-        Object.defineProperty(window.SVGPathElement.prototype, "normalizedPathSegList", { get: function() { return this.pathSegList; }, enumerable: true });
-        Object.defineProperty(window.SVGPathElement.prototype, "animatedPathSegList", { get: function() { return this.pathSegList; }, enumerable: true });
-        Object.defineProperty(window.SVGPathElement.prototype, "animatedNormalizedPathSegList", { get: function() { return this.pathSegList; }, enumerable: true });
+        try {
+            // Add the pathSegList accessors to window.SVGPathElement.
+            // Spec: http://www.w3.org/TR/SVG11/single-page.html#paths-InterfaceSVGAnimatedPathData
+            Object.defineProperty(window.SVGPathElement.prototype, "pathSegList", {
+                get: function() {
+                    if (!this._pathSegList)
+                        this._pathSegList = new window.SVGPathSegList(this);
+                    return this._pathSegList;
+                },
+                enumerable: true
+            });
+            // FIXME: The following are not implemented and simply return window.SVGPathElement.pathSegList.
+            Object.defineProperty(window.SVGPathElement.prototype, "normalizedPathSegList", { get: function() { return this.pathSegList; }, enumerable: true });
+            Object.defineProperty(window.SVGPathElement.prototype, "animatedPathSegList", { get: function() { return this.pathSegList; }, enumerable: true });
+            Object.defineProperty(window.SVGPathElement.prototype, "animatedNormalizedPathSegList", { get: function() { return this.pathSegList; }, enumerable: true });
+        } catch (e) {}
 
         // Process any pending mutations to the path element and update the list as needed.
         // This should be the first call of all public functions and is needed because
