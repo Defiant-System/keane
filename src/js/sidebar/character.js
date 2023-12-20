@@ -9,7 +9,7 @@
 		};
 
 		// subscribe to events
-		karaqu.on("set-fg-color", this.dispatch);
+		window.on("set-fg-color", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -25,7 +25,7 @@
 			// custom events
 			case "set-color":
 				// broadcast event
-				karaqu.emit("set-fg-color", { hex: event.value });
+				window.emit("set-fg-color", { hex: event.value });
 				break;
 			case "select-font-style":
 				// event.el.find("> .active").removeClass("active");

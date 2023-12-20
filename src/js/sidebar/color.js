@@ -24,7 +24,7 @@
 		this.els.colorWheel.on("mousedown", this.doColorWheel);
 
 		// subscribe to events
-		karaqu.on("set-fg-color", this.dispatch);
+		window.on("set-fg-color", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -141,7 +141,7 @@
 				break;
 			case "mouseup":
 				// broadcast event
-				karaqu.emit("set-fg-color", { hex: Drag.hex, uiDone: true });
+				window.emit("set-fg-color", { hex: Drag.hex, uiDone: true });
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers
@@ -213,7 +213,7 @@
 				break;
 			case "mouseup":
 				// broadcast event
-				karaqu.emit("set-fg-color", { hex: Drag.hex, uiDone: true });
+				window.emit("set-fg-color", { hex: Drag.hex, uiDone: true });
 				// remove class
 				APP.els.content.removeClass("no-cursor");
 				// unbind event handlers

@@ -72,7 +72,7 @@
 				// bind event handler
 				Proj.cvs.on("mousedown", Self.doMarquee);
 				// subscribe to events
-				karaqu.on("mouse-move", Self.dispatch);
+				window.on("mouse-move", Self.dispatch);
 				break;
 			case "disable":
 				// unset default cursor for this tool
@@ -80,7 +80,7 @@
 				// unbind event handler
 				Proj.cvs.off("mousedown", Self.doMarquee);
 				// subscribe to events
-				karaqu.off("mouse-move", Self.dispatch);
+				window.off("mouse-move", Self.dispatch);
 				break;
 			
 			// proxy event
@@ -385,7 +385,7 @@
 				// save values for "mouseup"
 				Drag.rect = { x, y, w, h };
 				// broadcast event
-				karaqu.emit("mouse-move", {
+				window.emit("mouse-move", {
 					isSelecting: true,
 					x: Drag._round((x - Drag.offset.foX) / scale),
 					y: Drag._round((y - Drag.offset.foY) / scale),
@@ -501,7 +501,7 @@
 				// save values for "mouseup"
 				Drag.elps = { x, y, rX, rY };
 				// broadcast event
-				karaqu.emit("mouse-move", {
+				window.emit("mouse-move", {
 					isSelecting: true,
 					x: Drag._round((mX - Drag.offset.foX) / scale),
 					y: Drag._round((mY - Drag.offset.foY) / scale),

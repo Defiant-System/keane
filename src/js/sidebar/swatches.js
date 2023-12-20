@@ -9,7 +9,7 @@
 		};
 
 		// subscribe to events
-		karaqu.on("set-fg-color", this.dispatch);
+		window.on("set-fg-color", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -31,7 +31,7 @@
 				rgb = el.css("background-color");
 				hex = ColorLib.rgbToHex(rgb);
 				// broadcast event
-				karaqu.emit("set-fg-color", { hex });
+				window.emit("set-fg-color", { hex });
 				break;
 		}
 	}

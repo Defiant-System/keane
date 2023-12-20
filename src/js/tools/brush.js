@@ -27,8 +27,8 @@
 		};
 
 		// subscribe to events
-		karaqu.on("set-fg-color", this.dispatch);
-		karaqu.on("set-bg-color", this.dispatch);
+		window.on("set-fg-color", this.dispatch);
+		window.on("set-bg-color", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -76,20 +76,20 @@
 					name: event.el.data("arg"),
 					value: APP.els.content.cssProp(`--${name}`),
 					// broadcast event
-					callback: ev => karaqu.emit(`set-${name}`, { hex: ev.value }),
+					callback: ev => window.emit(`set-${name}`, { hex: ev.value }),
 				});
 				break;
 			case "switch-color":
 				let c1 = APP.els.content.cssProp("--fg-color"),
 					c2 = APP.els.content.cssProp("--bg-color");
 				// broadcast event
-				karaqu.emit("set-fg-color", { hex: c2 });
-				karaqu.emit("set-bg-color", { hex: c1 });
+				window.emit("set-fg-color", { hex: c2 });
+				window.emit("set-bg-color", { hex: c1 });
 				break;
 			case "reset-color":
 				// broadcast event
-				karaqu.emit("set-fg-color", { hex: "#ffffff" });
-				karaqu.emit("set-bg-color", { hex: "#000000" });
+				window.emit("set-fg-color", { hex: "#ffffff" });
+				window.emit("set-bg-color", { hex: "#000000" });
 				break;
 			case "select-preset-tip":
 				el = APP.els.content.find(".option[data-change='select-preset-tip']");

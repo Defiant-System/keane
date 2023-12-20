@@ -11,7 +11,7 @@
 		};
 
 		// subscribe to events
-		karaqu.on("file-selected", this.dispatch);
+		window.on("file-selected", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = keane,

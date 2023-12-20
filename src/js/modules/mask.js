@@ -102,7 +102,7 @@ let Mask = {
 				Self.clear();
 				Mask.ants.halt();
 				// broadcast event
-				karaqu.emit("selection-cleared");
+				window.emit("selection-cleared");
 				break;
 			case "inverse-selection":
 				// stop marching ants
@@ -177,7 +177,7 @@ let Mask = {
 		// draw masked on Mask canvas
 		image.ctx.putImageData(imgData, 0, 0);
 		// broadcast event
-		karaqu.emit("mouse-move", {
+		window.emit("mouse-move", {
 			isSelecting: true,
 			x: bounds.minX.toString(),
 			y: bounds.minY.toString(),

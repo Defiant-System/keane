@@ -104,7 +104,7 @@ const keane = {
 			case "window.keystroke":
 				switch (event.char) {
 					case "meta":
-						karaqu.emit("meta-key", { state: "down" });
+						window.emit("meta-key", { state: "down" });
 						break;
 				}
 				// dispatch event to active tool object
@@ -114,7 +114,7 @@ const keane = {
 			case "window.keyup":
 				switch (event.char) {
 					case "meta":
-						karaqu.emit("meta-key", { state: "up" });
+						window.emit("meta-key", { state: "up" });
 						break;
 				}
 				break;

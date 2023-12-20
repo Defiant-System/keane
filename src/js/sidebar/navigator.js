@@ -26,7 +26,7 @@
 		this.els.zoomSlider.on("input", this.dispatch);
 
 		// subscribe to events
-		karaqu.on("projector-update", this.dispatch);
+		window.on("projector-update", this.dispatch);
 
 		if (this.ratio) {
 			// dispatch if ratio is calculated

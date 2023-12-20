@@ -49,7 +49,7 @@ const Projector = {
 					data.hsl = ColorLib.rgbToHsl(data.rgb);
 				}
 				// broadcast event
-				karaqu.emit("mouse-move", data);
+				window.emit("mouse-move", data);
 				break;
 		}
 	},
@@ -83,10 +83,10 @@ const Projector = {
 			// reference to displayed file
 			this.file = File;
 			// emit event
-			karaqu.emit("file-selected", { file: File._file });
+			window.emit("file-selected", { file: File._file });
 			// broadcast event
-			karaqu.emit("set-fg-color", { hex: File.fgColor });
-			karaqu.emit("set-bg-color", { hex: File.bgColor });
+			window.emit("set-fg-color", { hex: File.fgColor });
+			window.emit("set-bg-color", { hex: File.bgColor });
 		}
 	},
 	render(opt={}) {
@@ -141,7 +141,7 @@ const Projector = {
 
 		if (!opt.noEmit) {
 			// emit event
-			karaqu.emit("projector-update");
+			window.emit("projector-update");
 		}
 	}
 };

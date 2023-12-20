@@ -15,7 +15,7 @@ const Rulers = {
 		};
 
 		// subscribe to events
-		karaqu.on("meta-key", this.dispatch);
+		window.on("meta-key", this.dispatch);
 		// bind event handlers
 		this.els.rg.on("mousedown", this.dispatch);
 	},

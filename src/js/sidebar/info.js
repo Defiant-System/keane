@@ -23,7 +23,7 @@
 		// default
 		this.memRect = {};
 		// subscribe to events
-		karaqu.on("file-selected", this.dispatch);
+		window.on("file-selected", this.dispatch);
 	},
 	dispatch(event) {
 		let APP = keane,
@@ -77,20 +77,20 @@
 				Self.els.selWidth.html("");
 				break;
 			case "file-selected":
-				val = karaqu.formatBytes(event.detail.file.size);
+				val = window.formatBytes(event.detail.file.size);
 				Self.els.fileSize.html(val);
 				break;
 			
 			// custom events
 			case "enable":
 				// subscribe to events
-				karaqu.on("mouse-move", Self.dispatch);
-				karaqu.on("selection-cleared", Self.dispatch);
+				window.on("mouse-move", Self.dispatch);
+				window.on("selection-cleared", Self.dispatch);
 				break;
 			case "disable":
 				// unsubscribe to events
-				karaqu.off("mouse-move", Self.dispatch);
-				karaqu.off("selection-cleared", Self.dispatch);
+				window.off("mouse-move", Self.dispatch);
+				window.off("selection-cleared", Self.dispatch);
 				break;
 		}
 	}
