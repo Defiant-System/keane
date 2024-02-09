@@ -77,7 +77,7 @@
 				Self.els.selWidth.html("");
 				break;
 			case "file-selected":
-				val = window.formatBytes(event.detail.file.size);
+				val = karaqu.formatBytes(event.detail.file.size);
 				Self.els.fileSize.html(val);
 				break;
 			
