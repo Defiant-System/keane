@@ -143,7 +143,7 @@ const keane = {
 				// opening image file from application package
 				event.names.map(async name => {
 					// forward event to app
-					let file = await Tabs.openLocal(`~/samples/${name}`);
+					let file = await Tabs.openLocal(`/cdn/img/2d-samples/${name}`);
 					Self.dispatch({ type: "prepare-file", isSample: true, file });
 				});
 				break;
