@@ -82,14 +82,14 @@
 		<i width="500" height="500" icon="file-image" bg="transparent" bg-name="Transparent" name="Quadratic, 1 x 1"/>
 	</Presets>
 	<Samples>
-		<i width="600" height="400" path="~/samples/robert-collins.jpg"/>
-		<!-- <i width="600" height="400" path="~/samples/robert-collins.psd"/> -->
-		<i width="600" height="400" path="~/samples/matthew-brodeur.jpg"/>
-		<i width="600" height="400" path="~/samples/johannes-andersson.jpg"/>
-		<i width="600" height="400" path="~/samples/brigitte-tohm.jpg"/>
-		<i width="600" height="400" path="~/samples/casey-lee.jpg"/>
-		<i width="600" height="400" path="~/samples/brantley-neal.jpg"/>
-		<i width="600" height="400" path="~/samples/alexander-scott-lambley.jpg"/>
+		<i width="600" height="400" path="/cdn/img/2d-samples/robert-collins.jpg"/>
+		<!-- <i width="600" height="400" path="/cdn/img/2d-samples/robert-collins.psd"/> -->
+		<i width="600" height="400" path="/cdn/img/2d-samples/matthew-brodeur.jpg"/>
+		<i width="600" height="400" path="/cdn/img/2d-samples/johannes-andersson.jpg"/>
+		<i width="600" height="400" path="/cdn/img/2d-samples/brigitte-tohm.jpg"/>
+		<i width="600" height="400" path="/cdn/img/2d-samples/casey-lee.jpg"/>
+		<i width="600" height="400" path="/cdn/img/2d-samples/brantley-neal.jpg"/>
+		<i width="600" height="400" path="/cdn/img/2d-samples/alexander-scott-lambley.jpg"/>
 	</Samples>
 	<!-- <Recents>
 		<i name="basketball.png" filepath="/fs/Desktop/images/basketball.png"/>

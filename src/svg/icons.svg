@@ -512,20 +512,32 @@
 	</svg>
 
 	<svg id="icon-marquee-union" viewBox="0 0 17 17">
-		<polygon fill="#333" opacity="0.4" points="12.3,6 12.3,1.5 1.5,1.5 1.5,11.7 5,11.7 5,15.5 15.5,15.5 15.5,6"/>
-		<path fill="#333" d="M16,16H4.5v-3.8H1V1h11.9v4.5H16V16z M5.5,14.9h9.4V6.6h-3.1V2.1H2.1v9.1h3.5V14.9z"/>
+		<style type="text/css">
+			.st0{opacity:0.4;fill:#333;enable-background:new;}
+			.st1{fill:#333;}
+		</style>
+		<polygon class="st0" points="12.5,6.5 12.5,1.5 1.5,1.5 1.5,11.5 5.5,11.5 5.5,15.5 15.5,15.5 15.5,6.5 "/>
+		<path class="st1" d="M16,16H5v-4H1V1h12v5h3V16z M15,15V7h-3V2H2v9h4l0,4H15z"/>
 	</svg>
 
 	<svg id="icon-marquee-subtract" viewBox="0 0 17 17">
-		<polygon fill="#333" opacity="0.4" points="5,6 12.4,6 12.4,1.5 1.4,1.5 1.4,11.7 5,11.7"/>
-		<path fill="#333" d="M12.8,5.6V1H1v11.1h3.5V16H16V5.6H12.8z M1.9,11.3V1.9h10.1v3.7H4.5v5.7H1.9z M11.9,6.5v4.8H5.4V6.5H11.9z
-			 M15.1,15.1H5.4v-3h7.4V6.5h2.3V15.1z"/>
+		<style type="text/css">
+			.st0{opacity:0.4;fill:#333;enable-background:new;}
+			.st1{fill:#333;}
+		</style>
+		<polygon class="st0" points="4.5,6.5 12.5,6.5 12.5,1.5 1.4,1.5 1.4,11.5 4.5,11.5 "/>
+		<path class="st1" d="M13,6V1H1l0,11l3,0v4l12,0V6H13z M2,11l0-9l10,0v4L4,6v5C4,11,2,11,2,11z M12,7v4l-7,0V7L12,7z M15,15L5,15v-3
+			l8,0l0-5h2V15z"/>
 	</svg>
 
 	<svg id="icon-marquee-intersect" viewBox="0 0 17 17">
-		<rect x="5" y="6" fill="#333" opacity="0.4" width="7.4" height="5.7"/>
-		<path fill="#333" d="M12.8,5.6V1H1v11.1h3.5V16H16V5.6H12.8z M1.9,11.3V1.9h10.1v3.7H4.5v5.7H1.9z M11.9,6.5v4.8H5.4V6.5H11.9z
-			 M15.1,15.1H5.4v-3h7.4V6.5h2.3V15.1z"/>
+		<style type="text/css">
+			.st0{opacity:0.4;fill:#333;enable-background:new;}
+			.st1{fill:#333;}
+		</style>
+		<rect x="5.4" y="6.5" class="st0" width="7" height="5"/>
+		<path class="st1" d="M13,6l0-5H1v11l4,0v4l11,0l0-10H13z M2,11V2h10l0,4L5,6l0,5C5,11,2,11,2,11z M12,7v4H6V7H12z M15,15l-9,0v-3h7
+			V7l2,0V15z"/>
 	</svg>
 
 	<svg id="icon-align-top" viewBox="0 0 17 17">
