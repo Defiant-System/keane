@@ -185,7 +185,7 @@ const Svg = {
 		path(xShape, dim) {
 			// scale transform matrix points
 			let mtxScale = dim.matrix(dim.scale.x, dim.scale.y),
-				pathMap = [0, "z", "M", "m", "L", "l", "C", "c", "Q", "q", "A", "a", "H", "h", "V", "v", "S", "s", "T", "t"],
+				pathMap = [0, "z", "M", "m", "L", "l", "C", "c", "Q", "q", "A", "a", "H", "h", "V", "v", "S", "s", "T", "t", "Z"],
 				dArr = [];
 			// loop points
 			dim.points.map(seg => {
@@ -240,6 +240,10 @@ const Svg = {
 						[x,  y ] = this.matrixDot(mtxScale, [[seg.x], [seg.y], [1]]);
 						[x2, y2] = this.matrixDot(mtxScale, [[seg.x2], [seg.y2], [1]]);
 						dArr.push(`${c}${x2},${y2} ${x},${y} `);
+						break;
+					case 1:  // end of path (z)
+					case 20: // end of path (Z)
+						dArr.push(`${c}`);
 						break;
 				}
 			});
